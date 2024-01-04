@@ -19,7 +19,7 @@ class GameMain:
         self.windowHeight = 720
 
         self.FPS = 60
-        self.TPS = 2
+        self.TPS = 3
 
         self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.GL_DOUBLEBUFFER)
         pygame.display.set_caption("Car Game by David Derflinger")
@@ -34,7 +34,12 @@ class GameMain:
         self.topRight = pygame.image.load("gameFiles/images/top_Right.png")
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight]
-        self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray)
+        self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
+                                   [1, 0, 0, 1],
+                                   [1, 1, 0, 0],
+                                   [0, 0, 1, 1],
+                                   [0, 1, 1, 0]]
+        self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
 
         self.run()
 
