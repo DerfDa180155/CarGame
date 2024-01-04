@@ -4,6 +4,7 @@ import os
 import threading
 import time
 import numpy
+import WaveFunctionCollapse
 
 class GameMain:
     def __init__(self):
@@ -18,7 +19,7 @@ class GameMain:
         self.windowHeight = 720
 
         self.FPS = 60
-        self.TPS = 3
+        self.TPS = 2
 
         self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.GL_DOUBLEBUFFER)
         pygame.display.set_caption("Car Game by David Derflinger")
@@ -33,6 +34,7 @@ class GameMain:
         self.topRight = pygame.image.load("gameFiles/images/top_Right.png")
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight]
+        self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray)
 
         self.run()
 
@@ -43,9 +45,30 @@ class GameMain:
                 if event.type == pygame.QUIT:  # Quit the Game
                     self.running = False
 
+            x = 10
+            y = x
+
+            a = 0
+            b = 0
+            testMap = []
+            while a < x:
+                temp = []
+                b = 0
+                while b < y:
+                    temp.append(random.randint(0, 4))
+                    b+=1
+                testMap.append(temp)
+                a+=1
+
+            testMap = self.WFC.generate(x, y)
+
             #self.screen.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
 
-            self.screen.blit(pygame.transform.scale(self.mapArray[random.randint(0, 4)], (self.windowWidth, self.windowHeight)), (0, 0))
+            for i in range(len(testMap)):
+                for j in range(len(testMap[i])):
+                    self.screen.blit(pygame.transform.scale(self.mapArray[testMap[i][j]], ((self.windowWidth/len(testMap[i]))+1, (self.windowHeight/len(testMap))+1)), (self.windowWidth/len(testMap[i]) * j, self.windowHeight/len(testMap) * i))
+
+
 
 
             pygame.display.set_caption(str(self.TPSClock.get_fps()))
