@@ -19,7 +19,7 @@ class GameMain:
         self.windowHeight = 720
 
         self.FPS = 60
-        self.TPS = 3
+        self.TPS = 1
 
         self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.GL_DOUBLEBUFFER)
         pygame.display.set_caption("Car Game by David Derflinger")
@@ -50,7 +50,7 @@ class GameMain:
                 if event.type == pygame.QUIT:  # Quit the Game
                     self.running = False
 
-            x = 10
+            x = 3
             y = x
 
             a = 0
@@ -71,9 +71,11 @@ class GameMain:
 
             for i in range(len(testMap)):
                 for j in range(len(testMap[i])):
+                    if testMap[i][j] == -1:
+                        testMap[i][j] = 0
                     self.screen.blit(pygame.transform.scale(self.mapArray[testMap[i][j]], ((self.windowWidth/len(testMap[i]))+1, (self.windowHeight/len(testMap))+1)), (self.windowWidth/len(testMap[i]) * j, self.windowHeight/len(testMap) * i))
 
-
+            print(testMap)
 
 
             pygame.display.set_caption(str(self.TPSClock.get_fps()))
