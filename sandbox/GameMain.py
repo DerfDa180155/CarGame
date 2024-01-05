@@ -73,7 +73,7 @@ class GameMain:
                 for j in range(len(testMap[i])):
                     if testMap[i][j] == -1:
                         testMap[i][j] = 0
-                    self.screen.blit(pygame.transform.scale(self.mapArray[testMap[i][j]], ((self.windowWidth/len(testMap[i]))+1, (self.windowHeight/len(testMap))+1)), (self.windowWidth/len(testMap[i]) * j, self.windowHeight/len(testMap) * i))
+                    self.screen.blit(pygame.transform.scale(self.mapArray[testMap[i][j]], ((self.windowWidth/len(testMap[i]))+1, (self.windowHeight/len(testMap))+1)), (self.windowWidth/len(testMap) * i, self.windowHeight/len(testMap[i]) * j))
 
             print(testMap)
 
