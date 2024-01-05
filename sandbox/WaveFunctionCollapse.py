@@ -26,11 +26,14 @@ class WaveFunctionCollapse:
         b = random.randint(0, y - 1)
 
         #myMap[a][b] = random.randint(1, 4)
-        myMap[1][0] = 2
+        myMap[1][1] = 2
+        myMap[0][0] = 4
 
-        self.getEntropy(myMap, 2, 0)
+        print(self.getEntropy(myMap, 0, 1))
 
+        print(self.getLowestEntropy(myMap))
         # self.findEnd(myMap) # different concept
+        print(self.getPossible(myMap, 0, 1))
 
         return self.generateAll(myMap, a, b)
 
@@ -40,25 +43,20 @@ class WaveFunctionCollapse:
 
         return myMap # temp
 
-    def getLowestEntropy(self, myMap): # returns positions of the lowest entropys
-        a = 0
-        b = 0
+    def getLowestEntropy(self, myMap): # returns the position of the lowest entropy
         lowestEntropy = float('inf')  # infinity
-        positions = []
-        while a < len(myMap):
-            b = 0
-            while b <= len(myMap[a]):
-                if self.getEntropy(myMap, a, b) < lowestEntropy:
-                    lowestEntropy = self.getEntropy(myMap, a, b)
-                    positions.append((a, b))
-                b += 1
-            a += 1
+        position = []
+        for i in range(len(myMap)):
+            for j in range(len(myMap[i])):
+                if self.getEntropy(myMap, i, j) < lowestEntropy:
+                    lowestEntropy = self.getEntropy(myMap, i, j)
+                    position = (i, j)
 
-        return positions
+        return position
 
-    def getEntropy(self, myMap, x, y): # returns the entropy of the given point (x, y)
+    def getPossible(self, myMap, x, y): # get all possible patterns for the square (x, y)
         # This function is not very clean
-        count = 0
+        possible = []
 
         possibleTop = []
         possibleRight = []
@@ -89,11 +87,11 @@ class WaveFunctionCollapse:
         if y - 1 < 0:
             possibleTop.append(0)
         else:
-            if myMap[x][y -1] == -1:
+            if myMap[x][y - 1] == -1:
                 possibleTop.append(0)
                 possibleTop.append(1)
             else:
-                possibleTop.append(self.definition[myMap[x][y - 1]][3])
+                possibleTop.append(self.definition[myMap[x][y - 1]][2])
 
         # Bottom
         if y + 1 > len(myMap[0]) - 1:
@@ -103,14 +101,9 @@ class WaveFunctionCollapse:
                 possibleBottom.append(0)
                 possibleBottom.append(1)
             else:
-                possibleBottom.append(self.definition[myMap[x][y + 1]][1])
+                possibleBottom.append(self.definition[myMap[x][y + 1]][0])
 
-        print(possibleTop)
-        print(possibleRight)
-        print(possibleBottom)
-        print(possibleLeft)
-
-
+        count = 0 # to get the right pattern
         for i in self.definition:
             check = False
             for n in possibleTop:
@@ -136,23 +129,23 @@ class WaveFunctionCollapse:
                         check = True
 
             if check:
-                count += 1
+                possible.append(count)
 
+            count += 1
 
-        print("Count: " + str(count))
+        return possible
+
+    def getEntropy(self, myMap, x, y): # returns the entropy of the given point (x, y)
+        count = len(self.getPossible(myMap, x, y))
+        #print("Count: " + str(count))
         return count
 
     def countEmpty(self, myMap):
-        a = 0
-        b = 0
         count = 0
-        while a < len(myMap):
-            b = 0
-            while b < len(myMap[a]):
-                if myMap[a][b] == -1:
+        for i in range(len(myMap)):
+            for j in range(len(myMap[i])):
+                if myMap[i][j] == -1:
                     count += 1
-                b += 1
-            a += 1
 
         return count
 
