@@ -24,7 +24,10 @@ For example: 1x1, 30x30, 100x100, ...
 Starting with the map generator using Wave Function Collapse. This generator then delivers this 2 dimensional array. You will be able to adjust later how big the map should be and where the starting point is.
 
 
+## 05.01.2024
 
+Added entropy calculation. The entropy tells you how many different patterns can be at one point of the map. It is caculated, by checking all the 4 neighbour squares and check which pieces can fit. This is needed for the Wave Function Collapse.
+Fixed a display bug, where the map was displayed mirrored.
 
 
 
