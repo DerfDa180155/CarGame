@@ -51,7 +51,7 @@ class GameMain:
                     self.running = False
 
             x = 3
-            y = x
+            y = 3
 
             a = 0
             b = 0
