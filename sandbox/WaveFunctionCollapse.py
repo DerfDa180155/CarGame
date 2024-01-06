@@ -36,11 +36,11 @@ class WaveFunctionCollapse:
         myMap[1][2] = 4
         myMap[2][2] = 4
 
-        print(self.getEntropy(myMap, 0, 1))
+        print("Test: " + str(self.getPossible(myMap, 1, 0)))
 
         print(self.getLowestEntropy(myMap))
         # self.findEnd(myMap) # different concept
-        print(self.getPossible(myMap, 0, 1))
+        #print(self.getPossible(myMap, 0, 1))
 
         return self.generateAll(myMap, 0, 0)
 
@@ -48,14 +48,15 @@ class WaveFunctionCollapse:
         if (self.countEmpty(myMap) == 0):
             return myMap
 
-        for i in range(self.countEmpty(myMap)):
+        while self.countEmpty(myMap) != 1:
+            print("tset")
             if x + 1 < len(myMap):
                 if myMap[x + 1][y] == -1:
                     possibe = self.getPossible(myMap, x+1, y)
                     if len(possibe) > 0:
-                        myMap[x + 1][y] = 3
-                        print("Test")
-                    self.generateAll(myMap, x + 1, y)
+                        myMap[x+1][y] = 3
+                        print(str(x+1) + str(y))
+                    myMap = self.generateAll(myMap, x + 1, y)
 
         return myMap # temp
 
@@ -64,9 +65,10 @@ class WaveFunctionCollapse:
         position = []
         for i in range(len(myMap)):
             for j in range(len(myMap[i])):
-                if self.getEntropy(myMap, i, j) < lowestEntropy:
-                    lowestEntropy = self.getEntropy(myMap, i, j)
-                    position = (i, j)
+                if myMap[i][j] != -1:
+                    if self.getEntropy(myMap, i, j) < lowestEntropy:
+                        lowestEntropy = self.getEntropy(myMap, i, j)
+                        position = (i, j)
 
         return position
 
