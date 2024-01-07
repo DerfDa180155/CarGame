@@ -22,19 +22,12 @@ class WaveFunctionCollapse:
             myMap.append(temp)
             a += 1
 
-        a = random.randint(0, x - 1)
-        b = random.randint(0, y - 1)
+        a = random.randint(1, x - 2)
+        b = random.randint(1, y - 2)
 
-        #myMap[a][b] = random.randint(1, 4)
-        #myMap[1][1] = 2
-        myMap[0][0] = 3
+        myMap[a][b] = random.randint(1, 4)
+        #myMap[0][0] = 4
 
-        #myMap[0][1] = 4
-        #myMap[1][1] = 4
-        #myMap[2][1] = 4
-        #myMap[0][2] = 4
-        #myMap[1][2] = 4
-        #myMap[2][2] = 4
 
         #print("Test: " + str(self.getPossible(myMap, 1, 0)))
 
@@ -43,24 +36,65 @@ class WaveFunctionCollapse:
         #print(self.getPossible(myMap, 0, 1))
 
         #return myMap
-        return self.generateAll(myMap, 0, 0)
+        return self.generateAll(myMap, 1, 0)
 
     def generateAll(self, myMap, x, y):  # recursion
         if (self.countEmpty(myMap) == 0):
             return myMap
 
-        while self.countEmpty(myMap) != 0:
+        startEmptyCount = self.countEmpty(myMap) + 1
+        while self.countEmpty(myMap) != startEmptyCount:
             print("tset")
+            checkPutImage = True
+            position = []
             if x + 1 < len(myMap):
                 if myMap[x + 1][y] == -1:
-                    possible = self.getPossible(myMap, x+1, y)
-                    print(possible)
+                    possible = self.getPossible(myMap, x + 1, y)
                     if len(possible) > 0:
-                        myMap[x+1][y] = possible[0]
-                        print(str(x+1) + str(y))
-                    myMap = self.generateAll(myMap, x + 1, y)
+                        myMap[x + 1][y] = possible[random.randint(0, len(possible) - 1)]
+                        checkPutImage = True
+                        position.append((x + 1, y))
+                    else:
+                        return myMap
+            if x - 1 >= 0:
+                if myMap[x - 1][y] == -1:
+                    possible = self.getPossible(myMap, x - 1, y)
+                    if len(possible) > 0:
+                        myMap[x - 1][y] = possible[random.randint(0, len(possible) - 1)]
+                        checkPutImage = True
+                        position.append((x - 1, y))
+                    else:
+                        return myMap
 
-        return myMap # temp
+            if y + 1 < len(myMap[0]):
+                if myMap[x][y + 1] == -1:
+                    possible = self.getPossible(myMap, x, y+1)
+                    if len(possible) > 0:
+                        myMap[x][y+1] = possible[random.randint(0, len(possible)-1)]
+                        checkPutImage = True
+                        position.append((x, y+1))
+                    else:
+                        return myMap
+            if y - 1 >= 0:
+                if myMap[x][y - 1] == -1:
+                    possible = self.getPossible(myMap, x, y-1)
+                    if len(possible) > 0:
+                        myMap[x][y-1] = possible[random.randint(0, len(possible)-1)]
+                        checkPutImage = True
+                        position.append((x, y-1))
+                    else:
+                        return myMap
+
+            #print(myMap)
+            print(myMap)
+            if checkPutImage:
+                for i in position:
+                    myMap = self.generateAll(myMap, i[0], i[1])
+
+
+            startEmptyCount = self.countEmpty(myMap)
+
+        return myMap
 
     def getLowestEntropy(self, myMap): # returns the position of the lowest entropy
         lowestEntropy = float('inf')  # infinity

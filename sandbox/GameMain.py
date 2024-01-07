@@ -33,12 +33,19 @@ class GameMain:
         self.topLeft = pygame.image.load("gameFiles/images/top_Left.png")
         self.topRight = pygame.image.load("gameFiles/images/top_Right.png")
 
-        self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight]
+        self.verticalLine = pygame.image.load("gameFiles/images/vertical_Line.png")
+        self.horizontalLine = pygame.image.load("gameFiles/images/horizontal_line.png")
+        self.crossing = pygame.image.load("gameFiles/images/crossing.png")
+
+        self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine, self.crossing]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
                                    [1, 0, 0, 1],
                                    [1, 1, 0, 0],
                                    [0, 0, 1, 1],
-                                   [0, 1, 1, 0]]
+                                   [0, 1, 1, 0],
+                                   [1, 0, 1, 0],
+                                   [0, 1, 0, 1],
+                                   [1, 1, 1, 1]]
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
 
         self.run()
@@ -50,8 +57,8 @@ class GameMain:
                 if event.type == pygame.QUIT:  # Quit the Game
                     self.running = False
 
-            x = 2
-            y = 1
+            x = 5
+            y = 5
 
             a = 0
             b = 0
@@ -67,6 +74,7 @@ class GameMain:
 
             testMap = self.WFC.generate(x, y)
             print(testMap)
+            print(self.WFC.countEmpty(testMap))
 
             for i in range(len(testMap)):
                 for j in range(len(testMap[i])):
