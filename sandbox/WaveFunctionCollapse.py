@@ -27,34 +27,36 @@ class WaveFunctionCollapse:
 
         #myMap[a][b] = random.randint(1, 4)
         #myMap[1][1] = 2
-        myMap[0][0] = 4
+        myMap[0][0] = 3
 
-        myMap[0][1] = 4
-        myMap[1][1] = 4
-        myMap[2][1] = 4
-        myMap[0][2] = 4
-        myMap[1][2] = 4
-        myMap[2][2] = 4
+        #myMap[0][1] = 4
+        #myMap[1][1] = 4
+        #myMap[2][1] = 4
+        #myMap[0][2] = 4
+        #myMap[1][2] = 4
+        #myMap[2][2] = 4
 
-        print("Test: " + str(self.getPossible(myMap, 1, 0)))
+        #print("Test: " + str(self.getPossible(myMap, 1, 0)))
 
-        print(self.getLowestEntropy(myMap))
+        #print(self.getLowestEntropy(myMap))
         # self.findEnd(myMap) # different concept
         #print(self.getPossible(myMap, 0, 1))
 
+        #return myMap
         return self.generateAll(myMap, 0, 0)
 
     def generateAll(self, myMap, x, y):  # recursion
         if (self.countEmpty(myMap) == 0):
             return myMap
 
-        while self.countEmpty(myMap) != 1:
+        while self.countEmpty(myMap) != 0:
             print("tset")
             if x + 1 < len(myMap):
                 if myMap[x + 1][y] == -1:
-                    possibe = self.getPossible(myMap, x+1, y)
-                    if len(possibe) > 0:
-                        myMap[x+1][y] = 3
+                    possible = self.getPossible(myMap, x+1, y)
+                    print(possible)
+                    if len(possible) > 0:
+                        myMap[x+1][y] = possible[0]
                         print(str(x+1) + str(y))
                     myMap = self.generateAll(myMap, x + 1, y)
 

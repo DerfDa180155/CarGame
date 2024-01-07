@@ -50,8 +50,8 @@ class GameMain:
                 if event.type == pygame.QUIT:  # Quit the Game
                     self.running = False
 
-            x = 3
-            y = 3
+            x = 2
+            y = 1
 
             a = 0
             b = 0
@@ -66,16 +66,15 @@ class GameMain:
                 a+=1
 
             testMap = self.WFC.generate(x, y)
-
-            #self.screen.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+            print(testMap)
 
             for i in range(len(testMap)):
                 for j in range(len(testMap[i])):
                     if testMap[i][j] == -1:
                         testMap[i][j] = 0
-                    self.screen.blit(pygame.transform.scale(self.mapArray[testMap[i][j]], ((self.windowWidth/len(testMap[i]))+1, (self.windowHeight/len(testMap))+1)), (self.windowWidth/len(testMap) * i, self.windowHeight/len(testMap[i]) * j))
+                    self.screen.blit(pygame.transform.scale(self.mapArray[testMap[i][j]], ((self.windowWidth/len(testMap))+1, (self.windowHeight/len(testMap[i]))+1)), (self.windowWidth/len(testMap) * i, self.windowHeight/len(testMap[i]) * j))
 
-            print(testMap)
+
 
 
             pygame.display.set_caption(str(self.TPSClock.get_fps()))
