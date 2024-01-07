@@ -30,12 +30,17 @@ Added entropy calculation. The entropy tells you how many different patterns can
 Fixed a display bug, where the map was displayed mirrored.
 
 
+## 06.01.2024
+
+Added the first part of Wave Function Collapse.
+Fixed bug in entropy calculation where entropy was calculated for a field that is not empty.
 
 
+## 07.01.2024
 
-
-
-
+Fixed a small display error where the images were not displayed correctly.
+New map images created.
+Wave Function Collapse now works almost perfectly, but still has a small error where it may be that not all fields are filled.
 
 
 
