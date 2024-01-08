@@ -43,7 +43,9 @@ New map images created.
 Wave Function Collapse now works almost perfectly, but still has a small error where it may be that not all fields are filled.
 
 
+## 08.01.2024
 
+Wave function collapse bugs fixed, but there is still a small bug where some fields don't get an image.
 
 
 
