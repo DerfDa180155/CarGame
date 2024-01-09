@@ -48,7 +48,8 @@ Wave Function Collapse now works almost perfectly, but still has a small error w
 Wave function collapse bugs fixed, but there is still a small bug where some fields don't get an image.
 
 
+## 09.01.2024
 
-
+I re-wrote the entire algorithm for the map generator because the old one was very slow and had a lot of errors. The new algorithm no longer uses recursion. The algorithm always looks for the next closest empty field and then assigns a random image to it. However, the algorithm has a small error, because an empty field is always output in the bottom right corner.
 
 
