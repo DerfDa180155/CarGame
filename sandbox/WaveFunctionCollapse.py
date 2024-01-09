@@ -1,3 +1,5 @@
+import math
+
 import pygame
 import random
 import os
@@ -27,7 +29,7 @@ class WaveFunctionCollapse:
         #a=0
         #b=0
         possible = self.getPossible(myMap, a, b)
-        myMap[a][b] = possible[random.randint(0, len(possible)-1)]
+        myMap[a][b] = possible[random.randint(1, len(possible)-1)]
 
 
         #print("Test: " + str(self.getPossible(myMap, 1, 0)))
@@ -38,7 +40,37 @@ class WaveFunctionCollapse:
         #print(self.getPossible(myMap, 0, 1))
 
         #return myMap
-        return self.generateAll(myMap, a, b)
+
+        return self.newGenerateAll(myMap, a, b)
+        #return self.generateAll(myMap, a, b)
+
+    def newGenerateAll(self, myMap, x, y):
+        while self.countEmpty(myMap) != 0:
+            myMap = self.checkEntropy1(myMap)
+            position = self.getEmptyClosestTo(myMap, x, y)
+            possible = self.getPossible(myMap, position[0], position[1])
+            if len(possible) >= 1:
+                myMap[position[0]][position[1]] = possible[random.randint(0, len(possible)-1)]
+            else:
+                myMap[position[0]][position[1]] = 0
+
+        return myMap
+
+    def getEmptyClosestTo(self, myMap, x, y):
+        lowestDistance = float('inf')  # infinity
+        a = -1
+        b = -1
+        for i in range(len(myMap)):
+            for j in range(len(myMap[0])):
+                if myMap[i][j] == -1:
+                    absX = x - i
+                    absY = y - j
+                    distance = math.sqrt(math.pow(absX, 2) + math.pow(absY, 2))
+                    if distance < lowestDistance:
+                        lowestDistance = distance
+                        a = i
+                        b = j
+        return [a, b]
 
     def generateAll(self, myMap, x, y):  # recursion
         if (self.countEmpty(myMap) == 0):
