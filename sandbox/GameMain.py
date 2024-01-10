@@ -57,8 +57,8 @@ class GameMain:
                 if event.type == pygame.QUIT:  # Quit the Game
                     self.running = False
 
-            x = 5
-            y = 5
+            x = 7
+            y = x
 
             a = 0
             b = 0
