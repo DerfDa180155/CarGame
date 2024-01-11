@@ -5,6 +5,8 @@ import threading
 import time
 import numpy
 import WaveFunctionCollapse
+import GameDisplay
+
 
 class GameMain:
     def __init__(self):
@@ -19,7 +21,7 @@ class GameMain:
         self.windowHeight = 720
 
         self.FPS = 60
-        self.TPS = 1
+        self.TPS = 120
 
         self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.GL_DOUBLEBUFFER)
         pygame.display.set_caption("Car Game by David Derflinger")
@@ -48,6 +50,10 @@ class GameMain:
                                    #[1, 1, 1, 1]]
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
 
+        self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, FPS=self.FPS, textSize=20,
+                                                   displayClock=self.FPSClock, gameTickClock=self.TPSClock)
+        self.gameDisplay.start()
+
         self.run()
 
     def run(self):
@@ -57,7 +63,7 @@ class GameMain:
                 if event.type == pygame.QUIT:  # Quit the Game
                     self.running = False
 
-            x = 7
+            x = 20
             y = x
 
             a = 0
@@ -86,7 +92,7 @@ class GameMain:
 
 
             pygame.display.set_caption(str(self.TPSClock.get_fps()))
-            pygame.display.flip()
+            #pygame.display.flip()
             self.TPSClock.tick(self.TPS)  # limit Game Ticks
 
 

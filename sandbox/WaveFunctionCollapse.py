@@ -24,10 +24,10 @@ class WaveFunctionCollapse:
             myMap.append(temp)
             a += 1
 
-        a = random.randint(1, x - 2)
-        b = random.randint(1, y - 2)
-        a=0
-        b=0
+        #a = random.randint(0, x - 1)
+        #b = random.randint(0, y - 1)
+        a = 0
+        b = 0
         possible = self.getPossible(myMap, a, b)
         myMap[a][b] = possible[random.randint(0, len(possible)-1)]
 
