@@ -50,8 +50,9 @@ class GameMain:
                                    #[1, 1, 1, 1]]
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
 
-        self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, FPS=self.FPS, textSize=20,
-                                                   displayClock=self.FPSClock, gameTickClock=self.TPSClock)
+        self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, FPS=self.FPS, TPS=self.TPS, textSize=40,
+                                                   FPSClock=self.FPSClock, TPSClock=self.TPSClock,
+                                                   mapArray=self.mapArray, WFC=self.WFC)
         self.gameDisplay.start()
 
         self.run()
@@ -63,30 +64,15 @@ class GameMain:
                 if event.type == pygame.QUIT:  # Quit the Game
                     self.running = False
 
-            x = 20
+            x = 50
             y = x
 
-            a = 0
-            b = 0
-            testMap = []
-            while a < x:
-                temp = []
-                b = 0
-                while b < y:
-                    temp.append(random.randint(0, 4))
-                    b+=1
-                testMap.append(temp)
-                a+=1
 
             testMap = self.WFC.generate(x, y)
             print(testMap)
             print(self.WFC.countEmpty(testMap))
+            #self.gameDisplay.myMap = testMap
 
-            for i in range(len(testMap)):
-                for j in range(len(testMap[i])):
-                    if testMap[i][j] == -1:
-                        testMap[i][j] = 0
-                    self.screen.blit(pygame.transform.scale(self.mapArray[testMap[i][j]], ((self.windowWidth/len(testMap))+1, (self.windowHeight/len(testMap[i]))+1)), (self.windowWidth/len(testMap) * i, self.windowHeight/len(testMap[i]) * j))
 
 
 
@@ -95,7 +81,7 @@ class GameMain:
             #pygame.display.flip()
             self.TPSClock.tick(self.TPS)  # limit Game Ticks
 
-
+        self.gameDisplay.running = False
         pygame.quit()
 
 

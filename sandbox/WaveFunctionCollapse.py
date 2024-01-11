@@ -11,6 +11,7 @@ class WaveFunctionCollapse:
     def __init__(self, images, imageDefinition):
         self.images = images
         self.definition = imageDefinition
+        self.myMap = []
 
     def generate(self, x, y):
         myMap = []
@@ -24,6 +25,7 @@ class WaveFunctionCollapse:
             myMap.append(temp)
             a += 1
 
+        self.myMap = myMap
         #a = random.randint(0, x - 1)
         #b = random.randint(0, y - 1)
         a = 0
@@ -41,13 +43,15 @@ class WaveFunctionCollapse:
 
         #return myMap
 
-
+        self.myMap = myMap
         return self.newGenerateAll(myMap, a, b)
         #return self.generateAll(myMap, a, b)
 
     def newGenerateAll(self, myMap, x, y):
         while self.countEmpty(myMap) != 0:
             myMap = self.checkEntropy1(myMap)
+            #time.sleep(0.1)
+            self.myMap = myMap
             if self.countEmpty(myMap) != 0:
                 position = self.getEmptyClosestTo(myMap, x, y)
                 possible = self.getPossible(myMap, position[0], position[1])
@@ -57,6 +61,8 @@ class WaveFunctionCollapse:
                 else:
                     print(str(position[0]) + " " + str(position[1]))
                     myMap[position[0]][position[1]] = 0
+                self.myMap = myMap
+            #time.sleep(0.1)
 
         return myMap
 
