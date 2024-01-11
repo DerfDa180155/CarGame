@@ -53,3 +53,17 @@ Wave function collapse bugs fixed, but there is still a small bug where some fie
 I re-wrote the entire algorithm for the map generator because the old one was very slow and had a lot of errors. The new algorithm no longer uses recursion. The algorithm always looks for the next closest empty field and then assigns a random image to it. However, the algorithm has a small error, because an empty field is always output in the bottom right corner.
 
 
+## 10.01.2024
+
+Fixed the bug in the map generator, that createt an empty field in the bottem right corner. 
+
+
+## 11.01.2024
+
+Created a new thread, that updates the display. With the new thread it is possible to separate the main game from the display in order to carry out calculations in the background.
+
+
+
+
+
+
