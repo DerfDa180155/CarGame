@@ -4,8 +4,10 @@ import os
 import threading
 import time
 import numpy
-import WaveFunctionCollapse
+import CommunicationObject
 import GameDisplay
+import WaveFunctionCollapse
+
 
 
 class GameMain:
@@ -26,15 +28,16 @@ class GameMain:
         self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.GL_DOUBLEBUFFER)
         pygame.display.set_caption("Car Game by David Derflinger")
 
+        # clocks
         self.TPSClock = pygame.time.Clock()
         self.FPSClock = pygame.time.Clock()
 
+        # images
         self.empty = pygame.image.load("gameFiles/images/empty.png")
         self.bottomLeft = pygame.image.load("gameFiles/images/bottom_Left.png")
         self.bottomRight = pygame.image.load("gameFiles/images/bottom_Right.png")
         self.topLeft = pygame.image.load("gameFiles/images/top_Left.png")
         self.topRight = pygame.image.load("gameFiles/images/top_Right.png")
-
         self.verticalLine = pygame.image.load("gameFiles/images/vertical_Line.png")
         self.horizontalLine = pygame.image.load("gameFiles/images/horizontal_line.png")
         self.crossing = pygame.image.load("gameFiles/images/crossing.png")
@@ -50,9 +53,10 @@ class GameMain:
                                    #[1, 1, 1, 1]]
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
 
-        self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, FPS=self.FPS, TPS=self.TPS, textSize=40,
-                                                   FPSClock=self.FPSClock, TPSClock=self.TPSClock,
-                                                   mapArray=self.mapArray, WFC=self.WFC)
+        self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
+                                                          TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
+                                                          TextSize=40, imageArray=self.mapArray, WFC=self.WFC)
+        self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
 
         self.run()
@@ -63,10 +67,14 @@ class GameMain:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:  # Quit the Game
                     self.running = False
+                    self.gameDisplay.running = False
 
-            x = 50
+
+
+
+
+            x = 5
             y = x
-
 
             testMap = self.WFC.generate(x, y)
             print(testMap)
@@ -77,11 +85,8 @@ class GameMain:
 
 
 
-            pygame.display.set_caption(str(self.TPSClock.get_fps()))
-            #pygame.display.flip()
-            self.TPSClock.tick(self.TPS)  # limit Game Ticks
+            self.TPSClock.tick(self.CO.TPS)  # limit Game Ticks
 
-        self.gameDisplay.running = False
         pygame.quit()
 
 
