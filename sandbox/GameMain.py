@@ -68,18 +68,22 @@ class GameMain:
                 if event.type == pygame.QUIT:  # Quit the Game
                     self.running = False
                     self.gameDisplay.running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_m: # switch status
+                        if self.CO.gameStatus == "menu":
+                            self.CO.gameStatus = "generateMap"
+                        elif self.CO.gameStatus == "generateMap":
+                            self.CO.gameStatus = "menu"
 
 
+            if self.CO.gameStatus == "generateMap":
+                x = 20
+                y = x
 
-
-
-            x = 5
-            y = x
-
-            testMap = self.WFC.generate(x, y)
-            print(testMap)
-            print(self.WFC.countEmpty(testMap))
-            #self.gameDisplay.myMap = testMap
+                testMap = self.WFC.generate(x, y)
+                print(testMap)
+                print(self.WFC.countEmpty(testMap))
+                #self.gameDisplay.myMap = testMap
 
 
 
