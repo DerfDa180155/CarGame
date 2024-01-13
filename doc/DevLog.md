@@ -63,7 +63,13 @@ Fixed the bug in the map generator, that createt an empty field in the bottem ri
 Created a new thread, that updates the display. With the new thread it is possible to separate the main game from the display in order to carry out calculations in the background.
 
 
+## 12.01.2024
+
+I added a communications object. The display thread and the main game therad communicate with each other via this communication object. For example, the current game status is stored in the object.
 
 
+## 13.01.2024
+
+The status is now stored in the Object and used. You can now change the status using a key. So far there are only 2 statuses.
 
 
