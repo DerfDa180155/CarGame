@@ -54,6 +54,8 @@ class GameDisplay(threading.Thread):
         diffFPS = self.CO.FPS - currentFPS
         if diffFPS < 0:
             diffFPS = 0
+        elif diffFPS > 255/2:
+            diffFPS = 255/2
         displayText.append("FPS: " + str(currentFPS))
         displayTextColor.append((diffFPS*2, 255-diffFPS*2, 0))
 
@@ -62,6 +64,8 @@ class GameDisplay(threading.Thread):
         diffTPS = self.CO.TPS - currentTPS
         if diffTPS < 0:
             diffTPS = 0
+        elif diffTPS > 255 / 2:
+            diffTPS = 255 / 2
         displayText.append("Ticks: " + str(currentTPS))
         displayTextColor.append((diffTPS*2, 255-diffTPS*2, 0))
 

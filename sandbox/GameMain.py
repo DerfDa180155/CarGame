@@ -22,7 +22,7 @@ class GameMain:
         self.windowWidth = 1280
         self.windowHeight = 720
 
-        self.FPS = 60
+        self.FPS = 144
         self.TPS = 120
 
         self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.GL_DOUBLEBUFFER)
@@ -74,16 +74,15 @@ class GameMain:
                             self.CO.gameStatus = "generateMap"
                         elif self.CO.gameStatus == "generateMap":
                             self.CO.gameStatus = "menu"
+                    elif event.key == pygame.K_k and self.CO.gameStatus == "generateMap":
+                        x = 10
+                        y = x
 
+                        testMap = self.WFC.generate(x, y)
+                        print(testMap)
+                        print(self.WFC.countEmpty(testMap))
+                        # self.gameDisplay.myMap = testMap
 
-            if self.CO.gameStatus == "generateMap":
-                x = 20
-                y = x
-
-                testMap = self.WFC.generate(x, y)
-                print(testMap)
-                print(self.WFC.countEmpty(testMap))
-                #self.gameDisplay.myMap = testMap
 
 
 
