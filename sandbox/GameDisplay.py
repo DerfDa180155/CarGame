@@ -12,7 +12,6 @@ class GameDisplay(threading.Thread):
 
         self.textPosition = [0, 0]
 
-
         self.myMap = []
         self.windowWidth = 1280
         self.windowHeight = 720

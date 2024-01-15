@@ -32,15 +32,17 @@ class GameMain:
         self.TPSClock = pygame.time.Clock()
         self.FPSClock = pygame.time.Clock()
 
+        imagePath = "gameFiles/images/"
+
         # images
-        self.empty = pygame.image.load("gameFiles/images/empty.png")
-        self.bottomLeft = pygame.image.load("gameFiles/images/bottom_Left.png")
-        self.bottomRight = pygame.image.load("gameFiles/images/bottom_Right.png")
-        self.topLeft = pygame.image.load("gameFiles/images/top_Left.png")
-        self.topRight = pygame.image.load("gameFiles/images/top_Right.png")
-        self.verticalLine = pygame.image.load("gameFiles/images/vertical_Line.png")
-        self.horizontalLine = pygame.image.load("gameFiles/images/horizontal_line.png")
-        self.crossing = pygame.image.load("gameFiles/images/crossing.png")
+        self.empty = pygame.image.load(imagePath + "empty.png")
+        self.bottomLeft = pygame.image.load(imagePath + "bottom_Left.png")
+        self.bottomRight = pygame.image.load(imagePath + "bottom_Right.png")
+        self.topLeft = pygame.image.load(imagePath + "top_Left.png")
+        self.topRight = pygame.image.load(imagePath + "top_Right.png")
+        self.verticalLine = pygame.image.load(imagePath + "vertical_Line.png")
+        self.horizontalLine = pygame.image.load(imagePath + "horizontal_line.png")
+        self.crossing = pygame.image.load(imagePath + "crossing.png")
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left

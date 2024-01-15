@@ -14,16 +14,8 @@ class WaveFunctionCollapse:
         self.myMap = []
 
     def generate(self, x, y):
-        myMap = []
-        a = 0
-        while a < x:
-            temp = []
-            b = 0
-            while b < y:
-                temp.append(-1)
-                b += 1
-            myMap.append(temp)
-            a += 1
+        myMap = self.createEmptyMap(x, y)
+
 
         self.myMap = myMap
         #a = random.randint(0, x - 1)
@@ -33,24 +25,12 @@ class WaveFunctionCollapse:
         possible = self.getPossible(myMap, a, b)
         myMap[a][b] = possible[random.randint(0, len(possible)-1)]
 
-
-        #print("Test: " + str(self.getPossible(myMap, 1, 0)))
-
-        #print(myMap)
-        #print(self.getLowestEntropy(myMap))
-        # self.findEnd(myMap) # different concept
-        #print(self.getPossible(myMap, 0, 1))
-
-        #return myMap
-
         self.myMap = myMap
-        return self.newGenerateAll(myMap, a, b)
-        #return self.generateAll(myMap, a, b)
+        return self.generateAll(myMap, a, b)
 
-    def newGenerateAll(self, myMap, x, y):
+    def generateAll(self, myMap, x, y):
         while self.countEmpty(myMap) != 0:
             myMap = self.checkEntropy1(myMap)
-            #time.sleep(0.1)
             self.myMap = myMap
             if self.countEmpty(myMap) != 0:
                 position = self.getEmptyClosestTo(myMap, x, y)
@@ -62,14 +42,13 @@ class WaveFunctionCollapse:
                     print(str(position[0]) + " " + str(position[1]))
                     myMap[position[0]][position[1]] = 0
                 self.myMap = myMap
-            #time.sleep(0.1)
 
         return myMap
 
     def getEmptyClosestTo(self, myMap, x, y):
         lowestDistance = float('inf')  # infinity
-        a = -1
-        b = -1
+        lowestX = -1
+        lowestY = -1
         for i in range(len(myMap)):
             for j in range(len(myMap[0])):
                 if myMap[i][j] == -1:
@@ -78,102 +57,11 @@ class WaveFunctionCollapse:
                     distance = math.sqrt(math.pow(absX, 2) + math.pow(absY, 2))
                     if distance < lowestDistance:
                         lowestDistance = distance
-                        a = i
-                        b = j
-        return [a, b]
+                        lowestX = i
+                        lowestY = j
+        return [lowestX, lowestY]
 
-    def generateAll(self, myMap, x, y):  # recursion
-        if (self.countEmpty(myMap) == 0):
-            return myMap
-
-        myMap = self.checkEntropy1(myMap)
-
-        tempMap = myMap
-
-        startEmptyCount = self.countEmpty(myMap) + 1
-        while self.countEmpty(myMap) != startEmptyCount:
-        #while self.countEmpty(myMap) != 0:
-            checkPutImage = True
-            position = []
-            if x + 1 < len(myMap):
-                if myMap[x + 1][y] == -1:
-                    possible = self.getPossible(myMap, x + 1, y)
-                    if len(possible) > 0:
-                        myMap[x + 1][y] = possible[random.randint(0, len(possible) - 1)]
-                        entropy = self.getLowestEntropy(myMap)
-                        count = 0
-                        while self.getEntropy(myMap, entropy[0], entropy[1]) == 0 and count <= 15:
-                            myMap[x + 1][y] = possible[random.randint(0, len(possible) - 1)]
-                            count += 1
-                        checkPutImage = True
-                        position.append((x + 1, y))
-                    else:
-                        return myMap
-            myMap = self.checkEntropy1(myMap)
-            if x - 1 >= 0:
-                if myMap[x - 1][y] == -1:
-                    possible = self.getPossible(myMap, x - 1, y)
-                    if len(possible) > 0:
-                        myMap[x - 1][y] = possible[random.randint(0, len(possible) - 1)]
-                        entropy = self.getLowestEntropy(myMap)
-                        count = 0
-                        while self.getEntropy(myMap, entropy[0], entropy[1]) == 0 and count <= 15:
-                            myMap[x - 1][y] = possible[random.randint(0, len(possible) - 1)]
-                            count += 1
-                        checkPutImage = True
-                        position.append((x - 1, y))
-                    else:
-                        return myMap
-            myMap = self.checkEntropy1(myMap)
-            if y + 1 < len(myMap[0]):
-                if myMap[x][y + 1] == -1:
-                    possible = self.getPossible(myMap, x, y+1)
-                    if len(possible) > 0:
-                        myMap[x][y+1] = possible[random.randint(0, len(possible)-1)]
-                        entropy = self.getLowestEntropy(myMap)
-                        count = 0
-                        while self.getEntropy(myMap, entropy[0], entropy[1]) == 0 and count <= 15:
-                            myMap[x][y + 1] = possible[random.randint(0, len(possible) - 1)]
-                            count += 1
-                        checkPutImage = True
-                        position.append((x, y+1))
-                    else:
-                        return myMap
-            myMap = self.checkEntropy1(myMap)
-            if y - 1 >= 0:
-                if myMap[x][y - 1] == -1:
-                    possible = self.getPossible(myMap, x, y-1)
-                    if len(possible) > 0:
-                        myMap[x][y-1] = possible[random.randint(0, len(possible)-1)]
-                        entropy = self.getLowestEntropy(myMap)
-                        count = 0
-                        while self.getEntropy(myMap, entropy[0], entropy[1]) == 0 and count <= 15:
-                            myMap[x][y - 1] = possible[random.randint(0, len(possible) - 1)]
-                            count += 1
-                        checkPutImage = True
-                        position.append((x, y-1))
-                    else:
-                        return myMap
-            myMap = self.checkEntropy1(myMap)
-            #print(myMap)
-            print(myMap)
-            if checkPutImage:
-                for i in position:
-                    myMap = self.generateAll(myMap, i[0], i[1])
-
-            if self.countEmpty(myMap) != 0:
-                myMap = tempMap
-                print("Redo" + str(myMap))
-
-            lowestEntropy = self.getLowestEntropy(myMap)
-            if self.getEntropy(myMap, lowestEntropy[0], lowestEntropy[1]) < 1:
-                return myMap
-
-            startEmptyCount = self.countEmpty(myMap)
-
-        return myMap
-
-    def getLowestEntropy(self, myMap): # returns the position of the lowest entropy
+    def getLowestEntropy(self, myMap): # returns the position of the lowest entropy (only the first)
         lowestEntropy = float('inf')  # infinity
         position = [-1, -1]
         for i in range(len(myMap)):
@@ -185,7 +73,7 @@ class WaveFunctionCollapse:
 
         return position
 
-    def checkEntropy1(self, myMap):
+    def checkEntropy1(self, myMap): # fills the map where the entropy is 1
         lowestEntropy = self.getLowestEntropy(myMap)
         if lowestEntropy[0] != -1:
             entropy = self.getEntropy(myMap, lowestEntropy[0], lowestEntropy[1])
@@ -282,10 +170,9 @@ class WaveFunctionCollapse:
 
     def getEntropy(self, myMap, x, y): # returns the entropy of the given point (x, y)
         count = len(self.getPossible(myMap, x, y))
-        #print("Count: " + str(count))
         return count
 
-    def countEmpty(self, myMap):
+    def countEmpty(self, myMap): # returns the number of empty fields in the map (counts the -1)
         count = 0
         for i in range(len(myMap)):
             for j in range(len(myMap[i])):
@@ -294,27 +181,13 @@ class WaveFunctionCollapse:
 
         return count
 
-    def findEnd(self, myMap):  # different concept
-        a = 0
-        b = 0
-        while a < len(myMap):
-            b = 0
-            while b < len(myMap[a]):
-                if myMap[a][b] != 0:
-                    tempDefinition = self.definition[myMap[a][b]]
-                    possibleNeighbours = []
+    def createEmptyMap(self, x, y):
+        myMap = []
 
-                    if tempDefinition[0] == 1:
-                        possibleNeighbours.append([a - 1, b])
-                    if tempDefinition[1] == 1:
-                        possibleNeighbours.append([a, b + 1])
-                    if tempDefinition[2] == 1:
-                        possibleNeighbours.append([a + 1, b])
-                    if tempDefinition[3] == 1:
-                        possibleNeighbours.append([a, b - 1])
+        for i in range(x):
+            temp = []
+            for j in range(y):
+                temp.append(-1)
+            myMap.append(temp)
 
-                    print(tempDefinition)
-                    print(possibleNeighbours)
-
-                b += 1
-            a += 1
+        return myMap
