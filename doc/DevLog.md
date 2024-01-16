@@ -73,3 +73,21 @@ I added a communications object. The display thread and the main game therad com
 The status is now stored in the Object and used. You can now change the status using a key. So far there are only 2 statuses.
 
 
+## 14.01.2024
+
+Added new keys to test the map generator.
+
+
+## 15.01.2024
+
+Cleaned my code and removed code that is no longer needed.
+Added map cleaner. This cleans up the generated maps so that only the longest street is displayed.
+
+
+
+
+
+
+
+
+
