@@ -1,10 +1,5 @@
 import math
-
-import pygame
 import random
-import os
-import time
-import numpy
 
 
 class WaveFunctionCollapse:
@@ -16,12 +11,13 @@ class WaveFunctionCollapse:
     def generate(self, x, y):
         myMap = self.createEmptyMap(x, y)
 
-
         self.myMap = myMap
+
         #a = random.randint(0, x - 1)
         #b = random.randint(0, y - 1)
         a = 0
         b = 0
+
         possible = self.getPossible(myMap, a, b)
         myMap[a][b] = possible[random.randint(0, len(possible)-1)]
 
@@ -47,8 +43,10 @@ class WaveFunctionCollapse:
 
     def getEmptyClosestTo(self, myMap, x, y):
         lowestDistance = float('inf')  # infinity
+
         lowestX = -1
         lowestY = -1
+
         for i in range(len(myMap)):
             for j in range(len(myMap[0])):
                 if myMap[i][j] == -1:
@@ -59,11 +57,14 @@ class WaveFunctionCollapse:
                         lowestDistance = distance
                         lowestX = i
                         lowestY = j
+
         return [lowestX, lowestY]
 
     def getLowestEntropy(self, myMap): # returns the position of the lowest entropy (only the first)
         lowestEntropy = float('inf')  # infinity
+
         position = [-1, -1]
+
         for i in range(len(myMap)):
             for j in range(len(myMap[i])):
                 if myMap[i][j] == -1:
@@ -75,6 +76,7 @@ class WaveFunctionCollapse:
 
     def checkEntropy1(self, myMap): # fills the map where the entropy is 1
         lowestEntropy = self.getLowestEntropy(myMap)
+
         if lowestEntropy[0] != -1:
             entropy = self.getEntropy(myMap, lowestEntropy[0], lowestEntropy[1])
             while entropy == 1:
@@ -174,6 +176,7 @@ class WaveFunctionCollapse:
 
     def countEmpty(self, myMap): # returns the number of empty fields in the map (counts the -1)
         count = 0
+
         for i in range(len(myMap)):
             for j in range(len(myMap[i])):
                 if myMap[i][j] == -1:

@@ -7,6 +7,7 @@ import numpy
 import CommunicationObject
 import GameDisplay
 import WaveFunctionCollapse
+import MapCleaner
 
 
 
@@ -54,10 +55,12 @@ class GameMain:
                                    [0, 1, 0, 1]]
                                    #[1, 1, 1, 1]]
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
+        self.mapCleaner = MapCleaner.MapCleaner(self.mapArrayDefinition)
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
                                                           TextSize=40, imageArray=self.mapArray, WFC=self.WFC)
+
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
 
@@ -77,14 +80,16 @@ class GameMain:
                         elif self.CO.gameStatus == "generateMap":
                             self.CO.gameStatus = "menu"
                     elif event.key == pygame.K_k and self.CO.gameStatus == "generateMap":
-                        x = 10
+                        x = 20
                         y = x
 
-                        testMap = self.WFC.generate(x, y)
+                        testMap = self.CO.WFC.generate(x, y)
                         print(testMap)
-                        print(self.WFC.countEmpty(testMap))
+                        print(self.CO.WFC.countEmpty(testMap))
                         # self.gameDisplay.myMap = testMap
-
+                    elif event.key == pygame.K_l and self.CO.gameStatus == "generateMap":
+                        self.CO.WFC.myMap = self.mapCleaner.cleanMap(self.CO.WFC.myMap)
+                        print("cleaned Map:\n" + str(self.CO.WFC.myMap))
 
 
 
