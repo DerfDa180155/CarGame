@@ -8,6 +8,7 @@ import CommunicationObject
 import GameDisplay
 import WaveFunctionCollapse
 import MapCleaner
+import Player
 
 
 
@@ -57,9 +58,11 @@ class GameMain:
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
         self.mapCleaner = MapCleaner.MapCleaner(self.mapArrayDefinition)
 
+        self.Player = Player.Player(100, 100, 0)
+
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
-                                                          TextSize=40, imageArray=self.mapArray, WFC=self.WFC)
+                                                          TextSize=40, imageArray=self.mapArray, WFC=self.WFC, Player=self.Player)
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
@@ -80,7 +83,7 @@ class GameMain:
                         elif self.CO.gameStatus == "generateMap":
                             self.CO.gameStatus = "menu"
                     elif event.key == pygame.K_k and self.CO.gameStatus == "generateMap":
-                        x = 20
+                        x = 7
                         y = x
 
                         testMap = self.CO.WFC.generate(x, y)
@@ -93,9 +96,24 @@ class GameMain:
 
 
 
+            # get pressed Keys
+            keys = pygame.key.get_pressed()
+
+            if self.CO.gameStatus == "menu":
+                # movement keys pressed --> Update player
+                if keys[pygame.K_LEFT] or keys[pygame.K_a]: # turn left
+                    self.CO.Player.changeDir(-1)
+                if keys[pygame.K_RIGHT] or keys[pygame.K_d]: # turn right
+                    self.CO.Player.changeDir(1)
+                if keys[pygame.K_UP] or keys[pygame.K_w]: # move forward
+                    self.CO.Player.move(0)
+                if keys[pygame.K_DOWN] or keys[pygame.K_s]: # move backward
+                    self.CO.Player.move(1)
 
 
-            self.TPSClock.tick(self.CO.TPS)  # limit Game Ticks
+
+
+            self.TPSClock.tick(self.CO.TPS) # limit Game Ticks
 
         pygame.quit()
 

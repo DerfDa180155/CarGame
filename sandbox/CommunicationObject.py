@@ -5,7 +5,7 @@ import numpy
 
 
 class CommunicationObject:
-    def __init__(self, gameStatus, FPSClock, TPSClock, FPS, TPS, TextSize, imageArray, WFC):
+    def __init__(self, gameStatus, FPSClock, TPSClock, FPS, TPS, TextSize, imageArray, WFC, Player):
         self.gameStatus = gameStatus
         self.FPSClock = FPSClock
         self.TPSClock = TPSClock
@@ -14,5 +14,6 @@ class CommunicationObject:
         self.TextSize = TextSize
         self.imageArray = imageArray
         self.WFC = WFC
+        self.Player = Player
 
 

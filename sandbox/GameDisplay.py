@@ -38,7 +38,8 @@ class GameDisplay(threading.Thread):
                 text = font.render(displayText[line], True, displayTextColor[line])
                 self.screen.blit(text, (self.textPosition[0], self.textPosition[1] + (line * self.CO.TextSize)))
 
-
+            # print Player:
+            self.drawPlayer()
 
             # update Display
             pygame.display.flip()
@@ -74,3 +75,8 @@ class GameDisplay(threading.Thread):
 
         return displayText, displayTextColor
 
+    def drawPlayer(self):
+        playerSize = 20
+        pygame.draw.rect(self.screen, (255, 255, 255),
+                         pygame.Rect(self.CO.Player.x - (playerSize / 2), self.CO.Player.y - (playerSize / 2),
+                                     playerSize, playerSize))
