@@ -84,10 +84,14 @@ Cleaned my code and removed code that is no longer needed.
 Added map cleaner. This cleans up the generated maps so that only the longest street is displayed.
 
 
+## 16.01.2024
+
+Created a player, which is a square right now. The player will be a car in the future. Added keys to control it
 
 
+## 17.01.2024
 
-
+Updated the ToDo List, added new points and marked what is already done.
 
 
 
