@@ -10,8 +10,6 @@ import WaveFunctionCollapse
 import MapCleaner
 import Player
 
-
-
 class GameMain:
     def __init__(self):
         pygame.init()
@@ -27,7 +25,7 @@ class GameMain:
         self.FPS = 144
         self.TPS = 120
 
-        self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.GL_DOUBLEBUFFER)
+        self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.RESIZABLE, pygame.GL_DOUBLEBUFFER)
         pygame.display.set_caption("Car Game by David Derflinger")
 
         # clocks
@@ -83,7 +81,7 @@ class GameMain:
                         elif self.CO.gameStatus == "generateMap":
                             self.CO.gameStatus = "menu"
                     elif event.key == pygame.K_k and self.CO.gameStatus == "generateMap":
-                        x = 7
+                        x = 20
                         y = x
 
                         testMap = self.CO.WFC.generate(x, y)

@@ -13,14 +13,19 @@ class GameDisplay(threading.Thread):
         self.textPosition = [0, 0]
 
         self.myMap = []
-        self.windowWidth = 1280
-        self.windowHeight = 720
+        self.windowWidth = self.screen.get_width()
+        self.windowHeight = self.screen.get_height()
+
+        #self.hs = pygame.Surface((self.windowWidth, self.windowHeight), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.OPENGL)
 
         self.running = True
 
     def run(self):
         while self.running:
             self.screen.fill("black")
+            self.windowWidth = self.screen.get_width()
+            self.windowHeight = self.screen.get_height()
+            #self.hs = pygame.Surface((self.windowWidth, self.windowHeight), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.OPENGL)
 
             self.myMap = self.CO.WFC.myMap
             # draw Map
@@ -28,7 +33,10 @@ class GameDisplay(threading.Thread):
                 for j in range(len(self.myMap[i])):
                     if self.myMap[i][j] != -1:
                         #self.myMap[i][j] = 0
-                        self.screen.blit(pygame.transform.scale(self.CO.imageArray[self.myMap[i][j]], ((self.windowWidth/len(self.myMap))+1, (self.windowHeight/len(self.myMap[i]))+1)), (self.windowWidth/len(self.myMap) * i, self.windowHeight/len(self.myMap[i]) * j))
+                        self.screen.blit(pygame.transform.scale(self.CO.imageArray[self.myMap[i][j]],
+                                                                ((self.windowWidth/len(self.myMap))+1,
+                                                                 (self.windowHeight/len(self.myMap[i]))+1)),
+                                         (self.windowWidth/len(self.myMap) * i, self.windowHeight/len(self.myMap[i]) * j))
 
 
             # print Text
@@ -40,6 +48,8 @@ class GameDisplay(threading.Thread):
 
             # print Player:
             self.drawPlayer()
+
+            #self.screen.blit(self.hs, (0, 0))
 
             # update Display
             pygame.display.flip()
