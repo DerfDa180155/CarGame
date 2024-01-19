@@ -86,7 +86,10 @@ class GameDisplay(threading.Thread):
         return displayText, displayTextColor
 
     def drawPlayer(self):
-        playerSize = 20
+        x = (self.CO.Player.x * self.windowWidth) / self.CO.Player.scaleWidth
+        y = (self.CO.Player.y * self.windowHeight) / self.CO.Player.scaleHeight
+        playerSizeWidth = (20 * self.windowWidth) / self.CO.Player.scaleSizeWidth
+        playerSizeHeight = (20 * self.windowHeight) / self.CO.Player.scaleSizeHeight
         pygame.draw.rect(self.screen, (255, 255, 255),
-                         pygame.Rect(self.CO.Player.x - (playerSize / 2), self.CO.Player.y - (playerSize / 2),
-                                     playerSize, playerSize))
+                         pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
+                                     playerSizeWidth, playerSizeHeight))

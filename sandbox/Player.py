@@ -6,6 +6,10 @@ class Player:
         self.y = y
         self.direction = direction
         self.speed = 300
+        self.scaleWidth = 2000
+        self.scaleHeight = 2000
+        self.scaleSizeWidth = 1600
+        self.scaleSizeHeight = 900
 
     def move(self, moveDir):
         if moveDir == 0:
