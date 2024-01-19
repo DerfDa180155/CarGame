@@ -94,4 +94,6 @@ Created a player, which is a square right now. The player will be a car in the f
 Updated the ToDo List, added new points and marked what is already done.
 
 
+## 18.01.2024
 
+Made the window resizable
