@@ -40,11 +40,7 @@ class GameDisplay(threading.Thread):
 
 
             # print Text
-            displayText, displayTextColor = self.generateText()
-            font = pygame.font.Font(pygame.font.get_default_font(), self.CO.TextSize)
-            for line in range(len(displayText)):
-                text = font.render(displayText[line], True, displayTextColor[line])
-                self.screen.blit(text, (self.textPosition[0], self.textPosition[1] + (line * self.CO.TextSize)))
+            self.drawText()
 
             # print Player:
             self.drawPlayer()
@@ -84,6 +80,14 @@ class GameDisplay(threading.Thread):
         displayTextColor.append((255, 255, 0))
 
         return displayText, displayTextColor
+
+    def drawText(self):
+        newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)
+        displayText, displayTextColor = self.generateText()
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+        for line in range(len(displayText)):
+            text = font.render(displayText[line], True, displayTextColor[line])
+            self.screen.blit(text, (self.textPosition[0], self.textPosition[1] + (line * newTextSize)))
 
     def drawPlayer(self):
         x = (self.CO.Player.x * self.windowWidth) / self.CO.Player.scaleWidth

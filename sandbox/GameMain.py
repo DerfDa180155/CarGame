@@ -60,7 +60,7 @@ class GameMain:
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
-                                                          TextSize=40, imageArray=self.mapArray, WFC=self.WFC, Player=self.Player)
+                                                          TextSize=20, imageArray=self.mapArray, WFC=self.WFC, Player=self.Player)
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
