@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Player:
     def __init__(self, x, y, direction):
         self.x = x
@@ -28,5 +29,3 @@ class Player:
         self.direction = direction
         self.x = x
         self.y = y
-
-

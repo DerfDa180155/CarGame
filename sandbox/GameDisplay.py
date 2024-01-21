@@ -33,12 +33,13 @@ class GameDisplay(threading.Thread):
                 case "generateMap":
                     self.drawMapGenerator()
 
-                    # print Player:
+                    # draw Player:
                     self.drawPlayer()
                 case "mapSelector":
                     pass
                 case "racing":
-                    pass
+                    # draw Player:
+                    self.drawPlayer()
                 case "settings":
                     pass
 

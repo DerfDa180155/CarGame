@@ -10,6 +10,7 @@ import WaveFunctionCollapse
 import MapCleaner
 import Player
 import Button
+import webbrowser
 
 class GameMain:
     def __init__(self):
@@ -36,14 +37,15 @@ class GameMain:
         imagePath = "gameFiles/images/"
 
         # images
-        self.empty = pygame.image.load(imagePath + "empty.png")
-        self.bottomLeft = pygame.image.load(imagePath + "bottom_Left.png")
-        self.bottomRight = pygame.image.load(imagePath + "bottom_Right.png")
-        self.topLeft = pygame.image.load(imagePath + "top_Left.png")
-        self.topRight = pygame.image.load(imagePath + "top_Right.png")
-        self.verticalLine = pygame.image.load(imagePath + "vertical_Line.png")
-        self.horizontalLine = pygame.image.load(imagePath + "horizontal_line.png")
-        self.crossing = pygame.image.load(imagePath + "crossing.png")
+        self.empty = pygame.image.load(imagePath + "empty.png").convert()
+        self.bottomLeft = pygame.image.load(imagePath + "bottom_Left.png").convert()
+        self.bottomRight = pygame.image.load(imagePath + "bottom_Right.png").convert()
+        self.topLeft = pygame.image.load(imagePath + "top_Left.png").convert()
+        self.topRight = pygame.image.load(imagePath + "top_Right.png").convert()
+        self.verticalLine = pygame.image.load(imagePath + "vertical_Line.png").convert()
+        self.horizontalLine = pygame.image.load(imagePath + "horizontal_line.png").convert()
+        self.crossing = pygame.image.load(imagePath + "crossing.png").convert()
+        self.settings = pygame.image.load(imagePath + "settings.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -54,13 +56,16 @@ class GameMain:
                                    [1, 0, 1, 0],
                                    [0, 1, 0, 1]]
                                    #[1, 1, 1, 1]]
+
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
         self.mapCleaner = MapCleaner.MapCleaner(self.mapArrayDefinition)
 
         self.Player = Player.Player(100, 100, 0)
 
-        self.button = Button.Button(self.screen, 100, 100, 400, self.crossing)
-        self.menuButtons = [self.button]
+        self.modeSelectButton = Button.Button(self.screen, 100, 100, 200, self.crossing, "generateMap")
+        self.settingsButton = Button.Button(self.screen, 1460, 40, 100, self.settings, "settings")
+        self.linkButton = Button.Button(self.screen, 1450, 750, 100, self.empty, "https://github.com/DerfDa180155")
+        self.menuButtons = [self.modeSelectButton, self.settingsButton, self.linkButton]
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
@@ -89,7 +94,7 @@ class GameMain:
                         elif self.CO.gameStatus == "generateMap":
                             self.CO.gameStatus = "menu"
                     elif event.key == pygame.K_k and self.CO.gameStatus == "generateMap":
-                        x = 6
+                        x = 4
                         y = x
 
                         testMap = self.CO.WFC.generate(x, y)
@@ -104,8 +109,15 @@ class GameMain:
 
             match self.CO.gameStatus:
                 case "menu":
-                    if self.CO.menuButtons[0].clicked(mx, my, pygame.mouse.get_pressed()):
-                        self.CO.gameStatus = "generateMap"
+                    for button in self.CO.menuButtons:
+                        if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                            if "https://" in button.action:
+                                if not button.hadAction:
+                                    button.hadAction = True
+                                    webbrowser.open(button.action)
+                            else:
+                                self.CO.gameStatus = button.action
+
 
             # get pressed Keys
             keys = pygame.key.get_pressed()
