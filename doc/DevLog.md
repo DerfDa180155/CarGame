@@ -97,3 +97,18 @@ Updated the ToDo List, added new points and marked what is already done.
 ## 18.01.2024
 
 Made the window resizable
+
+
+## 19.01.2024
+
+Made the player scale to the current size of the screen.
+
+
+## 20.01.2024
+
+Made the Text scale to the current size of the screen.
+
+
+## 21.01.2024
+
+Added buttons to change the menu.
