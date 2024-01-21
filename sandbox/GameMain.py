@@ -9,6 +9,7 @@ import GameDisplay
 import WaveFunctionCollapse
 import MapCleaner
 import Player
+import Button
 
 class GameMain:
     def __init__(self):
@@ -25,7 +26,7 @@ class GameMain:
         self.FPS = 144
         self.TPS = 120
 
-        self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.RESIZABLE, pygame.GL_DOUBLEBUFFER)
+        self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.RESIZABLE | pygame.GL_DOUBLEBUFFER)
         pygame.display.set_caption("Car Game by David Derflinger")
 
         # clocks
@@ -58,9 +59,13 @@ class GameMain:
 
         self.Player = Player.Player(100, 100, 0)
 
+        self.button = Button.Button(self.screen, 100, 100, 400, self.crossing)
+        self.menuButtons = [self.button]
+
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
-                                                          TextSize=20, imageArray=self.mapArray, WFC=self.WFC, Player=self.Player)
+                                                          TextSize=30, imageArray=self.mapArray, WFC=self.WFC,
+                                                          Player=self.Player, menuButtons=self.menuButtons)
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
@@ -71,17 +76,20 @@ class GameMain:
         # pygame setup
         while self.running:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:  # Quit the Game
+                if event.type == pygame.QUIT: # Quit the Game
                     self.running = False
                     self.gameDisplay.running = False
                 elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE: # Quit the Game
+                        self.running = False
+                        self.gameDisplay.running = False
                     if event.key == pygame.K_m: # switch status
                         if self.CO.gameStatus == "menu":
                             self.CO.gameStatus = "generateMap"
                         elif self.CO.gameStatus == "generateMap":
                             self.CO.gameStatus = "menu"
                     elif event.key == pygame.K_k and self.CO.gameStatus == "generateMap":
-                        x = 20
+                        x = 6
                         y = x
 
                         testMap = self.CO.WFC.generate(x, y)
@@ -92,12 +100,17 @@ class GameMain:
                         self.CO.WFC.myMap = self.mapCleaner.cleanMap(self.CO.WFC.myMap)
                         print("cleaned Map:\n" + str(self.CO.WFC.myMap))
 
+            mx, my = pygame.mouse.get_pos()
 
+            match self.CO.gameStatus:
+                case "menu":
+                    if self.CO.menuButtons[0].clicked(mx, my, pygame.mouse.get_pressed()):
+                        self.CO.gameStatus = "generateMap"
 
             # get pressed Keys
             keys = pygame.key.get_pressed()
 
-            if self.CO.gameStatus == "menu":
+            if self.CO.gameStatus == "generateMap":
                 # movement keys pressed --> Update player
                 if keys[pygame.K_LEFT] or keys[pygame.K_a]: # turn left
                     self.CO.Player.changeDir(-1)
@@ -113,6 +126,7 @@ class GameMain:
 
             self.TPSClock.tick(self.CO.TPS) # limit Game Ticks
 
+        self.gameDisplay.join()
         pygame.quit()
 
 

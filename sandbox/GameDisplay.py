@@ -22,34 +22,58 @@ class GameDisplay(threading.Thread):
 
     def run(self):
         while self.running:
-            self.screen.fill("black")
+
             self.windowWidth = self.screen.get_width()
             self.windowHeight = self.screen.get_height()
-            #self.hs = pygame.Surface((self.windowWidth, self.windowHeight), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.OPENGL)
+            # self.hs = pygame.Surface((self.windowWidth, self.windowHeight), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.OPENGL)
 
-            self.myMap = self.CO.WFC.myMap
-            # draw Map
-            for i in range(len(self.myMap)):
-                for j in range(len(self.myMap[i])):
-                    if self.myMap[i][j] != -1:
-                        #self.myMap[i][j] = 0
-                        self.screen.blit(pygame.transform.scale(self.CO.imageArray[self.myMap[i][j]],
-                                                                ((self.windowWidth/len(self.myMap))+1,
-                                                                 (self.windowHeight/len(self.myMap[i]))+1)),
-                                         (self.windowWidth/len(self.myMap) * i, self.windowHeight/len(self.myMap[i]) * j))
+            match self.CO.gameStatus:
+                case "menu":
+                    self.drawMenu()
+                case "generateMap":
+                    self.drawMapGenerator()
 
+                    # print Player:
+                    self.drawPlayer()
+                case "mapSelector":
+                    pass
+                case "racing":
+                    pass
+                case "settings":
+                    pass
 
             # print Text
             self.drawText()
-
-            # print Player:
-            self.drawPlayer()
-
             #self.screen.blit(self.hs, (0, 0))
 
             # update Display
             pygame.display.flip()
             self.CO.FPSClock.tick(self.CO.FPS)  # limit FPS
+
+    def drawMenu(self):
+        self.screen.fill((50, 200, 200)) # background
+
+        # draw buttons
+        for button in self.CO.menuButtons:
+            button.draw(self.windowWidth, self.windowHeight)
+
+
+    def drawMapGenerator(self):
+        self.myMap = self.CO.WFC.myMap
+        # draw Map
+        for i in range(len(self.myMap)):
+            for j in range(len(self.myMap[i])):
+                if self.myMap[i][j] != -1:
+                    # self.myMap[i][j] = 0
+                    self.screen.blit(pygame.transform.scale(self.CO.imageArray[self.myMap[i][j]],
+                                                            ((self.windowWidth / len(self.myMap)) + 1,
+                                                             (self.windowHeight / len(self.myMap[i])) + 1)),
+                                     (self.windowWidth / len(self.myMap) * i,
+                                      self.windowHeight / len(self.myMap[i]) * j))
+        if len(self.myMap) == 0:
+            self.screen.fill((50, 200, 200))
+
+
 
     def generateText(self):
         displayText = []
@@ -97,3 +121,8 @@ class GameDisplay(threading.Thread):
         pygame.draw.rect(self.screen, (255, 255, 255),
                          pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
                                      playerSizeWidth, playerSizeHeight))
+
+
+
+
+
