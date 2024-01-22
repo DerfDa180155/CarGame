@@ -2,13 +2,14 @@ import pygame
 import random
 import os
 from numpy import *
+import array
 
 
 class MapCleaner:
-    def __init__(self, mapDefinition):
+    def __init__(self, mapDefinition: array):
         self.mapDefinition = mapDefinition
 
-    def cleanMap(self, inputMap):
+    def cleanMap(self, inputMap: array):
         myMap = list(map(list, inputMap))
         newMap = self.createEmptyMap(len(myMap), len(myMap[0]))
 
@@ -28,7 +29,7 @@ class MapCleaner:
 
         return newMap
 
-    def getStreet(self, myMap, x, y):
+    def getStreet(self, myMap: array, x: int, y: int):
         street = [[x, y]]
 
         currentX = x
@@ -64,12 +65,12 @@ class MapCleaner:
 
         return street
 
-    def removeStreet(self, myMap, street):
+    def removeStreet(self, myMap: array, street: array):
         for i in range(len(street)):
             myMap[street[i][0]][street[i][1]] = 0
         return myMap
 
-    def getLongestStreet(self, streets):
+    def getLongestStreet(self, streets: array):
         size = 0
         index = 0
         for i in range(len(streets)):
@@ -80,12 +81,12 @@ class MapCleaner:
 
         return streets[index]
 
-    def addStreet(self, newMap, myMap, street):
+    def addStreet(self, newMap: array, myMap: array, street: array):
         for i in range(len(street)):
             newMap[street[i][0]][street[i][1]] = myMap[street[i][0]][street[i][1]]
         return newMap
 
-    def createEmptyMap(self, x, y):
+    def createEmptyMap(self, x: int, y: int):
         myMap = []
 
         for i in range(x):

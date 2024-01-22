@@ -2,10 +2,11 @@ import pygame
 import random
 import os
 import numpy
+import array
 
 
 class Button:
-    def __init__(self, surface, x, y, size, img, action):
+    def __init__(self, surface, x: int, y: int, size: int, img: pygame.image, action: str):
         self.surface = surface
         self.x = x
         self.y = y
@@ -18,7 +19,7 @@ class Button:
         self.hadAction = False
         self.action = action
 
-    def draw(self, currentWidth, currentHeight):
+    def draw(self, currentWidth: int, currentHeight: int):
         newX = (self.x * currentWidth) / 1600
         newY = (self.y * currentHeight) / 900
         newSizeX = (self.size * currentWidth) / 1600
@@ -28,7 +29,7 @@ class Button:
         self.rect.topleft = (newX, newY)
         self.surface.blit(self.scaledImg, (newX, newY))
 
-    def clicked(self, mx, my, mouseClick):
+    def clicked(self, mx: int, my: int, mouseClick: array):
         if self.rect.collidepoint((mx, my)) and mouseClick[0]:
             self.isClicked = True
         else:

@@ -1,10 +1,10 @@
 import pygame
 import threading
 import numpy as np
-
+import CommunicationObject
 
 class GameDisplay(threading.Thread):
-    def __init__(self, screen, CO):
+    def __init__(self, screen, CO: CommunicationObject):
         threading.Thread.__init__(self)
 
         self.screen = screen

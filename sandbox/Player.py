@@ -2,7 +2,7 @@ import numpy as np
 
 
 class Player:
-    def __init__(self, x, y, direction):
+    def __init__(self, x: int, y: int, direction: int):
         self.x = x
         self.y = y
         self.direction = direction
@@ -12,7 +12,7 @@ class Player:
         self.scaleSizeWidth = 1600
         self.scaleSizeHeight = 900
 
-    def move(self, moveDir):
+    def move(self, moveDir: int):
         if moveDir == 0:
             # update coordinates based on direction and speed
             self.x += (self.speed / 100) * np.cos(np.deg2rad(self.direction))
@@ -22,10 +22,10 @@ class Player:
             self.x -= (self.speed / 100) * np.cos(np.deg2rad(self.direction))
             self.y -= (self.speed / 100) * np.sin(np.deg2rad(self.direction))
 
-    def changeDir(self, direction):
+    def changeDir(self, direction: int):
         self.direction += direction
 
-    def reset(self, x, y, direction):
+    def reset(self, x: int, y: int, direction: int):
         self.direction = direction
         self.x = x
         self.y = y

@@ -2,10 +2,12 @@ import pygame
 import random
 import os
 import numpy
-
+import WaveFunctionCollapse
+import Player
+import array
 
 class CommunicationObject:
-    def __init__(self, gameStatus, FPSClock, TPSClock, FPS, TPS, TextSize, imageArray, WFC, Player, menuButtons):
+    def __init__(self, gameStatus: str, FPSClock: pygame.time.Clock, TPSClock: pygame.time.Clock, FPS: int, TPS: int, TextSize: int, imageArray: array, WFC: WaveFunctionCollapse, Player: Player, menuButtons: array):
         self.gameStatus = gameStatus
         self.FPSClock = FPSClock
         self.TPSClock = TPSClock

@@ -1,14 +1,15 @@
 import math
 import random
+import array
 
 
 class WaveFunctionCollapse:
-    def __init__(self, images, imageDefinition):
+    def __init__(self, images: array, imageDefinition: array):
         self.images = images
         self.definition = imageDefinition
         self.myMap = []
 
-    def generate(self, x, y):
+    def generate(self, x: int, y: int):
         myMap = self.createEmptyMap(x, y)
 
         self.myMap = myMap
@@ -24,7 +25,7 @@ class WaveFunctionCollapse:
         self.myMap = myMap
         return self.generateAll(myMap, a, b)
 
-    def generateAll(self, myMap, x, y):
+    def generateAll(self, myMap: array, x: int, y: int):
         while self.countEmpty(myMap) != 0:
             myMap = self.checkEntropy1(myMap)
             self.myMap = myMap
@@ -41,7 +42,7 @@ class WaveFunctionCollapse:
 
         return myMap
 
-    def getEmptyClosestTo(self, myMap, x, y):
+    def getEmptyClosestTo(self, myMap: array, x: int, y: int):
         lowestDistance = float('inf')  # infinity
 
         lowestX = -1
@@ -60,7 +61,7 @@ class WaveFunctionCollapse:
 
         return [lowestX, lowestY]
 
-    def getLowestEntropy(self, myMap): # returns the position of the lowest entropy (only the first)
+    def getLowestEntropy(self, myMap: array): # returns the position of the lowest entropy (only the first)
         lowestEntropy = float('inf')  # infinity
 
         position = [-1, -1]
@@ -74,7 +75,7 @@ class WaveFunctionCollapse:
 
         return position
 
-    def checkEntropy1(self, myMap): # fills the map where the entropy is 1
+    def checkEntropy1(self, myMap: array): # fills the map where the entropy is 1
         lowestEntropy = self.getLowestEntropy(myMap)
 
         if lowestEntropy[0] != -1:
@@ -89,7 +90,7 @@ class WaveFunctionCollapse:
 
         return myMap
 
-    def getPossible(self, myMap, x, y): # get all possible patterns for the square (x, y)
+    def getPossible(self, myMap: array, x: int, y: int): # get all possible patterns for the square (x, y)
         # This function is not very clean
         possible = []
 
@@ -170,11 +171,11 @@ class WaveFunctionCollapse:
 
         return possible
 
-    def getEntropy(self, myMap, x, y): # returns the entropy of the given point (x, y)
+    def getEntropy(self, myMap: array, x: int, y: int): # returns the entropy of the given point (x, y)
         count = len(self.getPossible(myMap, x, y))
         return count
 
-    def countEmpty(self, myMap): # returns the number of empty fields in the map (counts the -1)
+    def countEmpty(self, myMap: array): # returns the number of empty fields in the map (counts the -1)
         count = 0
 
         for i in range(len(myMap)):
@@ -184,7 +185,7 @@ class WaveFunctionCollapse:
 
         return count
 
-    def createEmptyMap(self, x, y):
+    def createEmptyMap(self, x: int, y: int):
         myMap = []
 
         for i in range(x):
