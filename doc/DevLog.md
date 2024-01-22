@@ -111,4 +111,5 @@ Made the Text scale to the current size of the screen.
 
 ## 21.01.2024
 
-Added buttons to change the menu.
+Added buttons to change the menu and open my GitHub profile.
+Created a new Image for the settings button.
