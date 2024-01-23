@@ -113,3 +113,9 @@ Made the Text scale to the current size of the screen.
 
 Added buttons to change the menu and open my GitHub profile.
 Created a new Image for the settings button.
+
+
+## 22.01.2024
+
+Started coding a new map controller.
+Cleaned my code.
