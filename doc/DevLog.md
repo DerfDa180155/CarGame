@@ -119,3 +119,17 @@ Created a new Image for the settings button.
 
 Started coding a new map controller.
 Cleaned my code.
+
+
+## 23.01.2024
+
+Added a raceMap class, to store more information about a map.
+
+
+
+
+
+
+
+
+
