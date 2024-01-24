@@ -11,6 +11,7 @@ import MapCleaner
 import Player
 import Button
 import webbrowser
+import mapController
 
 class GameMain:
     def __init__(self):
@@ -24,6 +25,7 @@ class GameMain:
         self.windowWidth = 1280
         self.windowHeight = 720
 
+        # FPS and TPS for the game
         self.FPS = 144
         self.TPS = 120
 
@@ -34,6 +36,8 @@ class GameMain:
         self.TPSClock = pygame.time.Clock()
         self.FPSClock = pygame.time.Clock()
 
+        # paths for different game files (images, maps, settings, ...)
+        mapPath = "gameFiles/maps/"
         imagePath = "gameFiles/images/"
 
         # images
@@ -59,6 +63,8 @@ class GameMain:
 
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
         self.mapCleaner = MapCleaner.MapCleaner(self.mapArrayDefinition)
+        self.mapController = mapController.mapController(WFC=self.WFC, MC=self.mapCleaner, path=mapPath)
+        self.mapController.loadAllMaps() # load all saved maps
 
         self.Player = Player.Player(100, 100, 0)
 
@@ -69,8 +75,9 @@ class GameMain:
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
-                                                          TextSize=30, imageArray=self.mapArray, WFC=self.WFC,
-                                                          Player=self.Player, menuButtons=self.menuButtons)
+                                                          TextSize=30, imageArray=self.mapArray,
+                                                          mapController=self.mapController, Player=self.Player,
+                                                          menuButtons=self.menuButtons)
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
@@ -94,18 +101,18 @@ class GameMain:
                         elif self.CO.gameStatus == "generateMap":
                             self.CO.gameStatus = "menu"
                     elif event.key == pygame.K_k and self.CO.gameStatus == "generateMap":
-                        x = 4
+                        x = 5
                         y = x
 
-                        testMap = self.CO.WFC.generate(x, y)
-                        print(testMap)
-                        print(self.CO.WFC.countEmpty(testMap))
-                        # self.gameDisplay.myMap = testMap
+                        testMap = self.CO.mapController.generateNewMap(x, y)
+                        print("Name: " + testMap.name + "\nMap: " + str(testMap.myMap))
+                        self.CO.Player.reset(x=testMap.playerStartX, y=testMap.playerStartY, direction=testMap.playerStartDirection)
                     elif event.key == pygame.K_l and self.CO.gameStatus == "generateMap":
-                        self.CO.WFC.myMap = self.mapCleaner.cleanMap(self.CO.WFC.myMap)
-                        print("cleaned Map:\n" + str(self.CO.WFC.myMap))
+                        pass # maybe no longer needed, because of the new map controller
+                        #self.CO.WFC.myMap = self.mapCleaner.cleanMap(self.CO.WFC.myMap)
+                        #print("cleaned Map:\n" + str(self.CO.WFC.myMap))
 
-            mx, my = pygame.mouse.get_pos()
+            mx, my = pygame.mouse.get_pos() # get mouse positions for the buttons
 
             match self.CO.gameStatus:
                 case "menu":

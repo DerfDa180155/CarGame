@@ -23,8 +23,15 @@ class mapController:
         pass
 
     def generateNewMap(self, x: int, y: int):
-        self.maps.append(RaceMap.RaceMap(myMap=self.MC.cleanMap(self.WFC.generate(x, y))))
+        newMap = RaceMap.RaceMap(myMap=self.MC.cleanMap(self.WFC.generate(x, y)))
+        newMap.saveMap(self.mapPath)
+        print(newMap.myMap)
+        self.maps.append(newMap)
+        return newMap
 
-
+    def getLastMap(self):
+        if len(self.maps) >= 1:
+            return self.maps[len(self.maps)-1].myMap
+        return ""
 
 

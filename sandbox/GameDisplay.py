@@ -60,20 +60,20 @@ class GameDisplay(threading.Thread):
 
 
     def drawMapGenerator(self):
-        self.myMap = self.CO.WFC.myMap
+        self.myMap = self.CO.mapController.getLastMap()
         # draw Map
-        for i in range(len(self.myMap)):
-            for j in range(len(self.myMap[i])):
-                if self.myMap[i][j] != -1:
-                    # self.myMap[i][j] = 0
-                    self.screen.blit(pygame.transform.scale(self.CO.imageArray[self.myMap[i][j]],
-                                                            ((self.windowWidth / len(self.myMap)) + 1,
-                                                             (self.windowHeight / len(self.myMap[i])) + 1)),
-                                     (self.windowWidth / len(self.myMap) * i,
-                                      self.windowHeight / len(self.myMap[i]) * j))
-        if len(self.myMap) == 0:
+        if self.myMap != "":
+            for i in range(len(self.myMap)):
+                for j in range(len(self.myMap[i])):
+                    if self.myMap[i][j] != -1:
+                        # self.myMap[i][j] = 0
+                        self.screen.blit(pygame.transform.scale(self.CO.imageArray[self.myMap[i][j]],
+                                                                ((self.windowWidth / len(self.myMap)) + 1,
+                                                                 (self.windowHeight / len(self.myMap[i])) + 1)),
+                                         (self.windowWidth / len(self.myMap) * i,
+                                          self.windowHeight / len(self.myMap[i]) * j))
+        else:
             self.screen.fill((50, 200, 200))
-
 
 
     def generateText(self):
