@@ -126,6 +126,19 @@ Cleaned my code.
 Added a raceMap class, to store more information about a map.
 
 
+## 24.01.2024
+
+Implemented the new map controller in the current game.
+
+
+
+
+
+
+
+
+
+
 
 
 
