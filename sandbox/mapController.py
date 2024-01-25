@@ -29,7 +29,7 @@ class mapController:
         self.maps.append(newMap)
         return newMap
 
-    def getLastMap(self):
+    def getLastMap(self): # only for testing
         if len(self.maps) >= 1:
             return self.maps[len(self.maps)-1].myMap
         return ""

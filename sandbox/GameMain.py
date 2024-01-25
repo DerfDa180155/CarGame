@@ -68,10 +68,14 @@ class GameMain:
 
         self.Player = Player.Player(100, 100, 0)
 
-        self.modeSelectButton = Button.Button(self.screen, 100, 100, 200, self.crossing, "generateMap")
+        self.testButton = Button.Button(self.screen, 100, 100, 150, self.crossing, "generateMap")
+        self.modeSelectButton = Button.Button(self.screen, 100, 300, 150, self.topRight, "selectMode")
+        self.mapSelectButton = Button.Button(self.screen, 100, 500, 150, self.topLeft, "selectMap")
         self.settingsButton = Button.Button(self.screen, 1460, 40, 100, self.settings, "settings")
         self.linkButton = Button.Button(self.screen, 1450, 750, 100, self.empty, "https://github.com/DerfDa180155")
-        self.menuButtons = [self.modeSelectButton, self.settingsButton, self.linkButton]
+        self.quitButton = Button.Button(self.screen, 100, 700, 150, self.empty, "quit")
+        self.menuButtons = [self.testButton, self.modeSelectButton, self.mapSelectButton, self.settingsButton,
+                            self.linkButton, self.quitButton]
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
@@ -93,9 +97,16 @@ class GameMain:
                     self.gameDisplay.running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE: # Quit the Game
-                        self.running = False
-                        self.gameDisplay.running = False
-                    if event.key == pygame.K_m: # switch status
+                        if self.CO.gameStatus == "menu":
+                            self.running = False
+                            self.gameDisplay.running = False
+                        elif self.CO.gameStatus == "generateMap": # only for testing
+                            self.CO.gameStatus = "menu"
+                        elif self.CO.gameStatus == "selectMode" or self.CO.gameStatus == "settings":
+                            self.CO.gameStatus = "menu"
+                        elif self.CO.gameStatus == "selectMap":
+                            self.CO.gameStatus = "selectMode"
+                    if event.key == pygame.K_m: # switch status (only for testing)
                         if self.CO.gameStatus == "menu":
                             self.CO.gameStatus = "generateMap"
                         elif self.CO.gameStatus == "generateMap":
@@ -122,8 +133,15 @@ class GameMain:
                                 if not button.hadAction:
                                     button.hadAction = True
                                     webbrowser.open(button.action)
+                            elif "quit" in button.action: # quit the game
+                                self.running = False
+                                self.gameDisplay.running = False
                             else:
                                 self.CO.gameStatus = button.action
+                case "selectMode":
+                    pass
+                case "selectMap":
+                    pass
 
 
             # get pressed Keys

@@ -41,7 +41,11 @@ class GameDisplay(threading.Thread):
                     # draw Player:
                     self.drawPlayer()
                 case "settings":
-                    pass
+                    self.drawSettings()
+                case "selectMode":
+                    self.drawModeSelector()
+                case "selectMap":
+                    self.drawMapSelector()
 
             # print Text
             self.drawText()
@@ -57,6 +61,15 @@ class GameDisplay(threading.Thread):
         # draw buttons
         for button in self.CO.menuButtons:
             button.draw(self.windowWidth, self.windowHeight)
+
+    def drawSettings(self):
+        self.screen.fill((200, 200, 100)) # background
+
+    def drawModeSelector(self):
+        self.screen.fill((100, 150, 200)) # background
+
+    def drawMapSelector(self):
+        self.screen.fill((100, 150, 250)) # background
 
 
     def drawMapGenerator(self):
