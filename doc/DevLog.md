@@ -131,12 +131,14 @@ Added a raceMap class, to store more information about a map.
 Implemented the new map controller in the current game.
 
 
+## 25.01.2024
+
+Updated the GUI, added more menu buttons.
 
 
+## 26.01.2024
 
-
-
-
+Added a map saver with XML.
 
 
 
