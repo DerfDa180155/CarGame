@@ -32,6 +32,7 @@ class RaceMap:
 
         print(path + self.name + ".xml")
         ET.ElementTree(root).write(path + self.name + ".xml")
-        # this function will save the map in a file (with xml or json)
-        pass
+
+
+
 
