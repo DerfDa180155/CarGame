@@ -14,6 +14,7 @@ class mapController:
         self.MC = MC
         self.mapPath = path
         #self.loadAllMaps()
+        self.currentMapIndex = 0
 
     def loadAllMaps(self):
         self.maps = []
@@ -57,11 +58,19 @@ class mapController:
         pass
 
     def generateNewMap(self, x: int, y: int):
-        newMap = RaceMap.RaceMap(myMap=self.MC.cleanMap(self.WFC.generate(x, y)))
+        newMap = RaceMap.RaceMap(myMap=self.MC.cleanMap(self.WFC.generate(x, y)), name="Unknown - " + str(random.randint(1000, 9999)))
         newMap.saveMap(self.mapPath)
         print(newMap.myMap)
         self.maps.append(newMap)
         return newMap
+
+    def getCountMaps(self):
+        return len(self.maps)
+
+    def getCurrentMap(self):
+        if len(self.maps) > 0:
+            return self.maps[int(self.currentMapIndex)]
+        return ""
 
     def getLastMap(self): # only for testing
         if len(self.maps) > 0:

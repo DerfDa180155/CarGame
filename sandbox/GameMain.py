@@ -65,6 +65,7 @@ class GameMain:
         self.mapCleaner = MapCleaner.MapCleaner(self.mapArrayDefinition)
         self.mapController = mapController.mapController(WFC=self.WFC, MC=self.mapCleaner, path=mapPath)
         self.mapController.loadAllMaps() # load all saved maps
+        self.oldMapCount = self.mapController.getCountMaps()
 
         self.Player = Player.Player(100, 100, 0)
 
@@ -77,11 +78,23 @@ class GameMain:
         self.menuButtons = [self.testButton, self.modeSelectButton, self.mapSelectButton, self.settingsButton,
                             self.linkButton, self.quitButton]
 
+        self.singlePlayerButton = Button.Button(self.screen, 100, 100, 150, self.horizontalLine, "singleplayer")
+        self.multiPlayerButton = Button.Button(self.screen, 100, 300, 150, self.crossing, "multiplayer")
+        self.gameModeButtons = [self.singlePlayerButton, self.multiPlayerButton]
+
+        self.mapButtons = []
+        self.imageMapSize = 200
+        self.locations = [[100, 100], [400, 100], [700, 100], [1000, 100], [1300, 100],
+                     [100, 400], [400, 400], [700, 400], [1000, 400], [1300, 400],
+                     [100, 700], [400, 700], [700, 700], [1000, 700], [1300, 700]]
+        for i in range(self.oldMapCount):
+            self.mapButtons.append(Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
+
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
                                                           TextSize=30, imageArray=self.mapArray,
                                                           mapController=self.mapController, Player=self.Player,
-                                                          menuButtons=self.menuButtons)
+                                                          menuButtons=self.menuButtons, gameModeButtons=self.gameModeButtons, mapButtons=self.mapButtons)
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
@@ -123,6 +136,7 @@ class GameMain:
                         #self.CO.WFC.myMap = self.mapCleaner.cleanMap(self.CO.WFC.myMap)
                         #print("cleaned Map:\n" + str(self.CO.WFC.myMap))
 
+
             mx, my = pygame.mouse.get_pos() # get mouse positions for the buttons
 
             match self.CO.gameStatus:
@@ -139,9 +153,24 @@ class GameMain:
                             else:
                                 self.CO.gameStatus = button.action
                 case "selectMode":
-                    pass
+                    for button in self.CO.gameModeButtons:
+                        if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                            currentMode = button.action
+                            self.CO.gameStatus = "selectMap"
+                            print(currentMode)
                 case "selectMap":
-                    pass
+                    if self.oldMapCount != self.mapController.getCountMaps():
+                        self.oldMapCount = self.mapController.getCountMaps()
+                        self.mapButtons = []
+                        for i in range(self.oldMapCount):
+                            self.mapButtons.append(
+                                Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
+
+                    for button in self.CO.mapButtons:
+                        if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                            self.CO.mapController.currentMapIndex = button.action
+                            print(button.action)
+                            self.CO.gameStatus = "generateMap" # for testing, later it will be the race
 
 
             # get pressed Keys

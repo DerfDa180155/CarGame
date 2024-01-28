@@ -68,12 +68,21 @@ class GameDisplay(threading.Thread):
     def drawModeSelector(self):
         self.screen.fill((100, 150, 200)) # background
 
+        # draw buttons
+        for button in self.CO.gameModeButtons:
+            button.draw(self.windowWidth, self.windowHeight)
+
     def drawMapSelector(self):
         self.screen.fill((100, 150, 250)) # background
 
+        # draw buttons
+        for button in self.CO.mapButtons:
+            button.draw(self.windowWidth, self.windowHeight)
+
+
 
     def drawMapGenerator(self):
-        self.myMap = self.CO.mapController.getLastMap()
+        self.myMap = self.CO.mapController.getCurrentMap().myMap
         # draw Map
         if self.myMap != "":
             for i in range(len(self.myMap)):
