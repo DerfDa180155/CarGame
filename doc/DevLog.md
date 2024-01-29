@@ -141,6 +141,18 @@ Updated the GUI, added more menu buttons.
 Added a map saver with XML.
 
 
+## 27.01.2024
+
+Added a map reader so all the saved maps can be loaded.
+
+
+## 28.01.2024
+
+Updated the gui and implemented buttons to select a saved map.
+
+
+
+
 
 
 
