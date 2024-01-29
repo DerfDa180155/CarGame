@@ -94,7 +94,7 @@ class GameMain:
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
                                                           TextSize=30, imageArray=self.mapArray,
                                                           mapController=self.mapController, Player=self.Player,
-                                                          menuButtons=self.menuButtons, gameModeButtons=self.gameModeButtons, mapButtons=self.mapButtons)
+                                                          menuButtons=self.menuButtons, gameModeButtons=self.gameModeButtons, mapButtons=self.mapButtons, currentMode="singleplayer")
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
@@ -119,6 +119,8 @@ class GameMain:
                             self.CO.gameStatus = "menu"
                         elif self.CO.gameStatus == "selectMap":
                             self.CO.gameStatus = "selectMode"
+                        elif self.CO.gameStatus == "race":
+                            self.CO.gameStatus = "selectMap" # for testing, will be changed in the future (with pause menu)
                     if event.key == pygame.K_m: # switch status (only for testing)
                         if self.CO.gameStatus == "menu":
                             self.CO.gameStatus = "generateMap"
@@ -136,7 +138,8 @@ class GameMain:
                         #self.CO.WFC.myMap = self.mapCleaner.cleanMap(self.CO.WFC.myMap)
                         #print("cleaned Map:\n" + str(self.CO.WFC.myMap))
 
-
+            # get pressed Keys
+            keys = pygame.key.get_pressed()
             mx, my = pygame.mouse.get_pos() # get mouse positions for the buttons
 
             match self.CO.gameStatus:
@@ -155,9 +158,9 @@ class GameMain:
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
-                            currentMode = button.action
+                            self.CO.currentMode = button.action
                             self.CO.gameStatus = "selectMap"
-                            print(currentMode)
+                            print(self.CO.currentMode)
                 case "selectMap":
                     if self.oldMapCount != self.mapController.getCountMaps():
                         self.oldMapCount = self.mapController.getCountMaps()
@@ -170,11 +173,26 @@ class GameMain:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
                             self.CO.mapController.currentMapIndex = button.action
                             print(button.action)
-                            self.CO.gameStatus = "generateMap" # for testing, later it will be the race
+                            self.CO.gameStatus = "race"
+                case "race":
+                    print(self.CO.currentMode)
+                    # movement keys pressed --> Update player
+                    if keys[pygame.K_LEFT] or keys[pygame.K_a]:  # turn left
+                        self.CO.Player.changeDir(-1)
+                    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:  # turn right
+                        self.CO.Player.changeDir(1)
+                    if keys[pygame.K_UP] or keys[pygame.K_w]:  # move forward
+                        self.CO.Player.move(0)
+                    if keys[pygame.K_DOWN] or keys[pygame.K_s]:  # move backward
+                        self.CO.Player.move(1)
 
 
-            # get pressed Keys
-            keys = pygame.key.get_pressed()
+                    # TODO
+                    # player movement
+                    # Bots movement
+                    # round counter
+                    # ...
+
 
             if self.CO.gameStatus == "generateMap":
                 # movement keys pressed --> Update player

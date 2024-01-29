@@ -30,8 +30,8 @@ class GameDisplay(threading.Thread):
             match self.CO.gameStatus:
                 case "menu":
                     self.drawMenu()
-                case "generateMap":
-                    self.drawMapGenerator()
+                case "generateMap": # for testing
+                    self.drawMap()
 
                     # draw Player:
                     self.drawPlayer()
@@ -46,6 +46,8 @@ class GameDisplay(threading.Thread):
                     self.drawModeSelector()
                 case "selectMap":
                     self.drawMapSelector()
+                case "race":
+                    self.drawRace()
 
             # print Text
             self.drawText()
@@ -79,9 +81,16 @@ class GameDisplay(threading.Thread):
         for button in self.CO.mapButtons:
             button.draw(self.windowWidth, self.windowHeight)
 
+    def drawRace(self):
+        self.screen.fill((100, 100, 250))  # background
 
+        # draw map
+        self.drawMap()
 
-    def drawMapGenerator(self):
+        # draw player
+        self.drawPlayer()
+
+    def drawMap(self):
         self.myMap = self.CO.mapController.getCurrentMap().myMap
         # draw Map
         if self.myMap != "":
