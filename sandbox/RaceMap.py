@@ -15,6 +15,9 @@ class RaceMap:
         self.playerStartY = playerStartY
         self.playerStartDirection = playerStartDirection
 
+        self.boundsMap = []
+        self.generateLineMap()
+
 
     def saveMap(self, path):
         root = ET.Element("raceMap")
@@ -32,6 +35,18 @@ class RaceMap:
 
         print(path + self.name + ".xml")
         ET.ElementTree(root).write(path + self.name + ".xml")
+
+    def generateLineMap(self):
+        # this functions creates the bounds of the map
+        self.boundsMap = []
+        self.boundsMap.append([0,0,1500,100])
+
+        for i in range(len(self.myMap)):
+            for j in range(len(self.myMap[0])):
+                if self.myMap[i][j] != 0:
+                    print(self.myMap[i][j])
+                    # TODO add the lines for the bounds
+
 
 
 

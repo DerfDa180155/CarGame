@@ -175,7 +175,7 @@ class GameMain:
                             print(button.action)
                             self.CO.gameStatus = "race"
                 case "race":
-                    print(self.CO.currentMode)
+                    #print(self.CO.currentMode)
                     # movement keys pressed --> Update player
                     if keys[pygame.K_LEFT] or keys[pygame.K_a]:  # turn left
                         self.CO.Player.changeDir(-1)

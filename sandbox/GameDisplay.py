@@ -87,6 +87,9 @@ class GameDisplay(threading.Thread):
         # draw map
         self.drawMap()
 
+        # draw bounds (for testing)
+        self.drawBoundsMap()
+
         # draw player
         self.drawPlayer()
 
@@ -106,6 +109,13 @@ class GameDisplay(threading.Thread):
         else:
             self.screen.fill((50, 200, 200))
 
+
+    def drawBoundsMap(self):
+        boundsMap = self.CO.mapController.getCurrentMap().boundsMap
+        for bound in boundsMap:
+            start = ((bound[0] * self.windowWidth) / 1600, (bound[1] * self.windowHeight) / 900)
+            end = ((bound[2] * self.windowWidth) / 1600, (bound[3] * self.windowHeight) / 900)
+            pygame.draw.line(self.screen, (255, 255, 255), start, end, 4)
 
     def generateText(self):
         displayText = []
