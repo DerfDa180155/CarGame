@@ -151,12 +151,18 @@ Added a map reader so all the saved maps can be loaded.
 Updated the gui and implemented buttons to select a saved map.
 
 
+## 29.01.2024
+
+Saved the information of the mode of the current race, so that the race can be started correctly.
 
 
+## 30.01.2024
+
+Started with a bounds generator of the maps. This bounds are needed, so that the players and the bots can not leave the track.
 
 
+## 31.01.2024
 
-
-
+Completion of the bound generator, which now works for every map.
 
 
