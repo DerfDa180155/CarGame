@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 
 
@@ -11,6 +13,7 @@ class Player:
         self.scaleHeight = 900
         self.scaleSizeWidth = 1600
         self.scaleSizeHeight = 900
+        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255),)
 
     def move(self, moveDir: int):
         if moveDir == 0:

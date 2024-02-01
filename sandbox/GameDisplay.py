@@ -91,7 +91,7 @@ class GameDisplay(threading.Thread):
         self.drawBoundsMap()
 
         # draw player
-        self.drawPlayer()
+        self.drawPlayers()
 
     def drawMap(self):
         self.myMap = self.CO.mapController.getCurrentMap().myMap
@@ -155,14 +155,15 @@ class GameDisplay(threading.Thread):
             text = font.render(displayText[line], True, displayTextColor[line])
             self.screen.blit(text, (self.textPosition[0], self.textPosition[1] + (line * newTextSize)))
 
-    def drawPlayer(self):
-        x = (self.CO.Player.x * self.windowWidth) / self.CO.Player.scaleWidth
-        y = (self.CO.Player.y * self.windowHeight) / self.CO.Player.scaleHeight
-        playerSizeWidth = (20 * self.windowWidth) / self.CO.Player.scaleSizeWidth
-        playerSizeHeight = (20 * self.windowHeight) / self.CO.Player.scaleSizeHeight
-        pygame.draw.rect(self.screen, (255, 255, 255),
-                         pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
-                                     playerSizeWidth, playerSizeHeight))
+    def drawPlayers(self):
+        for player in self.CO.players:
+            x = (player.x * self.windowWidth) / player.scaleWidth
+            y = (player.y * self.windowHeight) / player.scaleHeight
+            playerSizeWidth = (20 * self.windowWidth) / player.scaleSizeWidth
+            playerSizeHeight = (20 * self.windowHeight) / player.scaleSizeHeight
+            pygame.draw.rect(self.screen, player.color,
+                             pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
+                                         playerSizeWidth, playerSizeHeight))
 
 
 

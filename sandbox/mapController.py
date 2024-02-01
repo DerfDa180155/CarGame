@@ -13,10 +13,11 @@ class mapController:
         self.WFC = WFC
         self.MC = MC
         self.mapPath = path
-        #self.loadAllMaps()
+        self.loadAllMaps()
         self.currentMapIndex = 0
 
     def loadAllMaps(self):
+        # load all maps from the path into the maps array
         self.maps = []
         currentPath = os.getcwd()
         mapsPath = os.path.join(currentPath, self.mapPath)
@@ -48,10 +49,6 @@ class mapController:
 
                 self.maps.append(newMap)
         print(self.maps)
-
-
-        # load all maps from the path into the maps array
-        pass
 
     def addNewMap(self, path, mapName):
         # this function will get made in the future (maybe with a custom mapmaker)

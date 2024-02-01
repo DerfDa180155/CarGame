@@ -64,10 +64,12 @@ class GameMain:
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
         self.mapCleaner = MapCleaner.MapCleaner(self.mapArrayDefinition)
         self.mapController = mapController.mapController(WFC=self.WFC, MC=self.mapCleaner, path=mapPath)
-        self.mapController.loadAllMaps() # load all saved maps
+        #self.mapController.loadAllMaps() # load all saved maps
         self.oldMapCount = self.mapController.getCountMaps()
 
-        self.Player = Player.Player(100, 100, 0)
+        self.players = []
+        self.players.append(Player.Player(100, 100, 0))
+        self.players.append(Player.Player(100, 200, 0))
 
         self.testButton = Button.Button(self.screen, 100, 100, 150, self.crossing, "generateMap")
         self.modeSelectButton = Button.Button(self.screen, 100, 300, 150, self.topRight, "selectMode")
@@ -93,8 +95,10 @@ class GameMain:
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
                                                           TextSize=30, imageArray=self.mapArray,
-                                                          mapController=self.mapController, Player=self.Player,
-                                                          menuButtons=self.menuButtons, gameModeButtons=self.gameModeButtons, mapButtons=self.mapButtons, currentMode="singleplayer")
+                                                          mapController=self.mapController, players=self.players,
+                                                          menuButtons=self.menuButtons,
+                                                          gameModeButtons=self.gameModeButtons,
+                                                          mapButtons=self.mapButtons, currentMode="singleplayer")
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
@@ -132,7 +136,7 @@ class GameMain:
 
                         testMap = self.CO.mapController.generateNewMap(x, y)
                         print("Name: " + testMap.name + "\nMap: " + str(testMap.myMap))
-                        self.CO.Player.reset(x=testMap.playerStartX, y=testMap.playerStartY, direction=testMap.playerStartDirection)
+                        self.CO.players[0].reset(x=testMap.playerStartX, y=testMap.playerStartY, direction=testMap.playerStartDirection)
                     elif event.key == pygame.K_l and self.CO.gameStatus == "generateMap":
                         pass # maybe no longer needed, because of the new map controller
                         #self.CO.WFC.myMap = self.mapCleaner.cleanMap(self.CO.WFC.myMap)
@@ -174,17 +178,35 @@ class GameMain:
                             self.CO.mapController.currentMapIndex = button.action
                             print(button.action)
                             self.CO.gameStatus = "race"
+                            self.CO.players[0].reset(x=self.CO.mapController.getCurrentMap().playerStartX,
+                                                     y=self.CO.mapController.getCurrentMap().playerStartY,
+                                                     direction=self.CO.mapController.getCurrentMap().playerStartDirection)
+                            self.CO.players[1].reset(x=self.CO.mapController.getCurrentMap().playerStartX,
+                                                     y=self.CO.mapController.getCurrentMap().playerStartY,
+                                                     direction=self.CO.mapController.getCurrentMap().playerStartDirection)
                 case "race":
-                    #print(self.CO.currentMode)
-                    # movement keys pressed --> Update player
-                    if keys[pygame.K_LEFT] or keys[pygame.K_a]:  # turn left
-                        self.CO.Player.changeDir(-1)
-                    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:  # turn right
-                        self.CO.Player.changeDir(1)
-                    if keys[pygame.K_UP] or keys[pygame.K_w]:  # move forward
-                        self.CO.Player.move(0)
-                    if keys[pygame.K_DOWN] or keys[pygame.K_s]:  # move backward
-                        self.CO.Player.move(1)
+                    # movement keys pressed --> Update players
+                    if self.CO.currentMode == "singleplayer":
+                        if keys[pygame.K_LEFT] or keys[pygame.K_a]:  # turn left
+                            self.CO.players[0].changeDir(-1)
+                        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:  # turn right
+                            self.CO.players[0].changeDir(1)
+                        if keys[pygame.K_UP] or keys[pygame.K_w]:  # move forward
+                            self.CO.players[0].move(0)
+                        if keys[pygame.K_DOWN] or keys[pygame.K_s]:  # move backward
+                            self.CO.players[0].move(1)
+                    elif self.CO.currentMode == "multiplayer":
+                        i = 0
+                        for player in self.CO.players:
+                            if keys[pygame.K_LEFT] and i == 1 or keys[pygame.K_a] and i == 0:  # turn left
+                                player.changeDir(-1)
+                            if keys[pygame.K_RIGHT] and i == 1 or keys[pygame.K_d] and i == 0:  # turn right
+                                player.changeDir(1)
+                            if keys[pygame.K_UP] and i == 1 or keys[pygame.K_w] and i == 0:  # move forward
+                                player.move(0)
+                            if keys[pygame.K_DOWN] and i == 1 or keys[pygame.K_s] and i == 0:  # move backward
+                                player.move(1)
+                            i += 1
 
 
                     # TODO
