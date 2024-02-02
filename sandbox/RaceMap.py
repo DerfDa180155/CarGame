@@ -15,8 +15,21 @@ class RaceMap:
         self.playerStartY = playerStartY
         self.playerStartDirection = playerStartDirection
 
+        self.mapDefinition = [[0, 0, 0, 0],  # top, right, bottom, left
+                              [1, 0, 0, 1],
+                              [1, 1, 0, 0],
+                              [0, 0, 1, 1],
+                              [0, 1, 1, 0],
+                              [1, 0, 1, 0],
+                              [0, 1, 0, 1]]
+
         self.boundsMap = []
         self.generateLineMap()
+
+        self.checkpoints = []
+        self.generateCheckpoints()
+
+
 
 
     def saveMap(self, path):
@@ -187,8 +200,62 @@ class RaceMap:
                         endY = sizeYOneSquare * j + sizeYOneSquare * 23 / 32
                         self.boundsMap.append([startX, startY, endX, endY])
 
+    def generateCheckpoints(self):
+        found = False
+        x = 0
+        y = 0
+        for i in range(len(self.myMap)):
+            for j in range(len(self.myMap[0])):
+                if self.myMap[i][j] != 0 and not found:
+                    x = i
+                    y = j
+                    found = True
+
+        street = self.getStreet(self.myMap, x, y)
+        #print(street)
+
+        sizeX = len(self.myMap)
+        sizeY = len(self.myMap[0])
+
+        sizeXOneSquare = 1600 / sizeX
+        sizeYOneSquare = 900 / sizeY
 
 
 
+    def getStreet(self, myMap: array, x: int, y: int):
+        street = [[x, y]]
+
+        currentX = x
+        currentY = y
+        complete = False
+
+        while not complete:
+            currentDefinition = self.mapDefinition[myMap[currentX][currentY]]
+            checkAdded = False
+            if currentDefinition[0] == 1: # top
+                if [currentX, currentY-1] not in street:
+                    street.append([currentX, currentY-1])
+                    checkAdded = True
+                    currentY -= 1
+            if currentDefinition[1] == 1 and not checkAdded: # right
+                if [currentX+1, currentY] not in street:
+                    street.append([currentX+1, currentY])
+                    checkAdded = True
+                    currentX += 1
+            if currentDefinition[2] == 1 and not checkAdded: # down
+                if [currentX, currentY+1] not in street:
+                    street.append([currentX, currentY+1])
+                    checkAdded = True
+                    currentY += 1
+            if currentDefinition[3] == 1 and not checkAdded: # left
+                if [currentX-1, currentY] not in street:
+                    street.append([currentX-1, currentY])
+                    checkAdded = True
+                    currentX -= 1
+
+            if not checkAdded:
+                complete = True
+
+        return street
 
 
