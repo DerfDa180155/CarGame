@@ -201,6 +201,7 @@ class RaceMap:
                         self.boundsMap.append([startX, startY, endX, endY])
 
     def generateCheckpoints(self):
+        self.checkpoints = []
         found = False
         x = 0
         y = 0
@@ -219,6 +220,117 @@ class RaceMap:
 
         sizeXOneSquare = 1600 / sizeX
         sizeYOneSquare = 900 / sizeY
+
+
+        print(street)
+        for streetPiece in street:
+            if len(self.checkpoints) == 0:
+                if self.myMap[streetPiece[0]][streetPiece[1]] == 1 or self.myMap[streetPiece[0]][streetPiece[1]] == 2 or self.myMap[streetPiece[0]][streetPiece[1]] == 5: # top
+                    startX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 9 / 32
+                    startY = sizeYOneSquare * streetPiece[1]
+                    endX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 23 / 32
+                    endY = sizeYOneSquare * streetPiece[1]
+                    self.checkpoints.append((startX, startY, endX, endY))
+                elif self.myMap[streetPiece[0]][streetPiece[1]] == 4 or self.myMap[streetPiece[0]][streetPiece[1]] == 6: # right
+                    startX = sizeXOneSquare * (streetPiece[0] + 1)
+                    startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
+                    endX = sizeXOneSquare * (streetPiece[0] + 1)
+                    endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
+                    self.checkpoints.append((startX, startY, endX, endY))
+                elif self.myMap[streetPiece[0]][streetPiece[1]] == 3: # left
+                    startX = sizeXOneSquare * streetPiece[0]
+                    startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
+                    endX = sizeXOneSquare * streetPiece[0]
+                    endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
+                    self.checkpoints.append((startX, startY, endX, endY))
+            else:
+                match self.myMap[streetPiece[0]][streetPiece[1]]:
+                    case 1: # topLeft
+                        startX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 9 / 32
+                        startY = sizeYOneSquare * streetPiece[1]
+                        endX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 23 / 32
+                        endY = sizeYOneSquare * streetPiece[1]
+                        checkpointOne = (startX, startY, endX, endY)
+                        if self.checkpoints[len(self.checkpoints) - 1] == checkpointOne:
+                            startX = sizeXOneSquare * streetPiece[0]
+                            startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
+                            endX = sizeXOneSquare * streetPiece[0]
+                            endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
+                            self.checkpoints.append((startX, startY, endX, endY))
+                        else:
+                            self.checkpoints.append(checkpointOne)
+                    case 2: # topRight
+                        startX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 9 / 32
+                        startY = sizeYOneSquare * streetPiece[1]
+                        endX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 23 / 32
+                        endY = sizeYOneSquare * streetPiece[1]
+                        checkpointOne = (startX, startY, endX, endY)
+                        if self.checkpoints[len(self.checkpoints) - 1] == checkpointOne:
+                            startX = sizeXOneSquare * (streetPiece[0] + 1)
+                            startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
+                            endX = sizeXOneSquare * (streetPiece[0] + 1)
+                            endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
+                            self.checkpoints.append((startX, startY, endX, endY))
+                        else:
+                            self.checkpoints.append(checkpointOne)
+                    case 3: # bottomLeft
+                        startX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 9 / 32
+                        startY = sizeYOneSquare * (streetPiece[1] + 1)
+                        endX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 23 / 32
+                        endY = sizeYOneSquare * (streetPiece[1] + 1)
+                        checkpointOne = (startX, startY, endX, endY)
+                        if self.checkpoints[len(self.checkpoints) - 1] == checkpointOne:
+                            startX = sizeXOneSquare * streetPiece[0]
+                            startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
+                            endX = sizeXOneSquare * streetPiece[0]
+                            endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
+                            self.checkpoints.append((startX, startY, endX, endY))
+                        else:
+                            self.checkpoints.append(checkpointOne)
+                    case 4: # bottomRight
+                        startX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 9 / 32
+                        startY = sizeYOneSquare * (streetPiece[1] + 1)
+                        endX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 23 / 32
+                        endY = sizeYOneSquare * (streetPiece[1] + 1)
+                        checkpointOne = (startX, startY, endX, endY)
+                        if self.checkpoints[len(self.checkpoints) - 1] == checkpointOne:
+                            startX = sizeXOneSquare * (streetPiece[0] + 1)
+                            startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
+                            endX = sizeXOneSquare * (streetPiece[0] + 1)
+                            endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
+                            self.checkpoints.append((startX, startY, endX, endY))
+                        else:
+                            self.checkpoints.append(checkpointOne)
+                    case 5: # verticalLine
+                        startX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 9 / 32 # top
+                        startY = sizeYOneSquare * streetPiece[1]
+                        endX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 23 / 32
+                        endY = sizeYOneSquare * streetPiece[1]
+                        checkpointOne = (startX, startY, endX, endY)
+                        if self.checkpoints[len(self.checkpoints) - 1] == checkpointOne: # bottom
+                            startX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 9 / 32
+                            startY = sizeYOneSquare * (streetPiece[1] + 1)
+                            endX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 23 / 32
+                            endY = sizeYOneSquare * (streetPiece[1] + 1)
+                            self.checkpoints.append((startX, startY, endX, endY))
+                        else:
+                            self.checkpoints.append(checkpointOne)
+                    case 6: # horizontalLine
+                        startX = sizeXOneSquare * streetPiece[0] # left
+                        startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
+                        endX = sizeXOneSquare * streetPiece[0]
+                        endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
+                        checkpointOne = (startX, startY, endX, endY)
+                        if self.checkpoints[len(self.checkpoints) - 1] == checkpointOne: # right
+                            startX = sizeXOneSquare * (streetPiece[0] + 1)
+                            startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
+                            endX = sizeXOneSquare * (streetPiece[0] + 1)
+                            endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
+                            self.checkpoints.append((startX, startY, endX, endY))
+                        else:
+                            self.checkpoints.append(checkpointOne)
+
+
 
 
 

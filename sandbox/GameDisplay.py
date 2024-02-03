@@ -90,6 +90,9 @@ class GameDisplay(threading.Thread):
         # draw bounds (for testing)
         self.drawBoundsMap()
 
+        # draw checkpoints (for testing)
+        self.drawCheckpoints()
+
         # draw player
         self.drawPlayers()
 
@@ -116,6 +119,15 @@ class GameDisplay(threading.Thread):
             start = ((bound[0] * self.windowWidth) / 1600, (bound[1] * self.windowHeight) / 900)
             end = ((bound[2] * self.windowWidth) / 1600, (bound[3] * self.windowHeight) / 900)
             pygame.draw.line(self.screen, (255, 255, 255), start, end, 4)
+
+    def drawCheckpoints(self):
+        i = 255
+        checkpoints = self.CO.mapController.getCurrentMap().checkpoints
+        for checkpoint in checkpoints:
+            start = ((checkpoint[0] * self.windowWidth) / 1600, (checkpoint[1] * self.windowHeight) / 900)
+            end = ((checkpoint[2] * self.windowWidth) / 1600, (checkpoint[3] * self.windowHeight) / 900)
+            pygame.draw.line(self.screen, (i, 150, 255), start, end, 4)
+            i -= 255 / len(checkpoints)
 
     def generateText(self):
         displayText = []
