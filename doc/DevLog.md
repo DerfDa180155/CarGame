@@ -166,3 +166,28 @@ Started with a bounds generator of the maps. This bounds are needed, so that the
 Completion of the bound generator, which now works for every map.
 
 
+## 01.02.2024
+
+Added a second player that can be controlled in the multiplayer mode.
+
+
+## 02.02.2024
+
+Started with the checkpoint generation. A Checkpoint is a line with the start and end point at the bounds. These checkpoints are created between 2 road map pices. The checkpints are needed, to know that a player drives in the right direction
+
+
+## 03.02.2024
+
+Finished the checkpoint generation.
+
+
+
+
+
+
+
+
+
+
+
+
