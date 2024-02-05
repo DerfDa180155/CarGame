@@ -208,9 +208,15 @@ class GameMain:
                                 player.move(1)
                             i += 1
 
+                    # update the players (position, speed, reys, ..)
+                    for player in self.CO.players:
+                        player.update()
+                        # update rey length
+                        player.updateReys(self.CO.mapController.getCurrentMap().boundsMap)
+
+
 
                     # TODO
-                    # player movement
                     # Bots movement
                     # round counter
                     # ...

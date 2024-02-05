@@ -1,6 +1,7 @@
 import random
-
 import numpy as np
+import array
+import Rey
 
 
 class Player:
@@ -13,7 +14,11 @@ class Player:
         self.scaleHeight = 900
         self.scaleSizeWidth = 1600
         self.scaleSizeHeight = 900
-        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255),)
+        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
+        self.frontReys = [Rey.Rey(self.x, self.y, self.direction - 45),
+                          Rey.Rey(self.x, self.y, self.direction),
+                          Rey.Rey(self.x, self.y, self.direction + 45)]
 
     def move(self, moveDir: int):
         if moveDir == 0:
@@ -32,3 +37,21 @@ class Player:
         self.direction = direction
         self.x = x
         self.y = y
+
+    def update(self):
+        # car physics
+
+
+
+
+        # Reys update
+        i = -45
+        for rey in self.frontReys:
+            rey.updateRey(self.x, self.y, self.direction + i)
+            i += 45
+
+
+    def updateReys(self, bounds: array):
+        for rey in self.frontReys:
+            rey.calcLength(bounds)
+
