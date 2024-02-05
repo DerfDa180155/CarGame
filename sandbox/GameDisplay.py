@@ -91,8 +91,8 @@ class GameDisplay(threading.Thread):
         # draw player
         self.drawPlayers()
 
-        # draw Reys
-        self.drawPlayerReys()
+        # draw Rays
+        self.drawPlayerRays()
 
     def drawMap(self):
         self.myMap = self.CO.mapController.getCurrentMap().myMap
@@ -175,16 +175,16 @@ class GameDisplay(threading.Thread):
                              pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
                                          playerSizeWidth, playerSizeHeight))
 
-    def drawPlayerReys(self):
+    def drawPlayerRays(self):
         for player in self.CO.players:
-            for rey in player.frontReys:
-                reyLengthX = (rey.length * self.windowWidth) / 1600
-                reyLengthY = (rey.length * self.windowHeight) / 900
+            for ray in player.frontRays:
+                rayLengthX = (ray.length * self.windowWidth) / 1600
+                rayLengthY = (ray.length * self.windowHeight) / 900
                 x1 = (player.x * self.windowWidth) / player.scaleWidth
                 y1 = (player.y * self.windowHeight) / player.scaleHeight
-                x2 = x1 + reyLengthX * np.cos(np.deg2rad(rey.direction))
-                y2 = y1 + reyLengthY * np.sin(np.deg2rad(rey.direction))
-                pygame.draw.line(self.screen, (255, 0, 255), (x1, y1), (x2, y2), 4)
+                x2 = x1 + rayLengthX * np.cos(np.deg2rad(ray.direction))
+                y2 = y1 + rayLengthY * np.sin(np.deg2rad(ray.direction))
+                pygame.draw.line(self.screen, player.color, (x1, y1), (x2, y2), 4)
 
 
 

@@ -1,7 +1,7 @@
 import random
 import numpy as np
 import array
-import Rey
+import Ray
 
 
 class Player:
@@ -16,9 +16,14 @@ class Player:
         self.scaleSizeHeight = 900
         self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
-        self.frontReys = [Rey.Rey(self.x, self.y, self.direction - 45),
-                          Rey.Rey(self.x, self.y, self.direction),
-                          Rey.Rey(self.x, self.y, self.direction + 45)]
+        self.frontRaysViewAngle = 90
+        self.frontRaysDeg = 45
+        self.frontRays = []
+
+        i = self.frontRaysViewAngle / (-2)
+        while i <= self.frontRaysViewAngle / 2:
+            self.frontRays.append(Ray.Ray(self.x, self.y, self.direction + i))
+            i += self.frontRaysDeg
 
     def move(self, moveDir: int):
         if moveDir == 0:
@@ -38,20 +43,22 @@ class Player:
         self.x = x
         self.y = y
 
+    def updateRays(self, bounds: array):
+        for ray in self.frontRays:
+            ray.calcLength(bounds)
+
     def update(self):
         # car physics
 
 
 
 
-        # Reys update
-        i = -45
-        for rey in self.frontReys:
-            rey.updateRey(self.x, self.y, self.direction + i)
-            i += 45
+        # Rays update
+        i = self.frontRaysViewAngle / (-2)
+        for ray in self.frontRays:
+            ray.updateRay(self.x, self.y, self.direction + i)
+            i += self.frontRaysDeg
 
 
-    def updateReys(self, bounds: array):
-        for rey in self.frontReys:
-            rey.calcLength(bounds)
+
 

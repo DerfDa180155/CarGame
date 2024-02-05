@@ -208,12 +208,11 @@ class GameMain:
                                 player.move(1)
                             i += 1
 
-                    # update the players (position, speed, reys, ..)
+                    # update the players (position, speed, rays, ..)
                     for player in self.CO.players:
                         player.update()
-                        # update rey length
-                        player.updateReys(self.CO.mapController.getCurrentMap().boundsMap)
-
+                        # update ray length
+                        player.updateRays(self.CO.mapController.getCurrentMap().boundsMap)
 
 
                     # TODO
@@ -225,13 +224,13 @@ class GameMain:
             if self.CO.gameStatus == "generateMap":
                 # movement keys pressed --> Update player
                 if keys[pygame.K_LEFT] or keys[pygame.K_a]: # turn left
-                    self.CO.Player.changeDir(-1)
+                    self.CO.players[0].changeDir(-1)
                 if keys[pygame.K_RIGHT] or keys[pygame.K_d]: # turn right
-                    self.CO.Player.changeDir(1)
+                    self.CO.players[0].changeDir(1)
                 if keys[pygame.K_UP] or keys[pygame.K_w]: # move forward
-                    self.CO.Player.move(0)
+                    self.CO.players[0].move(0)
                 if keys[pygame.K_DOWN] or keys[pygame.K_s]: # move backward
-                    self.CO.Player.move(1)
+                    self.CO.players[0].move(1)
 
 
 

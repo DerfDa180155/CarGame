@@ -213,7 +213,6 @@ class RaceMap:
                     found = True
 
         street = self.getStreet(self.myMap, x, y)
-        #print(street)
 
         sizeX = len(self.myMap)
         sizeY = len(self.myMap[0])
@@ -221,8 +220,6 @@ class RaceMap:
         sizeXOneSquare = 1600 / sizeX
         sizeYOneSquare = 900 / sizeY
 
-
-        print(street)
         for streetPiece in street:
             if len(self.checkpoints) == 0:
                 if self.myMap[streetPiece[0]][streetPiece[1]] == 1 or self.myMap[streetPiece[0]][streetPiece[1]] == 2 or self.myMap[streetPiece[0]][streetPiece[1]] == 5: # top
@@ -329,10 +326,6 @@ class RaceMap:
                             self.checkpoints.append((startX, startY, endX, endY))
                         else:
                             self.checkpoints.append(checkpointOne)
-
-
-
-
 
     def getStreet(self, myMap: array, x: int, y: int):
         street = [[x, y]]
