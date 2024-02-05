@@ -26,7 +26,7 @@ Starting with the map generator using Wave Function Collapse. This generator the
 
 ## 05.01.2024
 
-Added entropy calculation. The entropy tells you how many different patterns can be at one point of the map. It is caculated, by checking all the 4 neighbour squares and check which pieces can fit. This is needed for the Wave Function Collapse.
+Added entropy calculation. The entropy tells you how many different patterns can be at one point of the map. It is calculated, by checking all the 4 neighbor squares and check which pieces can fit. This is needed for the Wave Function Collapse.
 Fixed a display bug, where the map was displayed mirrored.
 
 
@@ -55,7 +55,7 @@ I re-wrote the entire algorithm for the map generator because the old one was ve
 
 ## 10.01.2024
 
-Fixed the bug in the map generator, that createt an empty field in the bottem right corner. 
+Fixed the bug in the map generator, that created an empty field in the bottom right corner. 
 
 
 ## 11.01.2024
@@ -173,7 +173,7 @@ Added a second player that can be controlled in the multiplayer mode.
 
 ## 02.02.2024
 
-Started with the checkpoint generation. A Checkpoint is a line with the start and end point at the bounds. These checkpoints are created between 2 road map pices. The checkpints are needed, to know that a player drives in the right direction
+Started with the checkpoint generation. A Checkpoint is a line with the start and end point at the bounds. These checkpoints are created between 2 road map pieces. The checkpoints are needed, to know that a player drives in the right direction.
 
 
 ## 03.02.2024
@@ -181,10 +181,9 @@ Started with the checkpoint generation. A Checkpoint is a line with the start an
 Finished the checkpoint generation.
 
 
+## 04.02.2024
 
-
-
-
+Started with ray casting and displaying the rays.
 
 
 
