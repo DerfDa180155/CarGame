@@ -2,12 +2,13 @@ import pygame
 import random
 import os
 import numpy
-import mapController
+import MapController
+import RaceObject
 import array
 
 class CommunicationObject:
     def __init__(self, gameStatus: str, FPSClock: pygame.time.Clock, TPSClock: pygame.time.Clock, FPS: int, TPS: int,
-                 TextSize: int, imageArray: array, mapController: mapController, players: array, menuButtons: array,
+                 TextSize: int, imageArray: array, mapController: MapController, players: array, raceObject: RaceObject, menuButtons: array,
                  gameModeButtons: array, mapButtons: array, currentMode: str):
         self.gameStatus = gameStatus
         self.FPSClock = FPSClock
@@ -18,6 +19,7 @@ class CommunicationObject:
         self.imageArray = imageArray
         self.mapController = mapController
         self.players = players
+        self.raceObject = raceObject
         self.menuButtons = menuButtons
         self.gameModeButtons = gameModeButtons
         self.mapButtons = mapButtons

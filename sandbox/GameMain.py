@@ -9,9 +9,10 @@ import GameDisplay
 import WaveFunctionCollapse
 import MapCleaner
 import Player
+import RaceObject
 import Button
 import webbrowser
-import mapController
+import MapController
 
 class GameMain:
     def __init__(self):
@@ -63,13 +64,15 @@ class GameMain:
 
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
         self.mapCleaner = MapCleaner.MapCleaner(self.mapArrayDefinition)
-        self.mapController = mapController.mapController(WFC=self.WFC, MC=self.mapCleaner, path=mapPath)
+        self.mapController = MapController.MapController(WFC=self.WFC, MC=self.mapCleaner, path=mapPath)
         #self.mapController.loadAllMaps() # load all saved maps
         self.oldMapCount = self.mapController.getCountMaps()
 
         self.players = []
         self.players.append(Player.Player(100, 100, 0))
         self.players.append(Player.Player(100, 200, 0))
+
+        self.raceObject = RaceObject.RaceObject()
 
         self.testButton = Button.Button(self.screen, 100, 100, 150, self.crossing, "generateMap")
         self.modeSelectButton = Button.Button(self.screen, 100, 300, 150, self.topRight, "selectMode")
@@ -96,7 +99,7 @@ class GameMain:
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
                                                           TextSize=30, imageArray=self.mapArray,
                                                           mapController=self.mapController, players=self.players,
-                                                          menuButtons=self.menuButtons,
+                                                          raceObject=self.raceObject, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,
                                                           mapButtons=self.mapButtons, currentMode="singleplayer")
 
@@ -166,8 +169,8 @@ class GameMain:
                             self.CO.gameStatus = "selectMap"
                             print(self.CO.currentMode)
                 case "selectMap":
-                    if self.oldMapCount != self.mapController.getCountMaps():
-                        self.oldMapCount = self.mapController.getCountMaps()
+                    if self.oldMapCount != self.CO.mapController.getCountMaps():
+                        self.oldMapCount = self.CO.mapController.getCountMaps()
                         self.mapButtons = []
                         for i in range(self.oldMapCount):
                             self.mapButtons.append(
@@ -184,7 +187,12 @@ class GameMain:
                             self.CO.players[1].reset(x=self.CO.mapController.getCurrentMap().playerStartX,
                                                      y=self.CO.mapController.getCurrentMap().playerStartY,
                                                      direction=self.CO.mapController.getCurrentMap().playerStartDirection)
+                            self.CO.raceObject.reset()
+                            self.CO.raceObject.start()
                 case "race":
+                    # update raceObject
+                    self.CO.raceObject.update()
+
                     # movement keys pressed --> Update players
                     if self.CO.currentMode == "singleplayer":
                         if keys[pygame.K_LEFT] or keys[pygame.K_a]:  # turn left

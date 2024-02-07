@@ -7,7 +7,7 @@ import RaceMap
 import xml.etree.ElementTree as ET
 
 
-class mapController:
+class MapController:
     def __init__(self, WFC: WaveFunctionCollapse, MC: MapCleaner, path: str):
         self.maps = []
         self.WFC = WFC

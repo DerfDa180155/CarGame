@@ -3,6 +3,7 @@ import threading
 import numpy as np
 import CommunicationObject
 
+
 class GameDisplay(threading.Thread):
     def __init__(self, screen, CO: CommunicationObject):
         threading.Thread.__init__(self)
@@ -154,6 +155,14 @@ class GameDisplay(threading.Thread):
         # status Display
         displayText.append("Status: " + self.CO.gameStatus)
         displayTextColor.append((255, 255, 0))
+
+        # stopwatch Display
+        if self.CO.gameStatus == "race":
+            nanoSeconds = self.CO.raceObject.stopwatch
+            seconds = int((nanoSeconds / 1000000000))
+            minutes = int(seconds/60)
+            displayText.append("Time: " + str(minutes).zfill(2) + ":" + str(seconds%60).zfill(2) + ":" + str(int((nanoSeconds/1000000)%1000)).zfill(3))
+            displayTextColor.append((255, 255, 0))
 
         return displayText, displayTextColor
 
