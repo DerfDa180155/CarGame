@@ -186,6 +186,36 @@ Finished the checkpoint generation.
 Started with ray casting and displaying the rays.
 
 
+## 05.02.2024
+
+Finished ray casting.
+
+
+## 06.02.2024
+
+Updated the movement, based on the closest distance off the front rays of a player. Players can no longer drive through walls.
+
+
+## 07.02.2024
+
+Added a raceObject, which controls the race. Implemented a clock in the raceObject.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
