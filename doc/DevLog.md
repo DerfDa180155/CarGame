@@ -201,9 +201,9 @@ Updated the movement, based on the closest distance off the front rays of a play
 Added a raceObject, which controls the race. Implemented a clock in the raceObject.
 
 
+## 08.01.2024
 
-
-
+Updated the raceObject and added keys to controll the race.
 
 
 
