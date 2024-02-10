@@ -20,6 +20,8 @@ class Player:
         self.frontRaysDeg = 22.5
         self.frontRays = []
 
+        self.isDone = False # for the race
+
         i = self.frontRaysViewAngle / (-2)
         while i <= self.frontRaysViewAngle / 2:
             self.frontRays.append(Ray.Ray(self.x, self.y, self.direction + i))
@@ -49,6 +51,7 @@ class Player:
         self.direction = direction
         self.x = x
         self.y = y
+        self.isDone = False  # for the race
 
     def updateRays(self, bounds: array):
         for ray in self.frontRays:

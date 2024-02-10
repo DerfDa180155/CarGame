@@ -16,6 +16,7 @@ class RaceObject:
         self.playerMaxItemCount = 0
 
         self.players = players
+        self.playerCheckpointList = []
 
         self.raceMap = raceMap
 
@@ -27,6 +28,17 @@ class RaceObject:
 
             self.raceStatus = "race"
             self.raceMap = raceMap
+
+            # position players and create checkpoints list
+            self.playerCheckpointList = []
+            for player in self.players:
+                player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
+                tempList = []
+                for i in range(self.maxRounds):
+                    tempList += self.raceMap.checkpoints
+                self.playerCheckpointList.append(tempList)
+
+
 
     def stop(self):
         if self.raceStatus == "race":
@@ -61,6 +73,32 @@ class RaceObject:
             case "noRace":
                 pass
             case "race":
-                pass
+                self.checkPlayerPassCheckpoint()
+                self.checkPlayerIsDone()
             case "paused":
                 pass
+
+    def checkPlayerPassCheckpoint(self):
+        i = 0
+        for player in self.players:
+            if len(self.playerCheckpointList[i]) != 0:
+                length = float('inf')
+                for ray in player.frontRays:
+                    newLength = ray.calcOneLine(self.playerCheckpointList[i][0])
+                    if newLength > 0 and newLength < length:
+                        length = newLength
+
+                if length <= 3:
+                    self.playerCheckpointList[i].pop(0)
+                    print(len(self.playerCheckpointList[i]))
+
+            i += 1
+
+    def checkPlayerIsDone(self):
+        i = 0
+        for player in self.players:
+            if len(self.playerCheckpointList[i]) == 0:
+                player.isDone = True
+            i += 1
+
+

@@ -134,7 +134,7 @@ class GameMain:
                         elif self.CO.gameStatus == "generateMap":
                             self.CO.gameStatus = "menu"
                     elif event.key == pygame.K_k and self.CO.gameStatus == "generateMap":
-                        x = 5
+                        x = 4
                         y = x
 
                         testMap = self.CO.mapController.generateNewMap(x, y)
@@ -205,7 +205,7 @@ class GameMain:
 
                     if self.CO.raceObject.raceStatus == "race":
                         # movement keys pressed --> Update players
-                        if self.CO.currentMode == "singleplayer":
+                        if self.CO.currentMode == "singleplayer" and not self.CO.players[0].isDone:
                             if keys[pygame.K_LEFT] or keys[pygame.K_a]:  # turn left
                                 self.CO.players[0].changeDir(-1)
                             if keys[pygame.K_RIGHT] or keys[pygame.K_d]:  # turn right
@@ -217,14 +217,15 @@ class GameMain:
                         elif self.CO.currentMode == "multiplayer":
                             i = 0
                             for player in self.CO.players:
-                                if keys[pygame.K_LEFT] and i == 1 or keys[pygame.K_a] and i == 0:  # turn left
-                                    player.changeDir(-1)
-                                if keys[pygame.K_RIGHT] and i == 1 or keys[pygame.K_d] and i == 0:  # turn right
-                                    player.changeDir(1)
-                                if keys[pygame.K_UP] and i == 1 or keys[pygame.K_w] and i == 0:  # move forward
-                                    player.move(0)
-                                if keys[pygame.K_DOWN] and i == 1 or keys[pygame.K_s] and i == 0:  # move backward
-                                    player.move(1)
+                                if not player.isDone:
+                                    if keys[pygame.K_LEFT] and i == 1 or keys[pygame.K_a] and i == 0:  # turn left
+                                        player.changeDir(-1)
+                                    if keys[pygame.K_RIGHT] and i == 1 or keys[pygame.K_d] and i == 0:  # turn right
+                                        player.changeDir(1)
+                                    if keys[pygame.K_UP] and i == 1 or keys[pygame.K_w] and i == 0:  # move forward
+                                        player.move(0)
+                                    if keys[pygame.K_DOWN] and i == 1 or keys[pygame.K_s] and i == 0:  # move backward
+                                        player.move(1)
                                 i += 1
 
                         # update the players (position, speed, rays, ..)

@@ -56,7 +56,7 @@ class MapController:
 
     def generateNewMap(self, x: int, y: int):
         newMap = RaceMap.RaceMap(myMap=self.MC.cleanMap(self.WFC.generate(x, y)), name="Unknown - " + str(random.randint(1000, 9999)))
-        #newMap.saveMap(self.mapPath)
+        newMap.saveMap(self.mapPath)
         print(newMap.myMap)
         self.maps.append(newMap)
         self.currentMapIndex = self.getCountMaps()-1
