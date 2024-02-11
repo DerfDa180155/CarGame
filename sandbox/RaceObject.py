@@ -20,6 +20,7 @@ class RaceObject:
         self.players = players
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]
+        self.leaderboard = []
 
 
 
@@ -83,6 +84,13 @@ class RaceObject:
                 self.checkPlayerPassCheckpoint()
                 self.checkPlayerIsDone()
                 self.updatePlayerRoundList()
+                self.updateLeaderboard()
+                if self.checkRaceOver():
+                    self.raceStatus = "raceOver"
+                    print(self.raceStatus)
+                    print(self.leaderboard)
+            case "raceOver":
+                pass
             case "paused":
                 pass
 
@@ -120,4 +128,20 @@ class RaceObject:
                 player.isDone = True
             i += 1
 
+    def checkRaceOver(self):
+        if self.mode == "singleplayer":
+            return self.players[0].isDone
+        for player in self.players:
+            if not player.isDone:
+                return False
+        return True
 
+    def updateLeaderboard(self):
+        i = 1
+        for player in self.players:
+            if player.isDone and i not in self.leaderboard:
+                temp = []
+                temp.append(i)
+                temp.append(self.stopwatch)
+                self.leaderboard.append(temp)
+            i += 1

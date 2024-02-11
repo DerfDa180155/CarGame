@@ -98,6 +98,13 @@ class GameDisplay(threading.Thread):
         # draw Rays
         self.drawPlayerRays()
 
+        if self.CO.raceObject.raceStatus == "raceOver":
+            x = (400 * self.windowWidth) / 1600
+            y = (200 * self.windowHeight) / 900
+            playerSizeWidth = (800 * self.windowWidth) / 1600
+            playerSizeHeight = (500 * self.windowHeight) / 900
+            pygame.draw.rect(self.screen, (128, 128, 128), pygame.Rect(x, y, playerSizeWidth, playerSizeHeight))
+
     def drawMap(self):
         self.myMap = self.CO.mapController.getCurrentMap().myMap
         # draw Map
