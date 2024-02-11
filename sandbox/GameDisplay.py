@@ -89,6 +89,9 @@ class GameDisplay(threading.Thread):
         # draw checkpoints (for testing)
         self.drawCheckpoints()
 
+        # draw text
+        self.drawRoundsText()
+
         # draw player
         self.drawPlayers()
 
@@ -110,7 +113,6 @@ class GameDisplay(threading.Thread):
                                           self.windowHeight / len(self.myMap[i]) * j))
         else:
             self.screen.fill((50, 200, 200))
-
 
     def drawBoundsMap(self):
         boundsMap = self.CO.mapController.getCurrentMap().boundsMap
@@ -173,6 +175,28 @@ class GameDisplay(threading.Thread):
         for line in range(len(displayText)):
             text = font.render(displayText[line], True, displayTextColor[line])
             self.screen.blit(text, (self.textPosition[0], self.textPosition[1] + (line * newTextSize)))
+
+    def drawRoundsText(self):
+        newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)
+        positionX = (5 * self.windowWidth) / 1600
+        positionY = (870 * self.windowHeight) / 900
+
+        text = str(self.CO.raceObject.playerRoundsList[0]) + " / " + str(self.CO.raceObject.maxRounds)
+
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+        text = font.render(text, True, (255, 255, 255))
+        self.screen.blit(text, (positionX, positionY))
+
+        if self.CO.raceObject.mode == "multiplayer":
+            newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)
+            positionX = (1545 * self.windowWidth) / 1600
+            positionY = (870 * self.windowHeight) / 900
+
+            text = str(self.CO.raceObject.playerRoundsList[1]) + " / " + str(self.CO.raceObject.maxRounds)
+
+            font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+            text = font.render(text, True, (255, 255, 255))
+            self.screen.blit(text, (positionX, positionY))
 
     def drawPlayers(self):
         for player in self.CO.players:

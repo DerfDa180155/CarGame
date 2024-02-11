@@ -166,6 +166,7 @@ class GameMain:
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
                             self.CO.currentMode = button.action
+                            self.CO.raceObject.mode = button.action
                             self.CO.gameStatus = "selectMap"
                             print(self.CO.currentMode)
                 case "selectMap":
@@ -194,7 +195,7 @@ class GameMain:
                     self.CO.raceObject.update()
 
                     if keys[pygame.K_t]:
-                        self.CO.raceObject.maxRounds = 1
+                        self.CO.raceObject.maxRounds = 3
                         self.CO.raceObject.start(self.CO.mapController.getCurrentMap())
                     elif keys[pygame.K_z]:
                         self.CO.raceObject.stop()

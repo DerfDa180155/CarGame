@@ -10,21 +10,26 @@ class RaceObject:
         self.stopwatchStart = 0
         self.stopwatchRunning = False
 
+        self.raceMap = raceMap
         self.raceStatus = "noRace"
         self.mode = "singleplayer"
         self.maxRounds = 0
         self.playerMaxItemCount = 0
+        self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
         self.players = players
         self.playerCheckpointList = []
+        self.playerRoundsList = [0, 0]
 
-        self.raceMap = raceMap
+
 
     def start(self, raceMap: RaceMap):
         if self.maxRounds > 0: # only start wenn the race settings are set
             self.stopwatchStart = time.time_ns()
             self.stopwatchRunning = True
             self.stopwatchCurrentTime = 0
+
+            self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
             self.raceStatus = "race"
             self.raceMap = raceMap
@@ -64,6 +69,8 @@ class RaceObject:
         self.raceStatus = "noRace"
         self.maxRounds = 0
         self.playerMaxItemCount = 0
+        self.playerCheckpointList = []
+        self.playerRoundsList = [0, 0]
 
     def update(self):
         if self.stopwatchRunning:
@@ -75,6 +82,7 @@ class RaceObject:
             case "race":
                 self.checkPlayerPassCheckpoint()
                 self.checkPlayerIsDone()
+                self.updatePlayerRoundList()
             case "paused":
                 pass
 
@@ -91,6 +99,17 @@ class RaceObject:
                 if length <= 3:
                     self.playerCheckpointList[i].pop(0)
                     print(len(self.playerCheckpointList[i]))
+
+            i += 1
+
+    def updatePlayerRoundList(self):
+        i = 0
+        for player in self.players:
+            currentRound = 0
+            for j in range(self.maxRounds+1):
+                if (self.maxRounds * self.checkpointsPerRounds) - (self.checkpointsPerRounds * j) >= len(self.playerCheckpointList[i]):
+                    currentRound = j
+            self.playerRoundsList[i] = currentRound
 
             i += 1
 
