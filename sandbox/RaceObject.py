@@ -45,7 +45,6 @@ class RaceObject:
                 self.playerCheckpointList.append(tempList)
 
 
-
     def stop(self):
         if self.raceStatus == "race":
             if self.stopwatchRunning:
@@ -89,6 +88,9 @@ class RaceObject:
                     self.raceStatus = "raceOver"
                     print(self.raceStatus)
                     print(self.leaderboard)
+                    if self.stopwatchRunning:
+                        self.stopwatchCurrentTime += time.time_ns() - self.stopwatchStart
+                    self.stopwatchRunning = False
             case "raceOver":
                 pass
             case "paused":
@@ -139,9 +141,15 @@ class RaceObject:
     def updateLeaderboard(self):
         i = 1
         for player in self.players:
-            if player.isDone and i not in self.leaderboard:
-                temp = []
-                temp.append(i)
-                temp.append(self.stopwatch)
-                self.leaderboard.append(temp)
+            if player.isDone:
+                exist = False
+                for j in self.leaderboard:
+                    if j[0] == i:
+                        exist = True
+                if not exist:
+                    temp = []
+                    temp.append(i)
+                    temp.append(self.stopwatch)
+                    self.leaderboard.append(temp)
+
             i += 1

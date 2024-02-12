@@ -99,11 +99,8 @@ class GameDisplay(threading.Thread):
         self.drawPlayerRays()
 
         if self.CO.raceObject.raceStatus == "raceOver":
-            x = (400 * self.windowWidth) / 1600
-            y = (200 * self.windowHeight) / 900
-            playerSizeWidth = (800 * self.windowWidth) / 1600
-            playerSizeHeight = (500 * self.windowHeight) / 900
-            pygame.draw.rect(self.screen, (128, 128, 128), pygame.Rect(x, y, playerSizeWidth, playerSizeHeight))
+            self.drawLeaderboard()
+
 
     def drawMap(self):
         self.myMap = self.CO.mapController.getCurrentMap().myMap
@@ -204,6 +201,51 @@ class GameDisplay(threading.Thread):
             font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
             text = font.render(text, True, (255, 255, 255))
             self.screen.blit(text, (positionX, positionY))
+
+    def drawLeaderboard(self):
+        # rectangle
+        x = (400 * self.windowWidth) / 1600
+        y = (200 * self.windowHeight) / 900
+        sizeWidth = (800 * self.windowWidth) / 1600
+        sizeHeight = (500 * self.windowHeight) / 900
+        rectangle = pygame.Rect(x, y, sizeWidth, sizeHeight)
+
+        pygame.draw.rect(self.screen, (128, 128, 128), rectangle)
+
+        # text
+        newTextSize = int((50 * self.windowWidth) / 2000)
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+
+        text = font.render("Leaderboard", True, (255, 255, 255))
+        newRect = text.get_rect()
+        newRect.centerx = rectangle.centerx
+        newRect.y = rectangle.y + (newTextSize / 2)
+        self.screen.blit(text, newRect)
+
+        i = 0
+        for entry in self.CO.raceObject.leaderboard:
+            text = font.render(str(entry[0]), True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.x = rectangle.x + (newTextSize / 2)
+            newRect.y = rectangle.y + (newTextSize * (3 + i))
+            self.screen.blit(text, newRect)
+
+            nanoSec = entry[1]
+            seconds = int((nanoSec / 1000000000))
+            minutes = int(seconds / 60)
+
+            timeText = str(minutes).zfill(2) + ":" + str(seconds % 60).zfill(2) + ":" + str(int((nanoSec / 1000000) % 1000)).zfill(3)
+
+
+            text = font.render(timeText, True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.right = rectangle.right - (newTextSize / 2)
+            newRect.y = rectangle.y + (newTextSize * (3 + i))
+            self.screen.blit(text, newRect)
+
+            i += 1
+
+
 
     def drawPlayers(self):
         for player in self.CO.players:
