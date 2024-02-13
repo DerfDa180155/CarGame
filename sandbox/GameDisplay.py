@@ -95,9 +95,14 @@ class GameDisplay(threading.Thread):
         # draw player
         self.drawPlayers()
 
-        # draw Rays
+        # draw rays
         self.drawPlayerRays()
 
+        # draw starting sequenz
+        if self.CO.raceObject.raceStatus == "startRace":
+            self.drawStartingSequenz()
+
+        # draw leaderboard
         if self.CO.raceObject.raceStatus == "raceOver":
             self.drawLeaderboard()
 
@@ -224,7 +229,7 @@ class GameDisplay(threading.Thread):
 
         i = 0
         for entry in self.CO.raceObject.leaderboard:
-            text = font.render(str(entry[0]), True, (255, 255, 255))
+            text = font.render("Player " + str(entry[0]), True, (255, 255, 255))
             newRect = text.get_rect()
             newRect.x = rectangle.x + (newTextSize / 2)
             newRect.y = rectangle.y + (newTextSize * (3 + i))
@@ -245,7 +250,15 @@ class GameDisplay(threading.Thread):
 
             i += 1
 
+    def drawStartingSequenz(self):
+        # text
+        newTextSize = int((500 * self.windowWidth) / 2000)
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
 
+        text = font.render(self.CO.raceObject.countDown, True, (255, 255, 255))
+        newRect = text.get_rect()
+        newRect.center = (self.windowWidth / 2), (self.windowHeight / 2)
+        self.screen.blit(text, newRect)
 
     def drawPlayers(self):
         for player in self.CO.players:

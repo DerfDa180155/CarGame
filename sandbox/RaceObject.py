@@ -22,28 +22,32 @@ class RaceObject:
         self.playerRoundsList = [0, 0]
         self.leaderboard = []
 
+        self.countDown = "0"
+
 
 
     def start(self, raceMap: RaceMap):
         if self.maxRounds > 0: # only start wenn the race settings are set
-            self.stopwatchStart = time.time_ns()
-            self.stopwatchRunning = True
-            self.stopwatchCurrentTime = 0
+            self.raceStatus = "startRace"
+            self.startingSequenzTimer = time.time_ns()
 
-            self.checkpointsPerRounds = len(self.raceMap.checkpoints)
+    def startRace(self):
+        self.stopwatchStart = time.time_ns()
+        self.stopwatchRunning = True
+        self.stopwatchCurrentTime = 0
 
-            self.raceStatus = "race"
-            self.raceMap = raceMap
+        self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
-            # position players and create checkpoints list
-            self.playerCheckpointList = []
-            for player in self.players:
-                player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
-                tempList = []
-                for i in range(self.maxRounds):
-                    tempList += self.raceMap.checkpoints
-                self.playerCheckpointList.append(tempList)
+        self.raceStatus = "race"
 
+        # position players and create checkpoints list
+        self.playerCheckpointList = []
+        for player in self.players:
+            player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
+            tempList = []
+            for i in range(self.maxRounds):
+                tempList += self.raceMap.checkpoints
+            self.playerCheckpointList.append(tempList)
 
     def stop(self):
         if self.raceStatus == "race":
@@ -79,6 +83,8 @@ class RaceObject:
         match self.raceStatus:
             case "noRace":
                 pass
+            case "startRace": # starting sequenz
+                self.startingSequenz()
             case "race":
                 self.checkPlayerPassCheckpoint()
                 self.checkPlayerIsDone()
@@ -153,3 +159,17 @@ class RaceObject:
                     self.leaderboard.append(temp)
 
             i += 1
+
+    def startingSequenz(self):
+        #print((time.time_ns() - self.startingSequenzTimer))
+        if (time.time_ns() - self.startingSequenzTimer) < 1000000000:
+            self.countDown = "3"
+        elif (time.time_ns() - self.startingSequenzTimer) < 2000000000:
+            self.countDown = "2"
+        elif (time.time_ns() - self.startingSequenzTimer) < 3000000000:
+            self.countDown = "1"
+        elif (time.time_ns() - self.startingSequenzTimer) < 4000000000:
+            self.countDown = "GO"
+            self.startRace()
+
+
