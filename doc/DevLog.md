@@ -201,21 +201,29 @@ Updated the movement, based on the closest distance off the front rays of a play
 Added a raceObject, which controls the race. Implemented a clock in the raceObject.
 
 
-## 08.01.2024
+## 08.02.2024
 
 Updated the raceObject and added keys to controll the race.
 
 
+## 09.02.2024
+
+Implemented the checkpoints to the raceObject.
 
 
+## 10.02.2024
+
+Implemented the display of the current round of the 2 players.
 
 
+## 11.02.2024
+
+Added a Leaderboard system and started displaying it.
 
 
+## 12.02.2024
 
-
-
-
+Added text display of the leaderboard.
 
 
 
