@@ -106,6 +106,9 @@ class GameDisplay(threading.Thread):
         if self.CO.raceObject.raceStatus == "raceOver":
             self.drawLeaderboard()
 
+        # draw paused screen
+        if self.CO.raceObject.raceStatus == "paused":
+            self.drawPaused()
 
     def drawMap(self):
         self.myMap = self.CO.mapController.getCurrentMap().myMap
@@ -186,26 +189,26 @@ class GameDisplay(threading.Thread):
             self.screen.blit(text, (self.textPosition[0], self.textPosition[1] + (line * newTextSize)))
 
     def drawRoundsText(self):
-        newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)
-        positionX = (5 * self.windowWidth) / 1600
-        positionY = (870 * self.windowHeight) / 900
-
+        newTextSize = int((40 * self.windowWidth) / 2000)
         text = str(self.CO.raceObject.playerRoundsList[0]) + " / " + str(self.CO.raceObject.maxRounds)
 
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
         text = font.render(text, True, (255, 255, 255))
-        self.screen.blit(text, (positionX, positionY))
+        #self.screen.blit(text, (positionX, positionY))
+        newRect = text.get_rect()
+        newRect.bottomleft = (newTextSize/5, self.windowHeight)
+        self.screen.blit(text, newRect)
+
 
         if self.CO.raceObject.mode == "multiplayer":
-            newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)
-            positionX = (1545 * self.windowWidth) / 1600
-            positionY = (870 * self.windowHeight) / 900
-
             text = str(self.CO.raceObject.playerRoundsList[1]) + " / " + str(self.CO.raceObject.maxRounds)
 
             font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
             text = font.render(text, True, (255, 255, 255))
-            self.screen.blit(text, (positionX, positionY))
+            #self.screen.blit(text, (positionX, positionY))
+            newRect = text.get_rect()
+            newRect.bottomright = (self.windowWidth - (newTextSize / 5), self.windowHeight)
+            self.screen.blit(text, newRect)
 
     def drawLeaderboard(self):
         # rectangle
@@ -260,26 +263,52 @@ class GameDisplay(threading.Thread):
         newRect.center = (self.windowWidth / 2), (self.windowHeight / 2)
         self.screen.blit(text, newRect)
 
+    def drawPaused(self):
+        # rectangle
+        x = (400 * self.windowWidth) / 1600
+        y = (200 * self.windowHeight) / 900
+        sizeWidth = (800 * self.windowWidth) / 1600
+        sizeHeight = (500 * self.windowHeight) / 900
+        rectangle = pygame.Rect(x, y, sizeWidth, sizeHeight)
+
+        pygame.draw.rect(self.screen, (128, 128, 128), rectangle)
+
+        # text
+        newTextSize = int((50 * self.windowWidth) / 2000)
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+
+        text = font.render("Paused", True, (255, 255, 255))
+        newRect = text.get_rect()
+        newRect.centerx = rectangle.centerx
+        newRect.y = rectangle.y + (newTextSize / 2)
+        self.screen.blit(text, newRect)
+
+
     def drawPlayers(self):
+        i = 0
         for player in self.CO.players:
-            x = (player.x * self.windowWidth) / player.scaleWidth
-            y = (player.y * self.windowHeight) / player.scaleHeight
-            playerSizeWidth = (20 * self.windowWidth) / player.scaleSizeWidth
-            playerSizeHeight = (20 * self.windowHeight) / player.scaleSizeHeight
-            pygame.draw.rect(self.screen, player.color,
-                             pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
-                                         playerSizeWidth, playerSizeHeight))
+            if (self.CO.currentMode == "singleplayer" and i == 0) or self.CO.currentMode == "multiplayer":
+                x = (player.x * self.windowWidth) / player.scaleWidth
+                y = (player.y * self.windowHeight) / player.scaleHeight
+                playerSizeWidth = (20 * self.windowWidth) / player.scaleSizeWidth
+                playerSizeHeight = (20 * self.windowHeight) / player.scaleSizeHeight
+                pygame.draw.rect(self.screen, player.color,
+                                 pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
+                                             playerSizeWidth, playerSizeHeight))
+            i += 1
 
     def drawPlayerRays(self):
+        i = 0
         for player in self.CO.players:
-            for ray in player.frontRays:
-                rayLengthX = (ray.length * self.windowWidth) / 1600
-                rayLengthY = (ray.length * self.windowHeight) / 900
-                x1 = (player.x * self.windowWidth) / player.scaleWidth
-                y1 = (player.y * self.windowHeight) / player.scaleHeight
-                x2 = x1 + rayLengthX * np.cos(np.deg2rad(ray.direction))
-                y2 = y1 + rayLengthY * np.sin(np.deg2rad(ray.direction))
-                pygame.draw.line(self.screen, player.color, (x1, y1), (x2, y2), 4)
-
+            if (self.CO.currentMode == "singleplayer" and i == 0) or self.CO.currentMode == "multiplayer":
+                for ray in player.frontRays:
+                    rayLengthX = (ray.length * self.windowWidth) / 1600
+                    rayLengthY = (ray.length * self.windowHeight) / 900
+                    x1 = (player.x * self.windowWidth) / player.scaleWidth
+                    y1 = (player.y * self.windowHeight) / player.scaleHeight
+                    x2 = x1 + rayLengthX * np.cos(np.deg2rad(ray.direction))
+                    y2 = y1 + rayLengthY * np.sin(np.deg2rad(ray.direction))
+                    pygame.draw.line(self.screen, player.color, (x1, y1), (x2, y2), 4)
+            i += 1
 
 

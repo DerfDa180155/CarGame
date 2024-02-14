@@ -70,7 +70,6 @@ class GameMain:
 
         self.players = []
         self.players.append(Player.Player(100, 100, 0))
-        self.players.append(Player.Player(100, 200, 0))
 
         self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0])
 
@@ -127,8 +126,9 @@ class GameMain:
                         elif self.CO.gameStatus == "selectMap":
                             self.CO.gameStatus = "selectMode"
                         elif self.CO.gameStatus == "race":
-                            self.CO.gameStatus = "selectMap" # for testing, will be changed in the future (with pause menu)
-                    if event.key == pygame.K_m: # switch status (only for testing)
+                            #self.CO.gameStatus = "selectMap"
+                            self.CO.raceObject.togglePause()
+                    elif event.key == pygame.K_m: # switch status (only for testing)
                         if self.CO.gameStatus == "menu":
                             self.CO.gameStatus = "generateMap"
                         elif self.CO.gameStatus == "generateMap":
@@ -140,10 +140,6 @@ class GameMain:
                         testMap = self.CO.mapController.generateNewMap(x, y)
                         print("Name: " + testMap.name + "\nMap: " + str(testMap.myMap))
                         self.CO.players[0].reset(x=testMap.playerStartX, y=testMap.playerStartY, direction=testMap.playerStartDirection)
-                    elif event.key == pygame.K_l and self.CO.gameStatus == "generateMap":
-                        pass # maybe no longer needed, because of the new map controller
-                        #self.CO.WFC.myMap = self.mapCleaner.cleanMap(self.CO.WFC.myMap)
-                        #print("cleaned Map:\n" + str(self.CO.WFC.myMap))
 
             # get pressed Keys
             keys = pygame.key.get_pressed()
@@ -167,6 +163,10 @@ class GameMain:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
                             self.CO.currentMode = button.action
                             self.CO.raceObject.mode = button.action
+                            if button.action == "singleplayer" and len(self.CO.players) == 2:
+                                self.CO.players.pop(1)
+                            elif button.action == "multiplayer" and len(self.CO.players) == 1:
+                                self.CO.players.append(Player.Player(0, 0, 0))
                             self.CO.gameStatus = "selectMap"
                             print(self.CO.currentMode)
                 case "selectMap":
@@ -182,12 +182,10 @@ class GameMain:
                             self.CO.mapController.currentMapIndex = button.action
                             print(button.action)
                             self.CO.gameStatus = "race"
-                            self.CO.players[0].reset(x=self.CO.mapController.getCurrentMap().playerStartX,
-                                                     y=self.CO.mapController.getCurrentMap().playerStartY,
-                                                     direction=self.CO.mapController.getCurrentMap().playerStartDirection)
-                            self.CO.players[1].reset(x=self.CO.mapController.getCurrentMap().playerStartX,
-                                                     y=self.CO.mapController.getCurrentMap().playerStartY,
-                                                     direction=self.CO.mapController.getCurrentMap().playerStartDirection)
+                            for player in self.CO.players:
+                                player.reset(x=self.CO.mapController.getCurrentMap().playerStartX,
+                                             y=self.CO.mapController.getCurrentMap().playerStartY,
+                                             direction=self.CO.mapController.getCurrentMap().playerStartDirection)
                             self.CO.raceObject.reset()
                             #self.CO.raceObject.start()
                 case "race":

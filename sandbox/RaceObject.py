@@ -24,10 +24,17 @@ class RaceObject:
 
         self.countDown = "0"
 
-
+    def togglePause(self):
+        if self.raceStatus == "race":
+            print("stop")
+            self.stop()
+        elif self.raceStatus == "paused":
+            print("resume")
+            self.resume()
 
     def start(self, raceMap: RaceMap):
         if self.maxRounds > 0: # only start wenn the race settings are set
+            self.raceMap = raceMap
             self.raceStatus = "startRace"
             self.startingSequenzTimer = time.time_ns()
 
