@@ -105,6 +105,9 @@ class GameDisplay(threading.Thread):
         # draw leaderboard
         if self.CO.raceObject.raceStatus == "raceOver":
             self.drawLeaderboard()
+            # draw buttons
+            for button in self.CO.leaderboardButtons:
+                button.draw(self.windowWidth, self.windowHeight)
 
         # draw paused screen
         if self.CO.raceObject.raceStatus == "paused":

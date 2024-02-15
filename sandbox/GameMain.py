@@ -86,6 +86,10 @@ class GameMain:
         self.multiPlayerButton = Button.Button(self.screen, 100, 300, 150, self.crossing, "multiplayer")
         self.gameModeButtons = [self.singlePlayerButton, self.multiPlayerButton]
 
+        self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
+        self.restartButton = Button.Button(self.screen, 875, 625, 50, self.topRight, "restart")
+        self.leaderboardButtons = [self.choseMap, self.restartButton]
+
         self.mapButtons = []
         self.imageMapSize = 200
         self.locations = [[100, 100], [400, 100], [700, 100], [1000, 100], [1300, 100],
@@ -100,7 +104,7 @@ class GameMain:
                                                           mapController=self.mapController, players=self.players,
                                                           raceObject=self.raceObject, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,
-                                                          mapButtons=self.mapButtons, currentMode="singleplayer")
+                                                          mapButtons=self.mapButtons, leaderboardButtons=self.leaderboardButtons, currentMode="singleplayer")
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
@@ -232,6 +236,13 @@ class GameMain:
                             player.update()
                             # update ray length
                             player.updateRays(self.CO.mapController.getCurrentMap().boundsMap)
+                    elif self.CO.raceObject.raceStatus == "raceOver":
+                        for button in self.CO.leaderboardButtons:
+                            if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                                if button.action == "restart":
+                                    self.CO.raceObject.reset()
+                                elif button.action == "choseMap":
+                                    self.CO.gameStatus = "selectMap"
 
 
                     # TODO
