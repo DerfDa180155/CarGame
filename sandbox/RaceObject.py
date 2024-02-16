@@ -26,10 +26,8 @@ class RaceObject:
 
     def togglePause(self):
         if self.raceStatus == "race":
-            print("stop")
             self.stop()
         elif self.raceStatus == "paused":
-            print("resume")
             self.resume()
 
     def start(self, raceMap: RaceMap):
@@ -37,6 +35,15 @@ class RaceObject:
             self.raceMap = raceMap
             self.raceStatus = "startRace"
             self.startingSequenzTimer = time.time_ns()
+
+            # position players and create checkpoints list
+            self.playerCheckpointList = []
+            for player in self.players:
+                player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
+                tempList = []
+                for i in range(self.maxRounds):
+                    tempList += self.raceMap.checkpoints
+                self.playerCheckpointList.append(tempList)
 
     def startRace(self):
         self.stopwatchStart = time.time_ns()
@@ -46,15 +53,6 @@ class RaceObject:
         self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
         self.raceStatus = "race"
-
-        # position players and create checkpoints list
-        self.playerCheckpointList = []
-        for player in self.players:
-            player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
-            tempList = []
-            for i in range(self.maxRounds):
-                tempList += self.raceMap.checkpoints
-            self.playerCheckpointList.append(tempList)
 
     def stop(self):
         if self.raceStatus == "race":
@@ -82,6 +80,11 @@ class RaceObject:
         self.playerMaxItemCount = 0
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]
+        self.leaderboard = []
+
+        # position players
+        for player in self.players:
+            player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
 
     def update(self):
         if self.stopwatchRunning:

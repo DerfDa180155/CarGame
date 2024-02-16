@@ -112,6 +112,9 @@ class GameDisplay(threading.Thread):
         # draw paused screen
         if self.CO.raceObject.raceStatus == "paused":
             self.drawPaused()
+            # draw buttons
+            for button in self.CO.pauseButtons:
+                button.draw(self.windowWidth, self.windowHeight)
 
     def drawMap(self):
         self.myMap = self.CO.mapController.getCurrentMap().myMap

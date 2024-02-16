@@ -90,6 +90,11 @@ class GameMain:
         self.restartButton = Button.Button(self.screen, 875, 625, 50, self.topRight, "restart")
         self.leaderboardButtons = [self.choseMap, self.restartButton]
 
+        self.mainMenu = Button.Button(self.screen, 650, 625, 50, self.topLeft, "mainMenu")
+        self.restartButton = Button.Button(self.screen, 775, 625, 50, self.topRight, "restart")
+        self.resumeButton = Button.Button(self.screen, 900, 625, 50, self.topRight, "resume")
+        self.pauseButtons = [self.mainMenu, self.restartButton, self.resumeButton]
+
         self.mapButtons = []
         self.imageMapSize = 200
         self.locations = [[100, 100], [400, 100], [700, 100], [1000, 100], [1300, 100],
@@ -104,7 +109,9 @@ class GameMain:
                                                           mapController=self.mapController, players=self.players,
                                                           raceObject=self.raceObject, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,
-                                                          mapButtons=self.mapButtons, leaderboardButtons=self.leaderboardButtons, currentMode="singleplayer")
+                                                          mapButtons=self.mapButtons,
+                                                          leaderboardButtons=self.leaderboardButtons,
+                                                          pauseButtons=self.pauseButtons, currentMode="singleplayer")
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
@@ -243,6 +250,15 @@ class GameMain:
                                     self.CO.raceObject.reset()
                                 elif button.action == "choseMap":
                                     self.CO.gameStatus = "selectMap"
+                    elif self.CO.raceObject.raceStatus == "paused":
+                        for button in self.CO.pauseButtons:
+                            if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                                if button.action == "resume":
+                                    self.CO.raceObject.resume()
+                                elif button.action == "restart":
+                                    self.CO.raceObject.reset()
+                                elif button.action == "mainMenu":
+                                    self.CO.gameStatus = "menu"
 
 
                     # TODO
