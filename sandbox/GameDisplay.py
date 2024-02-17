@@ -76,6 +76,17 @@ class GameDisplay(threading.Thread):
         # draw buttons
         for button in self.CO.mapButtons:
             button.draw(self.windowWidth, self.windowHeight)
+            # draw name of map on button
+            newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000) # scale text size
+            newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600) # scale x
+            newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900) # scale y
+            font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+            text = font.render(str(self.CO.mapController.maps[int(button.action)].name), True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.center = newX, newY # center text
+            self.screen.blit(text, newRect)
+
+
 
     def drawRace(self):
         self.screen.fill((100, 100, 250))  # background
