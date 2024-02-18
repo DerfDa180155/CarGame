@@ -22,7 +22,8 @@ class RaceObject:
         self.playerRoundsList = [0, 0]
         self.leaderboard = []
 
-        self.countDown = "0"
+        self.countDown = "-"
+        self.drawCounter = False
 
     def togglePause(self):
         if self.raceStatus == "race":
@@ -35,6 +36,8 @@ class RaceObject:
             self.raceMap = raceMap
             self.raceStatus = "startRace"
             self.startingSequenzTimer = time.time_ns()
+
+            self.drawCounter = True
 
             # position players and create checkpoints list
             self.playerCheckpointList = []
@@ -82,6 +85,9 @@ class RaceObject:
         self.playerRoundsList = [0, 0]
         self.leaderboard = []
 
+        self.countDown = "-"
+        self.drawCounter = False
+
         # position players
         for player in self.players:
             player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
@@ -89,6 +95,9 @@ class RaceObject:
     def update(self):
         if self.stopwatchRunning:
             self.stopwatch = time.time_ns() + self.stopwatchCurrentTime - self.stopwatchStart
+
+        if self.drawCounter:
+            self.startingSequenz()
 
         match self.raceStatus:
             case "noRace":
@@ -181,5 +190,8 @@ class RaceObject:
         elif (time.time_ns() - self.startingSequenzTimer) < 4000000000:
             self.countDown = "GO"
             self.startRace()
+        elif (time.time_ns() - self.startingSequenzTimer) < 5000000000:
+            self.countDown = "-"
+            self.drawCounter = False
 
 

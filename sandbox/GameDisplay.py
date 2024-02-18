@@ -17,16 +17,12 @@ class GameDisplay(threading.Thread):
         self.windowWidth = self.screen.get_width()
         self.windowHeight = self.screen.get_height()
 
-        #self.hs = pygame.Surface((self.windowWidth, self.windowHeight), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.OPENGL)
-
         self.running = True
 
     def run(self):
         while self.running:
-
             self.windowWidth = self.screen.get_width()
             self.windowHeight = self.screen.get_height()
-            # self.hs = pygame.Surface((self.windowWidth, self.windowHeight), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.OPENGL)
 
             match self.CO.gameStatus:
                 case "menu":
@@ -47,7 +43,6 @@ class GameDisplay(threading.Thread):
 
             # print Text
             self.drawText()
-            #self.screen.blit(self.hs, (0, 0))
 
             # update Display
             pygame.display.flip()
@@ -86,8 +81,6 @@ class GameDisplay(threading.Thread):
             newRect.center = newX, newY # center text
             self.screen.blit(text, newRect)
 
-
-
     def drawRace(self):
         self.screen.fill((100, 100, 250))  # background
 
@@ -110,7 +103,7 @@ class GameDisplay(threading.Thread):
         self.drawPlayerRays()
 
         # draw starting sequenz
-        if self.CO.raceObject.raceStatus == "startRace":
+        if self.CO.raceObject.raceStatus == "startRace" or (self.CO.raceObject.raceStatus == "race" and self.CO.raceObject.drawCounter):
             self.drawStartingSequenz()
 
         # draw leaderboard
@@ -299,7 +292,6 @@ class GameDisplay(threading.Thread):
         newRect.centerx = rectangle.centerx
         newRect.y = rectangle.y + (newTextSize / 2)
         self.screen.blit(text, newRect)
-
 
     def drawPlayers(self):
         i = 0

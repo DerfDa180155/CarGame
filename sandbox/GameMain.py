@@ -198,7 +198,7 @@ class GameMain:
                                              y=self.CO.mapController.getCurrentMap().playerStartY,
                                              direction=self.CO.mapController.getCurrentMap().playerStartDirection)
                             self.CO.raceObject.reset()
-                            #self.CO.raceObject.start()
+
                 case "race":
                     # update raceObject
                     self.CO.raceObject.update()
@@ -243,7 +243,7 @@ class GameMain:
                             player.update()
                             # update ray length
                             player.updateRays(self.CO.mapController.getCurrentMap().boundsMap)
-                    elif self.CO.raceObject.raceStatus == "raceOver":
+                    elif self.CO.raceObject.raceStatus == "raceOver": # leaderboard buttons
                         for button in self.CO.leaderboardButtons:
                             if button.clicked(mx, my, pygame.mouse.get_pressed()):
                                 if button.action == "restart":
@@ -251,7 +251,7 @@ class GameMain:
                                 elif button.action == "choseMap":
                                     self.CO.gameStatus = "selectMap"
                     elif self.CO.raceObject.raceStatus == "paused":
-                        for button in self.CO.pauseButtons:
+                        for button in self.CO.pauseButtons: # paused menu buttons
                             if button.clicked(mx, my, pygame.mouse.get_pressed()):
                                 if button.action == "resume":
                                     self.CO.raceObject.resume()
@@ -260,11 +260,6 @@ class GameMain:
                                 elif button.action == "mainMenu":
                                     self.CO.gameStatus = "menu"
 
-
-                    # TODO
-                    # Bots movement
-                    # round counter
-                    # ...
 
 
             if self.CO.gameStatus == "generateMap":
