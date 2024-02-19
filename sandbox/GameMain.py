@@ -221,9 +221,9 @@ class GameMain:
                             if keys[pygame.K_RIGHT] or keys[pygame.K_d]:  # turn right
                                 self.CO.players[0].changeDir(1)
                             if keys[pygame.K_UP] or keys[pygame.K_w]:  # move forward
-                                self.CO.players[0].move(0)
+                                self.CO.players[0].move(True)
                             if keys[pygame.K_DOWN] or keys[pygame.K_s]:  # move backward
-                                self.CO.players[0].move(1)
+                                self.CO.players[0].move(False)
                         elif self.CO.currentMode == "multiplayer":
                             i = 0
                             for player in self.CO.players:
@@ -233,9 +233,9 @@ class GameMain:
                                     if keys[pygame.K_RIGHT] and i == 1 or keys[pygame.K_d] and i == 0:  # turn right
                                         player.changeDir(1)
                                     if keys[pygame.K_UP] and i == 1 or keys[pygame.K_w] and i == 0:  # move forward
-                                        player.move(0)
+                                        player.move(True)
                                     if keys[pygame.K_DOWN] and i == 1 or keys[pygame.K_s] and i == 0:  # move backward
-                                        player.move(1)
+                                        player.move(False)
                                 i += 1
 
                         # update the players (position, speed, rays, ..)
@@ -269,9 +269,11 @@ class GameMain:
                 if keys[pygame.K_RIGHT] or keys[pygame.K_d]: # turn right
                     self.CO.players[0].changeDir(1)
                 if keys[pygame.K_UP] or keys[pygame.K_w]: # move forward
-                    self.CO.players[0].move(0)
+                    self.CO.players[0].move(True)
                 if keys[pygame.K_DOWN] or keys[pygame.K_s]: # move backward
-                    self.CO.players[0].move(1)
+                    self.CO.players[0].move(False)
+
+                self.CO.players[0].update()
 
 
 
