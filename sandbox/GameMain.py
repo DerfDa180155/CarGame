@@ -217,9 +217,9 @@ class GameMain:
                         # movement keys pressed --> Update players
                         if self.CO.currentMode == "singleplayer" and not self.CO.players[0].isDone:
                             if keys[pygame.K_LEFT] or keys[pygame.K_a]:  # turn left
-                                self.CO.players[0].changeDir(-1)
+                                self.CO.players[0].changeDir(False)
                             if keys[pygame.K_RIGHT] or keys[pygame.K_d]:  # turn right
-                                self.CO.players[0].changeDir(1)
+                                self.CO.players[0].changeDir(True)
                             if keys[pygame.K_UP] or keys[pygame.K_w]:  # move forward
                                 self.CO.players[0].move(True)
                             if keys[pygame.K_DOWN] or keys[pygame.K_s]:  # move backward
@@ -229,9 +229,9 @@ class GameMain:
                             for player in self.CO.players:
                                 if not player.isDone:
                                     if keys[pygame.K_LEFT] and i == 1 or keys[pygame.K_a] and i == 0:  # turn left
-                                        player.changeDir(-1)
+                                        player.changeDir(False)
                                     if keys[pygame.K_RIGHT] and i == 1 or keys[pygame.K_d] and i == 0:  # turn right
-                                        player.changeDir(1)
+                                        player.changeDir(True)
                                     if keys[pygame.K_UP] and i == 1 or keys[pygame.K_w] and i == 0:  # move forward
                                         player.move(True)
                                     if keys[pygame.K_DOWN] and i == 1 or keys[pygame.K_s] and i == 0:  # move backward
@@ -265,9 +265,9 @@ class GameMain:
             if self.CO.gameStatus == "generateMap":
                 # movement keys pressed --> Update player
                 if keys[pygame.K_LEFT] or keys[pygame.K_a]: # turn left
-                    self.CO.players[0].changeDir(-1)
+                    self.CO.players[0].changeDir(False)
                 if keys[pygame.K_RIGHT] or keys[pygame.K_d]: # turn right
-                    self.CO.players[0].changeDir(1)
+                    self.CO.players[0].changeDir(True)
                 if keys[pygame.K_UP] or keys[pygame.K_w]: # move forward
                     self.CO.players[0].move(True)
                 if keys[pygame.K_DOWN] or keys[pygame.K_s]: # move backward

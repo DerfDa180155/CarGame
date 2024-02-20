@@ -26,6 +26,8 @@ class Player:
         self.speed = 0
         self.acc = 0
         self.isMoving = False
+        self.isSteeringLeft = False
+        self.isSteeringRight = False
 
         self.isDone = False # for the race
 
@@ -41,6 +43,8 @@ class Player:
         self.speed = 0
         self.acc = 0
         self.isMoving = False
+        self.isSteeringLeft = False
+        self.isSteeringRight = False
         self.isDone = False  # for the race
 
     def updateRays(self, bounds: array):
@@ -54,8 +58,18 @@ class Player:
         else:
             self.acc -= 1
 
-    def changeDir(self, direction: int):
-        self.direction += direction
+    def changeDir(self, right: bool):
+        changeDir = 0
+
+        if self.speed != 0:
+            changeDir = 0.7
+
+        if right:
+            self.direction += changeDir
+            self.isSteeringRight = True
+        else:
+            self.direction -= changeDir
+            self.isSteeringLeft = True
 
     def update(self):
         # car physics
@@ -88,8 +102,8 @@ class Player:
         elif self.acc > self.maxAcc:
             self.acc = self.maxAcc
 
-        print(self.speed)
-        print(self.acc)
+        #print(self.speed)
+        #print(self.acc)
 
 
         # bounds check
@@ -97,14 +111,27 @@ class Player:
         for ray in self.frontRays:
             if ray.length <= 10:
                 checkMove = False
-        checkMove = True
-        if checkMove:
+        moved = False
+        if checkMove or (self.acc < 0):
             # update coordinates based on direction and speed
             self.x += (self.speed / 100) * np.cos(np.deg2rad(self.direction))
             self.y += (self.speed / 100) * np.sin(np.deg2rad(self.direction))
+            moved = True
         else:
             self.speed = 0
             self.acc = 0
+
+        # sliding
+        if moved:
+            if self.isSteeringRight and np.abs(self.speed) > 30:
+                self.x -= (self.speed / 400) * np.cos(np.deg2rad(self.direction + 90))
+                self.y -= (self.speed / 400) * np.sin(np.deg2rad(self.direction + 90))
+            if self.isSteeringLeft:
+                self.x -= (self.speed / 400) * np.cos(np.deg2rad(self.direction - 90))
+                self.y -= (self.speed / 400) * np.sin(np.deg2rad(self.direction - 90))
+
+        self.isSteeringRight = False
+        self.isSteeringLeft = False
 
         # Rays update
         i = self.frontRaysViewAngle / (-2)
