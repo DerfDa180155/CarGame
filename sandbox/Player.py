@@ -22,12 +22,14 @@ class Player:
         self.frontRays = []
 
         self.maxSpeed = 150
+        self.currentMaxSpeed = self.maxSpeed
         self.maxAcc = 30
         self.speed = 0
         self.acc = 0
         self.isMoving = False
         self.isSteeringLeft = False
         self.isSteeringRight = False
+        self.countSteering = 0
 
         self.isDone = False # for the race
 
@@ -45,6 +47,9 @@ class Player:
         self.isMoving = False
         self.isSteeringLeft = False
         self.isSteeringRight = False
+        self.countSteering = 0
+        self.currentMaxSpeed = self.maxSpeed
+
         self.isDone = False  # for the race
 
     def updateRays(self, bounds: array):
@@ -91,10 +96,10 @@ class Player:
             self.isMoving = False
 
         # speed limiter
-        if self.speed < (-self.maxSpeed / 2):
-            self.speed = -self.maxSpeed / 2
-        elif self.speed > self.maxSpeed:
-            self.speed = self.maxSpeed
+        if self.speed < (-self.currentMaxSpeed / 2):
+            self.speed = -self.currentMaxSpeed / 2
+        elif self.speed > self.currentMaxSpeed:
+            self.speed = self.currentMaxSpeed
 
         # acc limiter
         if self.acc < (-self.maxAcc / 1.5):
@@ -112,6 +117,7 @@ class Player:
             if ray.length <= 10:
                 checkMove = False
         moved = False
+        #checkMove = True
         if checkMove or (self.acc < 0):
             # update coordinates based on direction and speed
             self.x += (self.speed / 100) * np.cos(np.deg2rad(self.direction))
@@ -123,12 +129,26 @@ class Player:
 
         # sliding
         if moved:
-            if self.isSteeringRight and np.abs(self.speed) > 30:
+            if self.isSteeringRight and not self.isSteeringLeft and np.abs(self.speed) > 30:
                 self.x -= (self.speed / 400) * np.cos(np.deg2rad(self.direction + 90))
                 self.y -= (self.speed / 400) * np.sin(np.deg2rad(self.direction + 90))
-            if self.isSteeringLeft:
+                self.countSteering += 1
+            elif self.isSteeringLeft and not self.isSteeringRight and np.abs(self.speed) > 30:
                 self.x -= (self.speed / 400) * np.cos(np.deg2rad(self.direction - 90))
                 self.y -= (self.speed / 400) * np.sin(np.deg2rad(self.direction - 90))
+                self.countSteering += 1
+            else:
+                self.countSteering = 0
+        else:
+            self.countSteering = 0
+
+        # more max speed after steering
+        if self.countSteering > 30:
+            self.currentMaxSpeed += 0.1
+        elif self.currentMaxSpeed > self.maxSpeed:
+            self.currentMaxSpeed -= 0.1
+        elif self.currentMaxSpeed < self.maxSpeed:
+            self.currentMaxSpeed = self.maxSpeed
 
         self.isSteeringRight = False
         self.isSteeringLeft = False
