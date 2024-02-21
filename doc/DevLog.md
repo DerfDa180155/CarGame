@@ -203,7 +203,7 @@ Added a raceObject, which controls the race. Implemented a clock in the raceObje
 
 ## 08.02.2024
 
-Updated the raceObject and added keys to controll the race.
+Updated the raceObject and added keys to control the race.
 
 
 ## 09.02.2024
@@ -218,12 +218,71 @@ Implemented the display of the current round of the 2 players.
 
 ## 11.02.2024
 
-Added a Leaderboard system and started displaying it.
+Added a leaderboard system and started displaying it.
 
 
 ## 12.02.2024
 
 Added text display of the leaderboard.
+
+
+## 13.02.2024
+
+Added a starting countdown to the race.
+
+
+## 14.02.2024
+
+Added a pause menu during a race.
+
+
+## 15.02.2024
+
+Added two buttons to the leaderboard. One button restarts the race and the other opens the map selector.
+
+
+## 16.02.2024
+
+Added three buttons to the pause menu. These buttons restart the race, resume the race and quit the race and return to the main menu.
+
+
+## 17.02.2024
+
+Added text on the map buttons to display the name of the map.
+
+
+## 18.02.2024
+
+Updated the start countdown, to display the entire countdown.
+
+
+## 19.02.2024
+
+Updated the player movement. Added acceleration to change the speed of the player.
+
+
+## 20.02.2024
+
+Updated the player steering. Added a slight slide for the player when steering.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
