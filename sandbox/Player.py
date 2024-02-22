@@ -118,7 +118,7 @@ class Player:
                 checkMove = False
         moved = False
         #checkMove = True
-        if checkMove or (self.acc < 0):
+        if checkMove or (self.speed < 0):
             # update coordinates based on direction and speed
             self.x += (self.speed / 100) * np.cos(np.deg2rad(self.direction))
             self.y += (self.speed / 100) * np.sin(np.deg2rad(self.direction))
@@ -138,15 +138,18 @@ class Player:
                 self.y -= (self.speed / 400) * np.sin(np.deg2rad(self.direction - 90))
                 self.countSteering += 1
             else:
+                if self.countSteering > 30:
+                    self.currentMaxSpeed += self.countSteering / 5
+                    self.speed += self.countSteering / 5
                 self.countSteering = 0
         else:
             self.countSteering = 0
 
         # more max speed after steering
-        if self.countSteering > 30:
-            self.currentMaxSpeed += 0.1
-        elif self.currentMaxSpeed > self.maxSpeed:
-            self.currentMaxSpeed -= 0.1
+        #if self.countSteering > 30:
+        #    self.currentMaxSpeed += 0.1
+        if self.currentMaxSpeed > self.maxSpeed:
+            self.currentMaxSpeed -= 0.2
         elif self.currentMaxSpeed < self.maxSpeed:
             self.currentMaxSpeed = self.maxSpeed
 

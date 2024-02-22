@@ -33,6 +33,8 @@ class RaceObject:
 
     def start(self, raceMap: RaceMap):
         if self.maxRounds > 0: # only start wenn the race settings are set
+            self.reset()
+
             self.raceMap = raceMap
             self.raceStatus = "startRace"
             self.startingSequenzTimer = time.time_ns()

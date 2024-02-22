@@ -93,8 +93,8 @@ class GameDisplay(threading.Thread):
         # draw checkpoints (for testing)
         self.drawCheckpoints()
 
-        # draw text
-        self.drawRoundsText()
+        # draw player stats text
+        self.drawPlayerStatsText()
 
         # draw player
         self.drawPlayers()
@@ -198,27 +198,41 @@ class GameDisplay(threading.Thread):
             text = font.render(displayText[line], True, displayTextColor[line])
             self.screen.blit(text, (self.textPosition[0], self.textPosition[1] + (line * newTextSize)))
 
-    def drawRoundsText(self):
+    def drawPlayerStatsText(self):
         newTextSize = int((40 * self.windowWidth) / 2000)
-        text = str(self.CO.raceObject.playerRoundsList[0]) + " / " + str(self.CO.raceObject.maxRounds)
 
+        # rounds
+        text = str(self.CO.raceObject.playerRoundsList[0]) + " / " + str(self.CO.raceObject.maxRounds)
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
         text = font.render(text, True, (255, 255, 255))
-        #self.screen.blit(text, (positionX, positionY))
         newRect = text.get_rect()
         newRect.bottomleft = (newTextSize/5, self.windowHeight)
-        self.screen.blit(text, newRect)
+        self.screen.blit(text, newRect) # rounds
+
+        # speed
+        text = str(round(self.CO.players[0].speed, 1)) + " / " + str(round(self.CO.players[0].currentMaxSpeed, 1))
+        text = font.render(text, True, (255, 255, 255))
+        newRect = text.get_rect()
+        newRect.bottomleft = (newTextSize / 5, self.windowHeight - newTextSize)
+        self.screen.blit(text, newRect) # speed
 
 
         if self.CO.raceObject.mode == "multiplayer":
+            # rounds
             text = str(self.CO.raceObject.playerRoundsList[1]) + " / " + str(self.CO.raceObject.maxRounds)
-
             font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
             text = font.render(text, True, (255, 255, 255))
             #self.screen.blit(text, (positionX, positionY))
             newRect = text.get_rect()
             newRect.bottomright = (self.windowWidth - (newTextSize / 5), self.windowHeight)
-            self.screen.blit(text, newRect)
+            self.screen.blit(text, newRect) # rounds
+
+            # speed
+            text = str(round(self.CO.players[1].speed, 1)) + " / " + str(round(self.CO.players[1].currentMaxSpeed, 1))
+            text = font.render(text, True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.bottomright = (self.windowWidth - (newTextSize / 5), self.windowHeight - newTextSize)
+            self.screen.blit(text, newRect)  # speed
 
     def drawLeaderboard(self):
         # rectangle
