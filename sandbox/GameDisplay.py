@@ -254,6 +254,13 @@ class GameDisplay(threading.Thread):
         newRect.y = rectangle.y + (newTextSize / 2)
         self.screen.blit(text, newRect)
 
+        # map name
+        text = font.render(self.CO.mapController.getCurrentMap().name, True, (255, 255, 255))
+        newRect = text.get_rect()
+        newRect.centerx = rectangle.centerx
+        newRect.y = rectangle.y + (newTextSize / 2) + newTextSize
+        self.screen.blit(text, newRect)
+
         i = 0
         for entry in self.CO.raceObject.leaderboard:
             text = font.render("Player " + str(entry[0]), True, (255, 255, 255))
@@ -305,6 +312,13 @@ class GameDisplay(threading.Thread):
         newRect = text.get_rect()
         newRect.centerx = rectangle.centerx
         newRect.y = rectangle.y + (newTextSize / 2)
+        self.screen.blit(text, newRect)
+
+        # map name
+        text = font.render(self.CO.mapController.getCurrentMap().name, True, (255, 255, 255))
+        newRect = text.get_rect()
+        newRect.centerx = rectangle.centerx
+        newRect.y = rectangle.y + (newTextSize / 2) + newTextSize
         self.screen.blit(text, newRect)
 
     def drawPlayers(self):

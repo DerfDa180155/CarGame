@@ -33,8 +33,6 @@ class RaceObject:
 
     def start(self, raceMap: RaceMap):
         if self.maxRounds > 0: # only start wenn the race settings are set
-            self.reset()
-
             self.raceMap = raceMap
             self.raceStatus = "startRace"
             self.startingSequenzTimer = time.time_ns()
@@ -50,7 +48,11 @@ class RaceObject:
                     tempList += self.raceMap.checkpoints
                 self.playerCheckpointList.append(tempList)
 
+            # reset the old leaderboard
+            self.leaderboard = []
+
     def startRace(self):
+        self.stopwatch = 0
         self.stopwatchStart = time.time_ns()
         self.stopwatchRunning = True
         self.stopwatchCurrentTime = 0
