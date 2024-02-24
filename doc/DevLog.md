@@ -266,12 +266,19 @@ Updated the player movement. Added acceleration to change the speed of the playe
 Updated the player steering. Added a slight slide for the player when steering.
 
 
+## 21.02.2024
+
+Added a speed boost that increase the max speed for a short time. This speedbost is obtained while steering.
 
 
+## 22.02.2024
+
+Updated the speed boost to occur after steering rather than during steering. Balanced the speed and duration of the boost.
 
 
+## 23.02.2024
 
-
+Added map name on pause and leaderboard screen.
 
 
 
