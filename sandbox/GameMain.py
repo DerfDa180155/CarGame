@@ -90,8 +90,8 @@ class GameMain:
         self.gameModeButtons = [self.singlePlayerButton, self.multiPlayerButton]
 
         # race settings buttons
-        self.startRaceButtons = Button.Button(self.screen, 700, 650, 200, self.horizontalLine, "start")
-        self.backButton = Button.Button(self.screen, 50, 750, 100, self.crossing, "back")
+        self.startRaceButtons = Button.Button(self.screen, 750, 720, 150, self.horizontalLine, "start")
+        self.backButton = Button.Button(self.screen, 50, 770, 100, self.crossing, "back")
         self.raceSettingsButtons = [self.startRaceButtons, self.backButton]
 
         # leaderboard buttons
@@ -146,6 +146,8 @@ class GameMain:
                             self.CO.gameStatus = "menu"
                         elif self.CO.gameStatus == "selectMap":
                             self.CO.gameStatus = "selectMode"
+                        elif self.CO.gameStatus == "raceSettings":
+                            self.CO.gameStatus = "selectMap"
                         elif self.CO.gameStatus == "race":
                             #self.CO.gameStatus = "selectMap"
                             self.CO.raceObject.togglePause()

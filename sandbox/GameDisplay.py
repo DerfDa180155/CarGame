@@ -27,7 +27,7 @@ class GameDisplay(threading.Thread):
             match self.CO.gameStatus:
                 case "menu":
                     self.drawMenu()
-                case "generateMap": # for testing
+                case "generateMap":  # for testing
                     self.drawMap()
 
                     # draw Player:
@@ -51,36 +51,36 @@ class GameDisplay(threading.Thread):
             self.CO.FPSClock.tick(self.CO.FPS)  # limit FPS
 
     def drawMenu(self):
-        self.screen.fill((50, 200, 200)) # background
+        self.screen.fill((50, 200, 200))  # background
 
         # draw buttons
         for button in self.CO.menuButtons:
             button.draw(self.windowWidth, self.windowHeight)
 
     def drawSettings(self):
-        self.screen.fill((200, 200, 100)) # background
+        self.screen.fill((200, 200, 100))  # background
 
     def drawModeSelector(self):
-        self.screen.fill((100, 150, 200)) # background
+        self.screen.fill((100, 150, 200))  # background
 
         # draw buttons
         for button in self.CO.gameModeButtons:
             button.draw(self.windowWidth, self.windowHeight)
 
     def drawMapSelector(self):
-        self.screen.fill((100, 150, 250)) # background
+        self.screen.fill((100, 150, 250))  # background
 
         # draw buttons
         for button in self.CO.mapButtons:
             button.draw(self.windowWidth, self.windowHeight)
             # draw name of map on button
-            newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000) # scale text size
-            newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600) # scale x
-            newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900) # scale y
+            newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)  # scale text size
+            newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600)  # scale x
+            newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900)  # scale y
             font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
             text = font.render(str(self.CO.mapController.maps[int(button.action)].name), True, (255, 255, 255))
             newRect = text.get_rect()
-            newRect.center = newX, newY # center text
+            newRect.center = newX, newY  # center text
             self.screen.blit(text, newRect)
 
     def drawRaceSettings(self):
@@ -93,7 +93,7 @@ class GameDisplay(threading.Thread):
         text = font.render(self.CO.mapController.getCurrentMap().name, True, (255, 255, 255))
         newRect = text.get_rect()
         newRect.centerx = self.windowWidth / 2
-        newRect.y = 30
+        newRect.y = newTextSize * 0.5
         self.screen.blit(text, newRect)
 
         settingsText = ["Rounds: ", "MaxSpeed: ", "MaxAcc: ", "Items: ", "Items spawn cooldown: "]
@@ -114,10 +114,33 @@ class GameDisplay(threading.Thread):
             newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
             self.screen.blit(text, newRect)
 
+        # map preview
+        topLeft = [(870*self.windowWidth)/1600, (80*self.windowHeight)/900]
+        bottomRight = [(1570*self.windowWidth)/1600, (750*self.windowHeight)/900]
+        mapWidth = bottomRight[0] - topLeft[0]
+        mapHeight = bottomRight[1] - topLeft[1]
+        myMap = self.CO.mapController.getCurrentMap().myMap
+        # draw Map
+        if myMap != "":
+            for i in range(len(myMap)):
+                for j in range(len(myMap[i])):
+                    self.screen.blit(pygame.transform.scale(self.CO.imageArray[myMap[i][j]],
+                                                            ((mapWidth / len(myMap)) + 1,
+                                                             (mapHeight / len(myMap[i])) + 1)),
+                                     ((mapWidth / len(myMap) * i) + topLeft[0],
+                                      (mapHeight / len(myMap[i]) * j) + topLeft[1]))
+        else:
+            self.screen.fill((50, 200, 200))
+
+        # border
+        pygame.draw.line(self.screen, (0, 0, 0), topLeft, (bottomRight[0], topLeft[1]), int(newTextSize / 15)) # top
+        pygame.draw.line(self.screen, (0, 0, 0), (bottomRight[0], topLeft[1]), bottomRight, int(newTextSize / 15)) # right
+        pygame.draw.line(self.screen, (0, 0, 0), bottomRight, (topLeft[0], bottomRight[1]), int(newTextSize / 15)) # bottom
+        pygame.draw.line(self.screen, (0, 0, 0), (topLeft[0], bottomRight[1]), topLeft, int(newTextSize / 15)) # left
+
         # draw buttons
         for button in self.CO.raceSettingsButtons:
             button.draw(self.windowWidth, self.windowHeight)
-
 
     def drawRace(self):
         self.screen.fill((100, 100, 250))  # background
@@ -141,7 +164,8 @@ class GameDisplay(threading.Thread):
         self.drawPlayerRays()
 
         # draw starting sequenz
-        if self.CO.raceObject.raceStatus == "startRace" or (self.CO.raceObject.raceStatus == "race" and self.CO.raceObject.drawCounter):
+        if self.CO.raceObject.raceStatus == "startRace" or (
+                self.CO.raceObject.raceStatus == "race" and self.CO.raceObject.drawCounter):
             self.drawStartingSequenz()
 
         # draw leaderboard
@@ -199,10 +223,10 @@ class GameDisplay(threading.Thread):
         diffFPS = self.CO.FPS - currentFPS
         if diffFPS < 0:
             diffFPS = 0
-        elif diffFPS > 255/2:
-            diffFPS = 255/2
+        elif diffFPS > 255 / 2:
+            diffFPS = 255 / 2
         displayText.append("FPS: " + str(currentFPS))
-        displayTextColor.append((diffFPS*2, 255-diffFPS*2, 0))
+        displayTextColor.append((diffFPS * 2, 255 - diffFPS * 2, 0))
 
         # TPS Display
         currentTPS = round(self.CO.TPSClock.get_fps(), 1)
@@ -212,7 +236,7 @@ class GameDisplay(threading.Thread):
         elif diffTPS > 255 / 2:
             diffTPS = 255 / 2
         displayText.append("Ticks: " + str(currentTPS))
-        displayTextColor.append((diffTPS*2, 255-diffTPS*2, 0))
+        displayTextColor.append((diffTPS * 2, 255 - diffTPS * 2, 0))
 
         # status Display
         displayText.append("Status: " + self.CO.gameStatus)
@@ -222,8 +246,9 @@ class GameDisplay(threading.Thread):
         if self.CO.gameStatus == "race":
             nanoSeconds = self.CO.raceObject.stopwatch
             seconds = int((nanoSeconds / 1000000000))
-            minutes = int(seconds/60)
-            displayText.append("Time: " + str(minutes).zfill(2) + ":" + str(seconds%60).zfill(2) + ":" + str(int((nanoSeconds/1000000)%1000)).zfill(3))
+            minutes = int(seconds / 60)
+            displayText.append("Time: " + str(minutes).zfill(2) + ":" + str(seconds % 60).zfill(2) + ":" + str(
+                int((nanoSeconds / 1000000) % 1000)).zfill(3))
             displayTextColor.append((255, 255, 0))
 
         return displayText, displayTextColor
@@ -244,26 +269,25 @@ class GameDisplay(threading.Thread):
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
         text = font.render(text, True, (255, 255, 255))
         newRect = text.get_rect()
-        newRect.bottomleft = (newTextSize/5, self.windowHeight)
-        self.screen.blit(text, newRect) # rounds
+        newRect.bottomleft = (newTextSize / 5, self.windowHeight)
+        self.screen.blit(text, newRect)  # rounds
 
         # speed
         text = str(round(self.CO.players[0].speed, 1)) + " / " + str(round(self.CO.players[0].currentMaxSpeed, 1))
         text = font.render(text, True, (255, 255, 255))
         newRect = text.get_rect()
         newRect.bottomleft = (newTextSize / 5, self.windowHeight - newTextSize)
-        self.screen.blit(text, newRect) # speed
-
+        self.screen.blit(text, newRect)  # speed
 
         if self.CO.raceObject.mode == "multiplayer":
             # rounds
             text = str(self.CO.raceObject.playerRoundsList[1]) + " / " + str(self.CO.raceObject.rounds)
             font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
             text = font.render(text, True, (255, 255, 255))
-            #self.screen.blit(text, (positionX, positionY))
+            # self.screen.blit(text, (positionX, positionY))
             newRect = text.get_rect()
             newRect.bottomright = (self.windowWidth - (newTextSize / 5), self.windowHeight)
-            self.screen.blit(text, newRect) # rounds
+            self.screen.blit(text, newRect)  # rounds
 
             # speed
             text = str(round(self.CO.players[1].speed, 1)) + " / " + str(round(self.CO.players[1].currentMaxSpeed, 1))
@@ -311,8 +335,8 @@ class GameDisplay(threading.Thread):
             seconds = int((nanoSec / 1000000000))
             minutes = int(seconds / 60)
 
-            timeText = str(minutes).zfill(2) + ":" + str(seconds % 60).zfill(2) + ":" + str(int((nanoSec / 1000000) % 1000)).zfill(3)
-
+            timeText = str(minutes).zfill(2) + ":" + str(seconds % 60).zfill(2) + ":" + str(
+                int((nanoSec / 1000000) % 1000)).zfill(3)
 
             text = font.render(timeText, True, (255, 255, 255))
             newRect = text.get_rect()
@@ -385,5 +409,3 @@ class GameDisplay(threading.Thread):
                     y2 = y1 + rayLengthY * np.sin(np.deg2rad(ray.direction))
                     pygame.draw.line(self.screen, player.color, (x1, y1), (x2, y2), 4)
             i += 1
-
-
