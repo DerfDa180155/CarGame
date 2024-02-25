@@ -13,7 +13,7 @@ class RaceObject:
         self.raceMap = raceMap
         self.raceStatus = "noRace"
         self.mode = "singleplayer"
-        self.maxRounds = 0
+        self.rounds = 0
         self.playerMaxItemCount = 0
         self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
@@ -32,7 +32,7 @@ class RaceObject:
             self.resume()
 
     def start(self, raceMap: RaceMap):
-        if self.maxRounds > 0: # only start wenn the race settings are set
+        if self.rounds > 0: # only start wenn the race settings are set
             self.raceMap = raceMap
             self.raceStatus = "startRace"
             self.startingSequenzTimer = time.time_ns()
@@ -44,7 +44,7 @@ class RaceObject:
             for player in self.players:
                 player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
                 tempList = []
-                for i in range(self.maxRounds):
+                for i in range(self.rounds):
                     tempList += self.raceMap.checkpoints
                 self.playerCheckpointList.append(tempList)
 
@@ -83,7 +83,7 @@ class RaceObject:
         self.stopwatchRunning = False
 
         self.raceStatus = "noRace"
-        self.maxRounds = 0
+        self.rounds = 0
         self.playerMaxItemCount = 0
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]
@@ -145,8 +145,8 @@ class RaceObject:
         i = 0
         for player in self.players:
             currentRound = 0
-            for j in range(self.maxRounds+1):
-                if (self.maxRounds * self.checkpointsPerRounds) - (self.checkpointsPerRounds * j) >= len(self.playerCheckpointList[i]):
+            for j in range(self.rounds + 1):
+                if (self.rounds * self.checkpointsPerRounds) - (self.checkpointsPerRounds * j) >= len(self.playerCheckpointList[i]):
                     currentRound = j
             self.playerRoundsList[i] = currentRound
 

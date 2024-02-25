@@ -38,6 +38,8 @@ class GameDisplay(threading.Thread):
                     self.drawModeSelector()
                 case "selectMap":
                     self.drawMapSelector()
+                case "raceSettings":
+                    self.drawRaceSettings()
                 case "race":
                     self.drawRace()
 
@@ -80,6 +82,42 @@ class GameDisplay(threading.Thread):
             newRect = text.get_rect()
             newRect.center = newX, newY # center text
             self.screen.blit(text, newRect)
+
+    def drawRaceSettings(self):
+        self.screen.fill((100, 200, 200))  # background
+
+        # display race settings
+        # map name
+        newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+        text = font.render(self.CO.mapController.getCurrentMap().name, True, (255, 255, 255))
+        newRect = text.get_rect()
+        newRect.centerx = self.windowWidth / 2
+        newRect.y = 30
+        self.screen.blit(text, newRect)
+
+        settingsText = ["Rounds: ", "MaxSpeed: ", "MaxAcc: ", "Items: ", "Items spawn cooldown: "]
+        settingsData = [str(self.CO.raceObject.rounds), "-", "-", "-", "-"]
+
+        for i in range(len(settingsText)):
+            # settings Text
+            text = font.render(settingsText[i], True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.x = newTextSize
+            newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
+            self.screen.blit(text, newRect)
+
+            # settings Data
+            text = font.render(settingsData[i], True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.right = newTextSize * 17
+            newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
+            self.screen.blit(text, newRect)
+
+        # draw buttons
+        for button in self.CO.raceSettingsButtons:
+            button.draw(self.windowWidth, self.windowHeight)
+
 
     def drawRace(self):
         self.screen.fill((100, 100, 250))  # background
@@ -202,7 +240,7 @@ class GameDisplay(threading.Thread):
         newTextSize = int((40 * self.windowWidth) / 2000)
 
         # rounds
-        text = str(self.CO.raceObject.playerRoundsList[0]) + " / " + str(self.CO.raceObject.maxRounds)
+        text = str(self.CO.raceObject.playerRoundsList[0]) + " / " + str(self.CO.raceObject.rounds)
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
         text = font.render(text, True, (255, 255, 255))
         newRect = text.get_rect()
@@ -219,7 +257,7 @@ class GameDisplay(threading.Thread):
 
         if self.CO.raceObject.mode == "multiplayer":
             # rounds
-            text = str(self.CO.raceObject.playerRoundsList[1]) + " / " + str(self.CO.raceObject.maxRounds)
+            text = str(self.CO.raceObject.playerRoundsList[1]) + " / " + str(self.CO.raceObject.rounds)
             font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
             text = font.render(text, True, (255, 255, 255))
             #self.screen.blit(text, (positionX, positionY))

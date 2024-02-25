@@ -73,6 +73,8 @@ class GameMain:
 
         self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0])
 
+        # buttons
+        # main menu buttons
         self.testButton = Button.Button(self.screen, 100, 100, 150, self.crossing, "generateMap")
         self.modeSelectButton = Button.Button(self.screen, 100, 300, 150, self.topRight, "selectMode")
         self.mapSelectButton = Button.Button(self.screen, 100, 500, 150, self.topLeft, "selectMap")
@@ -82,14 +84,22 @@ class GameMain:
         self.menuButtons = [self.testButton, self.modeSelectButton, self.mapSelectButton, self.settingsButton,
                             self.linkButton, self.quitButton]
 
+        # game mode buttons
         self.singlePlayerButton = Button.Button(self.screen, 100, 100, 150, self.horizontalLine, "singleplayer")
         self.multiPlayerButton = Button.Button(self.screen, 100, 300, 150, self.crossing, "multiplayer")
         self.gameModeButtons = [self.singlePlayerButton, self.multiPlayerButton]
 
+        # race settings buttons
+        self.startRaceButtons = Button.Button(self.screen, 700, 650, 200, self.horizontalLine, "start")
+        self.backButton = Button.Button(self.screen, 50, 750, 100, self.crossing, "back")
+        self.raceSettingsButtons = [self.startRaceButtons, self.backButton]
+
+        # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
         self.restartButton = Button.Button(self.screen, 875, 625, 50, self.topRight, "restart")
         self.leaderboardButtons = [self.choseMap, self.restartButton]
 
+        # pause buttons
         self.mainMenu = Button.Button(self.screen, 650, 625, 50, self.topLeft, "mainMenu")
         self.restartButton = Button.Button(self.screen, 775, 625, 50, self.topRight, "restart")
         self.resumeButton = Button.Button(self.screen, 900, 625, 50, self.topRight, "resume")
@@ -109,7 +119,7 @@ class GameMain:
                                                           mapController=self.mapController, players=self.players,
                                                           raceObject=self.raceObject, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,
-                                                          mapButtons=self.mapButtons,
+                                                          mapButtons=self.mapButtons, raceSettingsButtons=self.raceSettingsButtons,
                                                           leaderboardButtons=self.leaderboardButtons,
                                                           pauseButtons=self.pauseButtons, currentMode="singleplayer")
 
@@ -192,19 +202,28 @@ class GameMain:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
                             self.CO.mapController.currentMapIndex = button.action
                             print(button.action)
-                            self.CO.gameStatus = "race"
+                            self.CO.gameStatus = "raceSettings"
                             for player in self.CO.players:
                                 player.reset(x=self.CO.mapController.getCurrentMap().playerStartX,
                                              y=self.CO.mapController.getCurrentMap().playerStartY,
                                              direction=self.CO.mapController.getCurrentMap().playerStartDirection)
                             self.CO.raceObject.reset()
+                case "raceSettings":
+                    for button in self.CO.raceSettingsButtons:
+                        if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                            if button.action == "start":
+                                self.CO.gameStatus = "race"
+                                self.CO.raceObject.rounds = 3
+                                self.CO.raceObject.start(self.CO.mapController.getCurrentMap())
+                            elif button.action == "back":
+                                self.CO.gameStatus = "selectMap"
 
                 case "race":
                     # update raceObject
                     self.CO.raceObject.update()
 
                     if keys[pygame.K_t]:
-                        self.CO.raceObject.maxRounds = 3
+                        self.CO.raceObject.rounds = 3
                         self.CO.raceObject.start(self.CO.mapController.getCurrentMap())
                     elif keys[pygame.K_z]:
                         self.CO.raceObject.stop()
