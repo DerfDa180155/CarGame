@@ -13,8 +13,19 @@ class RaceObject:
         self.raceMap = raceMap
         self.raceStatus = "noRace"
         self.mode = "singleplayer"
-        self.rounds = 0
-        self.playerMaxItemCount = 0
+
+        self.defaultRounds = 0
+        self.defaultMaxSpeed = 150
+        self.defaultMaxAcc = 30
+        self.defaultItemsEnabled = False
+        self.defaultItemSpawnCooldown = 0
+
+        self.rounds = self.defaultRounds
+        self.maxSpeed = self.defaultMaxSpeed
+        self.maxAcc = self.defaultMaxAcc
+        self.itemsEnabled = self.defaultItemsEnabled
+        self.itemSpawnCooldown = self.defaultItemSpawnCooldown
+
         self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
         self.players = players
@@ -43,6 +54,8 @@ class RaceObject:
             self.playerCheckpointList = []
             for player in self.players:
                 player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
+                player.maxSpeed = self.maxSpeed
+                player.maxAcc = self.maxAcc
                 tempList = []
                 for i in range(self.rounds):
                     tempList += self.raceMap.checkpoints
@@ -83,8 +96,13 @@ class RaceObject:
         self.stopwatchRunning = False
 
         self.raceStatus = "noRace"
-        self.rounds = 0
-        self.playerMaxItemCount = 0
+
+        self.rounds = self.defaultRounds
+        self.maxSpeed = self.defaultMaxSpeed
+        self.maxAcc = self.defaultMaxAcc
+        self.itemsEnabled = self.defaultItemsEnabled
+        self.itemSpawnCooldown = self.defaultItemSpawnCooldown
+
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]
         self.leaderboard = []
