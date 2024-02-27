@@ -92,7 +92,12 @@ class GameMain:
         # race settings buttons
         self.startRaceButtons = Button.Button(self.screen, 750, 720, 150, self.horizontalLine, "start")
         self.backButton = Button.Button(self.screen, 50, 770, 100, self.crossing, "back")
-        self.raceSettingsButtons = [self.startRaceButtons, self.backButton]
+        self.roundsScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollRounds")
+        self.maxSpeedScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollMaxSpeed")
+        self.maxAccScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollMaxAcc")
+        self.itemsEnabledScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollItemsEnabled")
+        self.itemsSpawnCooldownScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollISC")
+        self.raceSettingsButtons = [self.startRaceButtons, self.backButton, self.roundsScrollButton, self.maxSpeedScrollButton, self.maxAccScrollButton, self.itemsEnabledScrollButton, self.itemsSpawnCooldownScrollButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -131,8 +136,13 @@ class GameMain:
     def run(self):
         # pygame setup
         while self.running:
+            scrolledUp = False
+            scrolledDown = False
             for event in pygame.event.get():
-                if event.type == pygame.QUIT: # Quit the Game
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    scrolledUp = (event.button == 4)
+                    scrolledDown = (event.button == 5)
+                elif event.type == pygame.QUIT: # Quit the Game
                     self.running = False
                     self.gameDisplay.running = False
                 elif event.type == pygame.KEYDOWN:
@@ -214,11 +224,46 @@ class GameMain:
                     for button in self.CO.raceSettingsButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
                             if button.action == "start":
-                                self.CO.gameStatus = "race"
-                                self.CO.raceObject.rounds = 3
-                                self.CO.raceObject.start(self.CO.mapController.getCurrentMap())
+                                if self.CO.raceObject.rounds > 0:
+                                    self.CO.gameStatus = "race"
+                                    self.CO.raceObject.start(self.CO.mapController.getCurrentMap())
                             elif button.action == "back":
                                 self.CO.gameStatus = "selectMap"
+                        if button.hover(mx, my):
+                            match button.action:
+                                case "scrollRounds":
+                                    if scrolledUp:
+                                        self.CO.raceObject.rounds += 1
+                                    elif scrolledDown:
+                                        self.CO.raceObject.rounds -= 1
+                                        if self.CO.raceObject.rounds < 0:
+                                            self.CO.raceObject.rounds = 0
+                                case "scrollMaxSpeed":
+                                    if scrolledUp:
+                                        self.CO.raceObject.maxSpeed += 1
+                                    elif scrolledDown:
+                                        self.CO.raceObject.maxSpeed -= 1
+                                        if self.CO.raceObject.maxSpeed < 0:
+                                            self.CO.raceObject.maxSpeed = 0
+                                case "scrollMaxAcc":
+                                    if scrolledUp:
+                                        self.CO.raceObject.maxAcc += 1
+                                    elif scrolledDown:
+                                        self.CO.raceObject.maxAcc -= 1
+                                        if self.CO.raceObject.maxAcc < 0:
+                                            self.CO.raceObject.maxAcc = 0
+                                case "scrollItemsEnabled":
+                                    if scrolledUp:
+                                        self.CO.raceObject.itemsEnabled = True
+                                    elif scrolledDown:
+                                        self.CO.raceObject.itemsEnabled = False
+                                case "scrollISC":
+                                    if scrolledUp:
+                                        self.CO.raceObject.itemSpawnCooldown += 1
+                                    elif scrolledDown:
+                                        self.CO.raceObject.itemSpawnCooldown -= 1
+                                        if self.CO.raceObject.itemSpawnCooldown < 0:
+                                            self.CO.raceObject.itemSpawnCooldown = 0
 
                 case "race":
                     # update raceObject

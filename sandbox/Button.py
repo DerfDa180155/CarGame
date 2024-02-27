@@ -40,3 +40,7 @@ class Button:
             self.isClicked = False
 
         return self.isClicked
+
+    def hover(self, mx: int, my: int):
+        return self.rect.collidepoint((mx, my))
+

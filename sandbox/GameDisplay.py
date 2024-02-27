@@ -114,6 +114,8 @@ class GameDisplay(threading.Thread):
             newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
             self.screen.blit(text, newRect)
 
+            self.CO.raceSettingsButtons[i+2].y = (newRect.y * 900) / self.windowHeight
+
         # map preview
         topLeft = [(870*self.windowWidth)/1600, (80*self.windowHeight)/900]
         bottomRight = [(1570*self.windowWidth)/1600, (750*self.windowHeight)/900]
