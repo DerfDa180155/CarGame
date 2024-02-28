@@ -385,6 +385,30 @@ class GameDisplay(threading.Thread):
         newRect.y = rectangle.y + (newTextSize / 2) + newTextSize
         self.screen.blit(text, newRect)
 
+        # race settings
+        settingsText = ["Rounds: ", "MaxSpeed: ", "MaxAcc: ", "Items: ", "Items spawn cooldown: "]
+        settingsData = [str(self.CO.raceObject.rounds), str(self.CO.raceObject.maxSpeed),
+                        str(self.CO.raceObject.maxAcc), str(self.CO.raceObject.itemsEnabled),
+                        str(self.CO.raceObject.itemSpawnCooldown)]
+        newTextSize = int((30 * self.windowWidth) / 2000)
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+        x = (430 * self.windowWidth) / 1600
+        y = (300 * self.windowHeight) / 900
+        for i in range(len(settingsText)):
+            # settings Text
+            text = font.render(settingsText[i], True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.x = x
+            newRect.y = y + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
+            self.screen.blit(text, newRect)
+
+            # settings Data
+            text = font.render(settingsData[i], True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.right = x + newTextSize * 16
+            newRect.y = y + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
+            self.screen.blit(text, newRect)
+
     def drawPlayers(self):
         i = 0
         for player in self.CO.players:
