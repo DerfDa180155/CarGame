@@ -32,6 +32,7 @@ class RaceObject:
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]
         self.leaderboard = []
+        self.finishLine = []
 
         self.countDown = "-"
         self.drawCounter = False
@@ -60,6 +61,8 @@ class RaceObject:
                 for i in range(self.rounds):
                     tempList += self.raceMap.checkpoints
                 self.playerCheckpointList.append(tempList)
+
+            self.finishLine = self.playerCheckpointList[0][len(self.playerCheckpointList[0])-1]
 
             # reset the old leaderboard
             self.leaderboard = []
@@ -106,6 +109,7 @@ class RaceObject:
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]
         self.leaderboard = []
+        self.finishLine = []
 
         self.countDown = "-"
         self.drawCounter = False

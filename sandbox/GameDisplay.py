@@ -156,6 +156,9 @@ class GameDisplay(threading.Thread):
         # draw checkpoints (for testing)
         self.drawCheckpoints()
 
+        # draw the finish Line
+        self.drawFinishLine()
+
         # draw player stats text
         self.drawPlayerStatsText()
 
@@ -215,6 +218,13 @@ class GameDisplay(threading.Thread):
             end = ((checkpoint[2] * self.windowWidth) / 1600, (checkpoint[3] * self.windowHeight) / 900)
             pygame.draw.line(self.screen, (i, 150, 255), start, end, 4)
             i -= 255 / len(checkpoints)
+
+    def drawFinishLine(self):
+        finishLine = self.CO.raceObject.finishLine
+        start = ((finishLine[0] * self.windowWidth) / 1600, (finishLine[1] * self.windowHeight) / 900)
+        end = ((finishLine[2] * self.windowWidth) / 1600, (finishLine[3] * self.windowHeight) / 900)
+        size = int((10 * self.windowWidth) / 2000)
+        pygame.draw.line(self.screen, (255, 255, 255), start, end, size)
 
     def generateText(self):
         displayText = []
