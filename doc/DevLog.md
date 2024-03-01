@@ -281,6 +281,53 @@ Updated the speed boost to occur after steering rather than during steering. Bal
 Added map name on pause and leaderboard screen.
 
 
+## 24.02.2024
+
+Added a new menu, where the race settings can be set.
+
+
+## 25.02.2024
+
+Implemented a preview of the map in the race settings menu.
+
+
+## 26.02.2024
+
+Implemented default race settings.
+
+
+## 27.02.2024
+
+Added scroll buttons to the race setting menu to change and set the settings.
+
+
+## 28.02.2024
+
+Updated the pause menu to display the current race settings.
+
+
+## 29.02.2024
+
+Created new maps.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
