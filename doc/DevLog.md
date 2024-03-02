@@ -311,11 +311,9 @@ Updated the pause menu to display the current race settings.
 Created new maps.
 
 
+## 01.03.2024
 
-
-
-
-
+Started with a better visualisation of the finish line.
 
 
 
