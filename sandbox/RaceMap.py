@@ -29,9 +29,6 @@ class RaceMap:
         self.checkpoints = []
         self.generateCheckpoints()
 
-
-
-
     def saveMap(self, path):
         root = ET.Element("raceMap")
         ET.SubElement(root, "name").text = self.name
@@ -202,15 +199,38 @@ class RaceMap:
 
     def generateCheckpoints(self):
         self.checkpoints = []
-        found = False
+        sizeX = 1600 / len(self.myMap)
+        sizeY = 900 / len(self.myMap[0])
+
         x = 0
         y = 0
-        for i in range(len(self.myMap)):
-            for j in range(len(self.myMap[0])):
-                if self.myMap[i][j] != 0 and not found:
-                    x = i
-                    y = j
-                    found = True
+        tempX = self.playerStartX
+        tempY = self.playerStartY
+
+        found = False
+        while not found:
+            if tempX > sizeX:
+                x += 1
+                tempX -= sizeX
+            else:
+                found = True
+
+        found = False
+        while not found:
+            if tempY > sizeY:
+                y += 1
+                tempY -= sizeY
+            else:
+                found = True
+
+        if self.myMap[x][y] == 0:
+            found = False
+            for i in range(len(self.myMap)):
+                for j in range(len(self.myMap[0])):
+                    if self.myMap[i][j] != 0 and not found:
+                        x = i
+                        y = j
+                        found = True
 
         street = self.getStreet(self.myMap, x, y)
 

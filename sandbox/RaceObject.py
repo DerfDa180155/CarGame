@@ -60,6 +60,7 @@ class RaceObject:
                 tempList = []
                 for i in range(self.rounds):
                     tempList += self.raceMap.checkpoints
+                tempList.append(self.raceMap.checkpoints[0])
                 self.playerCheckpointList.append(tempList)
 
             self.finishLine = self.playerCheckpointList[0][len(self.playerCheckpointList[0])-1]
