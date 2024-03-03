@@ -157,7 +157,7 @@ class GameDisplay(threading.Thread):
         self.drawCheckpoints()
 
         # draw the finish Line
-        self.drawFinishLine()
+        self.drawFinishLine(15)
 
         # draw player stats text
         self.drawPlayerStatsText()
@@ -219,12 +219,50 @@ class GameDisplay(threading.Thread):
             pygame.draw.line(self.screen, (i, 150, 255), start, end, 4)
             i -= 255 / len(checkpoints)
 
-    def drawFinishLine(self):
+    def drawFinishLine(self, segAmount):
         finishLine = self.CO.raceObject.finishLine
+        if not finishLine:
+            return
         start = ((finishLine[0] * self.windowWidth) / 1600, (finishLine[1] * self.windowHeight) / 900)
         end = ((finishLine[2] * self.windowWidth) / 1600, (finishLine[3] * self.windowHeight) / 900)
-        size = int((10 * self.windowWidth) / 2000)
-        pygame.draw.line(self.screen, (255, 255, 255), start, end, size)
+
+        isHorizontal = (start[0] != end[0] and start[1] == end[1])
+
+        if isHorizontal:
+            length = end[0] - start[0]
+
+            for i in range(segAmount):
+                color1 = (255, 255, 255)
+                color2 = (0, 0, 0)
+
+                if i % 2 == 0:
+                    color1 = (0, 0, 0)
+                    color2 = (255, 255, 255)
+
+                x = start[0] + ((length / segAmount) * i)
+                y = start[1] - (length / segAmount)
+                pygame.draw.rect(self.screen, color1,
+                                 pygame.Rect(x, y, (length / segAmount) + 1, (length / segAmount) + 1))
+                pygame.draw.rect(self.screen, color2,
+                                 pygame.Rect(x, start[1], (length / segAmount) + 1, (length / segAmount) + 1))
+
+        else:
+            length = end[1] - start[1]
+
+            for i in range(segAmount):
+                color1 = (255, 255, 255)
+                color2 = (0, 0, 0)
+
+                if i % 2 == 0:
+                    color1 = (0, 0, 0)
+                    color2 = (255, 255, 255)
+
+                x = start[0] - (length / segAmount)
+                y = start[1] + ((length / segAmount) * i)
+                pygame.draw.rect(self.screen, color1,
+                                 pygame.Rect(x, y, (length / segAmount) + 1, (length / segAmount) + 1))
+                pygame.draw.rect(self.screen, color2,
+                                 pygame.Rect(start[0], y, (length / segAmount) + 1, (length / segAmount) + 1))
 
     def generateText(self):
         displayText = []
