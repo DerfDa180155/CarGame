@@ -240,6 +240,8 @@ class RaceMap:
         sizeXOneSquare = 1600 / sizeX
         sizeYOneSquare = 900 / sizeY
 
+        currentDirection = ""
+
         for streetPiece in street:
             if len(self.checkpoints) == 0:
                 if self.myMap[streetPiece[0]][streetPiece[1]] == 1 or self.myMap[streetPiece[0]][streetPiece[1]] == 2 or self.myMap[streetPiece[0]][streetPiece[1]] == 5: # top
@@ -248,18 +250,21 @@ class RaceMap:
                     endX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 23 / 32
                     endY = sizeYOneSquare * streetPiece[1]
                     self.checkpoints.append((startX, startY, endX, endY))
+                    currentDirection = "top"
                 elif self.myMap[streetPiece[0]][streetPiece[1]] == 4 or self.myMap[streetPiece[0]][streetPiece[1]] == 6: # right
                     startX = sizeXOneSquare * (streetPiece[0] + 1)
                     startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
                     endX = sizeXOneSquare * (streetPiece[0] + 1)
                     endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
                     self.checkpoints.append((startX, startY, endX, endY))
+                    currentDirection = "right"
                 elif self.myMap[streetPiece[0]][streetPiece[1]] == 3: # left
                     startX = sizeXOneSquare * streetPiece[0]
                     startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
                     endX = sizeXOneSquare * streetPiece[0]
                     endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
                     self.checkpoints.append((startX, startY, endX, endY))
+                    currentDirection = "left"
             else:
                 match self.myMap[streetPiece[0]][streetPiece[1]]:
                     case 1: # topLeft
@@ -346,6 +351,38 @@ class RaceMap:
                             self.checkpoints.append((startX, startY, endX, endY))
                         else:
                             self.checkpoints.append(checkpointOne)
+
+        invert = False
+
+        definition = self.mapDefinition[self.myMap[x][y]]
+        if definition[0] == 1 and definition[1] == 1: # top right
+            pass
+        elif definition[1] == 1 and definition[2] == 1: # right bottom
+            pass
+        elif definition[2] == 1 and definition[3] == 1: # bottom left
+            pass
+        elif definition[3] == 1 and definition[0] == 1: # left top
+            pass
+        elif definition[0] == 1 and definition[2] == 1: # top bottom
+            pass
+        elif definition[1] == 1 and definition[3] == 1: # right left
+            pass
+
+
+
+        match currentDirection:
+            case "top":
+                pass
+            case "right":
+                pass
+            case "left":
+                pass
+
+        if invert:
+            tempCheckpoint = []
+            for i in reversed(range(len(self.checkpoints))):
+                tempCheckpoint.append(self.checkpoints[i])
+            self.checkpoints = tempCheckpoint
 
     def getStreet(self, myMap: array, x: int, y: int):
         street = [[x, y]]
