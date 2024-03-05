@@ -353,32 +353,47 @@ class RaceMap:
                             self.checkpoints.append(checkpointOne)
 
         invert = False
-
         definition = self.mapDefinition[self.myMap[x][y]]
-        if definition[0] == 1 and definition[1] == 1: # top right
-            pass
-        elif definition[1] == 1 and definition[2] == 1: # right bottom
-            pass
-        elif definition[2] == 1 and definition[3] == 1: # bottom left
-            pass
-        elif definition[3] == 1 and definition[0] == 1: # left top
-            pass
-        elif definition[0] == 1 and definition[2] == 1: # top bottom
-            pass
-        elif definition[1] == 1 and definition[3] == 1: # right left
-            pass
 
+        # get raw angles
+        angles = []
+        if definition[0] == 1: # top
+            angles.append([270 - 45, 270 + 45])
+        if definition[1] == 1: # right
+            angles.append([360 - 45, 0 + 45])
+        if definition[2] == 1: # bottom
+            angles.append([90 - 45, 90 + 45])
+        if definition[3] == 1: # left
+            angles.append([180 - 45, 180 + 45])
 
+        # get all angles (0-360)
+        complete = False
+        if angles[0][1] > angles[1][0]:
+            angles[1][0] += 360
+        while not complete:
+            if angles[0][0] > angles[1][1]:
+                angles[0][0] -= 1
+                angles[1][1] += 1
+            elif angles[0][1] < angles[1][0]:
+                angles[0][1] += 1
+                angles[1][0] -= 1
 
-        match currentDirection:
-            case "top":
-                pass
-            case "right":
-                pass
-            case "left":
-                pass
+            else:
+                complete = True
+        print(angles)
+        # check if checkpoints array need to be flipped
+        if angles[0][0] > angles[0][1]:
+            if self.playerStartDirection >= angles[0][0] or self.playerStartDirection <= angles[0][1]:
+                invert = False
+            else:
+                invert = True
+        if angles[1][0] > angles[1][1]:
+            if self.playerStartDirection >= angles[1][0] or self.playerStartDirection <= angles[1][1]:
+                invert = True
+            else:
+                invert = False
 
-        if invert:
+        if invert: # flip array
             tempCheckpoint = []
             for i in reversed(range(len(self.checkpoints))):
                 tempCheckpoint.append(self.checkpoints[i])
