@@ -377,10 +377,9 @@ class RaceMap:
             elif angles[0][1] < angles[1][0]:
                 angles[0][1] += 1
                 angles[1][0] -= 1
-
             else:
                 complete = True
-        print(angles)
+
         # check if checkpoints array need to be flipped
         if angles[0][0] > angles[0][1]:
             if self.playerStartDirection >= angles[0][0] or self.playerStartDirection <= angles[0][1]:

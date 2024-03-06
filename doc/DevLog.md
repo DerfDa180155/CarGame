@@ -316,6 +316,26 @@ Created new maps.
 Started with a better visualisation of the finish line.
 
 
+## 02.03.2024
+
+Updated finish line texture.
+
+
+## 03.03.2024
+
+Updated the checkpoint generation to start at the players starting position.
+
+
+## 04.03.2024
+
+Started updating the checkpoint generation rotation, to go clockwise or counter clockwise, depending on the player starting direction.
+
+
+## 05.03.2024
+
+Finished checkpoint generation rotation.
+
+
 
 
 
