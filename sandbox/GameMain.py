@@ -120,6 +120,7 @@ class GameMain:
                           [100, 660], [400, 660], [700, 660], [1000, 660], [1300, 660]]
         for i in range(self.oldMapCount):
             self.mapButtons.append(Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
+        self.mapButtons.append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
@@ -215,13 +216,16 @@ class GameMain:
 
                     for button in self.CO.mapButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
-                            self.CO.mapController.currentMapIndex = button.action
-                            print(button.action)
+                            if button.action == "generateMapWFC":
+                                self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
+                            else:
+                                self.CO.mapController.currentMapIndex = button.action
+                                print(button.action)
+                                for player in self.CO.players:
+                                    player.reset(x=self.CO.mapController.getCurrentMap().playerStartX,
+                                                 y=self.CO.mapController.getCurrentMap().playerStartY,
+                                                 direction=self.CO.mapController.getCurrentMap().playerStartDirection)
                             self.CO.gameStatus = "raceSettings"
-                            for player in self.CO.players:
-                                player.reset(x=self.CO.mapController.getCurrentMap().playerStartX,
-                                             y=self.CO.mapController.getCurrentMap().playerStartY,
-                                             direction=self.CO.mapController.getCurrentMap().playerStartDirection)
                             self.CO.raceObject.reset()
                 case "raceSettings":
                     for button in self.CO.raceSettingsButtons:
@@ -273,7 +277,7 @@ class GameMain:
                     self.CO.raceObject.update()
 
                     if keys[pygame.K_t]:
-                        self.CO.raceObject.rounds = 3
+                        #self.CO.raceObject.rounds = 3
                         self.CO.raceObject.start(self.CO.mapController.getCurrentMap())
                     elif keys[pygame.K_z]:
                         self.CO.raceObject.stop()

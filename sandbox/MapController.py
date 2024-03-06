@@ -54,12 +54,14 @@ class MapController:
         # this function will get made in the future (maybe with a custom mapmaker)
         pass
 
-    def generateNewMap(self, x: int, y: int):
+    def generateNewMap(self, x: int, y: int, saveMap=False, setIndex=False):
         newMap = RaceMap.RaceMap(myMap=self.MC.cleanMap(self.WFC.generate(x, y)), name="Unknown - " + str(random.randint(1000, 9999)))
-        newMap.saveMap(self.mapPath)
+        if saveMap:
+            newMap.saveMap(self.mapPath)
         print(newMap.myMap)
         self.maps.append(newMap)
-        self.currentMapIndex = self.getCountMaps()-1
+        if setIndex:
+            self.currentMapIndex = self.getCountMaps()-1
         return newMap
 
     def getCountMaps(self):

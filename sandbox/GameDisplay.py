@@ -78,7 +78,10 @@ class GameDisplay(threading.Thread):
             newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600)  # scale x
             newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900)  # scale y
             font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
-            text = font.render(str(self.CO.mapController.maps[int(button.action)].name), True, (255, 255, 255))
+            if button.action != "generateMapWFC":
+                text = font.render(str(self.CO.mapController.maps[int(button.action)].name), True, (255, 255, 255))
+            else:
+                text = font.render("generate new Map", True, (255, 255, 255))
             newRect = text.get_rect()
             newRect.center = newX, newY  # center text
             self.screen.blit(text, newRect)

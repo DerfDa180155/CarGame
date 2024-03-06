@@ -17,7 +17,6 @@ class Ray:
         self.length = -1
 
     def calcLength(self, lines):
-
         tempLength = float('inf')
         for line in lines:
             x1 = line[0]
@@ -38,7 +37,6 @@ class Ray:
                 if t > 0 and t < 1 and u > 0:
                     pointX = x1 + t * (x2 - x1)
                     pointY = y1 + t * (y2 - y1)
-
 
                     newLength = np.sqrt(np.power((self.posX - pointX), 2) + np.power((self.posY - pointY), 2))
                     if newLength < tempLength:
