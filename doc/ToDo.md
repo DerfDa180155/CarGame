@@ -1,22 +1,28 @@
 # ToDo
 
+- [x] player
+  - [x] singleplayer
+  - [x] multiplayer
+- [ ] bots 
+  - [ ] neuronal network
+- [ ] items
+  - [ ] speed inclease
+  - [ ] stun
+  - [ ] ... 
+- [ ] modes
+  - [x] race
+  - [ ] time race
+
+- [x] map controller
+- [ ] map-maker
 - [x] map-generator
   - [x] wave function collapse 
   - [x] map cleaner
-- [ ] map-maker
-  - [ ] map controller
-- [x] Display thread
-- [ ] images
-  - [x] basic test images
-  - [ ] good images
-- [ ] overall game
-  - [ ] player
-  - [ ] bots with a neuronal network
-  - [ ] items
-  - [ ] race mode
+
 - [ ] UI
-  - [ ] menu
-  - [ ] game mode selector
-  - [ ] ...
-
-
+  - [x] menu
+  - [x] game mode selector
+  - [x] map selector
+  - [ ] images
+    - [x] basic test images
+    - [ ] good images
