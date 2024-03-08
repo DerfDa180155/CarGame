@@ -277,7 +277,7 @@ class GameMain:
                     self.CO.raceObject.update()
 
                     if keys[pygame.K_t]:
-                        #self.CO.raceObject.rounds = 3
+                        self.CO.raceObject.rounds = 3
                         self.CO.raceObject.start(self.CO.mapController.getCurrentMap())
                     elif keys[pygame.K_z]:
                         self.CO.raceObject.stop()

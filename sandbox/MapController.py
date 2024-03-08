@@ -16,6 +16,14 @@ class MapController:
         self.loadAllMaps()
         self.currentMapIndex = 0
 
+        self.mapDefinition = [[0, 0, 0, 0],  # top, right, bottom, left
+                              [1, 0, 0, 1],
+                              [1, 1, 0, 0],
+                              [0, 0, 1, 1],
+                              [0, 1, 1, 0],
+                              [1, 0, 1, 0],
+                              [0, 1, 0, 1]]
+
     def loadAllMaps(self):
         # load all maps from the path into the maps array
         self.maps = []
@@ -55,7 +63,34 @@ class MapController:
         pass
 
     def generateNewMap(self, x: int, y: int, saveMap=False, setIndex=False):
-        newMap = RaceMap.RaceMap(myMap=self.MC.cleanMap(self.WFC.generate(x, y)), name="Unknown - " + str(random.randint(1000, 9999)))
+        mapArray = self.MC.cleanMap(self.WFC.generate(x, y))
+
+        found = False
+        x = 0
+        y = 0
+        for i in range(len(mapArray)):
+            for j in range(len(mapArray[0])):
+                if mapArray[i][j] != 0 and not found:
+                    x = i
+                    y = j
+                    found = True
+
+        street = self.MC.getStreet(mapArray, x, y)
+        start = street[random.randint(0, len(street))]
+
+        possibleDirections = []
+        definition = self.mapDefinition[mapArray[start[0]][start[1]]]
+        degArray = [270, 0, 90, 180]
+        for i in range(len(definition)):
+            if definition[i] == 1:
+                possibleDirections.append((degArray[i]))
+
+        startX = ((1600 / len(mapArray)) * start[0]) + ((1600 / len(mapArray)) / 2)
+        startY = ((900 / len(mapArray[0])) * start[1]) + ((900 / len(mapArray[0])) / 2)
+        startDirection = possibleDirections[random.randint(0, 1)]
+        newMap = RaceMap.RaceMap(myMap=mapArray, name="generatedWFC",
+                                 playerStartX=startX, playerStartY=startY, playerStartDirection=startDirection)
+
         if saveMap:
             newMap.saveMap(self.mapPath)
         print(newMap.myMap)
