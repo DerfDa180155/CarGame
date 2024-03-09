@@ -63,6 +63,9 @@ class MapController:
         pass
 
     def generateNewMap(self, x: int, y: int, saveMap=False, setIndex=False):
+        generateName = "generatedWFC"
+        self.checkAndRemoveOldGenerated(generateName)
+
         mapArray = self.MC.cleanMap(self.WFC.generate(x, y))
 
         found = False
@@ -88,7 +91,7 @@ class MapController:
         startX = ((1600 / len(mapArray)) * start[0]) + ((1600 / len(mapArray)) / 2)
         startY = ((900 / len(mapArray[0])) * start[1]) + ((900 / len(mapArray[0])) / 2)
         startDirection = possibleDirections[random.randint(0, 1)]
-        newMap = RaceMap.RaceMap(myMap=mapArray, name="generatedWFC",
+        newMap = RaceMap.RaceMap(myMap=mapArray, name=generateName,
                                  playerStartX=startX, playerStartY=startY, playerStartDirection=startDirection)
 
         if saveMap:
@@ -98,6 +101,13 @@ class MapController:
         if setIndex:
             self.currentMapIndex = self.getCountMaps()-1
         return newMap
+
+    def checkAndRemoveOldGenerated(self, name):
+        index = 0
+        for rMap in self.maps:
+            if rMap.name == name:
+                self.maps.pop(index)
+            index += 1
 
     def getCountMaps(self):
         return len(self.maps)
