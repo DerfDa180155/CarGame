@@ -66,7 +66,18 @@ class MapController:
         generateName = "generatedWFC"
         self.checkAndRemoveOldGenerated(generateName)
 
-        mapArray = self.MC.cleanMap(self.WFC.generate(x, y))
+        mapArray = self.WFC.generate(x, y)
+        checkEmpty = True
+        while checkEmpty:
+            for i in range(len(mapArray)):
+                for j in range(len(mapArray[0])):
+                    if mapArray[i][j] != 0:
+                        checkEmpty = False
+            if checkEmpty: # generate new one
+                mapArray = self.WFC.generate(x, y)
+                print("new map")
+
+        mapArray = self.MC.cleanMap(mapArray)
 
         found = False
         x = 0
@@ -79,7 +90,7 @@ class MapController:
                     found = True
 
         street = self.MC.getStreet(mapArray, x, y)
-        start = street[random.randint(0, len(street))]
+        start = street[random.randint(0, len(street) - 1)]
 
         possibleDirections = []
         definition = self.mapDefinition[mapArray[start[0]][start[1]]]
