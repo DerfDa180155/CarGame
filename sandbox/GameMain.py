@@ -38,19 +38,20 @@ class GameMain:
         self.FPSClock = pygame.time.Clock()
 
         # paths for different game files (images, maps, settings, ...)
-        mapPath = "gameFiles/maps/"
-        imagePath = "gameFiles/images/"
+        self.mapPath = "gameFiles/maps/"
+        self.customMapPath = "gameFiles/maps/customMaps/"
+        self.imagePath = "gameFiles/images/"
 
         # images
-        self.empty = pygame.image.load(imagePath + "empty.png").convert()
-        self.bottomLeft = pygame.image.load(imagePath + "bottom_Left.png").convert()
-        self.bottomRight = pygame.image.load(imagePath + "bottom_Right.png").convert()
-        self.topLeft = pygame.image.load(imagePath + "top_Left.png").convert()
-        self.topRight = pygame.image.load(imagePath + "top_Right.png").convert()
-        self.verticalLine = pygame.image.load(imagePath + "vertical_Line.png").convert()
-        self.horizontalLine = pygame.image.load(imagePath + "horizontal_line.png").convert()
-        self.crossing = pygame.image.load(imagePath + "crossing.png").convert()
-        self.settings = pygame.image.load(imagePath + "settings.png").convert()
+        self.empty = pygame.image.load(self.imagePath + "empty.png").convert()
+        self.bottomLeft = pygame.image.load(self.imagePath + "bottom_Left.png").convert()
+        self.bottomRight = pygame.image.load(self.imagePath + "bottom_Right.png").convert()
+        self.topLeft = pygame.image.load(self.imagePath + "top_Left.png").convert()
+        self.topRight = pygame.image.load(self.imagePath + "top_Right.png").convert()
+        self.verticalLine = pygame.image.load(self.imagePath + "vertical_Line.png").convert()
+        self.horizontalLine = pygame.image.load(self.imagePath + "horizontal_line.png").convert()
+        self.crossing = pygame.image.load(self.imagePath + "crossing.png").convert()
+        self.settings = pygame.image.load(self.imagePath + "settings.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -64,7 +65,7 @@ class GameMain:
 
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
         self.mapCleaner = MapCleaner.MapCleaner(self.mapArrayDefinition)
-        self.mapController = MapController.MapController(WFC=self.WFC, MC=self.mapCleaner, path=mapPath)
+        self.mapController = MapController.MapController(WFC=self.WFC, MC=self.mapCleaner, path=self.mapPath)
         #self.mapController.loadAllMaps() # load all saved maps
         self.oldMapCount = self.mapController.getCountMaps()
 
@@ -285,6 +286,10 @@ class GameMain:
                         self.CO.raceObject.resume()
                     elif keys[pygame.K_i]:
                         self.CO.raceObject.reset()
+
+                    if self.CO.mapController.getCurrentMap().name == "generatedWFC":
+                        if keys[pygame.K_o]: # save custom map
+                            self.CO.mapController.getCurrentMap().saveMap(self.customMapPath)
 
                     if self.CO.raceObject.raceStatus == "race":
                         # movement keys pressed --> Update players
