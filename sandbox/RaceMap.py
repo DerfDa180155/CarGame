@@ -7,7 +7,7 @@ import xml.etree.cElementTree as ET
 
 
 class RaceMap:
-    def __init__(self, myMap: array, name: str = "Unknown", playerStartX: int = 0, playerStartY: int = 0, playerStartDirection: int = 0):
+    def __init__(self, myMap: array, name: str = "Unknown", playerStartX: float = 0, playerStartY: float = 0, playerStartDirection: int = 0):
         self.name = name
         self.myMap = myMap
 

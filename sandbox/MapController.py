@@ -33,29 +33,30 @@ class MapController:
 
         for root, dirs, files in os.walk(mapsPath):
             for file in files:
-                print(root)
-                print(file)
+                if "customMaps" not in root:
+                    print(root)
+                    print(file)
 
-                docRoot = ET.parse(os.path.join(root, file)).getroot()
-                mapName = docRoot[0].text
-                playerStartX = int(docRoot[1].text)
-                playerStartY = int(docRoot[2].text)
-                playerStartDirection = int(docRoot[3].text)
-                mapSizeX = int(docRoot[4].text)
-                mapSizeY = int(docRoot[5].text)
+                    docRoot = ET.parse(os.path.join(root, file)).getroot()
+                    mapName = docRoot[0].text
+                    playerStartX = float(docRoot[1].text)
+                    playerStartY = float(docRoot[2].text)
+                    playerStartDirection = int(docRoot[3].text)
+                    mapSizeX = int(docRoot[4].text)
+                    mapSizeY = int(docRoot[5].text)
 
-                myMap = []
-                for i in range(0, mapSizeX):
-                    temp = []
-                    for j in range(0, mapSizeY):
-                        temp.append(int(docRoot[6][i][j].text))
-                    myMap.append(temp)
-                print(myMap)
+                    myMap = []
+                    for i in range(0, mapSizeX):
+                        temp = []
+                        for j in range(0, mapSizeY):
+                            temp.append(int(docRoot[6][i][j].text))
+                        myMap.append(temp)
+                    print(myMap)
 
-                newMap = RaceMap.RaceMap(myMap=myMap, name=mapName, playerStartX=playerStartX, playerStartY=playerStartY,
-                                         playerStartDirection=playerStartDirection)
+                    newMap = RaceMap.RaceMap(myMap=myMap, name=mapName, playerStartX=playerStartX, playerStartY=playerStartY,
+                                             playerStartDirection=playerStartDirection)
 
-                self.maps.append(newMap)
+                    self.maps.append(newMap)
         print(self.maps)
 
     def addNewMap(self, path, mapName):
@@ -99,8 +100,8 @@ class MapController:
             if definition[i] == 1:
                 possibleDirections.append((degArray[i]))
 
-        startX = ((1600 / len(mapArray)) * start[0]) + ((1600 / len(mapArray)) / 2)
-        startY = ((900 / len(mapArray[0])) * start[1]) + ((900 / len(mapArray[0])) / 2)
+        startX = float(((1600 / len(mapArray)) * start[0]) + ((1600 / len(mapArray)) / 2))
+        startY = float(((900 / len(mapArray[0])) * start[1]) + ((900 / len(mapArray[0])) / 2))
         startDirection = possibleDirections[random.randint(0, 1)]
         newMap = RaceMap.RaceMap(myMap=mapArray, name=generateName,
                                  playerStartX=startX, playerStartY=startY, playerStartDirection=startDirection)
