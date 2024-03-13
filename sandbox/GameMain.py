@@ -103,7 +103,8 @@ class GameMain:
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
         self.restartButton = Button.Button(self.screen, 875, 625, 50, self.topRight, "restart")
-        self.leaderboardButtons = [self.choseMap, self.restartButton]
+        self.saveButton = Button.Button(self.screen, 775, 575, 50, self.crossing, "saveMap")
+        self.leaderboardButtons = [self.choseMap, self.restartButton, self.saveButton]
 
         # pause buttons
         self.mainMenu = Button.Button(self.screen, 650, 625, 50, self.topLeft, "mainMenu")
@@ -328,6 +329,8 @@ class GameMain:
                                     self.CO.raceObject.reset()
                                 elif button.action == "choseMap":
                                     self.CO.gameStatus = "selectMap"
+                                elif button.action == "saveMap" and self.CO.mapController.getCurrentMap().name == "generatedWFC":
+                                    self.CO.mapController.getCurrentMap().saveMap(self.customMapPath)
                     elif self.CO.raceObject.raceStatus == "paused":
                         for button in self.CO.pauseButtons: # paused menu buttons
                             if button.clicked(mx, my, pygame.mouse.get_pressed()):

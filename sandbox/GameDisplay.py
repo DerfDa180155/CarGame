@@ -181,7 +181,11 @@ class GameDisplay(threading.Thread):
             self.drawLeaderboard()
             # draw buttons
             for button in self.CO.leaderboardButtons:
-                button.draw(self.windowWidth, self.windowHeight)
+                if button.action == "saveMap":
+                    if self.CO.mapController.getCurrentMap().name == "generatedWFC":
+                        button.draw(self.windowWidth, self.windowHeight)
+                else:
+                    button.draw(self.windowWidth, self.windowHeight)
 
         # draw paused screen
         if self.CO.raceObject.raceStatus == "paused":
