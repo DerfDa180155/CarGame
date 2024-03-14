@@ -254,11 +254,15 @@ class RaceMap:
                     endX = sizeXOneSquare * (streetPiece[0] + 1)
                     endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
                     self.checkpoints.append((startX, startY, endX, endY))
-                elif self.myMap[streetPiece[0]][streetPiece[1]] == 3: # left
-                    startX = sizeXOneSquare * streetPiece[0]
-                    startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
-                    endX = sizeXOneSquare * streetPiece[0]
-                    endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
+                elif self.myMap[streetPiece[0]][streetPiece[1]] == 3: # bottom
+                    #startX = sizeXOneSquare * streetPiece[0]
+                    #startY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 9 / 32
+                    #endX = sizeXOneSquare * streetPiece[0]
+                    #endY = sizeYOneSquare * streetPiece[1] + sizeYOneSquare * 23 / 32
+                    startX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 9 / 32
+                    startY = sizeYOneSquare * (streetPiece[1] + 1)
+                    endX = sizeXOneSquare * streetPiece[0] + sizeXOneSquare * 23 / 32
+                    endY = sizeYOneSquare * (streetPiece[1] + 1)
                     self.checkpoints.append((startX, startY, endX, endY))
             else:
                 match self.myMap[streetPiece[0]][streetPiece[1]]:
