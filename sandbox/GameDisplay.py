@@ -60,8 +60,14 @@ class GameDisplay(threading.Thread):
     def drawSettings(self):
         self.screen.fill((200, 200, 100))  # background
 
+        # draw menu Text
+        self.drawMenuText("Settings", (255, 255, 255))
+
     def drawModeSelector(self):
         self.screen.fill((100, 150, 200))  # background
+
+        # draw menu Text
+        self.drawMenuText("Mode Selector", (255, 255, 255))
 
         # draw buttons
         for button in self.CO.gameModeButtons:
@@ -69,6 +75,9 @@ class GameDisplay(threading.Thread):
 
     def drawMapSelector(self):
         self.screen.fill((100, 150, 250))  # background
+
+        # draw menu Text
+        self.drawMenuText("Map Selector", (255, 255, 255))
 
         # draw buttons
         for button in self.CO.mapButtons:
@@ -90,14 +99,11 @@ class GameDisplay(threading.Thread):
         self.screen.fill((100, 200, 200))  # background
 
         # display race settings
-        # map name
         newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
-        text = font.render(self.CO.mapController.getCurrentMap().name, True, (255, 255, 255))
-        newRect = text.get_rect()
-        newRect.centerx = self.windowWidth / 2
-        newRect.y = newTextSize * 0.5
-        self.screen.blit(text, newRect)
+
+        # map name
+        self.drawMenuText(self.CO.mapController.getCurrentMap().name, (255, 255, 255))
 
         settingsText = ["Rounds: ", "MaxSpeed: ", "MaxAcc: ", "Items: ", "Items spawn cooldown: "]
         settingsData = [str(self.CO.raceObject.rounds), str(self.CO.raceObject.maxSpeed), str(self.CO.raceObject.maxAcc), str(self.CO.raceObject.itemsEnabled), str(self.CO.raceObject.itemSpawnCooldown)]
@@ -317,6 +323,15 @@ class GameDisplay(threading.Thread):
         for line in range(len(displayText)):
             text = font.render(displayText[line], True, displayTextColor[line])
             self.screen.blit(text, (self.textPosition[0], self.textPosition[1] + (line * newTextSize)))
+
+    def drawMenuText(self, menuText, color = (255, 255, 255)):
+        newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+        text = font.render(menuText, True, color)
+        newRect = text.get_rect()
+        newRect.centerx = self.windowWidth / 2
+        newRect.y = newTextSize * 0.5
+        self.screen.blit(text, newRect)
 
     def drawPlayerStatsText(self):
         newTextSize = int((40 * self.windowWidth) / 2000)
