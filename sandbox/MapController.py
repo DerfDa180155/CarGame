@@ -32,7 +32,7 @@ class MapController:
         # print(mapsPath)
 
         for root, dirs, files in os.walk(mapsPath):
-            for file in files:
+            for file in sorted(files):
                 if "customMaps" not in root:
                     print(root)
                     print(file)
@@ -57,7 +57,6 @@ class MapController:
                                              playerStartDirection=playerStartDirection)
 
                     self.maps.append(newMap)
-        print(self.maps)
 
     def addNewMap(self, path, mapName):
         # this function will get made in the future (maybe with a custom mapmaker)
