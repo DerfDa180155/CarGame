@@ -9,7 +9,7 @@ class MapCleaner:
     def __init__(self, mapDefinition: array):
         self.mapDefinition = mapDefinition
 
-    def cleanMap(self, inputMap: array):
+    def cleanMap(self, inputMap: array, zoomIn: bool = True):
         myMap = list(map(list, inputMap))
         newMap = self.createEmptyMap(len(myMap), len(myMap[0]))
 
@@ -26,6 +26,57 @@ class MapCleaner:
         print("streets:\n" + str(streets))
         print("myMap:\n" + str(myMap))
         print("newMap:\n" + str(newMap))
+
+        if zoomIn:
+            # left column
+            remove = True
+            while remove:
+                for i in newMap[0]:
+                    if i != 0:
+                        remove = False
+                if remove:
+                    print("remove left:")
+                    print(newMap)
+                    newMap.pop(0)
+                    print(newMap)
+
+            # right column
+            remove = True
+            while remove:
+                for i in newMap[len(newMap)-1]:
+                    if i != 0:
+                        remove = False
+                if remove:
+                    print("remove right:")
+                    print(newMap)
+                    newMap.pop(len(newMap)-1)
+                    print(newMap)
+
+            # top row
+            remove = True
+            while remove:
+                for i in newMap:
+                    if i[0] != 0:
+                        remove = False
+                if remove:
+                    print("remove top:")
+                    print(newMap)
+                    for i in newMap:
+                        i.pop(0)
+                    print(newMap)
+
+            # bottom row
+            remove = True
+            while remove:
+                for i in newMap:
+                    if i[len(newMap[len(newMap)-1])-1] != 0:
+                        remove = False
+                if remove:
+                    print("remove bottom:")
+                    print(newMap)
+                    for i in newMap:
+                        i.pop(len(newMap[len(newMap)-1])-1)
+                    print(newMap)
 
         return newMap
 
