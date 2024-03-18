@@ -65,7 +65,7 @@ class GameMain:
 
         self.WFC = WaveFunctionCollapse.WaveFunctionCollapse(self.mapArray, self.mapArrayDefinition)
         self.mapCleaner = MapCleaner.MapCleaner(self.mapArrayDefinition)
-        self.mapController = MapController.MapController(WFC=self.WFC, MC=self.mapCleaner, path=self.mapPath)
+        self.mapController = MapController.MapController(WFC=self.WFC, MC=self.mapCleaner, mapPath=self.mapPath, customMapPath=self.customMapPath)
         #self.mapController.loadAllMaps() # load all saved maps
         self.oldMapCount = self.mapController.getCountMaps()
 

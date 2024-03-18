@@ -8,11 +8,13 @@ import xml.etree.ElementTree as ET
 
 
 class MapController:
-    def __init__(self, WFC: WaveFunctionCollapse, MC: MapCleaner, path: str):
+    def __init__(self, WFC: WaveFunctionCollapse, MC: MapCleaner, mapPath: str, customMapPath: str):
         self.maps = []
+        self.customMaps = []
         self.WFC = WFC
         self.MC = MC
-        self.mapPath = path
+        self.mapPath = mapPath
+        self.customMapPath = customMapPath
         self.loadAllMaps()
         self.currentMapIndex = 0
 
@@ -27,13 +29,16 @@ class MapController:
     def loadAllMaps(self):
         # load all maps from the path into the maps array
         self.maps = []
+        self.customMaps = []
         currentPath = os.getcwd()
         mapsPath = os.path.join(currentPath, self.mapPath)
+        customMapsPath = os.path.join(currentPath, self.customMapPath)
         # print(mapsPath)
 
+        # main maps
         for root, dirs, files in os.walk(mapsPath):
             for file in sorted(files):
-                if "customMaps" not in root:
+                if mapsPath == root:
                     print(root)
                     print(file)
 
@@ -57,6 +62,35 @@ class MapController:
                                              playerStartDirection=playerStartDirection)
 
                     self.maps.append(newMap)
+
+        # custom maps
+        print("Custom:")
+        for root, dirs, files in os.walk(customMapsPath):
+            for file in sorted(files):
+                if customMapsPath == root:
+                    print(root)
+                    print(file)
+
+                    docRoot = ET.parse(os.path.join(root, file)).getroot()
+                    mapName = docRoot[0].text
+                    playerStartX = float(docRoot[1].text)
+                    playerStartY = float(docRoot[2].text)
+                    playerStartDirection = int(docRoot[3].text)
+                    mapSizeX = int(docRoot[4].text)
+                    mapSizeY = int(docRoot[5].text)
+
+                    myMap = []
+                    for i in range(0, mapSizeX):
+                        temp = []
+                        for j in range(0, mapSizeY):
+                            temp.append(int(docRoot[6][i][j].text))
+                        myMap.append(temp)
+                    print(myMap)
+
+                    newMap = RaceMap.RaceMap(myMap=myMap, name=mapName, playerStartX=playerStartX, playerStartY=playerStartY,
+                                             playerStartDirection=playerStartDirection)
+
+                    self.customMaps.append(newMap)
 
     def addNewMap(self, path, mapName):
         # this function will get made in the future (maybe with a custom mapmaker)
