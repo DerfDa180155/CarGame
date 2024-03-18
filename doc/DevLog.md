@@ -336,6 +336,76 @@ Started updating the checkpoint generation rotation, to go clockwise or counter 
 Finished checkpoint generation rotation.
 
 
+## 06.03.2024
+
+Added the map generator in the map selector.
+
+
+## 07.03.2024
+
+Added random starting positions and random directions to the generator. Fixed a bug where the rotation of the checkpoints not always work.
+
+
+## 08.03.2024
+
+Started with the documentation and updated the todo list.
+
+
+## 09.03.2024
+
+Updated the map generator, so that the old generated map is deleted when a new one is generated.
+
+
+## 10.03.2024
+
+Fixed a bug in the map generator, where an empty map is created.
+
+
+## 11.03.2024
+
+Implemented the option to save a generated map in a custom maps folder.
+
+
+## 12.03.2024
+
+Fixed a bug in the map loader, where custom maps where loaded. Also fixed a bug where the values of the starting position had decimal places and therefore couldn´t be stored in an int variable. Changed the variable to float in the whole programm.
+
+
+## 13.03.2024
+
+Added a new button to the leaderboard that saves the map. This button is only displayed when a generated map was played.
+
+
+## 14.03.2024
+
+Fixed a bug in the checkpoint generation, where the checkpoints were not generated and rotated correctly. This bug appears only in one case.
+
+
+## 15.03.2024
+
+Added menu headings to some menus.
+
+
+## 16.03.2024
+
+Updated the map loader to sort the maps by their names.
+
+
+## 17.03.2024
+
+Updated the map cleaner to remove empty rows and columns and therefore zoom into the generated map.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
