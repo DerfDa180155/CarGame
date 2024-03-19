@@ -396,9 +396,9 @@ Updated the map loader to sort the maps by their names.
 Updated the map cleaner to remove empty rows and columns and therefore zoom into the generated map.
 
 
+## 18.03.2024
 
-
-
+Updated the map loader to load the custom maps.
 
 
 
