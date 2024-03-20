@@ -17,6 +17,7 @@ class MapController:
         self.customMapPath = customMapPath
         self.loadAllMaps()
         self.currentMapIndex = 0
+        self.useOfficialMaps = True
 
         self.mapDefinition = [[0, 0, 0, 0],  # top, right, bottom, left
                               [1, 0, 0, 1],

@@ -121,8 +121,9 @@ class GameMain:
                           [100, 380], [400, 380], [700, 380], [1000, 380], [1300, 380],
                           [100, 660], [400, 660], [700, 660], [1000, 660], [1300, 660]]
         for i in range(self.oldMapCount):
-            self.mapButtons.append(Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
+            self.mapButtons.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i)))
         self.mapButtons.append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
+        self.mapButtonPage = 0
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
@@ -130,7 +131,8 @@ class GameMain:
                                                           mapController=self.mapController, players=self.players,
                                                           raceObject=self.raceObject, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,
-                                                          mapButtons=self.mapButtons, raceSettingsButtons=self.raceSettingsButtons,
+                                                          mapButtons=self.mapButtons, mapButtonPage=self.mapButtonPage,
+                                                          raceSettingsButtons=self.raceSettingsButtons,
                                                           leaderboardButtons=self.leaderboardButtons,
                                                           pauseButtons=self.pauseButtons, currentMode="singleplayer")
 
@@ -215,6 +217,18 @@ class GameMain:
                         for i in range(self.oldMapCount):
                             self.mapButtons.append(
                                 Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
+
+                    # hotkeys for debugging and testing
+                    if keys[pygame.K_j]:
+                        if self.CO.mapButtonPage != 0:
+                            self.CO.mapButtonPage -= 1
+                            print(self.CO.mapButtonPage)
+                            time.sleep(0.3)
+                    elif keys[pygame.K_k]:
+                        self.CO.mapButtonPage += 1
+                        print(self.CO.mapButtonPage)
+                        time.sleep(0.3)
+
 
                     for button in self.CO.mapButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
