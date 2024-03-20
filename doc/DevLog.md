@@ -401,10 +401,9 @@ Updated the map cleaner to remove empty rows and columns and therefore zoom into
 Updated the map loader to load the custom maps.
 
 
+## 19.03.2024
 
-
-
-
+Started updating the map selector, to have multiple map pages. There is a maximum of 15 maps per page. The custom maps are showen on a seperate own page. Updated the button class, so that a button can be enabled and disabled.
 
 
 
