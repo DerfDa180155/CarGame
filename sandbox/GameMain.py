@@ -122,6 +122,8 @@ class GameMain:
                           [100, 660], [400, 660], [700, 660], [1000, 660], [1300, 660]]
         for i in range(self.oldMapCount):
             self.mapButtons.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i)))
+            if i >= 15:
+                self.mapButtons[len(self.mapButtons)-1].enable = False
         self.mapButtons.append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
         self.mapButtonPage = 0
 
@@ -217,6 +219,12 @@ class GameMain:
                         for i in range(self.oldMapCount):
                             self.mapButtons.append(
                                 Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
+
+                    count = 0
+                    for button in self.CO.mapButtons:
+                        if button.action == str(count): # only toggle the map buttons
+                            button.enable = self.CO.mapButtonPage * 15 <= count <= (self.CO.mapButtonPage + 1) * 15
+                            count += 1
 
                     # hotkeys for debugging and testing
                     if keys[pygame.K_j]:
