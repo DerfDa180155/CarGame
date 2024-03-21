@@ -125,6 +125,8 @@ class GameMain:
             if i >= 15:
                 self.mapButtons[len(self.mapButtons)-1].enable = False
         self.mapButtons.append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
+        self.mapButtons.append(Button.Button(self.screen, 75, 800, 50, self.crossing, "previousPage"))
+        self.mapButtons.append(Button.Button(self.screen, 1475, 800, 50, self.crossing, "nextPage"))
         self.mapButtonPage = 0
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
@@ -240,8 +242,18 @@ class GameMain:
 
                     for button in self.CO.mapButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
-                            if button.action == "generateMapWFC":
-                                self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
+                            if not button.action.isnumeric():
+                                if button.action == "generateMapWFC":
+                                    self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
+                                    self.CO.gameStatus = "raceSettings"
+                                    self.CO.raceObject.reset()
+                                elif button.action == "previousPage":
+                                    if self.CO.mapButtonPage != 0:
+                                        self.CO.mapButtonPage -= 1
+                                        print(self.CO.mapButtonPage)
+                                elif button.action == "nextPage":
+                                    self.CO.mapButtonPage += 1
+                                    print(self.CO.mapButtonPage)
                             else:
                                 self.CO.mapController.currentMapIndex = button.action
                                 print(button.action)
@@ -249,8 +261,8 @@ class GameMain:
                                     player.reset(x=self.CO.mapController.getCurrentMap().playerStartX,
                                                  y=self.CO.mapController.getCurrentMap().playerStartY,
                                                  direction=self.CO.mapController.getCurrentMap().playerStartDirection)
-                            self.CO.gameStatus = "raceSettings"
-                            self.CO.raceObject.reset()
+                                self.CO.gameStatus = "raceSettings"
+                                self.CO.raceObject.reset()
                 case "raceSettings":
                     for button in self.CO.raceSettingsButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
