@@ -89,6 +89,7 @@ class GameDisplay(threading.Thread):
                 newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900)  # scale y
                 font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
                 if button.action.isnumeric():
+                    # decide on what page the map selector is (TODO)
                     text = font.render(str(self.CO.mapController.maps[int(button.action)].name), True, (255, 255, 255))
                 else:
                     if button.action == "generateMapWFC":

@@ -67,7 +67,7 @@ class GameMain:
         self.mapCleaner = MapCleaner.MapCleaner(self.mapArrayDefinition)
         self.mapController = MapController.MapController(WFC=self.WFC, MC=self.mapCleaner, mapPath=self.mapPath, customMapPath=self.customMapPath)
         #self.mapController.loadAllMaps() # load all saved maps
-        self.oldMapCount = self.mapController.getCountMaps()
+        self.oldMapCount = self.mapController.getCountMaps(True)
 
         self.players = []
         self.players.append(Player.Player(100, 100, 0))
@@ -215,8 +215,8 @@ class GameMain:
                             self.CO.gameStatus = "selectMap"
                             print(self.CO.currentMode)
                 case "selectMap":
-                    if self.oldMapCount != self.CO.mapController.getCountMaps():
-                        self.oldMapCount = self.CO.mapController.getCountMaps()
+                    if self.oldMapCount != self.CO.mapController.getCountMaps(True):
+                        self.oldMapCount = self.CO.mapController.getCountMaps(True)
                         self.mapButtons = []
                         for i in range(self.oldMapCount):
                             self.mapButtons.append(
@@ -238,7 +238,6 @@ class GameMain:
                         self.CO.mapButtonPage += 1
                         print(self.CO.mapButtonPage)
                         time.sleep(0.3)
-
 
                     for button in self.CO.mapButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):

@@ -17,7 +17,6 @@ class MapController:
         self.customMapPath = customMapPath
         self.loadAllMaps()
         self.currentMapIndex = 0
-        self.useOfficialMaps = True
 
         self.mapDefinition = [[0, 0, 0, 0],  # top, right, bottom, left
                               [1, 0, 0, 1],
@@ -155,13 +154,27 @@ class MapController:
                 self.maps.pop(index)
             index += 1
 
-    def getCountMaps(self):
-        return len(self.maps)
+    def getMapArray(self, useOfficialMaps: bool = True):
+        if useOfficialMaps:
+            return self.maps
+        else:
+            return self.customMaps
 
-    def getCurrentMap(self):
-        if len(self.maps) > 0:
-            return self.maps[int(self.currentMapIndex)]
-        return ""
+    def getCountMaps(self, useOfficialMaps: bool = True):
+        if useOfficialMaps:
+            return len(self.maps)
+        else:
+            return len(self.customMaps)
+
+    def getCurrentMap(self, useOfficialMaps: bool = True):
+        if useOfficialMaps:
+            if len(self.maps) > 0:
+                return self.maps[int(self.currentMapIndex)]
+            return ""
+        else:
+            if len(self.customMaps) > 0:
+                return self.customMaps[int(self.currentMapIndex)]
+            return ""
 
     def getLastMap(self): # only for testing
         if len(self.maps) > 0:
