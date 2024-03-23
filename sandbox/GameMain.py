@@ -68,6 +68,7 @@ class GameMain:
         self.mapController = MapController.MapController(WFC=self.WFC, MC=self.mapCleaner, mapPath=self.mapPath, customMapPath=self.customMapPath)
         #self.mapController.loadAllMaps() # load all saved maps
         self.oldMapCount = self.mapController.getCountMaps(True)
+        self.oldCustomMapCount = self.mapController.getCountMaps(False)
 
         self.players = []
         self.players.append(Player.Player(100, 100, 0))
@@ -120,13 +121,25 @@ class GameMain:
         self.locations = [[100, 100], [400, 100], [700, 100], [1000, 100], [1300, 100],
                           [100, 380], [400, 380], [700, 380], [1000, 380], [1300, 380],
                           [100, 660], [400, 660], [700, 660], [1000, 660], [1300, 660]]
+        # official maps
+        tempArray = []
         for i in range(self.oldMapCount):
-            self.mapButtons.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i)))
+            tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i)))
             if i >= 15:
-                self.mapButtons[len(self.mapButtons)-1].enable = False
-        self.mapButtons.append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
-        self.mapButtons.append(Button.Button(self.screen, 75, 800, 50, self.crossing, "previousPage"))
-        self.mapButtons.append(Button.Button(self.screen, 1475, 800, 50, self.crossing, "nextPage"))
+                tempArray[len(self.mapButtons)-1].enable = False
+        self.mapButtons.append(tempArray)
+        # custom maps
+        tempArray = []
+        for i in range(self.oldCustomMapCount):
+            tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i)))
+            if i >= 15:
+                tempArray[len(self.mapButtons)-1].enable = False
+        self.mapButtons.append(tempArray)
+        self.mapButtons[0].append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
+        tempArray = []
+        tempArray.append(Button.Button(self.screen, 75, 800, 50, self.crossing, "previousPage"))
+        tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.crossing, "nextPage"))
+        self.mapButtons.append(tempArray)
         self.mapButtonPage = 0
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
@@ -222,8 +235,9 @@ class GameMain:
                             self.mapButtons.append(
                                 Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
 
+                    index = 0
                     count = 0
-                    for button in self.CO.mapButtons:
+                    for button in self.CO.mapButtons[index]:
                         if button.action == str(count): # only toggle the map buttons
                             button.enable = self.CO.mapButtonPage * 15 <= count <= (self.CO.mapButtonPage + 1) * 15
                             count += 1
@@ -239,7 +253,7 @@ class GameMain:
                         print(self.CO.mapButtonPage)
                         time.sleep(0.3)
 
-                    for button in self.CO.mapButtons:
+                    for button in self.CO.mapButtons[index] + self.CO.mapButtons[2]:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
                             if not button.action.isnumeric():
                                 if button.action == "generateMapWFC":

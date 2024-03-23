@@ -80,7 +80,7 @@ class GameDisplay(threading.Thread):
         self.drawMenuText("Map Selector", (255, 255, 255))
 
         # draw buttons
-        for button in self.CO.mapButtons:
+        for button in self.CO.mapButtons[0]:
             if button.enable:
                 button.draw(self.windowWidth, self.windowHeight)
                 # draw name of map on button
@@ -89,13 +89,21 @@ class GameDisplay(threading.Thread):
                 newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900)  # scale y
                 font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
                 if button.action.isnumeric():
-                    # decide on what page the map selector is (TODO)
                     text = font.render(str(self.CO.mapController.maps[int(button.action)].name), True, (255, 255, 255))
                 else:
                     if button.action == "generateMapWFC":
                         text = font.render("generate new Map", True, (255, 255, 255))
-                    else:
-                        text = font.render(button.action, True, (255, 255, 255))
+                newRect = text.get_rect()
+                newRect.center = newX, newY  # center text
+                self.screen.blit(text, newRect)
+        for button in self.CO.mapButtons[2]:
+            if button.enable:
+                button.draw(self.windowWidth, self.windowHeight)
+                newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)  # scale text size
+                newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600)  # scale x
+                newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900)  # scale y
+                font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+                text = font.render(button.action, True, (255, 255, 255))
                 newRect = text.get_rect()
                 newRect.center = newX, newY  # center text
                 self.screen.blit(text, newRect)
