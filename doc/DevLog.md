@@ -406,23 +406,24 @@ Updated the map loader to load the custom maps.
 Started updating the map selector, to have multiple map pages. There is a maximum of 15 maps per page. The custom maps are showen on a seperate own page. Updated the button class, so that a button can be enabled and disabled.
 
 
+## 20.03.2024
+
+Updated the map selector to show only the maps of the current page.
 
 
+## 21.03.2024
+
+Added next and previous buttons to the map selector.
 
 
+## 22.03.2024
+
+Started implementing custom maps on the map selector.
 
 
+## 23.03.2024
 
-
-
-
-
-
-
-
-
-
-
+Started splitting the buttons of the map selector in multiple arrays to separate the maps.
 
 
 
