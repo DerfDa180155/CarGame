@@ -149,7 +149,7 @@ class GameMain:
                                                           raceObject=self.raceObject, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,
                                                           mapButtons=self.mapButtons, mapButtonPage=self.mapButtonPage,
-                                                          raceSettingsButtons=self.raceSettingsButtons,
+                                                          officialMaps=True, raceSettingsButtons=self.raceSettingsButtons,
                                                           leaderboardButtons=self.leaderboardButtons,
                                                           pauseButtons=self.pauseButtons, currentMode="singleplayer")
 
@@ -235,12 +235,35 @@ class GameMain:
                             self.mapButtons.append(
                                 Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
 
-                    index = 0
-                    count = 0
-                    for button in self.CO.mapButtons[index]:
-                        if button.action == str(count): # only toggle the map buttons
-                            button.enable = self.CO.mapButtonPage * 15 <= count <= (self.CO.mapButtonPage + 1) * 15
-                            count += 1
+
+                    maxPageOfficialMaps = int((len(self.CO.mapButtons[0])/15)+0.5)
+                    maxPageCustomMaps = int((len(self.CO.mapButtons[1])/15)+0.5)
+                    maxPage = maxPageOfficialMaps + maxPageCustomMaps
+                    if self.CO.mapButtonPage >= maxPageOfficialMaps:
+                        index = 1
+                        self.CO.officialMaps = False
+                    else:
+                        index = 0
+                        self.CO.officialMaps = True
+
+                    if index == 0:
+                        count = 0
+                        for button in self.CO.mapButtons[0]:
+                            if button.action == str(count): # only toggle the map buttons
+                                button.enable = self.CO.mapButtonPage * 15 <= count <= (self.CO.mapButtonPage + 1) * 15
+                                count += 1
+                            elif button.action == "generateMapWFC":
+                                button.enable = True
+                        for button in self.CO.mapButtons[1]:
+                            button.enable = False
+                    elif index == 1: # custom maps
+                        for button in self.CO.mapButtons[0]:
+                            button.enable = False
+                        count = 0
+                        for button in self.CO.mapButtons[1]:
+                            if button.action == str(count):  # only toggle the map buttons
+                                button.enable = (self.CO.mapButtonPage-maxPageOfficialMaps) * 15 <= count <= ((self.CO.mapButtonPage-maxPageOfficialMaps) + 1) * 15
+                                count += 1
 
                     # hotkeys for debugging and testing
                     if keys[pygame.K_j]:
@@ -249,9 +272,10 @@ class GameMain:
                             print(self.CO.mapButtonPage)
                             time.sleep(0.3)
                     elif keys[pygame.K_k]:
-                        self.CO.mapButtonPage += 1
-                        print(self.CO.mapButtonPage)
-                        time.sleep(0.3)
+                        if self.CO.mapButtonPage < maxPage:
+                            self.CO.mapButtonPage += 1
+                            print(self.CO.mapButtonPage)
+                            time.sleep(0.3)
 
                     for button in self.CO.mapButtons[index] + self.CO.mapButtons[2]:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
@@ -260,20 +284,24 @@ class GameMain:
                                     self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
                                     self.CO.gameStatus = "raceSettings"
                                     self.CO.raceObject.reset()
+                                    if self.CO.mapButtonPage != 0:
+                                        self.CO.mapButtonPage -= 1
+                                        print(self.CO.mapButtonPage)
                                 elif button.action == "previousPage":
                                     if self.CO.mapButtonPage != 0:
                                         self.CO.mapButtonPage -= 1
                                         print(self.CO.mapButtonPage)
                                 elif button.action == "nextPage":
-                                    self.CO.mapButtonPage += 1
-                                    print(self.CO.mapButtonPage)
+                                    if self.CO.mapButtonPage < maxPage:
+                                        self.CO.mapButtonPage += 1
+                                        print(self.CO.mapButtonPage)
                             else:
                                 self.CO.mapController.currentMapIndex = button.action
                                 print(button.action)
                                 for player in self.CO.players:
-                                    player.reset(x=self.CO.mapController.getCurrentMap().playerStartX,
-                                                 y=self.CO.mapController.getCurrentMap().playerStartY,
-                                                 direction=self.CO.mapController.getCurrentMap().playerStartDirection)
+                                    player.reset(x=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartX,
+                                                 y=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartY,
+                                                 direction=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartDirection)
                                 self.CO.gameStatus = "raceSettings"
                                 self.CO.raceObject.reset()
                 case "raceSettings":
@@ -282,7 +310,7 @@ class GameMain:
                             if button.action == "start":
                                 if self.CO.raceObject.rounds > 0:
                                     self.CO.gameStatus = "race"
-                                    self.CO.raceObject.start(self.CO.mapController.getCurrentMap())
+                                    self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
                             elif button.action == "back":
                                 self.CO.gameStatus = "selectMap"
                         if button.hover(mx, my):
@@ -327,7 +355,7 @@ class GameMain:
 
                     if keys[pygame.K_t]:
                         self.CO.raceObject.rounds = 1
-                        self.CO.raceObject.start(self.CO.mapController.getCurrentMap())
+                        self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
                     elif keys[pygame.K_z]:
                         self.CO.raceObject.stop()
                     elif keys[pygame.K_u]:
@@ -335,9 +363,9 @@ class GameMain:
                     elif keys[pygame.K_i]:
                         self.CO.raceObject.reset()
 
-                    if self.CO.mapController.getCurrentMap().name == "generatedWFC":
+                    if self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
                         if keys[pygame.K_o]: # save custom map
-                            self.CO.mapController.getCurrentMap().saveMap(self.customMapPath)
+                            self.CO.mapController.getCurrentMap(self.CO.officialMaps).saveMap(self.customMapPath)
 
                     if self.CO.raceObject.raceStatus == "race":
                         # movement keys pressed --> Update players
@@ -368,7 +396,7 @@ class GameMain:
                         for player in self.CO.players:
                             player.update()
                             # update ray length
-                            player.updateRays(self.CO.mapController.getCurrentMap().boundsMap)
+                            player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
                     elif self.CO.raceObject.raceStatus == "raceOver": # leaderboard buttons
                         for button in self.CO.leaderboardButtons:
                             if button.clicked(mx, my, pygame.mouse.get_pressed()):
@@ -376,8 +404,8 @@ class GameMain:
                                     self.CO.raceObject.reset()
                                 elif button.action == "choseMap":
                                     self.CO.gameStatus = "selectMap"
-                                elif button.action == "saveMap" and self.CO.mapController.getCurrentMap().name == "generatedWFC":
-                                    self.CO.mapController.getCurrentMap().saveMap(self.customMapPath)
+                                elif button.action == "saveMap" and self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
+                                    self.CO.mapController.getCurrentMap(self.CO.officialMaps).saveMap(self.customMapPath)
                     elif self.CO.raceObject.raceStatus == "paused":
                         for button in self.CO.pauseButtons: # paused menu buttons
                             if button.clicked(mx, my, pygame.mouse.get_pressed()):

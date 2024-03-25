@@ -79,8 +79,12 @@ class GameDisplay(threading.Thread):
         # draw menu Text
         self.drawMenuText("Map Selector", (255, 255, 255))
 
+        index = 1
+        if self.CO.officialMaps:
+            index = 0
+
         # draw buttons
-        for button in self.CO.mapButtons[0]:
+        for button in self.CO.mapButtons[index]:
             if button.enable:
                 button.draw(self.windowWidth, self.windowHeight)
                 # draw name of map on button
@@ -89,7 +93,7 @@ class GameDisplay(threading.Thread):
                 newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900)  # scale y
                 font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
                 if button.action.isnumeric():
-                    text = font.render(str(self.CO.mapController.maps[int(button.action)].name), True, (255, 255, 255))
+                    text = font.render(str(self.CO.mapController.getMapArray((index == 0))[int(button.action)].name), True, (255, 255, 255))
                 else:
                     if button.action == "generateMapWFC":
                         text = font.render("generate new Map", True, (255, 255, 255))
@@ -116,7 +120,7 @@ class GameDisplay(threading.Thread):
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
 
         # map name
-        self.drawMenuText(self.CO.mapController.getCurrentMap().name, (255, 255, 255))
+        self.drawMenuText(self.CO.mapController.getCurrentMap(self.CO.officialMaps).name, (255, 255, 255))
 
         settingsText = ["Rounds: ", "MaxSpeed: ", "MaxAcc: ", "Items: ", "Items spawn cooldown: "]
         settingsData = [str(self.CO.raceObject.rounds), str(self.CO.raceObject.maxSpeed), str(self.CO.raceObject.maxAcc), str(self.CO.raceObject.itemsEnabled), str(self.CO.raceObject.itemSpawnCooldown)]
@@ -143,7 +147,7 @@ class GameDisplay(threading.Thread):
         bottomRight = [(1570*self.windowWidth)/1600, (750*self.windowHeight)/900]
         mapWidth = bottomRight[0] - topLeft[0]
         mapHeight = bottomRight[1] - topLeft[1]
-        myMap = self.CO.mapController.getCurrentMap().myMap
+        myMap = self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap
         # draw Map
         if myMap != "":
             for i in range(len(myMap)):
@@ -201,7 +205,7 @@ class GameDisplay(threading.Thread):
             # draw buttons
             for button in self.CO.leaderboardButtons:
                 if button.action == "saveMap":
-                    if self.CO.mapController.getCurrentMap().name == "generatedWFC":
+                    if self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
                         button.draw(self.windowWidth, self.windowHeight)
                 else:
                     button.draw(self.windowWidth, self.windowHeight)
@@ -214,7 +218,7 @@ class GameDisplay(threading.Thread):
                 button.draw(self.windowWidth, self.windowHeight)
 
     def drawMap(self):
-        self.myMap = self.CO.mapController.getCurrentMap().myMap
+        self.myMap = self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap
         # draw Map
         if self.myMap != "":
             for i in range(len(self.myMap)):
@@ -230,7 +234,7 @@ class GameDisplay(threading.Thread):
             self.screen.fill((50, 200, 200))
 
     def drawBoundsMap(self):
-        boundsMap = self.CO.mapController.getCurrentMap().boundsMap
+        boundsMap = self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap
         for bound in boundsMap:
             start = ((bound[0] * self.windowWidth) / 1600, (bound[1] * self.windowHeight) / 900)
             end = ((bound[2] * self.windowWidth) / 1600, (bound[3] * self.windowHeight) / 900)
@@ -238,7 +242,7 @@ class GameDisplay(threading.Thread):
 
     def drawCheckpoints(self):
         i = 255
-        checkpoints = self.CO.mapController.getCurrentMap().checkpoints
+        checkpoints = self.CO.mapController.getCurrentMap(self.CO.officialMaps).checkpoints
         for checkpoint in checkpoints:
             start = ((checkpoint[0] * self.windowWidth) / 1600, (checkpoint[1] * self.windowHeight) / 900)
             end = ((checkpoint[2] * self.windowWidth) / 1600, (checkpoint[3] * self.windowHeight) / 900)
@@ -402,7 +406,7 @@ class GameDisplay(threading.Thread):
         self.screen.blit(text, newRect)
 
         # map name
-        text = font.render(self.CO.mapController.getCurrentMap().name, True, (255, 255, 255))
+        text = font.render(self.CO.mapController.getCurrentMap(self.CO.officialMaps).name, True, (255, 255, 255))
         newRect = text.get_rect()
         newRect.centerx = rectangle.centerx
         newRect.y = rectangle.y + (newTextSize / 2) + newTextSize
@@ -462,7 +466,7 @@ class GameDisplay(threading.Thread):
         self.screen.blit(text, newRect)
 
         # map name
-        text = font.render(self.CO.mapController.getCurrentMap().name, True, (255, 255, 255))
+        text = font.render(self.CO.mapController.getCurrentMap(self.CO.officialMaps).name, True, (255, 255, 255))
         newRect = text.get_rect()
         newRect.centerx = rectangle.centerx
         newRect.y = rectangle.y + (newTextSize / 2) + newTextSize
