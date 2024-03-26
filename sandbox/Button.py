@@ -21,6 +21,7 @@ class Button:
         self.hadAction = False
         self.action = action
         self.enable = True
+        self.getsHovered = False
 
     def draw(self, currentWidth: int, currentHeight: int):
         if self.enable:
@@ -32,19 +33,26 @@ class Button:
             self.rect = self.scaledImg.get_rect()
             self.rect.topleft = (newX, newY)
             self.surface.blit(self.scaledImg, (newX, newY))
+            if self.getsHovered:
+                darkenFaktor = 70
+                newImg = self.scaledImg.copy()
+                newImg.fill((darkenFaktor, darkenFaktor, darkenFaktor))
+                self.surface.blit(newImg, (newX, newY), special_flags=pygame.BLEND_RGBA_SUB)
 
     def clicked(self, mx: int, my: int, mouseClick: array):
         if self.enable:
-            if self.rect.collidepoint((mx, my)) and mouseClick[0]:
-                self.isClicked = True
-                time.sleep(0.3) # delay for multiple button presses
-            else:
-                self.hadAction = False
-                self.isClicked = False
+            if self.hover(mx, my):
+                if self.rect.collidepoint((mx, my)) and mouseClick[0]:
+                    self.isClicked = True
+                    time.sleep(0.3) # delay for multiple button presses
+                else:
+                    self.hadAction = False
+                    self.isClicked = False
 
-            return self.isClicked
+                return self.isClicked
         return False
 
     def hover(self, mx: int, my: int):
-        return self.rect.collidepoint((mx, my)) and self.enable
+        self.getsHovered = self.rect.collidepoint((mx, my)) and self.enable
+        return self.getsHovered
 
