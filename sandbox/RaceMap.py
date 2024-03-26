@@ -29,9 +29,12 @@ class RaceMap:
         self.checkpoints = []
         self.generateCheckpoints()
 
-    def saveMap(self, path):
+    def saveMap(self, path: str, name: str = ""):
         root = ET.Element("raceMap")
-        ET.SubElement(root, "name").text = self.name
+        if name == "":
+            ET.SubElement(root, "name").text = self.name
+        else:
+            ET.SubElement(root, "name").text = name
         ET.SubElement(root, "playerStartX").text = str(self.playerStartX)
         ET.SubElement(root, "playerStartY").text = str(self.playerStartY)
         ET.SubElement(root, "playerStartDirection").text = str(self.playerStartDirection)
@@ -43,8 +46,12 @@ class RaceMap:
             for j in i:
                 y = ET.SubElement(x, "y").text = str(j)
 
-        print(path + self.name + ".xml")
-        ET.ElementTree(root).write(path + self.name + ".xml")
+        if name == "":
+            print(path + self.name + ".xml")
+            ET.ElementTree(root).write(path + self.name + ".xml")
+        else:
+            print(path + name + ".xml")
+            ET.ElementTree(root).write(path + name + ".xml")
 
     def generateLineMap(self):
         # this functions creates the bounds of the map

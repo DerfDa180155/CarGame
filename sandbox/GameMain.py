@@ -4,6 +4,7 @@ import os
 import threading
 import time
 import numpy
+import datetime
 import CommunicationObject
 import GameDisplay
 import WaveFunctionCollapse
@@ -405,7 +406,15 @@ class GameMain:
                                 elif button.action == "choseMap":
                                     self.CO.gameStatus = "selectMap"
                                 elif button.action == "saveMap" and self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
-                                    self.CO.mapController.getCurrentMap(self.CO.officialMaps).saveMap(self.customMapPath)
+                                    currentTime = datetime.datetime.now()
+                                    name = "generated map: "
+                                    name += str(currentTime.hour) + ":"
+                                    name += str(currentTime.minute) + ":"
+                                    name += str(currentTime.second) + " | "
+                                    name += str(currentTime.day) + "."
+                                    name += str(currentTime.month) + "."
+                                    name += str(currentTime.year)
+                                    self.CO.mapController.getCurrentMap(self.CO.officialMaps).saveMap(self.customMapPath, name)
                     elif self.CO.raceObject.raceStatus == "paused":
                         for button in self.CO.pauseButtons: # paused menu buttons
                             if button.clicked(mx, my, pygame.mouse.get_pressed()):
