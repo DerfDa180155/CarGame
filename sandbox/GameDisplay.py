@@ -446,6 +446,11 @@ class GameDisplay(threading.Thread):
         self.screen.blit(text, newRect)
 
     def drawPaused(self):
+        darkenFaktor = 100
+        dark = pygame.Surface((self.windowWidth, self.windowHeight))
+        dark.fill((darkenFaktor, darkenFaktor, darkenFaktor))
+        self.screen.blit(dark, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)
+
         # rectangle
         x = (400 * self.windowWidth) / 1600
         y = (200 * self.windowHeight) / 900
