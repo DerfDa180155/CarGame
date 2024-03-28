@@ -386,6 +386,9 @@ class GameDisplay(threading.Thread):
             self.screen.blit(text, newRect)  # speed
 
     def drawLeaderboard(self):
+        # dark overlay
+        self.drawOverlay((70, 70, 70))
+
         # rectangle
         x = (400 * self.windowWidth) / 1600
         y = (200 * self.windowHeight) / 900
@@ -446,10 +449,8 @@ class GameDisplay(threading.Thread):
         self.screen.blit(text, newRect)
 
     def drawPaused(self):
-        darkenFaktor = 100
-        dark = pygame.Surface((self.windowWidth, self.windowHeight))
-        dark.fill((darkenFaktor, darkenFaktor, darkenFaktor))
-        self.screen.blit(dark, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)
+        # dark overlay
+        self.drawOverlay((100, 100, 100))
 
         # rectangle
         x = (400 * self.windowWidth) / 1600
@@ -500,6 +501,12 @@ class GameDisplay(threading.Thread):
             newRect.right = x + newTextSize * 16
             newRect.y = y + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
             self.screen.blit(text, newRect)
+
+    def drawOverlay(self, color):
+        # dark overlay
+        dark = pygame.Surface((self.windowWidth, self.windowHeight))
+        dark.fill(color)
+        self.screen.blit(dark, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)
 
     def drawPlayers(self):
         i = 0
