@@ -426,6 +426,29 @@ Started implementing custom maps on the map selector.
 Started splitting the buttons of the map selector in multiple arrays to separate the maps.
 
 
+## 24.03.2024
+
+Finished map selector. The map selector now have multiple pages and can also select custom maps.
+
+
+## 25.03.2024
+
+Updated the buttons, to have a hover effect.
+
+
+## 26.03.2024
+
+Updated the map saver, to store the date and time in the map name.
+
+
+## 27.03.2024
+
+Updated the pause screen, to have a dark overlay.
+
+
+## 28.03.2024
+
+Updated the leaderboard screen, to have a dark overlay.
 
 
 
