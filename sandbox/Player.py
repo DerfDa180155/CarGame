@@ -32,6 +32,7 @@ class Player:
         self.countSteering = 0
 
         self.isDone = False # for the race
+        self.name = "Unknown"
 
         i = self.frontRaysViewAngle / (-2)
         while i <= self.frontRaysViewAngle / 2:

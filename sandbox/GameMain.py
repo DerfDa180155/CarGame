@@ -228,6 +228,7 @@ class GameMain:
                                 self.CO.players.append(Player.Player(0, 0, 0))
                             self.CO.gameStatus = "selectMap"
                             print(self.CO.currentMode)
+                            self.CO.mapButtonPage = 0
                 case "selectMap":
                     if self.oldMapCount != self.CO.mapController.getCountMaps(True):
                         self.oldMapCount = self.CO.mapController.getCountMaps(True)
