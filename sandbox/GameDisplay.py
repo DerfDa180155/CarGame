@@ -63,6 +63,29 @@ class GameDisplay(threading.Thread):
         # draw menu Text
         self.drawMenuText("Settings", (255, 255, 255))
 
+        newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+
+        settingsText = ["drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "pause key: "]
+        settingsData = ["...", "...", "...", "...", "..."]
+
+        for i in range(len(settingsText)):
+            # settings Text
+            text = font.render(settingsText[i], True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.x = newTextSize
+            newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
+            self.screen.blit(text, newRect)
+
+            # settings Data
+            text = font.render(settingsData[i], True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.right = newTextSize * 17
+            newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
+            self.screen.blit(text, newRect)
+
+            self.CO.raceSettingsButtons[i + 2].y = (newRect.y * 900) / self.windowHeight
+
     def drawModeSelector(self):
         self.screen.fill((100, 150, 200))  # background
 
