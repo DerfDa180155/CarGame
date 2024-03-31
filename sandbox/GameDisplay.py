@@ -67,7 +67,9 @@ class GameDisplay(threading.Thread):
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
 
         settingsText = ["drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "pause key: "]
-        settingsData = ["...", "...", "...", "...", "..."]
+        settingsData = [str(self.CO.settings.driveForwardKey), str(self.CO.settings.driveBackwardKey),
+                        str(self.CO.settings.steerLeftKey), str(self.CO.settings.steerRightKey),
+                        str(self.CO.settings.pauseKey)]
 
         for i in range(len(settingsText)):
             # settings Text

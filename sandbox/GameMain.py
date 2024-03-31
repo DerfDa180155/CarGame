@@ -7,6 +7,7 @@ import numpy
 import datetime
 import CommunicationObject
 import GameDisplay
+import Settings
 import WaveFunctionCollapse
 import MapCleaner
 import Player
@@ -42,6 +43,7 @@ class GameMain:
         self.mapPath = "gameFiles/maps/"
         self.customMapPath = "gameFiles/maps/customMaps/"
         self.imagePath = "gameFiles/images/"
+        self.settingsPath = "gameFiles/settings/"
 
         # images
         self.empty = pygame.image.load(self.imagePath + "empty.png").convert()
@@ -52,7 +54,7 @@ class GameMain:
         self.verticalLine = pygame.image.load(self.imagePath + "vertical_Line.png").convert()
         self.horizontalLine = pygame.image.load(self.imagePath + "horizontal_line.png").convert()
         self.crossing = pygame.image.load(self.imagePath + "crossing.png").convert()
-        self.settings = pygame.image.load(self.imagePath + "settings.png").convert()
+        self.settingsImg = pygame.image.load(self.imagePath + "settings.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -75,13 +77,14 @@ class GameMain:
         self.players.append(Player.Player(100, 100, 0))
 
         self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0])
+        self.settings = Settings.Settings(self.settingsPath)
 
         # buttons
         # main menu buttons
         self.testButton = Button.Button(self.screen, 100, 100, 150, self.crossing, "generateMap")
         self.modeSelectButton = Button.Button(self.screen, 100, 300, 150, self.topRight, "selectMode")
         self.mapSelectButton = Button.Button(self.screen, 100, 500, 150, self.topLeft, "selectMap")
-        self.settingsButton = Button.Button(self.screen, 1460, 40, 100, self.settings, "settings")
+        self.settingsButton = Button.Button(self.screen, 1460, 40, 100, self.settingsImg, "settings")
         self.linkButton = Button.Button(self.screen, 1450, 750, 100, self.empty, "https://github.com/DerfDa180155")
         self.quitButton = Button.Button(self.screen, 100, 700, 150, self.empty, "quit")
         self.menuButtons = [self.testButton, self.modeSelectButton, self.mapSelectButton, self.settingsButton,
@@ -147,7 +150,8 @@ class GameMain:
                                                           TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
                                                           TextSize=30, imageArray=self.mapArray,
                                                           mapController=self.mapController, players=self.players,
-                                                          raceObject=self.raceObject, menuButtons=self.menuButtons,
+                                                          raceObject=self.raceObject, settings=self.settings,
+                                                          menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,
                                                           mapButtons=self.mapButtons, mapButtonPage=self.mapButtonPage,
                                                           officialMaps=True, raceSettingsButtons=self.raceSettingsButtons,
