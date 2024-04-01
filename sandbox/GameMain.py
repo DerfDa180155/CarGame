@@ -105,6 +105,14 @@ class GameMain:
         self.itemsSpawnCooldownScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollISC")
         self.raceSettingsButtons = [self.startRaceButtons, self.backButton, self.roundsScrollButton, self.maxSpeedScrollButton, self.maxAccScrollButton, self.itemsEnabledScrollButton, self.itemsSpawnCooldownScrollButton]
 
+        # settings buttons
+        self.forwardKeyButtons = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "forwardKey")
+        self.backwardKeyButtons = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "backwardKey")
+        self.leftKeyButtons = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "leftKey")
+        self.rightKeyButtons = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "rightKey")
+        self.pauseKeyButtons = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "pauseKey")
+        self.settingsButtons = [self.forwardKeyButtons, self.backwardKeyButtons, self.leftKeyButtons, self.rightKeyButtons, self.pauseKeyButtons]
+
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
         self.restartButton = Button.Button(self.screen, 875, 625, 50, self.topRight, "restart")
@@ -151,12 +159,13 @@ class GameMain:
                                                           TextSize=30, imageArray=self.mapArray,
                                                           mapController=self.mapController, players=self.players,
                                                           raceObject=self.raceObject, settings=self.settings,
-                                                          menuButtons=self.menuButtons,
-                                                          gameModeButtons=self.gameModeButtons,
-                                                          mapButtons=self.mapButtons, mapButtonPage=self.mapButtonPage,
-                                                          officialMaps=True, raceSettingsButtons=self.raceSettingsButtons,
+                                                          menuButtons=self.menuButtons, gameModeButtons=self.gameModeButtons,
+                                                          raceSettingsButtons=self.raceSettingsButtons,
                                                           leaderboardButtons=self.leaderboardButtons,
-                                                          pauseButtons=self.pauseButtons, currentMode="singleplayer")
+                                                          settingsButtons=self.settingsButtons,
+                                                          pauseButtons=self.pauseButtons, mapButtons=self.mapButtons,
+                                                          mapButtonPage=self.mapButtonPage, officialMaps=True,
+                                                          currentMode="singleplayer")
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()

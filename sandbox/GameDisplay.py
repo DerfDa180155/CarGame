@@ -86,7 +86,11 @@ class GameDisplay(threading.Thread):
             newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
             self.screen.blit(text, newRect)
 
-            self.CO.raceSettingsButtons[i + 2].y = (newRect.y * 900) / self.windowHeight
+            self.CO.settingsButtons[i].y = (newRect.y * 900) / self.windowHeight
+
+        # draw buttons
+        for button in self.CO.settingsButtons:
+            button.draw(self.windowWidth, self.windowHeight)
 
     def drawModeSelector(self):
         self.screen.fill((100, 150, 200))  # background
