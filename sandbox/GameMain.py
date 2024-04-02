@@ -230,6 +230,26 @@ class GameMain:
                                 self.gameDisplay.running = False
                             else:
                                 self.CO.gameStatus = button.action
+                case "settings":
+                    for button in self.CO.settingsButtons:
+                        if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                            print(button.action)
+                            text = ""
+                            while text == "":
+                                for detect in pygame.event.get():
+                                    if detect.type == pygame.KEYDOWN:
+                                        text = detect.key
+                            match button.action:
+                                case "forwardKey":
+                                    self.CO.settings.driveForwardKey = pygame.key.name(text)
+                                case "backwardKey":
+                                    self.CO.settings.driveBackwardKey = pygame.key.name(text)
+                                case "leftKey":
+                                    self.CO.settings.steerLeftKey = pygame.key.name(text)
+                                case "rightKey":
+                                    self.CO.settings.steerRightKey = pygame.key.name(text)
+                                case "pauseKey":
+                                    self.CO.settings.pauseKey = pygame.key.name(text)
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
