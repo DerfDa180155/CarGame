@@ -185,7 +185,7 @@ class GameMain:
                     self.running = False
                     self.gameDisplay.running = False
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE: # Quit the Game
+                    if event.key == pygame.key.key_code(self.CO.settings.pauseKey): # Quit the Game
                         if self.CO.gameStatus == "menu":
                             self.running = False
                             self.gameDisplay.running = False
@@ -405,25 +405,25 @@ class GameMain:
                     if self.CO.raceObject.raceStatus == "race":
                         # movement keys pressed --> Update players
                         if self.CO.currentMode == "singleplayer" and not self.CO.players[0].isDone:
-                            if keys[pygame.K_LEFT] or keys[pygame.K_a]:  # turn left
+                            if keys[pygame.key.key_code(self.CO.settings.steerLeftKey)]: # turn left
                                 self.CO.players[0].changeDir(False)
-                            if keys[pygame.K_RIGHT] or keys[pygame.K_d]:  # turn right
+                            if keys[pygame.key.key_code(self.CO.settings.steerRightKey)]: # turn right
                                 self.CO.players[0].changeDir(True)
-                            if keys[pygame.K_UP] or keys[pygame.K_w]:  # move forward
+                            if keys[pygame.key.key_code(self.CO.settings.driveForwardKey)]: # move forward
                                 self.CO.players[0].move(True)
-                            if keys[pygame.K_DOWN] or keys[pygame.K_s]:  # move backward
+                            if keys[pygame.key.key_code(self.CO.settings.driveBackwardKey)]: # move backward
                                 self.CO.players[0].move(False)
                         elif self.CO.currentMode == "multiplayer":
                             i = 0
                             for player in self.CO.players:
                                 if not player.isDone:
-                                    if keys[pygame.K_LEFT] and i == 1 or keys[pygame.K_a] and i == 0:  # turn left
+                                    if keys[pygame.K_LEFT] and i == 1 or keys[pygame.K_a] and i == 0: # turn left
                                         player.changeDir(False)
-                                    if keys[pygame.K_RIGHT] and i == 1 or keys[pygame.K_d] and i == 0:  # turn right
+                                    if keys[pygame.K_RIGHT] and i == 1 or keys[pygame.K_d] and i == 0: # turn right
                                         player.changeDir(True)
-                                    if keys[pygame.K_UP] and i == 1 or keys[pygame.K_w] and i == 0:  # move forward
+                                    if keys[pygame.K_UP] and i == 1 or keys[pygame.K_w] and i == 0: # move forward
                                         player.move(True)
-                                    if keys[pygame.K_DOWN] and i == 1 or keys[pygame.K_s] and i == 0:  # move backward
+                                    if keys[pygame.K_DOWN] and i == 1 or keys[pygame.K_s] and i == 0: # move backward
                                         player.move(False)
                                 i += 1
 
