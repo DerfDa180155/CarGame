@@ -451,4 +451,41 @@ Updated the pause screen, to have a dark overlay.
 Updated the leaderboard screen, to have a dark overlay.
 
 
+## 29.03.2024
+
+Updated map selector to always start on the first page.
+
+
+## 30.03.2024
+
+Started with the dispay of the setting menu.
+
+
+## 31.03.2024
+
+Created a settings class, to store the settings.
+
+
+## 01.04.2024
+
+Created buttons for the settings menu.
+
+
+## 02.04.2024
+
+Updated the buttons, to listen for the next keyboard press and save the key in the settings class.
+
+
+## 03.04.2024
+
+Implemented the settings keys in the game.
+
+
+
+
+
+
+
+
+
 
