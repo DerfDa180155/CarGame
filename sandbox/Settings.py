@@ -18,7 +18,18 @@ class Settings:
         self.loadSettings()
 
     def loadSettings(self):
-        pass
+        currentPath = os.getcwd()
+        settingsPath = os.path.join(currentPath, self.path)
+
+        for root, dirs, files in os.walk(settingsPath):
+            for file in files:
+                if self.filename + ".xml" == file:
+                    docRoot = ET.parse(os.path.join(root, file)).getroot()
+                    self.driveForwardKey = pygame.key.name(int(docRoot[0].text))
+                    self.driveBackwardKey = pygame.key.name(int(docRoot[1].text))
+                    self.steerLeftKey = pygame.key.name(int(docRoot[2].text))
+                    self.steerRightKey = pygame.key.name(int(docRoot[3].text))
+                    self.pauseKey = pygame.key.name(int(docRoot[4].text))
 
     def saveSettings(self):
         root = ET.Element("settings")
