@@ -231,6 +231,11 @@ class GameMain:
                             else:
                                 self.CO.gameStatus = button.action
                 case "settings":
+                    # hotkeys for debugging and testing
+                    if keys[pygame.K_s]:
+                        self.CO.settings.saveSettings()
+                        time.sleep(0.3)
+
                     for button in self.CO.settingsButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
                             print(button.action)
