@@ -106,12 +106,13 @@ class GameMain:
         self.raceSettingsButtons = [self.startRaceButtons, self.backButton, self.roundsScrollButton, self.maxSpeedScrollButton, self.maxAccScrollButton, self.itemsEnabledScrollButton, self.itemsSpawnCooldownScrollButton]
 
         # settings buttons
-        self.forwardKeyButtons = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "forwardKey")
-        self.backwardKeyButtons = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "backwardKey")
-        self.leftKeyButtons = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "leftKey")
-        self.rightKeyButtons = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "rightKey")
-        self.pauseKeyButtons = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "pauseKey")
-        self.settingsButtons = [self.forwardKeyButtons, self.backwardKeyButtons, self.leftKeyButtons, self.rightKeyButtons, self.pauseKeyButtons]
+        self.saveButton = Button.Button(self.screen, 50, 750, 100, self.verticalLine, "save")
+        self.forwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "forwardKey")
+        self.backwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "backwardKey")
+        self.leftKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "leftKey")
+        self.rightKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "rightKey")
+        self.pauseKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "pauseKey")
+        self.settingsButtons = [self.saveButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.pauseKeyButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -238,23 +239,25 @@ class GameMain:
 
                     for button in self.CO.settingsButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
-                            print(button.action)
-                            text = ""
-                            while text == "":
-                                for detect in pygame.event.get():
-                                    if detect.type == pygame.KEYDOWN:
-                                        text = detect.key
-                            match button.action:
-                                case "forwardKey":
-                                    self.CO.settings.driveForwardKey = pygame.key.name(text)
-                                case "backwardKey":
-                                    self.CO.settings.driveBackwardKey = pygame.key.name(text)
-                                case "leftKey":
-                                    self.CO.settings.steerLeftKey = pygame.key.name(text)
-                                case "rightKey":
-                                    self.CO.settings.steerRightKey = pygame.key.name(text)
-                                case "pauseKey":
-                                    self.CO.settings.pauseKey = pygame.key.name(text)
+                            if button.action == "save":
+                                self.CO.settings.saveSettings()
+                            else:
+                                text = ""
+                                while text == "":
+                                    for detect in pygame.event.get():
+                                        if detect.type == pygame.KEYDOWN:
+                                            text = detect.key
+                                match button.action:
+                                    case "forwardKey":
+                                        self.CO.settings.driveForwardKey = pygame.key.name(text)
+                                    case "backwardKey":
+                                        self.CO.settings.driveBackwardKey = pygame.key.name(text)
+                                    case "leftKey":
+                                        self.CO.settings.steerLeftKey = pygame.key.name(text)
+                                    case "rightKey":
+                                        self.CO.settings.steerRightKey = pygame.key.name(text)
+                                    case "pauseKey":
+                                        self.CO.settings.pauseKey = pygame.key.name(text)
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):
