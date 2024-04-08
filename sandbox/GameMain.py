@@ -161,7 +161,8 @@ class GameMain:
                                                           TextSize=30, imageArray=self.mapArray,
                                                           mapController=self.mapController, players=self.players,
                                                           raceObject=self.raceObject, settings=self.settings,
-                                                          menuButtons=self.menuButtons, gameModeButtons=self.gameModeButtons,
+                                                          waitForKey=False, menuButtons=self.menuButtons,
+                                                          gameModeButtons=self.gameModeButtons,
                                                           raceSettingsButtons=self.raceSettingsButtons,
                                                           leaderboardButtons=self.leaderboardButtons,
                                                           settingsButtons=self.settingsButtons,
@@ -246,10 +247,12 @@ class GameMain:
                                 self.CO.gameStatus = "menu"
                             else:
                                 text = ""
+                                self.CO.waitForKey = True
                                 while text == "":
                                     for detect in pygame.event.get():
                                         if detect.type == pygame.KEYDOWN:
                                             text = detect.key
+                                self.CO.waitForKey = False
                                 match button.action:
                                     case "forwardKey":
                                         self.CO.settings.driveForwardKey = pygame.key.name(text)

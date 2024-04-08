@@ -88,6 +88,9 @@ class GameDisplay(threading.Thread):
 
             self.CO.settingsButtons[i + 2].y = (newRect.y * 900) / self.windowHeight
 
+        if self.CO.waitForKey:
+            self.drawSettingsSelectKey()
+
         # draw buttons
         for button in self.CO.settingsButtons:
             button.draw(self.windowWidth, self.windowHeight)
@@ -530,6 +533,30 @@ class GameDisplay(threading.Thread):
             newRect.right = x + newTextSize * 16
             newRect.y = y + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
             self.screen.blit(text, newRect)
+
+    def drawSettingsSelectKey(self):
+        # dark overlay
+        self.drawOverlay((100, 100, 100))
+
+        # rectangle
+        x = (580 * self.windowWidth) / 1600
+        y = (410 * self.windowHeight) / 900
+        sizeWidth = (440 * self.windowWidth) / 1600
+        sizeHeight = (80 * self.windowHeight) / 900
+        rectangle = pygame.Rect(x, y, sizeWidth, sizeHeight)
+
+        pygame.draw.rect(self.screen, (128, 128, 128), rectangle)
+
+        # text
+        newTextSize = int((50 * self.windowWidth) / 2000)
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+
+        # map name
+        text = font.render("Press a key to select!", True, (255, 255, 255))
+        newRect = text.get_rect()
+        newRect.centerx = rectangle.centerx
+        newRect.centery = rectangle.centery
+        self.screen.blit(text, newRect)
 
     def drawOverlay(self, color):
         # dark overlay
