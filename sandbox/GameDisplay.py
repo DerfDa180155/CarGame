@@ -66,10 +66,10 @@ class GameDisplay(threading.Thread):
         newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
 
-        settingsText = ["drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "pause key: "]
+        settingsText = ["drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "pause key: ", "FPS: ", "TPS: "]
         settingsData = [str(self.CO.settings.driveForwardKey), str(self.CO.settings.driveBackwardKey),
                         str(self.CO.settings.steerLeftKey), str(self.CO.settings.steerRightKey),
-                        str(self.CO.settings.pauseKey)]
+                        str(self.CO.settings.pauseKey), str(self.CO.settings.FPS), str(self.CO.settings.TPS)]
 
         for i in range(len(settingsText)):
             # settings Text
@@ -86,7 +86,8 @@ class GameDisplay(threading.Thread):
             newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
             self.screen.blit(text, newRect)
 
-            self.CO.settingsButtons[i + 2].y = (newRect.y * 900) / self.windowHeight
+            if len(self.CO.settingsButtons)-2 > i:
+                self.CO.settingsButtons[i + 2].y = (newRect.y * 900) / self.windowHeight
 
         if self.CO.waitForKey:
             self.drawSettingsSelectKey()

@@ -15,6 +15,10 @@ class Settings:
         self.steerRightKey = "d"
         self.pauseKey = "escape"
 
+        # game settings
+        self.FPS = 60
+        self.TPS = 120
+
         self.loadSettings()
 
     def loadSettings(self):
@@ -30,6 +34,8 @@ class Settings:
                     self.steerLeftKey = pygame.key.name(int(docRoot[2].text))
                     self.steerRightKey = pygame.key.name(int(docRoot[3].text))
                     self.pauseKey = pygame.key.name(int(docRoot[4].text))
+                    self.FPS = int(docRoot[5].text)
+                    self.TPS = int(docRoot[6].text)
 
     def saveSettings(self):
         root = ET.Element("settings")
@@ -38,6 +44,8 @@ class Settings:
         ET.SubElement(root, "steerLeftKey").text = str(pygame.key.key_code(self.steerLeftKey))
         ET.SubElement(root, "steerRightKey").text = str(pygame.key.key_code(self.steerRightKey))
         ET.SubElement(root, "pauseKey").text = str(pygame.key.key_code(self.pauseKey))
+        ET.SubElement(root, "FPS").text = str(self.FPS)
+        ET.SubElement(root, "TPS").text = str(self.TPS)
 
         print(self.path + self.filename + ".xml")
         ET.ElementTree(root).write(self.path + self.filename + ".xml")
