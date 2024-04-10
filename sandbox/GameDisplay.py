@@ -48,7 +48,7 @@ class GameDisplay(threading.Thread):
 
             # update Display
             pygame.display.flip()
-            self.CO.FPSClock.tick(self.CO.FPS)  # limit FPS
+            self.CO.FPSClock.tick(self.CO.settings.FPS)  # limit FPS
 
     def drawMenu(self):
         self.screen.fill((50, 200, 200))  # background
@@ -333,7 +333,7 @@ class GameDisplay(threading.Thread):
 
         # FPS Display
         currentFPS = round(self.CO.FPSClock.get_fps(), 1)
-        diffFPS = self.CO.FPS - currentFPS
+        diffFPS = self.CO.settings.FPS - currentFPS
         if diffFPS < 0:
             diffFPS = 0
         elif diffFPS > 255 / 2:
@@ -343,7 +343,7 @@ class GameDisplay(threading.Thread):
 
         # TPS Display
         currentTPS = round(self.CO.TPSClock.get_fps(), 1)
-        diffTPS = self.CO.TPS - currentTPS
+        diffTPS = self.CO.settings.TPS - currentTPS
         if diffTPS < 0:
             diffTPS = 0
         elif diffTPS > 255 / 2:

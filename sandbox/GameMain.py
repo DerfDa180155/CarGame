@@ -29,8 +29,8 @@ class GameMain:
         self.windowHeight = 720
 
         # FPS and TPS for the game
-        self.FPS = 144
-        self.TPS = 120
+        #self.FPS = 144
+        #self.TPS = 120
 
         self.screen = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.RESIZABLE | pygame.GL_DOUBLEBUFFER)
         pygame.display.set_caption("Car Game by David Derflinger")
@@ -157,7 +157,7 @@ class GameMain:
         self.mapButtonPage = 0
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
-                                                          TPSClock=self.TPSClock, FPS=self.FPS, TPS=self.TPS,
+                                                          TPSClock=self.TPSClock, #FPS=self.FPS, TPS=self.TPS,
                                                           TextSize=30, imageArray=self.mapArray,
                                                           mapController=self.mapController, players=self.players,
                                                           raceObject=self.raceObject, settings=self.settings,
@@ -491,7 +491,7 @@ class GameMain:
 
 
 
-            self.TPSClock.tick(self.CO.TPS) # limit Game Ticks
+            self.TPSClock.tick(self.CO.settings.TPS) # limit Game Ticks
 
         self.gameDisplay.join()
         pygame.quit()

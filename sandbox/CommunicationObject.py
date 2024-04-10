@@ -8,7 +8,7 @@ import Settings
 import array
 
 class CommunicationObject:
-    def __init__(self, gameStatus: str, FPSClock: pygame.time.Clock, TPSClock: pygame.time.Clock, FPS: int, TPS: int,
+    def __init__(self, gameStatus: str, FPSClock: pygame.time.Clock, TPSClock: pygame.time.Clock, #FPS: int, TPS: int,
                  TextSize: int, imageArray: array, mapController: MapController, players: array, raceObject: RaceObject,
                  settings: Settings, waitForKey: bool, menuButtons: array, gameModeButtons: array, raceSettingsButtons: array,
                  settingsButtons: array, leaderboardButtons: array, pauseButtons: array, mapButtons: array,
@@ -16,8 +16,8 @@ class CommunicationObject:
         self.gameStatus = gameStatus
         self.FPSClock = FPSClock
         self.TPSClock = TPSClock
-        self.FPS = FPS
-        self.TPS = TPS
+        #self.FPS = FPS
+        #self.TPS = TPS
         self.TextSize = TextSize
         self.imageArray = imageArray
         self.mapController = mapController
