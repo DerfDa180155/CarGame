@@ -113,7 +113,9 @@ class GameMain:
         self.leftKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "leftKey")
         self.rightKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "rightKey")
         self.pauseKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "pauseKey")
-        self.settingsButtons = [self.saveButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.pauseKeyButton]
+        self.FPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollFPS")
+        self.TPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollTPS")
+        self.settingsButtons = [self.saveButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -264,6 +266,18 @@ class GameMain:
                                         self.CO.settings.steerRightKey = pygame.key.name(text)
                                     case "pauseKey":
                                         self.CO.settings.pauseKey = pygame.key.name(text)
+                        if button.hover(mx, my):
+                            match button.action:
+                                case "scrollFPS":
+                                    if scrolledUp:
+                                        self.CO.settings.FPS += 1
+                                    if scrolledDown and self.CO.settings.FPS > 1:
+                                        self.CO.settings.FPS -= 1
+                                case "scrollTPS":
+                                    if scrolledUp:
+                                        self.CO.settings.TPS += 1
+                                    if scrolledDown and self.CO.settings.TPS > 1:
+                                        self.CO.settings.TPS -= 1
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, pygame.mouse.get_pressed()):

@@ -86,8 +86,8 @@ class GameDisplay(threading.Thread):
             newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
             self.screen.blit(text, newRect)
 
-            if len(self.CO.settingsButtons)-2 > i:
-                self.CO.settingsButtons[i + 2].y = (newRect.y * 900) / self.windowHeight
+            #if len(self.CO.settingsButtons)-2 > i:
+            self.CO.settingsButtons[i + 2].y = (newRect.y * 900) / self.windowHeight
 
         if self.CO.waitForKey:
             self.drawSettingsSelectKey()
