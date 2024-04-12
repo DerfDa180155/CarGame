@@ -68,7 +68,10 @@ class Player:
         changeDir = 0
 
         if self.speed != 0:
-            changeDir = 0.7
+            if self.speed > 0:
+                changeDir = 0.7
+            else:
+                changeDir = -0.7
 
         if right:
             self.direction += changeDir
