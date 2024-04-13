@@ -107,6 +107,7 @@ class GameMain:
 
         # settings buttons
         self.saveButton = Button.Button(self.screen, 1450, 750, 100, self.verticalLine, "save")
+        self.applyButton = Button.Button(self.screen, 750, 750, 100, self.crossing, "apply")
         self.backButton = Button.Button(self.screen, 50, 750, 100, self.bottomLeft, "back")
         self.forwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "forwardKey")
         self.backwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "backwardKey")
@@ -115,7 +116,7 @@ class GameMain:
         self.pauseKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "pauseKey")
         self.FPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollFPS")
         self.TPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollTPS")
-        self.settingsButtons = [self.saveButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton]
+        self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -247,7 +248,9 @@ class GameMain:
                                 self.CO.settings.saveSettings()
                             elif button.action == "back":
                                 self.CO.gameStatus = "menu"
-                            else:
+                            elif button.action == "apply":
+                                pass
+                            elif button.action not in ["scrollFPS", "scrollTPS"]:
                                 text = ""
                                 self.CO.waitForKey = True
                                 while text == "":
