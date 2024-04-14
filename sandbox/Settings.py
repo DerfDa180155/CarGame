@@ -49,3 +49,13 @@ class Settings:
 
         print(self.path + self.filename + ".xml")
         ET.ElementTree(root).write(self.path + self.filename + ".xml")
+
+    def copyFrom(self, newSetting):
+        self.driveForwardKey = newSetting.driveForwardKey
+        self.driveBackwardKey = newSetting.driveBackwardKey
+        self.steerLeftKey = newSetting.steerLeftKey
+        self.steerRightKey = newSetting.steerRightKey
+        self.pauseKey = newSetting.pauseKey
+
+        self.FPS = newSetting.FPS
+        self.TPS = newSetting.TPS
