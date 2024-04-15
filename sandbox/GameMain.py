@@ -181,6 +181,7 @@ class GameMain:
         self.run()
 
     def run(self):
+        oldMousePressed = (False, False, False)
         # pygame setup
         while self.running:
             scrolledUp = False
@@ -224,11 +225,23 @@ class GameMain:
             # get pressed Keys
             keys = pygame.key.get_pressed()
             mx, my = pygame.mouse.get_pos() # get mouse positions for the buttons
+            mousePressed = pygame.mouse.get_pressed() # get current mouse pressed
+            mousePressedUp = []
+            mousePressedDown = []
+            for i in range(len(mousePressed)):
+                mousePressedUp.append(not mousePressed[i] and oldMousePressed[i])
+                mousePressedDown.append(mousePressed[i] and not oldMousePressed[i])
+            #print(mousePressed)
+            #print(mousePressedUp)
+            #print(mousePressedDown)
+            #print(oldMousePressed)
+            #print("----")
+            oldMousePressed = mousePressed
 
             match self.CO.gameStatus:
                 case "menu":
                     for button in self.CO.menuButtons:
-                        if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                        if button.clicked(mx, my, mousePressedUp):
                             if "https://" in button.action:
                                 if not button.hadAction:
                                     button.hadAction = True
@@ -245,7 +258,7 @@ class GameMain:
                         time.sleep(0.3)
 
                     for button in self.CO.settingsButtons:
-                        if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                        if button.clicked(mx, my, mousePressedUp):
                             if button.action == "save":
                                 self.CO.displayTempSettings.saveSettings()
                             elif button.action == "back":
@@ -285,7 +298,7 @@ class GameMain:
                                         self.CO.displayTempSettings.TPS -= 1
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
-                        if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                        if button.clicked(mx, my, mousePressedUp):
                             self.CO.currentMode = button.action
                             self.CO.raceObject.mode = button.action
                             if button.action == "singleplayer" and len(self.CO.players) == 2:
@@ -346,7 +359,7 @@ class GameMain:
                             time.sleep(0.3)
 
                     for button in self.CO.mapButtons[index] + self.CO.mapButtons[2]:
-                        if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                        if button.clicked(mx, my, mousePressedUp):
                             if not button.action.isnumeric():
                                 if button.action == "generateMapWFC":
                                     self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
@@ -374,7 +387,7 @@ class GameMain:
                                 self.CO.raceObject.reset()
                 case "raceSettings":
                     for button in self.CO.raceSettingsButtons:
-                        if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                        if button.clicked(mx, my, mousePressedUp):
                             if button.action == "start":
                                 if self.CO.raceObject.rounds > 0:
                                     self.CO.gameStatus = "race"
@@ -467,7 +480,7 @@ class GameMain:
                             player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
                     elif self.CO.raceObject.raceStatus == "raceOver": # leaderboard buttons
                         for button in self.CO.leaderboardButtons:
-                            if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                            if button.clicked(mx, my, mousePressedUp):
                                 if button.action == "restart":
                                     self.CO.raceObject.reset()
                                 elif button.action == "choseMap":
@@ -484,7 +497,7 @@ class GameMain:
                                     self.CO.mapController.getCurrentMap(self.CO.officialMaps).saveMap(self.customMapPath, name)
                     elif self.CO.raceObject.raceStatus == "paused":
                         for button in self.CO.pauseButtons: # paused menu buttons
-                            if button.clicked(mx, my, pygame.mouse.get_pressed()):
+                            if button.clicked(mx, my, mousePressedUp):
                                 if button.action == "resume":
                                     self.CO.raceObject.resume()
                                 elif button.action == "restart":

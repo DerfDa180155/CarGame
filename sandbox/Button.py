@@ -43,7 +43,7 @@ class Button:
             if self.hover(mx, my):
                 if self.rect.collidepoint((mx, my)) and mouseClick[0]:
                     self.isClicked = True
-                    time.sleep(0.3) # delay for multiple button presses
+                    #time.sleep(0.3) # delay for multiple button presses
                 else:
                     self.hadAction = False
                     self.isClicked = False
