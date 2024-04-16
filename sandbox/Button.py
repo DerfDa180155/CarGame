@@ -7,14 +7,18 @@ import array
 
 
 class Button:
-    def __init__(self, surface, x: int, y: int, size: int, img: pygame.image, action: str):
+    def __init__(self, surface, x: int, y: int, size: int, img: pygame.image, action: str, useTopLeft: bool = True):
         self.surface = surface
         self.x = x
         self.y = y
         self.size = size
         self.img = img
         self.rect = self.img.get_rect()
-        self.rect.topleft = (x, y)
+        self.useTopLeft = useTopLeft
+        if self.useTopLeft:
+            self.rect.topleft = (x, y)
+        else:
+            self.rect.center = (x, y)
         self.scaledImg = img
         self.isClicked = False
         self.hadAction = False
@@ -30,13 +34,21 @@ class Button:
             newSizeY = (self.size * currentHeight) / 900
             self.scaledImg = pygame.transform.scale(self.img, (newSizeX, newSizeY))
             self.rect = self.scaledImg.get_rect()
-            self.rect.topleft = (newX, newY)
-            self.surface.blit(self.scaledImg, (newX, newY))
+            if self.useTopLeft:
+                self.rect.topleft = (newX, newY)
+                self.surface.blit(self.scaledImg, (newX, newY))
+            else:
+                self.rect.center = (newX, newY)
+                self.surface.blit(self.scaledImg, (newX-(newSizeX/2), newY-(newSizeY/2)))
+
             if self.getsHovered:
                 darkenFaktor = 70
                 newImg = self.scaledImg.copy()
                 newImg.fill((darkenFaktor, darkenFaktor, darkenFaktor))
-                self.surface.blit(newImg, (newX, newY), special_flags=pygame.BLEND_RGBA_SUB)
+                if self.useTopLeft:
+                    self.surface.blit(newImg, (newX, newY), special_flags=pygame.BLEND_RGBA_SUB)
+                else:
+                    self.surface.blit(newImg, (newX-(newSizeX/2), newY-(newSizeY/2)), special_flags=pygame.BLEND_RGBA_SUB)
 
     def clicked(self, mx: int, my: int, mouseClick: array):
         if self.enable:
