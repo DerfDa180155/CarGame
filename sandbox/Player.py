@@ -132,7 +132,7 @@ class Player:
             self.acc = 0
 
         # sliding
-        if moved:
+        if moved and self.speed > 0:
             if self.isSteeringRight and not self.isSteeringLeft and np.abs(self.speed) > 30:
                 self.x -= (self.speed / 400) * np.cos(np.deg2rad(self.direction + 90))
                 self.y -= (self.speed / 400) * np.sin(np.deg2rad(self.direction + 90))
