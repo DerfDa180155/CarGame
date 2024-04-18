@@ -34,6 +34,8 @@ class GameDisplay(threading.Thread):
                     self.drawPlayers()
                 case "settings":
                     self.drawSettings()
+                case "mapMaker":
+                    self.drawMapMaker()
                 case "selectMode":
                     self.drawModeSelector()
                 case "selectMap":
@@ -95,6 +97,18 @@ class GameDisplay(threading.Thread):
         # draw buttons
         for button in self.CO.settingsButtons:
             button.draw(self.windowWidth, self.windowHeight)
+
+    def drawMapMaker(self):
+        self.screen.fill((50, 50, 50))  # background
+
+        # rectangle
+        x = (100 * self.windowWidth) / 1600
+        y = (100 * self.windowHeight) / 900
+        sizeWidth = (1400 * self.windowWidth) / 1600
+        sizeHeight = (700 * self.windowHeight) / 900
+        rectangle = pygame.Rect(x, y, sizeWidth, sizeHeight)
+
+        pygame.draw.rect(self.screen, (100, 200, 150), rectangle)
 
     def drawModeSelector(self):
         self.screen.fill((100, 150, 200))  # background

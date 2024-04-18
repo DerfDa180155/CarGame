@@ -82,7 +82,8 @@ class GameMain:
 
         # buttons
         # main menu buttons
-        self.testButton = Button.Button(self.screen, 100, 100, 150, self.crossing, "generateMap")
+        #self.testButton = Button.Button(self.screen, 100, 100, 150, self.crossing, "generateMap")
+        self.testButton = Button.Button(self.screen, 100, 100, 150, self.crossing, "mapMaker")
         self.modeSelectButton = Button.Button(self.screen, 100, 300, 150, self.topRight, "selectMode")
         self.mapSelectButton = Button.Button(self.screen, 100, 500, 150, self.topLeft, "selectMap")
         self.settingsButton = Button.Button(self.screen, 1460, 40, 100, self.settingsImg, "settings")
