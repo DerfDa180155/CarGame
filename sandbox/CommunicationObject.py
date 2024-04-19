@@ -11,7 +11,7 @@ class CommunicationObject:
     def __init__(self, gameStatus: str, FPSClock: pygame.time.Clock, TPSClock: pygame.time.Clock, #FPS: int, TPS: int,
                  TextSize: int, imageArray: array, mapController: MapController, players: array, raceObject: RaceObject,
                  settings: Settings, displayTempSettings: Settings, waitForKey: bool, menuButtons: array, gameModeButtons: array, raceSettingsButtons: array,
-                 settingsButtons: array, leaderboardButtons: array, pauseButtons: array, mapButtons: array,
+                 settingsButtons: array, mapMakerButtons: array, leaderboardButtons: array, pauseButtons: array, mapButtons: array,
                  mapButtonPage: int, officialMaps: bool, currentMode: str):
         self.gameStatus = gameStatus
         self.FPSClock = FPSClock
@@ -27,10 +27,12 @@ class CommunicationObject:
         self.displayTempSettings = displayTempSettings
         self.waitForKey = waitForKey
 
+        # buttons
         self.menuButtons = menuButtons
         self.gameModeButtons = gameModeButtons
         self.raceSettingsButtons = raceSettingsButtons
         self.settingsButtons = settingsButtons
+        self.mapMakerButtons = mapMakerButtons
         self.leaderboardButtons = leaderboardButtons
         self.pauseButtons = pauseButtons
         self.mapButtons = mapButtons

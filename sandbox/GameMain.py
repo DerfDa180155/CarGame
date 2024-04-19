@@ -120,6 +120,16 @@ class GameMain:
         self.TPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollTPS")
         self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton]
 
+        # mapMaker buttons
+        self.bottomRightButton = Button.Button(self.screen, 1300, 100, 100, self.bottomRight, "bottomRight")
+        self.bottomLeftButton = Button.Button(self.screen, 1450, 100, 100, self.bottomLeft, "bottomLeft")
+        self.topRightButton = Button.Button(self.screen, 1300, 250, 100, self.topRight, "topRight")
+        self.topLeftButton = Button.Button(self.screen, 1450, 250, 100, self.topLeft, "topLeft")
+        self.verticalLineButton = Button.Button(self.screen, 1300, 400, 100, self.verticalLine, "verticalLine")
+        self.horizontalLineButton = Button.Button(self.screen, 1450, 400, 100, self.horizontalLine, "horizontalLine")
+        self.emptyButton = Button.Button(self.screen, 1300, 550, 100, self.empty, "empty")
+        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton]
+
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
         self.restartButton = Button.Button(self.screen, 875, 625, 50, self.topRight, "restart")
@@ -172,6 +182,7 @@ class GameMain:
                                                           raceSettingsButtons=self.raceSettingsButtons,
                                                           leaderboardButtons=self.leaderboardButtons,
                                                           settingsButtons=self.settingsButtons,
+                                                          mapMakerButtons=self.mapMakerButtons,
                                                           pauseButtons=self.pauseButtons, mapButtons=self.mapButtons,
                                                           mapButtonPage=self.mapButtonPage, officialMaps=True,
                                                           currentMode="singleplayer")
@@ -201,7 +212,7 @@ class GameMain:
                             self.gameDisplay.running = False
                         elif self.CO.gameStatus == "generateMap": # only for testing
                             self.CO.gameStatus = "menu"
-                        elif self.CO.gameStatus == "selectMode" or self.CO.gameStatus == "settings":
+                        elif self.CO.gameStatus == "selectMode" or self.CO.gameStatus == "settings" or self.CO.gameStatus == "mapMaker":
                             self.CO.gameStatus = "menu"
                         elif self.CO.gameStatus == "selectMap":
                             self.CO.gameStatus = "selectMode"
