@@ -121,13 +121,13 @@ class GameMain:
         self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton]
 
         # mapMaker buttons
-        self.bottomRightButton = Button.Button(self.screen, 1300, 100, 100, self.bottomRight, "bottomRight")
-        self.bottomLeftButton = Button.Button(self.screen, 1450, 100, 100, self.bottomLeft, "bottomLeft")
-        self.topRightButton = Button.Button(self.screen, 1300, 250, 100, self.topRight, "topRight")
-        self.topLeftButton = Button.Button(self.screen, 1450, 250, 100, self.topLeft, "topLeft")
-        self.verticalLineButton = Button.Button(self.screen, 1300, 400, 100, self.verticalLine, "verticalLine")
-        self.horizontalLineButton = Button.Button(self.screen, 1450, 400, 100, self.horizontalLine, "horizontalLine")
-        self.emptyButton = Button.Button(self.screen, 1300, 550, 100, self.empty, "empty")
+        self.bottomRightButton = Button.Button(self.screen, 1300, 100, 100, self.bottomRight, "mapPiece-bottomRight")
+        self.bottomLeftButton = Button.Button(self.screen, 1450, 100, 100, self.bottomLeft, "mapPiece-bottomLeft")
+        self.topRightButton = Button.Button(self.screen, 1300, 250, 100, self.topRight, "mapPiece-topRight")
+        self.topLeftButton = Button.Button(self.screen, 1450, 250, 100, self.topLeft, "mapPiece-topLeft")
+        self.verticalLineButton = Button.Button(self.screen, 1300, 400, 100, self.verticalLine, "mapPiece-verticalLine")
+        self.horizontalLineButton = Button.Button(self.screen, 1450, 400, 100, self.horizontalLine, "mapPiece-horizontalLine")
+        self.emptyButton = Button.Button(self.screen, 1300, 550, 100, self.empty, "mapPiece-empty")
         self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton]
 
         # leaderboard buttons
@@ -308,6 +308,12 @@ class GameMain:
                                         self.CO.displayTempSettings.TPS += 1
                                     if scrolledDown and self.CO.displayTempSettings.TPS > 1:
                                         self.CO.displayTempSettings.TPS -= 1
+                case "mapMaker":
+                    for button in self.CO.mapMakerButtons:
+                        if button.clicked(mx, my, mousePressedUp):
+                            if "mapPiece-" in button.action:
+                                # @todo select new map piece
+                                print(button.action)
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, mousePressedUp):
