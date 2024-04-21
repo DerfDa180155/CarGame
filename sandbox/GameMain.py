@@ -8,6 +8,7 @@ import datetime
 import CommunicationObject
 import GameDisplay
 import Settings
+import MapMaker
 import WaveFunctionCollapse
 import MapCleaner
 import Player
@@ -79,6 +80,7 @@ class GameMain:
         self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0])
         self.settings = Settings.Settings(self.settingsPath)
         self.displayTempSettings = Settings.Settings(self.settingsPath)
+        self.mapMaker = MapMaker.MapMaker()
 
         # buttons
         # main menu buttons
@@ -176,7 +178,7 @@ class GameMain:
                                                           TextSize=30, imageArray=self.mapArray,
                                                           mapController=self.mapController, players=self.players,
                                                           raceObject=self.raceObject, settings=self.settings,
-                                                          displayTempSettings=self.displayTempSettings,
+                                                          mapMaker=self.mapMaker, displayTempSettings=self.displayTempSettings,
                                                           waitForKey=False, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,
                                                           raceSettingsButtons=self.raceSettingsButtons,
@@ -312,8 +314,17 @@ class GameMain:
                     for button in self.CO.mapMakerButtons:
                         if button.clicked(mx, my, mousePressedUp):
                             if "mapPiece-" in button.action:
-                                # @todo select new map piece
-                                print(button.action)
+                                dictionary = {
+                                    "mapPiece-empty": 0,
+                                    "mapPiece-topLeft": 1,
+                                    "mapPiece-topRight": 2,
+                                    "mapPiece-bottomRight": 3,
+                                    "mapPiece-bottomLeft": 4,
+                                    "mapPiece-verticalLine": 5,
+                                    "mapPiece-horizontalLine": 6,
+                                }
+                                self.CO.mapMaker.selectedPiece = dictionary[button.action]
+                                print(self.CO.mapMaker.selectedPiece)
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, mousePressedUp):

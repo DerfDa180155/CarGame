@@ -5,13 +5,15 @@ import numpy
 import MapController
 import RaceObject
 import Settings
+import MapMaker
 import array
 
 class CommunicationObject:
     def __init__(self, gameStatus: str, FPSClock: pygame.time.Clock, TPSClock: pygame.time.Clock, #FPS: int, TPS: int,
                  TextSize: int, imageArray: array, mapController: MapController, players: array, raceObject: RaceObject,
-                 settings: Settings, displayTempSettings: Settings, waitForKey: bool, menuButtons: array, gameModeButtons: array, raceSettingsButtons: array,
-                 settingsButtons: array, mapMakerButtons: array, leaderboardButtons: array, pauseButtons: array, mapButtons: array,
+                 settings: Settings, mapMaker: MapMaker, displayTempSettings: Settings, waitForKey: bool,
+                 menuButtons: array, gameModeButtons: array, raceSettingsButtons: array, settingsButtons: array,
+                 mapMakerButtons: array, leaderboardButtons: array, pauseButtons: array, mapButtons: array,
                  mapButtonPage: int, officialMaps: bool, currentMode: str):
         self.gameStatus = gameStatus
         self.FPSClock = FPSClock
@@ -24,6 +26,7 @@ class CommunicationObject:
         self.players = players
         self.raceObject = raceObject
         self.settings = settings
+        self.mapMaker = mapMaker
         self.displayTempSettings = displayTempSettings
         self.waitForKey = waitForKey
 
