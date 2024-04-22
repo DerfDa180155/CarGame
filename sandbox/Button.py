@@ -26,7 +26,7 @@ class Button:
         self.enable = True
         self.getsHovered = False
 
-    def draw(self, currentWidth: int, currentHeight: int):
+    def draw(self, currentWidth: int, currentHeight: int, highlight: bool = False):
         if self.enable:
             newX = (self.x * currentWidth) / 1600
             newY = (self.y * currentHeight) / 900
@@ -49,6 +49,16 @@ class Button:
                     self.surface.blit(newImg, (newX, newY), special_flags=pygame.BLEND_RGBA_SUB)
                 else:
                     self.surface.blit(newImg, (newX-(newSizeX/2), newY-(newSizeY/2)), special_flags=pygame.BLEND_RGBA_SUB)
+
+            if highlight:
+                darkenFaktor = 50
+                newImg = self.scaledImg.copy()
+                newImg.fill((darkenFaktor, darkenFaktor, darkenFaktor))
+                if self.useTopLeft:
+                    self.surface.blit(newImg, (newX, newY), special_flags=pygame.BLEND_RGBA_ADD)
+                else:
+                    self.surface.blit(newImg, (newX - (newSizeX / 2), newY - (newSizeY / 2)),
+                                      special_flags=pygame.BLEND_RGBA_ADD)
 
     def clicked(self, mx: int, my: int, mouseClick: array):
         if self.enable:

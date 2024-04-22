@@ -112,9 +112,21 @@ class GameDisplay(threading.Thread):
 
         pygame.draw.rect(self.screen, (100, 200, 150), rectangle)
 
+        dictionary = {
+            0: "mapPiece-empty",
+            1: "mapPiece-topLeft",
+            2: "mapPiece-topRight",
+            3: "mapPiece-bottomRight",
+            4: "mapPiece-bottomLeft",
+            5: "mapPiece-verticalLine",
+            6: "mapPiece-horizontalLine",
+        }
+        print(self.CO.mapMaker.selectedPiece)
+        print(dictionary[self.CO.mapMaker.selectedPiece])
+
         # draw buttons
         for button in self.CO.mapMakerButtons:
-            button.draw(self.windowWidth, self.windowHeight)
+            button.draw(self.windowWidth, self.windowHeight, (button.action == dictionary[self.CO.mapMaker.selectedPiece]))
 
     def drawModeSelector(self):
         self.screen.fill((100, 150, 200))  # background
