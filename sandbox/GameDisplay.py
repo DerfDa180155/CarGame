@@ -112,6 +112,8 @@ class GameDisplay(threading.Thread):
 
         pygame.draw.rect(self.screen, (100, 200, 150), rectangle)
 
+        self.drawMap(self.CO.mapMaker.createEmptyMap(5,5))
+
         # dictionary for selected button
         dictionary = {
             0: "mapPiece-empty",
@@ -209,20 +211,7 @@ class GameDisplay(threading.Thread):
         # map preview
         topLeft = [(870*self.windowWidth)/1600, (80*self.windowHeight)/900]
         bottomRight = [(1570*self.windowWidth)/1600, (750*self.windowHeight)/900]
-        mapWidth = bottomRight[0] - topLeft[0]
-        mapHeight = bottomRight[1] - topLeft[1]
-        myMap = self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap
-        # draw Map
-        if myMap != "":
-            for i in range(len(myMap)):
-                for j in range(len(myMap[i])):
-                    self.screen.blit(pygame.transform.scale(self.CO.imageArray[myMap[i][j]],
-                                                            ((mapWidth / len(myMap)) + 1,
-                                                             (mapHeight / len(myMap[i])) + 1)),
-                                     ((mapWidth / len(myMap) * i) + topLeft[0],
-                                      (mapHeight / len(myMap[i]) * j) + topLeft[1]))
-        else:
-            self.screen.fill((50, 200, 200))
+        self.drawMap(self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap, topLeft, bottomRight)
 
         # border
         pygame.draw.line(self.screen, (0, 0, 0), topLeft, (bottomRight[0], topLeft[1]), int(newTextSize / 15)) # top
@@ -281,19 +270,26 @@ class GameDisplay(threading.Thread):
             for button in self.CO.pauseButtons:
                 button.draw(self.windowWidth, self.windowHeight)
 
-    def drawMap(self):
-        self.myMap = self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap
+    def drawMap(self, myMap=None, topLeft=None, bottomRight=None):
+        if myMap is None:
+            myMap = self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap
+
+        if topLeft is None:
+            topLeft = [0, 0]
+        if bottomRight is None:
+            bottomRight = [self.windowWidth, self.windowHeight]
+        mapWidth = bottomRight[0] - topLeft[0]
+        mapHeight = bottomRight[1] - topLeft[1]
+        print(myMap)
         # draw Map
-        if self.myMap != "":
-            for i in range(len(self.myMap)):
-                for j in range(len(self.myMap[i])):
-                    if self.myMap[i][j] != -1:
-                        # self.myMap[i][j] = 0
-                        self.screen.blit(pygame.transform.scale(self.CO.imageArray[self.myMap[i][j]],
-                                                                ((self.windowWidth / len(self.myMap)) + 1,
-                                                                 (self.windowHeight / len(self.myMap[i])) + 1)),
-                                         (self.windowWidth / len(self.myMap) * i,
-                                          self.windowHeight / len(self.myMap[i]) * j))
+        if myMap != "":
+            for i in range(len(myMap)):
+                for j in range(len(myMap[i])):
+                    self.screen.blit(pygame.transform.scale(self.CO.imageArray[myMap[i][j]],
+                                                            ((mapWidth / len(myMap)) + 1,
+                                                             (mapHeight / len(myMap[i])) + 1)),
+                                     ((mapWidth / len(myMap) * i) + topLeft[0],
+                                      (mapHeight / len(myMap[i]) * j) + topLeft[1]))
         else:
             self.screen.fill((50, 200, 200))
 
