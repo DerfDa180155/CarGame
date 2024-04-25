@@ -112,7 +112,22 @@ class GameDisplay(threading.Thread):
 
         pygame.draw.rect(self.screen, (100, 200, 150), rectangle)
 
-        self.drawMap(self.CO.mapMaker.createEmptyMap(5,5))
+        # draw Map
+        self.drawMap(self.CO.mapMaker.myMap, [x, y], [x+sizeWidth, y+sizeHeight])
+
+        # draw grid
+        gridColor = (30, 30, 30)
+        lineThickness = 1
+        lineThicknessScaler = 400
+        scaledThickness = int((lineThickness*self.windowWidth)/lineThicknessScaler)
+        lenX = len(self.CO.mapMaker.myMap)
+        lenY = len(self.CO.mapMaker.myMap[0])
+        sizeWidthPiece = sizeWidth/lenX
+        sizeHeightPiece = sizeHeight/lenY
+        for i in range(lenX + 1):
+            pygame.draw.line(self.screen, gridColor, (x + (sizeWidthPiece*i), y), (x + (sizeWidthPiece*i), y + sizeHeight), scaledThickness)
+        for j in range(lenY+1):
+            pygame.draw.line(self.screen, gridColor, (x, y + (sizeHeightPiece*j)), (x + sizeWidth, y + (sizeHeightPiece*j)), scaledThickness)
 
         # dictionary for selected button
         dictionary = {
@@ -280,16 +295,17 @@ class GameDisplay(threading.Thread):
             bottomRight = [self.windowWidth, self.windowHeight]
         mapWidth = bottomRight[0] - topLeft[0]
         mapHeight = bottomRight[1] - topLeft[1]
-        print(myMap)
+
         # draw Map
         if myMap != "":
             for i in range(len(myMap)):
                 for j in range(len(myMap[i])):
-                    self.screen.blit(pygame.transform.scale(self.CO.imageArray[myMap[i][j]],
-                                                            ((mapWidth / len(myMap)) + 1,
-                                                             (mapHeight / len(myMap[i])) + 1)),
-                                     ((mapWidth / len(myMap) * i) + topLeft[0],
-                                      (mapHeight / len(myMap[i]) * j) + topLeft[1]))
+                    if myMap[i][j] != -1:
+                        self.screen.blit(pygame.transform.scale(self.CO.imageArray[myMap[i][j]],
+                                                                ((mapWidth / len(myMap)) + 1,
+                                                                 (mapHeight / len(myMap[i])) + 1)),
+                                         ((mapWidth / len(myMap) * i) + topLeft[0],
+                                          (mapHeight / len(myMap[i]) * j) + topLeft[1]))
         else:
             self.screen.fill((50, 200, 200))
 
