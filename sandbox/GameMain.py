@@ -325,6 +325,7 @@ class GameMain:
                                 }
                                 self.CO.mapMaker.selectedPiece = dictionary[button.action]
                                 print(self.CO.mapMaker.selectedPiece)
+                    print(self.CO.mapMaker.mapRect.collidepoint((mx, my)))
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, mousePressedUp):

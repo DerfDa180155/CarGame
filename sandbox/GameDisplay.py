@@ -112,6 +112,10 @@ class GameDisplay(threading.Thread):
 
         pygame.draw.rect(self.screen, (100, 200, 150), rectangle)
 
+        # set mapMaker map position
+        self.CO.mapMaker.mapPosition = [x, y, x + sizeWidth, y + sizeHeight]
+        self.CO.mapMaker.mapRect = rectangle
+
         # draw Map
         self.drawMap(self.CO.mapMaker.myMap, [x, y], [x+sizeWidth, y+sizeHeight])
 

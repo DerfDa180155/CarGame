@@ -5,6 +5,9 @@ import random
 
 class MapMaker:
     def __init__(self):
+        self.mapPosition = [0, 0, 10, 10]
+        self.mapRect = pygame.Rect(0, 0, 10, 10)
+
         self.selectedPiece = 0
 
         self.emptyMapFiller = -1
