@@ -14,7 +14,7 @@
   - [ ] time race
 
 - [x] map controller
-- [ ] map-maker
+- [x] map-maker
 - [x] map-generator
   - [x] wave function collapse 
   - [x] map cleaner
