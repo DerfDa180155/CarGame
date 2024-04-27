@@ -15,6 +15,7 @@
 
 - [x] map controller
 - [x] map-maker
+  - [ ] save map
 - [x] map-generator
   - [x] wave function collapse 
   - [x] map cleaner
