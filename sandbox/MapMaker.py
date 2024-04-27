@@ -12,14 +12,17 @@ class MapMaker:
 
         self.emptyMapFiller = -1
 
-        self.x = 5
-        self.y = 5
+        self.x = 15
+        self.y = 15
         self.myMap = self.createEmptyMap(self.x, self.y)
 
     def reset(self):
         self.x = 5
         self.y = 5
         self.myMap = self.createEmptyMap(self.x, self.y)
+
+    def place(self, x, y):
+        self.myMap[x][y] = self.selectedPiece
 
     def createEmptyMap(self, x, y):
         newMap = []

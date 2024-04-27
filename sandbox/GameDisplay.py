@@ -138,8 +138,8 @@ class GameDisplay(threading.Thread):
             0: "mapPiece-empty",
             1: "mapPiece-topLeft",
             2: "mapPiece-topRight",
-            3: "mapPiece-bottomRight",
-            4: "mapPiece-bottomLeft",
+            3: "mapPiece-bottomLeft",
+            4: "mapPiece-bottomRight",
             5: "mapPiece-verticalLine",
             6: "mapPiece-horizontalLine",
         }

@@ -318,14 +318,21 @@ class GameMain:
                                     "mapPiece-empty": 0,
                                     "mapPiece-topLeft": 1,
                                     "mapPiece-topRight": 2,
-                                    "mapPiece-bottomRight": 3,
-                                    "mapPiece-bottomLeft": 4,
+                                    "mapPiece-bottomLeft": 3,
+                                    "mapPiece-bottomRight": 4,
                                     "mapPiece-verticalLine": 5,
                                     "mapPiece-horizontalLine": 6,
                                 }
                                 self.CO.mapMaker.selectedPiece = dictionary[button.action]
                                 print(self.CO.mapMaker.selectedPiece)
-                    print(self.CO.mapMaker.mapRect.collidepoint((mx, my)))
+                    # place selected piece
+                    if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
+                        widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x
+                        heightGridOne = self.CO.mapMaker.mapRect.height / self.CO.mapMaker.y
+                        gridX = int((mx-self.CO.mapMaker.mapRect.x)/widthGridOne)
+                        gridY = int((my-self.CO.mapMaker.mapRect.y)/heightGridOne)
+                        #print(str(gridX) + " | " + str(gridY))
+                        self.CO.mapMaker.place(gridX, gridY)
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, mousePressedUp):
