@@ -130,7 +130,9 @@ class GameMain:
         self.verticalLineButton = Button.Button(self.screen, 1300, 400, 100, self.verticalLine, "mapPiece-verticalLine")
         self.horizontalLineButton = Button.Button(self.screen, 1450, 400, 100, self.horizontalLine, "mapPiece-horizontalLine")
         self.emptyButton = Button.Button(self.screen, 1300, 550, 100, self.empty, "mapPiece-empty")
-        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton]
+        self.clearButton = Button.Button(self.screen, 100, 775, 100, self.empty, "actionButton-clear")
+        self.saveButton = Button.Button(self.screen, 250, 775, 100, self.empty, "actionButton-save")
+        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.clearButton, self.saveButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -325,6 +327,9 @@ class GameMain:
                                 }
                                 self.CO.mapMaker.selectedPiece = dictionary[button.action]
                                 print(self.CO.mapMaker.selectedPiece)
+                            elif button.action == "actionButton-clear":
+                                self.CO.mapMaker.clearMap()
+
                     # place selected piece
                     if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
                         widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x
