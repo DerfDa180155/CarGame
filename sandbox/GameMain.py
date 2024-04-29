@@ -329,6 +329,8 @@ class GameMain:
                                 print(self.CO.mapMaker.selectedPiece)
                             elif button.action == "actionButton-clear":
                                 self.CO.mapMaker.clearMap()
+                            elif button.action == "actionButton-save":
+                                self.CO.mapMaker.save(self.customMapPath)
 
                     # place selected piece
                     if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:

@@ -1,19 +1,21 @@
 import time
 import pygame
 import random
+import RaceMap
 
 
 class MapMaker:
     def __init__(self):
         self.mapPosition = [0, 0, 10, 10]
         self.mapRect = pygame.Rect(0, 0, 10, 10)
+        self.mapName = ""
 
         self.selectedPiece = 0
 
         self.emptyMapFiller = -1
 
-        self.x = 15
-        self.y = 15
+        self.x = 5
+        self.y = 5
         self.myMap = self.createEmptyMap(self.x, self.y)
 
     def reset(self):
@@ -23,6 +25,10 @@ class MapMaker:
 
     def place(self, x, y):
         self.myMap[x][y] = self.selectedPiece
+
+    def save(self, path):
+        raceMap = RaceMap.RaceMap(self.myMap)
+        raceMap.saveMap(path, self.mapName)
 
     def createEmptyMap(self, x, y):
         newMap = []
