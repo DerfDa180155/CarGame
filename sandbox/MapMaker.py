@@ -26,6 +26,11 @@ class MapMaker:
     def place(self, x, y):
         self.myMap[x][y] = self.selectedPiece
 
+    def fillMap(self, value):
+        for i in range(len(self.myMap)):
+            for j in range(len(self.myMap[0])):
+                self.myMap[i][j] = value
+
     def save(self, path):
         raceMap = RaceMap.RaceMap(self.myMap)
         raceMap.saveMap(path, self.mapName)
@@ -41,6 +46,4 @@ class MapMaker:
         return newMap
 
     def clearMap(self):
-        for i in range(len(self.myMap)):
-            for j in range(len(self.myMap[0])):
-                self.myMap[i][j] = self.emptyMapFiller
+        self.fillMap(self.emptyMapFiller)
