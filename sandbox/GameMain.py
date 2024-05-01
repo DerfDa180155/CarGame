@@ -314,6 +314,38 @@ class GameMain:
                                     if scrolledDown and self.CO.displayTempSettings.TPS > 1:
                                         self.CO.displayTempSettings.TPS -= 1
                 case "mapMaker":
+
+                    # hotkeys
+                    if keys[pygame.K_w]:
+                        if self.CO.mapMaker.selectedPiece == 3: # bottom left
+                            self.CO.mapMaker.selectedPiece = 1 # top left
+                        elif self.CO.mapMaker.selectedPiece == 4: # bottom right
+                            self.CO.mapMaker.selectedPiece = 2 # top right
+                        elif self.CO.mapMaker.selectedPiece in [0, 6]: # empty | horizontal line
+                            self.CO.mapMaker.selectedPiece = 5 # vertical line
+                    elif keys[pygame.K_s]:
+                        if self.CO.mapMaker.selectedPiece == 1: # top left
+                            self.CO.mapMaker.selectedPiece = 3 # bottom left
+                        elif self.CO.mapMaker.selectedPiece == 2: # top right
+                            self.CO.mapMaker.selectedPiece = 4 # bottom right
+                        elif self.CO.mapMaker.selectedPiece in [0, 6]: # empty | horizontal line
+                            self.CO.mapMaker.selectedPiece = 5 # vertical line
+                    elif keys[pygame.K_a]:
+                        if self.CO.mapMaker.selectedPiece == 2: # top right
+                            self.CO.mapMaker.selectedPiece = 1 # top left
+                        elif self.CO.mapMaker.selectedPiece == 4: # bottom right
+                            self.CO.mapMaker.selectedPiece = 3 # bottom left
+                        elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
+                            self.CO.mapMaker.selectedPiece = 6 # horizontal line
+                    elif keys[pygame.K_d]:
+                        if self.CO.mapMaker.selectedPiece == 1: # top left
+                            self.CO.mapMaker.selectedPiece = 2 # top right
+                        elif self.CO.mapMaker.selectedPiece == 3: # bottom left
+                            self.CO.mapMaker.selectedPiece = 4 # bottom right
+                        elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
+                            self.CO.mapMaker.selectedPiece = 6 # horizontal line
+
+
                     for button in self.CO.mapMakerButtons:
                         if button.clicked(mx, my, mousePressedUp):
                             if "mapPiece-" in button.action:
