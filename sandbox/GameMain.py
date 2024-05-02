@@ -344,7 +344,20 @@ class GameMain:
                             self.CO.mapMaker.selectedPiece = 4 # bottom right
                         elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
                             self.CO.mapMaker.selectedPiece = 6 # horizontal line
-
+                    elif keys[pygame.K_1]:
+                        self.CO.mapMaker.selectedPiece = 0
+                    elif keys[pygame.K_2]:
+                        self.CO.mapMaker.selectedPiece = 1
+                    elif keys[pygame.K_3]:
+                        self.CO.mapMaker.selectedPiece = 2
+                    elif keys[pygame.K_4]:
+                        self.CO.mapMaker.selectedPiece = 3
+                    elif keys[pygame.K_5]:
+                        self.CO.mapMaker.selectedPiece = 4
+                    elif keys[pygame.K_6]:
+                        self.CO.mapMaker.selectedPiece = 5
+                    elif keys[pygame.K_7]:
+                        self.CO.mapMaker.selectedPiece = 6
 
                     for button in self.CO.mapMakerButtons:
                         if button.clicked(mx, my, mousePressedUp):
