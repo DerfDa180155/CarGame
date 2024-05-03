@@ -143,10 +143,33 @@ class GameDisplay(threading.Thread):
             5: "mapPiece-verticalLine",
             6: "mapPiece-horizontalLine",
         }
+        dictionary2 = {
+            "mapPiece-empty": 1,
+            "mapPiece-topLeft": 2,
+            "mapPiece-topRight": 3,
+            "mapPiece-bottomLeft": 4,
+            "mapPiece-bottomRight": 5,
+            "mapPiece-verticalLine": 6,
+            "mapPiece-horizontalLine": 7,
+        }
 
         # draw buttons
         for button in self.CO.mapMakerButtons:
             button.draw(self.windowWidth, self.windowHeight, (button.action == dictionary[self.CO.mapMaker.selectedPiece]))
+
+            # text
+            if "mapPiece-" in button.action:
+                newX = (button.x * self.windowWidth) / 1600
+                newY = (button.y * self.windowHeight) / 900
+                newSizeX = (button.size * self.windowWidth) / 1600
+                newSizeY = (button.size * self.windowHeight) / 900
+                newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
+                font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+                text = font.render(str(dictionary2[button.action]), True, (255, 255, 255))
+                newRect = text.get_rect()
+                newRect.centerx = newX + (newSizeX / 2)
+                newRect.y = newY + newSizeY
+                self.screen.blit(text, newRect)
 
     def drawModeSelector(self):
         self.screen.fill((100, 150, 200))  # background
