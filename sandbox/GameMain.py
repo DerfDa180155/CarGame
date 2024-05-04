@@ -133,7 +133,8 @@ class GameMain:
         self.clearButton = Button.Button(self.screen, 100, 775, 100, self.empty, "actionButton-clear")
         self.saveButton = Button.Button(self.screen, 250, 775, 100, self.empty, "actionButton-save")
         self.fillEmptyButton = Button.Button(self.screen, 400, 775, 100, self.empty, "actionButton-fillEmpty")
-        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.clearButton, self.saveButton, self.fillEmptyButton]
+        self.enterNameButton = Button.Button(self.screen, 550, 775, 100, self.empty, "actionButton-enterName")
+        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -314,79 +315,94 @@ class GameMain:
                                     if scrolledDown and self.CO.displayTempSettings.TPS > 1:
                                         self.CO.displayTempSettings.TPS -= 1
                 case "mapMaker":
+                    if self.CO.mapMaker.enteringName:
+                        text = ""
+                        self.CO.waitForKey = True
+                        while self.CO.waitForKey:
+                            for detect in pygame.event.get():
+                                if detect.type == pygame.KEYDOWN:
+                                    if detect.key == 13:
+                                        self.CO.waitForKey = False
+                                    else:
+                                        text += detect.unicode
+                        self.CO.mapMaker.enteringName = False
+                        self.CO.mapMaker.mapName = text
+                        print(text)
+                    else:
+                        # hotkeys
+                        if keys[pygame.K_w]:
+                            if self.CO.mapMaker.selectedPiece == 3: # bottom left
+                                self.CO.mapMaker.selectedPiece = 1 # top left
+                            elif self.CO.mapMaker.selectedPiece == 4: # bottom right
+                                self.CO.mapMaker.selectedPiece = 2 # top right
+                            elif self.CO.mapMaker.selectedPiece in [0, 6]: # empty | horizontal line
+                                self.CO.mapMaker.selectedPiece = 5 # vertical line
+                        elif keys[pygame.K_s]:
+                            if self.CO.mapMaker.selectedPiece == 1: # top left
+                                self.CO.mapMaker.selectedPiece = 3 # bottom left
+                            elif self.CO.mapMaker.selectedPiece == 2: # top right
+                                self.CO.mapMaker.selectedPiece = 4 # bottom right
+                            elif self.CO.mapMaker.selectedPiece in [0, 6]: # empty | horizontal line
+                                self.CO.mapMaker.selectedPiece = 5 # vertical line
+                        elif keys[pygame.K_a]:
+                            if self.CO.mapMaker.selectedPiece == 2: # top right
+                                self.CO.mapMaker.selectedPiece = 1 # top left
+                            elif self.CO.mapMaker.selectedPiece == 4: # bottom right
+                                self.CO.mapMaker.selectedPiece = 3 # bottom left
+                            elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
+                                self.CO.mapMaker.selectedPiece = 6 # horizontal line
+                        elif keys[pygame.K_d]:
+                            if self.CO.mapMaker.selectedPiece == 1: # top left
+                                self.CO.mapMaker.selectedPiece = 2 # top right
+                            elif self.CO.mapMaker.selectedPiece == 3: # bottom left
+                                self.CO.mapMaker.selectedPiece = 4 # bottom right
+                            elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
+                                self.CO.mapMaker.selectedPiece = 6 # horizontal line
+                        elif keys[pygame.K_1]:
+                            self.CO.mapMaker.selectedPiece = 0
+                        elif keys[pygame.K_2]:
+                            self.CO.mapMaker.selectedPiece = 1
+                        elif keys[pygame.K_3]:
+                            self.CO.mapMaker.selectedPiece = 2
+                        elif keys[pygame.K_4]:
+                            self.CO.mapMaker.selectedPiece = 3
+                        elif keys[pygame.K_5]:
+                            self.CO.mapMaker.selectedPiece = 4
+                        elif keys[pygame.K_6]:
+                            self.CO.mapMaker.selectedPiece = 5
+                        elif keys[pygame.K_7]:
+                            self.CO.mapMaker.selectedPiece = 6
 
-                    # hotkeys
-                    if keys[pygame.K_w]:
-                        if self.CO.mapMaker.selectedPiece == 3: # bottom left
-                            self.CO.mapMaker.selectedPiece = 1 # top left
-                        elif self.CO.mapMaker.selectedPiece == 4: # bottom right
-                            self.CO.mapMaker.selectedPiece = 2 # top right
-                        elif self.CO.mapMaker.selectedPiece in [0, 6]: # empty | horizontal line
-                            self.CO.mapMaker.selectedPiece = 5 # vertical line
-                    elif keys[pygame.K_s]:
-                        if self.CO.mapMaker.selectedPiece == 1: # top left
-                            self.CO.mapMaker.selectedPiece = 3 # bottom left
-                        elif self.CO.mapMaker.selectedPiece == 2: # top right
-                            self.CO.mapMaker.selectedPiece = 4 # bottom right
-                        elif self.CO.mapMaker.selectedPiece in [0, 6]: # empty | horizontal line
-                            self.CO.mapMaker.selectedPiece = 5 # vertical line
-                    elif keys[pygame.K_a]:
-                        if self.CO.mapMaker.selectedPiece == 2: # top right
-                            self.CO.mapMaker.selectedPiece = 1 # top left
-                        elif self.CO.mapMaker.selectedPiece == 4: # bottom right
-                            self.CO.mapMaker.selectedPiece = 3 # bottom left
-                        elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
-                            self.CO.mapMaker.selectedPiece = 6 # horizontal line
-                    elif keys[pygame.K_d]:
-                        if self.CO.mapMaker.selectedPiece == 1: # top left
-                            self.CO.mapMaker.selectedPiece = 2 # top right
-                        elif self.CO.mapMaker.selectedPiece == 3: # bottom left
-                            self.CO.mapMaker.selectedPiece = 4 # bottom right
-                        elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
-                            self.CO.mapMaker.selectedPiece = 6 # horizontal line
-                    elif keys[pygame.K_1]:
-                        self.CO.mapMaker.selectedPiece = 0
-                    elif keys[pygame.K_2]:
-                        self.CO.mapMaker.selectedPiece = 1
-                    elif keys[pygame.K_3]:
-                        self.CO.mapMaker.selectedPiece = 2
-                    elif keys[pygame.K_4]:
-                        self.CO.mapMaker.selectedPiece = 3
-                    elif keys[pygame.K_5]:
-                        self.CO.mapMaker.selectedPiece = 4
-                    elif keys[pygame.K_6]:
-                        self.CO.mapMaker.selectedPiece = 5
-                    elif keys[pygame.K_7]:
-                        self.CO.mapMaker.selectedPiece = 6
-
-                    for button in self.CO.mapMakerButtons:
-                        if button.clicked(mx, my, mousePressedUp):
-                            if "mapPiece-" in button.action:
-                                dictionary = {
-                                    "mapPiece-empty": 0,
-                                    "mapPiece-topLeft": 1,
-                                    "mapPiece-topRight": 2,
-                                    "mapPiece-bottomLeft": 3,
-                                    "mapPiece-bottomRight": 4,
-                                    "mapPiece-verticalLine": 5,
-                                    "mapPiece-horizontalLine": 6,
-                                }
-                                self.CO.mapMaker.selectedPiece = dictionary[button.action]
-                                print(self.CO.mapMaker.selectedPiece)
-                            elif button.action == "actionButton-clear":
-                                self.CO.mapMaker.clearMap()
-                            elif button.action == "actionButton-save":
-                                self.CO.mapMaker.save(self.customMapPath)
-                            elif button.action == "actionButton-fillEmpty":
-                                self.CO.mapMaker.fillMap(0)
-                    # place selected piece
-                    if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
-                        widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x
-                        heightGridOne = self.CO.mapMaker.mapRect.height / self.CO.mapMaker.y
-                        gridX = int((mx-self.CO.mapMaker.mapRect.x)/widthGridOne)
-                        gridY = int((my-self.CO.mapMaker.mapRect.y)/heightGridOne)
-                        #print(str(gridX) + " | " + str(gridY))
-                        self.CO.mapMaker.place(gridX, gridY)
+                        for button in self.CO.mapMakerButtons:
+                            if button.clicked(mx, my, mousePressedUp):
+                                if "mapPiece-" in button.action:
+                                    dictionary = {
+                                        "mapPiece-empty": 0,
+                                        "mapPiece-topLeft": 1,
+                                        "mapPiece-topRight": 2,
+                                        "mapPiece-bottomLeft": 3,
+                                        "mapPiece-bottomRight": 4,
+                                        "mapPiece-verticalLine": 5,
+                                        "mapPiece-horizontalLine": 6,
+                                    }
+                                    self.CO.mapMaker.selectedPiece = dictionary[button.action]
+                                    print(self.CO.mapMaker.selectedPiece)
+                                elif button.action == "actionButton-clear":
+                                    self.CO.mapMaker.clearMap()
+                                elif button.action == "actionButton-save":
+                                    self.CO.mapMaker.save(self.customMapPath)
+                                elif button.action == "actionButton-fillEmpty":
+                                    self.CO.mapMaker.fillMap(0)
+                                elif button.action == "actionButton-enterName":
+                                    self.CO.mapMaker.enteringName = True
+                        # place selected piece
+                        if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
+                            widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x
+                            heightGridOne = self.CO.mapMaker.mapRect.height / self.CO.mapMaker.y
+                            gridX = int((mx-self.CO.mapMaker.mapRect.x)/widthGridOne)
+                            gridY = int((my-self.CO.mapMaker.mapRect.y)/heightGridOne)
+                            #print(str(gridX) + " | " + str(gridY))
+                            self.CO.mapMaker.place(gridX, gridY)
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, mousePressedUp):
