@@ -324,9 +324,13 @@ class GameMain:
                                     if detect.key == 13:
                                         self.CO.waitForKey = False
                                     else:
-                                        text += detect.unicode
+                                        if detect.key == 8:
+                                            text = text[:-1]
+                                        else:
+                                            text += str(detect.unicode)
+
                         self.CO.mapMaker.enteringName = False
-                        self.CO.mapMaker.mapName = text
+                        self.CO.mapMaker.mapName = str(text)
                         print(text)
                     else:
                         # hotkeys
