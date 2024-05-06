@@ -8,7 +8,7 @@ class MapMaker:
     def __init__(self):
         self.mapPosition = [0, 0, 10, 10]
         self.mapRect = pygame.Rect(0, 0, 10, 10)
-        self.mapName = ""
+        self.mapName = "Unknown"
         self.enteringName = False
 
         self.selectedPiece = 0

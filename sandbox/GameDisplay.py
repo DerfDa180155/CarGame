@@ -116,6 +116,15 @@ class GameDisplay(threading.Thread):
         self.CO.mapMaker.mapPosition = [x, y, x + sizeWidth, y + sizeHeight]
         self.CO.mapMaker.mapRect = rectangle
 
+        # draw Map name
+        newTextSize = int((30 * self.windowWidth) / 2000)  # scale text size
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+        text = font.render("MapName: " + self.CO.mapMaker.mapName, True, (255, 255, 255))
+        newRect = text.get_rect()
+        newRect.centerx = self.windowWidth / 2
+        newRect.y = newTextSize * 2.5
+        self.screen.blit(text, newRect)
+
         # draw Map
         self.drawMap(self.CO.mapMaker.myMap, [x, y], [x+sizeWidth, y+sizeHeight])
 
