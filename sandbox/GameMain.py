@@ -376,6 +376,10 @@ class GameMain:
                             self.CO.mapMaker.selectedPiece = 5
                         elif keys[pygame.K_7]:
                             self.CO.mapMaker.selectedPiece = 6
+                        elif keys[pygame.K_g]: # clear map
+                            self.CO.mapMaker.clearMap()
+                        elif keys[pygame.K_h]: # fill map empty
+                            self.CO.mapMaker.fillMap(0)
 
                         for button in self.CO.mapMakerButtons:
                             if button.clicked(mx, my, mousePressedUp):
