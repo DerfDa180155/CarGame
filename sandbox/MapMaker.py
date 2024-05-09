@@ -41,7 +41,30 @@ class MapMaker:
 
     def checkPossible(self, x, y, piece):
         possible = self.getPossible(self.myMap, x, y)
-        return piece in possible
+        if piece in possible:
+            self.myMap[x][y] = piece
+            print(str(x) + " | " + str(y))
+            # check surrounding pieces
+            check = True
+            if x > 0:
+                print(1)
+                if len(self.getPossible(self.myMap, x - 1, y)) < 1:
+                    check = False
+            if x < len(self.myMap) - 1:
+                print(2)
+                if len(self.getPossible(self.myMap, x + 1, y)) < 1:
+                    check = False
+            if y > 0:
+                print(3)
+                if len(self.getPossible(self.myMap, x, y - 1)) < 1:
+                    check = False
+            if y < len(self.myMap[0]) - 1:
+                print(4)
+                if len(self.getPossible(self.myMap, x, y + 1)) < 1:
+                    check = False
+            self.myMap[x][y] = self.emptyMapFiller
+            return check
+        return False
 
     def getPossible(self, myMap, x: int, y: int): # get all possible patterns for the square (x, y)
         # This function is not very clean
