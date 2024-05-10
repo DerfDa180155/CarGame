@@ -12,6 +12,7 @@ class MapMaker:
         self.enteringName = False
 
         self.selectedPiece = 0
+        self.enablePlace = True
 
         self.emptyMapFiller = -1
 
@@ -35,9 +36,15 @@ class MapMaker:
         self.myMap = self.createEmptyMap(self.x, self.y)
 
     def place(self, x, y):
-        print(self.getPossible(self.myMap, x, y))
-        if self.checkPossible(x, y, self.selectedPiece):
-            self.myMap[x][y] = self.selectedPiece
+        if self.enablePlace:
+            print(self.getPossible(self.myMap, x, y))
+            if self.checkPossible(x, y, self.selectedPiece):
+                self.myMap[x][y] = self.selectedPiece
+        else:
+            self.remove(x, y)
+
+    def remove(self, x, y):
+        self.myMap[x][y] = self.emptyMapFiller
 
     def checkPossible(self, x, y, piece):
         possible = self.getPossible(self.myMap, x, y)

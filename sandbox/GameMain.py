@@ -380,6 +380,9 @@ class GameMain:
                             self.CO.mapMaker.clearMap()
                         elif keys[pygame.K_h]: # fill map empty
                             self.CO.mapMaker.fillMap(0)
+                        elif keys[pygame.K_q]:
+                            self.CO.mapMaker.enablePlace = not self.CO.mapMaker.enablePlace
+                            time.sleep(0.2)
 
                         for button in self.CO.mapMakerButtons:
                             if button.clicked(mx, my, mousePressedUp):
