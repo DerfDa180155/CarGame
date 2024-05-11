@@ -142,6 +142,16 @@ class GameDisplay(threading.Thread):
         for j in range(lenY+1):
             pygame.draw.line(self.screen, gridColor, (x, y + (sizeHeightPiece*j)), (x + sizeWidth, y + (sizeHeightPiece*j)), scaledThickness)
 
+        # draw erase mode
+        state = "ON" if not self.CO.mapMaker.enablePlace else "OFF"
+        eraseModeColor = (50, 150, 50) if not self.CO.mapMaker.enablePlace else (150, 50, 50)
+        text = font.render("Erase mode: " + state, True, (255, 255, 255))
+        newRect.x = (1300 * self.windowWidth) / 1600
+        newRect.y = (700 * self.windowHeight) / 900
+        pygame.draw.rect(self.screen, eraseModeColor, newRect)
+        self.screen.blit(text, newRect)
+
+
         # dictionary for selected button
         dictionary = {
             0: "mapPiece-empty",
