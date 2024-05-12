@@ -130,11 +130,12 @@ class GameMain:
         self.verticalLineButton = Button.Button(self.screen, 1300, 400, 100, self.verticalLine, "mapPiece-verticalLine")
         self.horizontalLineButton = Button.Button(self.screen, 1450, 400, 100, self.horizontalLine, "mapPiece-horizontalLine")
         self.emptyButton = Button.Button(self.screen, 1300, 550, 100, self.empty, "mapPiece-empty")
+        self.eraseModeButton = Button.Button(self.screen, 1300, 750, 50, self.empty, "actionButton-eraseMode")
         self.clearButton = Button.Button(self.screen, 100, 775, 100, self.empty, "actionButton-clear")
         self.saveButton = Button.Button(self.screen, 250, 775, 100, self.empty, "actionButton-save")
         self.fillEmptyButton = Button.Button(self.screen, 400, 775, 100, self.empty, "actionButton-fillEmpty")
         self.enterNameButton = Button.Button(self.screen, 550, 775, 100, self.empty, "actionButton-enterName")
-        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton]
+        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -406,6 +407,8 @@ class GameMain:
                                     self.CO.mapMaker.fillMap(0)
                                 elif button.action == "actionButton-enterName":
                                     self.CO.mapMaker.enteringName = True
+                                elif button.action == "actionButton-eraseMode":
+                                    self.CO.mapMaker.enablePlace = not self.CO.mapMaker.enablePlace
                         # place selected piece
                         if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
                             widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x
