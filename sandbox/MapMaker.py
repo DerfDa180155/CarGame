@@ -159,9 +159,19 @@ class MapMaker:
             for j in range(len(self.myMap[0])):
                 self.myMap[i][j] = value
 
+    def checkIfMapFull(self):
+        for i in range(len(self.myMap)):
+            for j in range(len(self.myMap[0])):
+                if self.myMap[i][j] == self.emptyMapFiller:
+                    return False
+        return True
+
     def save(self, path):
-        raceMap = RaceMap.RaceMap(self.myMap)
-        raceMap.saveMap(path, self.mapName)
+        if self.checkIfMapFull():
+            raceMap = RaceMap.RaceMap(self.myMap)
+            raceMap.saveMap(path, self.mapName)
+        else:
+            print("Map is not full")
 
     def createEmptyMap(self, x, y):
         newMap = []
