@@ -135,7 +135,8 @@ class GameMain:
         self.saveButton = Button.Button(self.screen, 250, 775, 100, self.empty, "actionButton-save")
         self.fillEmptyButton = Button.Button(self.screen, 400, 775, 100, self.empty, "actionButton-fillEmpty")
         self.enterNameButton = Button.Button(self.screen, 550, 775, 100, self.empty, "actionButton-enterName")
-        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton]
+        self.createNewMapButton = Button.Button(self.screen, 700, 775, 100, self.empty, "actionButton-createNewMap")
+        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -409,6 +410,10 @@ class GameMain:
                                     self.CO.mapMaker.enteringName = True
                                 elif button.action == "actionButton-eraseMode":
                                     self.CO.mapMaker.enablePlace = not self.CO.mapMaker.enablePlace
+                                elif button.action == "actionButton-createNewMap":
+                                    self.CO.mapMaker.x = 15
+                                    self.CO.mapMaker.y = 15
+                                    self.CO.mapMaker.createEmptyMap(self.CO.mapMaker.x, self.CO.mapMaker.y, True)
                         # place selected piece
                         if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
                             widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x

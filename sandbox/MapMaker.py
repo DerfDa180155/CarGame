@@ -173,13 +173,16 @@ class MapMaker:
         else:
             print("Map is not full")
 
-    def createEmptyMap(self, x, y):
+    def createEmptyMap(self, x, y, saveNewMap = False):
         newMap = []
         for i in range(x):
             temp = []
             for j in range(y):
                 temp.append(self.emptyMapFiller)
             newMap.append(temp)
+
+        if saveNewMap:
+            self.myMap = newMap
 
         return newMap
 
