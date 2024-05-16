@@ -136,7 +136,9 @@ class GameMain:
         self.fillEmptyButton = Button.Button(self.screen, 400, 775, 100, self.empty, "actionButton-fillEmpty")
         self.enterNameButton = Button.Button(self.screen, 550, 775, 100, self.empty, "actionButton-enterName")
         self.createNewMapButton = Button.Button(self.screen, 700, 775, 100, self.empty, "actionButton-createNewMap")
-        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton]
+        self.XScrollButton = Button.Button(self.screen, 920, 785, 30, self.verticalLine, "scrollButton-x")
+        self.YScrollButton = Button.Button(self.screen, 920, 830, 30, self.verticalLine, "scrollButton-y")
+        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -411,9 +413,23 @@ class GameMain:
                                 elif button.action == "actionButton-eraseMode":
                                     self.CO.mapMaker.enablePlace = not self.CO.mapMaker.enablePlace
                                 elif button.action == "actionButton-createNewMap":
-                                    self.CO.mapMaker.x = 15
-                                    self.CO.mapMaker.y = 15
                                     self.CO.mapMaker.createEmptyMap(self.CO.mapMaker.x, self.CO.mapMaker.y, True)
+                            elif button.hover(mx, my):
+                                match button.action:
+                                    case "scrollButton-x":
+                                        if scrolledUp:
+                                            self.CO.mapMaker.x += 1
+                                        elif scrolledDown:
+                                            self.CO.mapMaker.x -= 1
+                                            if self.CO.mapMaker.x < 1:
+                                                self.CO.mapMaker.x = 1
+                                    case "scrollButton-y":
+                                        if scrolledUp:
+                                            self.CO.mapMaker.y += 1
+                                        elif scrolledDown:
+                                            self.CO.mapMaker.y -= 1
+                                            if self.CO.mapMaker.y < 1:
+                                                self.CO.mapMaker.y = 1
                         # place selected piece
                         if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
                             widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x

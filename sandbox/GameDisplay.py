@@ -156,11 +156,11 @@ class GameDisplay(threading.Thread):
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
         text = font.render("x: " + str(self.CO.mapMaker.x), True, (255, 255, 255))
         newRect.x = (850 * self.windowWidth) / 1600
-        newRect.y = (790 * self.windowHeight) / 900
+        newRect.y = (785 * self.windowHeight) / 900
         self.screen.blit(text, newRect)
         text = font.render("y: " + str(self.CO.mapMaker.y), True, (255, 255, 255))
         newRect.x = (850 * self.windowWidth) / 1600
-        newRect.y = (825 * self.windowHeight) / 900
+        newRect.y = (830 * self.windowHeight) / 900
         self.screen.blit(text, newRect)
 
         # dictionary for selected button
