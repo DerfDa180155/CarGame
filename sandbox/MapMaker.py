@@ -9,6 +9,7 @@ class MapMaker:
         self.mapPosition = [0, 0, 10, 10]
         self.mapRect = pygame.Rect(0, 0, 10, 10)
         self.mapName = "Unknown"
+        self.startingPiece = [2, 2]
         self.enteringName = False
 
         self.selectedPiece = 0
@@ -168,7 +169,15 @@ class MapMaker:
 
     def save(self, path):
         if self.checkIfMapFull():
-            raceMap = RaceMap.RaceMap(self.myMap)
+            sizeX = len(self.myMap)
+            sizeY = len(self.myMap[0])
+            sizeXOneSquare = 1600 / sizeX
+            sizeYOneSquare = 900 / sizeY
+
+            playerStartX = (sizeXOneSquare * self.startingPiece[0]) + (sizeXOneSquare / 2)
+            playerStartY = (sizeYOneSquare * self.startingPiece[1]) + (sizeYOneSquare / 2)
+            playerStartDir = 0
+            raceMap = RaceMap.RaceMap(self.myMap, self.mapName, playerStartX, playerStartY, playerStartDir)
             raceMap.saveMap(path, self.mapName)
         else:
             print("Map is not full")
