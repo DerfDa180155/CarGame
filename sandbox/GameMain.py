@@ -138,7 +138,9 @@ class GameMain:
         self.createNewMapButton = Button.Button(self.screen, 700, 775, 100, self.empty, "actionButton-createNewMap")
         self.XScrollButton = Button.Button(self.screen, 920, 785, 30, self.verticalLine, "scrollButton-x")
         self.YScrollButton = Button.Button(self.screen, 920, 830, 30, self.verticalLine, "scrollButton-y")
-        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton]
+        self.startXScrollButton = Button.Button(self.screen, 1150, 785, 30, self.verticalLine, "scrollButton-startX")
+        self.startYScrollButton = Button.Button(self.screen, 1150, 830, 30, self.verticalLine, "scrollButton-startY")
+        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -430,6 +432,24 @@ class GameMain:
                                             self.CO.mapMaker.y -= 1
                                             if self.CO.mapMaker.y < 1:
                                                 self.CO.mapMaker.y = 1
+                                    case "scrollButton-startX":
+                                        if scrolledUp:
+                                            self.CO.mapMaker.startingPiece[0] += 1
+                                            if self.CO.mapMaker.startingPiece[0] > self.CO.mapMaker.x - 1:
+                                                self.CO.mapMaker.startingPiece[0] = self.CO.mapMaker.x - 1
+                                        elif scrolledDown:
+                                            self.CO.mapMaker.startingPiece[0] -= 1
+                                            if self.CO.mapMaker.startingPiece[0] < 0:
+                                                self.CO.mapMaker.startingPiece[0] = 0
+                                    case "scrollButton-startY":
+                                        if scrolledUp:
+                                            self.CO.mapMaker.startingPiece[1] += 1
+                                            if self.CO.mapMaker.startingPiece[1] > self.CO.mapMaker.y - 1:
+                                                self.CO.mapMaker.startingPiece[1] = self.CO.mapMaker.y - 1
+                                        elif scrolledDown:
+                                            self.CO.mapMaker.startingPiece[1] -= 1
+                                            if self.CO.mapMaker.startingPiece[1] < 0:
+                                                self.CO.mapMaker.startingPiece[1] = 0
                         # place selected piece
                         if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
                             widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x

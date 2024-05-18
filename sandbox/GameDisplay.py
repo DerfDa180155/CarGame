@@ -163,6 +163,18 @@ class GameDisplay(threading.Thread):
         newRect.y = (830 * self.windowHeight) / 900
         self.screen.blit(text, newRect)
 
+        # draw start x and y
+        newTextSize = int((40 * self.windowWidth) / 2000)  # scale text size
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+        text = font.render("start x: " + str(self.CO.mapMaker.startingPiece[0] + 1), True, (255, 255, 255))
+        newRect.x = (1000 * self.windowWidth) / 1600
+        newRect.y = (785 * self.windowHeight) / 900
+        self.screen.blit(text, newRect)
+        text = font.render("start y: " + str(self.CO.mapMaker.startingPiece[1] + 1), True, (255, 255, 255))
+        newRect.x = (1000 * self.windowWidth) / 1600
+        newRect.y = (830 * self.windowHeight) / 900
+        self.screen.blit(text, newRect)
+
         # dictionary for selected button
         dictionary = {
             0: "mapPiece-empty",
