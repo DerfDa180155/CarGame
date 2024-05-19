@@ -10,6 +10,7 @@ class MapMaker:
         self.mapRect = pygame.Rect(0, 0, 10, 10)
         self.mapName = "Unknown"
         self.startingPiece = [0, 0]
+        self.startingDirection = 0
         self.enteringName = False
 
         self.selectedPiece = 0
