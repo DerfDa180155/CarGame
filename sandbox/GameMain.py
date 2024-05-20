@@ -140,7 +140,8 @@ class GameMain:
         self.YScrollButton = Button.Button(self.screen, 920, 830, 30, self.verticalLine, "scrollButton-y")
         self.startXScrollButton = Button.Button(self.screen, 1150, 785, 30, self.verticalLine, "scrollButton-startX")
         self.startYScrollButton = Button.Button(self.screen, 1150, 830, 30, self.verticalLine, "scrollButton-startY")
-        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton]
+        self.startDirScrollButton = Button.Button(self.screen, 1555, 830, 30, self.verticalLine, "scrollButton-startDir")
+        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton, self.startDirScrollButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -450,6 +451,15 @@ class GameMain:
                                             self.CO.mapMaker.startingPiece[1] -= 1
                                             if self.CO.mapMaker.startingPiece[1] < 0:
                                                 self.CO.mapMaker.startingPiece[1] = 0
+                                    case "scrollButton-startDir":
+                                        if scrolledUp:
+                                            self.CO.mapMaker.startingDirection += 90
+                                            if self.CO.mapMaker.startingDirection >= 360:
+                                                self.CO.mapMaker.startingDirection -= 360
+                                        elif scrolledDown:
+                                            self.CO.mapMaker.startingDirection -= 90
+                                            if self.CO.mapMaker.startingDirection < 0:
+                                                self.CO.mapMaker.startingDirection += 360
                         # place selected piece
                         if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
                             widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x
