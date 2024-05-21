@@ -177,8 +177,7 @@ class MapMaker:
 
             playerStartX = (sizeXOneSquare * self.startingPiece[0]) + (sizeXOneSquare / 2)
             playerStartY = (sizeYOneSquare * self.startingPiece[1]) + (sizeYOneSquare / 2)
-            playerStartDir = 0
-            raceMap = RaceMap.RaceMap(self.myMap, self.mapName, playerStartX, playerStartY, playerStartDir)
+            raceMap = RaceMap.RaceMap(self.myMap, self.mapName, playerStartX, playerStartY, self.startingDirection)
             raceMap.saveMap(path, self.mapName)
         else:
             print("Map is not full")
