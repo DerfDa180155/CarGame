@@ -390,6 +390,10 @@ class GameMain:
                         elif keys[pygame.K_q]:
                             self.CO.mapMaker.enablePlace = not self.CO.mapMaker.enablePlace
                             time.sleep(0.2)
+                        elif keys[pygame.K_e]:
+                            self.CO.mapMaker.highlightStartingPiece = not self.CO.mapMaker.highlightStartingPiece
+                            print(self.CO.mapMaker.highlightStartingPiece)
+                            time.sleep(0.2)
 
                         for button in self.CO.mapMakerButtons:
                             if button.clicked(mx, my, mousePressedUp):

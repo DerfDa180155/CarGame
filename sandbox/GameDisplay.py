@@ -189,6 +189,15 @@ class GameDisplay(threading.Thread):
         newRect.y = (830 * self.windowHeight) / 900
         self.screen.blit(text, newRect)
 
+        # highlight starting piece
+        if self.CO.mapMaker.highlightStartingPiece:
+            # rectangle
+            x = sizeWidthPiece * self.CO.mapMaker.startingPiece[0] + (100 * self.windowWidth) / 1600
+            y = sizeHeightPiece * self.CO.mapMaker.startingPiece[1] + (100 * self.windowHeight) / 900
+            rectangle = pygame.Rect(x, y, sizeWidthPiece, sizeHeightPiece)
+
+            pygame.draw.rect(self.screen, (128, 128, 128), rectangle)
+
         # dictionary for selected button
         dictionary = {
             0: "mapPiece-empty",
