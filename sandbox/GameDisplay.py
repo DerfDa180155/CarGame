@@ -194,9 +194,10 @@ class GameDisplay(threading.Thread):
             # rectangle
             x = sizeWidthPiece * self.CO.mapMaker.startingPiece[0] + (100 * self.windowWidth) / 1600
             y = sizeHeightPiece * self.CO.mapMaker.startingPiece[1] + (100 * self.windowHeight) / 900
-            rectangle = pygame.Rect(x, y, sizeWidthPiece, sizeHeightPiece)
 
-            pygame.draw.rect(self.screen, (128, 128, 128), rectangle)
+            highlight = pygame.Surface((sizeWidthPiece, sizeHeightPiece))
+            highlight.fill((70, 70, 70))
+            self.screen.blit(highlight, (x, y), special_flags=pygame.BLEND_RGBA_ADD)
 
         # dictionary for selected button
         dictionary = {

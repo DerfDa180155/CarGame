@@ -33,10 +33,11 @@ class MapMaker:
                            [0, 1, 0, 1]]
                            #[1, 1, 1, 1]]
 
-
     def reset(self):
         self.x = 5
         self.y = 5
+        self.startingPiece = [0, 0]
+        self.startingDirection = 0
         self.myMap = self.createEmptyMap(self.x, self.y)
 
     def place(self, x, y):
@@ -194,6 +195,8 @@ class MapMaker:
 
         if saveNewMap:
             self.myMap = newMap
+            self.startingPiece = [0, 0]
+            self.startingDirection = 0
 
         return newMap
 

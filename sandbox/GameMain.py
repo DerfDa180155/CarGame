@@ -392,7 +392,7 @@ class GameMain:
                             time.sleep(0.2)
                         elif keys[pygame.K_e]:
                             self.CO.mapMaker.highlightStartingPiece = not self.CO.mapMaker.highlightStartingPiece
-                            print(self.CO.mapMaker.highlightStartingPiece)
+                            #print(self.CO.mapMaker.highlightStartingPiece)
                             time.sleep(0.2)
 
                         for button in self.CO.mapMakerButtons:
@@ -408,7 +408,7 @@ class GameMain:
                                         "mapPiece-horizontalLine": 6,
                                     }
                                     self.CO.mapMaker.selectedPiece = dictionary[button.action]
-                                    print(self.CO.mapMaker.selectedPiece)
+                                    #print(self.CO.mapMaker.selectedPiece)
                                 elif button.action == "actionButton-clear":
                                     self.CO.mapMaker.clearMap()
                                 elif button.action == "actionButton-save":
