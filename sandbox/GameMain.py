@@ -131,6 +131,7 @@ class GameMain:
         self.horizontalLineButton = Button.Button(self.screen, 1450, 400, 100, self.horizontalLine, "mapPiece-horizontalLine")
         self.emptyButton = Button.Button(self.screen, 1300, 550, 100, self.empty, "mapPiece-empty")
         self.eraseModeButton = Button.Button(self.screen, 1300, 750, 50, self.empty, "actionButton-eraseMode")
+        self.startPieceHighlightButton = Button.Button(self.screen, 1375, 750, 50, self.empty, "actionButton-startPieceHighlight")
         self.clearButton = Button.Button(self.screen, 100, 775, 100, self.empty, "actionButton-clear")
         self.saveButton = Button.Button(self.screen, 250, 775, 100, self.empty, "actionButton-save")
         self.fillEmptyButton = Button.Button(self.screen, 400, 775, 100, self.empty, "actionButton-fillEmpty")
@@ -141,7 +142,7 @@ class GameMain:
         self.startXScrollButton = Button.Button(self.screen, 1150, 785, 30, self.verticalLine, "scrollButton-startX")
         self.startYScrollButton = Button.Button(self.screen, 1150, 830, 30, self.verticalLine, "scrollButton-startY")
         self.startDirScrollButton = Button.Button(self.screen, 1555, 830, 30, self.verticalLine, "scrollButton-startDir")
-        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton, self.startDirScrollButton]
+        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.startPieceHighlightButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton, self.startDirScrollButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -421,6 +422,8 @@ class GameMain:
                                     self.CO.mapMaker.enablePlace = not self.CO.mapMaker.enablePlace
                                 elif button.action == "actionButton-createNewMap":
                                     self.CO.mapMaker.createEmptyMap(self.CO.mapMaker.x, self.CO.mapMaker.y, True)
+                                elif button.action == "actionButton-startPieceHighlight":
+                                    self.CO.mapMaker.highlightStartingPiece = not self.CO.mapMaker.highlightStartingPiece
                             elif button.hover(mx, my):
                                 match button.action:
                                     case "scrollButton-x":
