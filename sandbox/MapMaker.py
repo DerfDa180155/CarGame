@@ -173,15 +173,18 @@ class MapMaker:
 
     def save(self, path):
         if self.checkIfMapFull():
-            sizeX = len(self.myMap)
-            sizeY = len(self.myMap[0])
-            sizeXOneSquare = 1600 / sizeX
-            sizeYOneSquare = 900 / sizeY
+            if self.myMap[self.startingPiece[0]][self.startingPiece[1]] not in [self.emptyMapFiller, 0]:
+                sizeX = len(self.myMap)
+                sizeY = len(self.myMap[0])
+                sizeXOneSquare = 1600 / sizeX
+                sizeYOneSquare = 900 / sizeY
 
-            playerStartX = (sizeXOneSquare * self.startingPiece[0]) + (sizeXOneSquare / 2)
-            playerStartY = (sizeYOneSquare * self.startingPiece[1]) + (sizeYOneSquare / 2)
-            raceMap = RaceMap.RaceMap(self.myMap, self.mapName, playerStartX, playerStartY, self.startingDirection)
-            raceMap.saveMap(path, self.mapName)
+                playerStartX = (sizeXOneSquare * self.startingPiece[0]) + (sizeXOneSquare / 2)
+                playerStartY = (sizeYOneSquare * self.startingPiece[1]) + (sizeYOneSquare / 2)
+                raceMap = RaceMap.RaceMap(self.myMap, self.mapName, playerStartX, playerStartY, self.startingDirection)
+                raceMap.saveMap(path, self.mapName)
+            else:
+                print("Starting point is not on the track")
         else:
             print("Map is not full")
 
