@@ -349,6 +349,10 @@ class GameDisplay(threading.Thread):
         # draw player stats text
         self.drawPlayerStatsText()
 
+        # draw player items
+        if self.CO.raceObject.itemsEnabled:
+            self.drawPlayerItems()
+
         # draw player
         self.drawPlayers()
 
@@ -553,6 +557,23 @@ class GameDisplay(threading.Thread):
             newRect = text.get_rect()
             newRect.bottomright = (self.windowWidth - (newTextSize / 5), self.windowHeight - newTextSize)
             self.screen.blit(text, newRect)  # speed
+
+    def drawPlayerItems(self):
+        newTextSize = int((40 * self.windowWidth) / 2000)
+        x = newTextSize / 5
+        y = self.windowHeight - (newTextSize * 5)
+        sizeWidth = newTextSize * 2.5
+        sizeHeight = sizeWidth
+        rectangle = pygame.Rect(x, y, sizeWidth, sizeHeight)
+        pygame.draw.rect(self.screen, (128, 128, 128), rectangle)
+
+        if self.CO.raceObject.mode == "multiplayer":
+            x = (self.windowWidth - (newTextSize / 5)) - newTextSize * 2.5
+            y = self.windowHeight - (newTextSize * 5)
+            sizeWidth = newTextSize * 2.5
+            sizeHeight = sizeWidth
+            rectangle = pygame.Rect(x, y, sizeWidth, sizeHeight)
+            pygame.draw.rect(self.screen, (128, 128, 128), rectangle)
 
     def drawLeaderboard(self):
         # dark overlay
