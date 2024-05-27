@@ -324,7 +324,7 @@ class GameMain:
                                         self.CO.displayTempSettings.TPS -= 1
                 case "mapMaker":
                     if self.CO.mapMaker.enteringName:
-                        text = ""
+                        self.CO.mapMaker.tempName = ""
                         self.CO.waitForKey = True
                         while self.CO.waitForKey:
                             for detect in pygame.event.get():
@@ -333,13 +333,12 @@ class GameMain:
                                         self.CO.waitForKey = False
                                     else:
                                         if detect.key == 8:
-                                            text = text[:-1]
+                                            self.CO.mapMaker.tempName = self.CO.mapMaker.tempName[:-1]
                                         else:
-                                            text += str(detect.unicode)
-
+                                            self.CO.mapMaker.tempName += str(detect.unicode)
+                            time.sleep(0.001) # a little delay, because the display thread drops to 2 FPS without
                         self.CO.mapMaker.enteringName = False
-                        self.CO.mapMaker.mapName = str(text)
-                        print(text)
+                        self.CO.mapMaker.mapName = str(self.CO.mapMaker.tempName)
                     else:
                         # hotkeys
                         if keys[pygame.K_w]:

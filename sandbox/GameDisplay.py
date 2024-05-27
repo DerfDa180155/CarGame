@@ -237,6 +237,13 @@ class GameDisplay(threading.Thread):
                 newRect.y = newY + newSizeY
                 self.screen.blit(text, newRect)
 
+        if self.CO.mapMaker.enteringName:
+            self.drawOverlay((80, 80, 80))
+            text = font.render(self.CO.mapMaker.tempName, True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.center = (self.windowWidth / 2, self.windowHeight / 2)
+            self.screen.blit(text, newRect)
+
     def drawModeSelector(self):
         self.screen.fill((100, 150, 200))  # background
 
