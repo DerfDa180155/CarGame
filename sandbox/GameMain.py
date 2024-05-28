@@ -185,6 +185,10 @@ class GameMain:
         self.mapButtons.append(tempArray)
         self.mapButtonPage = 0
 
+        # items
+        self.testItemImage1 = self.crossing
+        self.itemImageDictionary = [self.testItemImage1]
+
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, #FPS=self.FPS, TPS=self.TPS,
                                                           TextSize=30, imageArray=self.mapArray,
@@ -199,7 +203,8 @@ class GameMain:
                                                           mapMakerButtons=self.mapMakerButtons,
                                                           pauseButtons=self.pauseButtons, mapButtons=self.mapButtons,
                                                           mapButtonPage=self.mapButtonPage, officialMaps=True,
-                                                          currentMode="singleplayer")
+                                                          currentMode="singleplayer",
+                                                          itemImageDictionary=self.itemImageDictionary)
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()

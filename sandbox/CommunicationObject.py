@@ -14,7 +14,7 @@ class CommunicationObject:
                  settings: Settings, mapMaker: MapMaker, displayTempSettings: Settings, waitForKey: bool,
                  menuButtons: array, gameModeButtons: array, raceSettingsButtons: array, settingsButtons: array,
                  mapMakerButtons: array, leaderboardButtons: array, pauseButtons: array, mapButtons: array,
-                 mapButtonPage: int, officialMaps: bool, currentMode: str):
+                 mapButtonPage: int, officialMaps: bool, currentMode: str, itemImageDictionary: array):
         self.gameStatus = gameStatus
         self.FPSClock = FPSClock
         self.TPSClock = TPSClock
@@ -29,6 +29,7 @@ class CommunicationObject:
         self.mapMaker = mapMaker
         self.displayTempSettings = displayTempSettings
         self.waitForKey = waitForKey
+        self.itemImageDictionary = itemImageDictionary
 
         # buttons
         self.menuButtons = menuButtons

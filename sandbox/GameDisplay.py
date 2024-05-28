@@ -573,6 +573,13 @@ class GameDisplay(threading.Thread):
         sizeHeight = sizeWidth
         rectangle = pygame.Rect(x, y, sizeWidth, sizeHeight)
         pygame.draw.rect(self.screen, (128, 128, 128), rectangle)
+        # draw Item image
+        if self.CO.raceObject.playerItemList[0] != -1:
+            self.screen.blit(pygame.transform.scale(self.CO.itemImageDictionary[self.CO.raceObject.playerItemList[0]],
+                                                    (sizeHeight-(newTextSize/3), sizeWidth-(newTextSize/3))), (x+(newTextSize/6), y+(newTextSize/6)))
+        else:
+            self.screen.blit(pygame.transform.scale(self.CO.itemImageDictionary[0],
+                                                    (sizeHeight-(newTextSize/3), sizeWidth-(newTextSize/3))), (x+(newTextSize/6), y+(newTextSize/6)))
 
         if self.CO.raceObject.mode == "multiplayer":
             x = (self.windowWidth - (newTextSize / 5)) - newTextSize * 2.5

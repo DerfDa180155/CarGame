@@ -29,6 +29,7 @@ class RaceObject:
         self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
         self.players = players
+        self.playerItemList = []
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]
         self.leaderboard = []
@@ -50,6 +51,11 @@ class RaceObject:
             self.startingSequenzTimer = time.time_ns()
 
             self.drawCounter = True
+
+            # create player Item list
+            self.playerItemList = []
+            for i in range(len(self.players)):
+                self.playerItemList.append(-1)
 
             # position players and create checkpoints list
             self.playerCheckpointList = []
@@ -107,6 +113,7 @@ class RaceObject:
         self.itemsEnabled = self.defaultItemsEnabled
         self.itemSpawnCooldown = self.defaultItemSpawnCooldown
 
+        self.playerItemList = []
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]
         self.leaderboard = []
