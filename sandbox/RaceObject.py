@@ -156,38 +156,31 @@ class RaceObject:
                 pass
 
     def checkPlayerPassCheckpoint(self):
-        i = 0
         for player in self.players:
-            if len(self.playerCheckpointList[i]) != 0:
+            if len(self.playerCheckpointList[player.id]) != 0:
                 length = float('inf')
                 for ray in player.frontRays:
-                    newLength = ray.calcOneLine(self.playerCheckpointList[i][0])
+                    newLength = ray.calcOneLine(self.playerCheckpointList[player.id][0])
                     if newLength > 0 and newLength < length:
                         length = newLength
 
                 if length <= 3:
-                    self.playerCheckpointList[i].pop(0)
-                    print(len(self.playerCheckpointList[i]))
-
-            i += 1
+                    self.playerCheckpointList[player.id].pop(0)
+                    self.givePlayerItem(player)
+                    print(len(self.playerCheckpointList[player.id]))
 
     def updatePlayerRoundList(self):
-        i = 0
         for player in self.players:
             currentRound = 0
             for j in range(self.rounds + 1):
-                if (self.rounds * self.checkpointsPerRounds) - (self.checkpointsPerRounds * j) >= len(self.playerCheckpointList[i]):
+                if (self.rounds * self.checkpointsPerRounds) - (self.checkpointsPerRounds * j) >= len(self.playerCheckpointList[player.id]):
                     currentRound = j
-            self.playerRoundsList[i] = currentRound
-
-            i += 1
+            self.playerRoundsList[player.id] = currentRound
 
     def checkPlayerIsDone(self):
-        i = 0
         for player in self.players:
-            if len(self.playerCheckpointList[i]) == 0:
+            if len(self.playerCheckpointList[player.id]) == 0:
                 player.isDone = True
-            i += 1
 
     def checkRaceOver(self):
         if self.mode == "singleplayer":
@@ -198,20 +191,17 @@ class RaceObject:
         return True
 
     def updateLeaderboard(self):
-        i = 1
         for player in self.players:
             if player.isDone:
                 exist = False
                 for j in self.leaderboard:
-                    if j[0] == i:
+                    if j[0] == player.id:
                         exist = True
                 if not exist:
                     temp = []
-                    temp.append(i)
+                    temp.append(player.id)
                     temp.append(self.stopwatch)
                     self.leaderboard.append(temp)
-
-            i += 1
 
     def startingSequenz(self):
         #print((time.time_ns() - self.startingSequenzTimer))
@@ -228,4 +218,5 @@ class RaceObject:
             self.countDown = "-"
             self.drawCounter = False
 
-
+    def givePlayerItem(self, player):
+        self.playerItemList[player.id] = 0

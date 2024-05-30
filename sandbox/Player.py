@@ -5,7 +5,7 @@ import Ray
 
 
 class Player:
-    def __init__(self, x: int, y: int, direction: int):
+    def __init__(self, x: int, y: int, direction: int, id: int):
         self.x = x
         self.y = y
         self.direction = direction
@@ -32,7 +32,8 @@ class Player:
         self.countSteering = 0
 
         self.isDone = False # for the race
-        self.name = "Unknown"
+        self.id = id
+        self.currentItem = -1
 
         i = self.frontRaysViewAngle / (-2)
         while i <= self.frontRaysViewAngle / 2:

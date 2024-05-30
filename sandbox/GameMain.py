@@ -75,7 +75,7 @@ class GameMain:
         self.oldCustomMapCount = self.mapController.getCountMaps(False)
 
         self.players = []
-        self.players.append(Player.Player(100, 100, 0))
+        self.players.append(Player.Player(100, 100, 0, 0))
 
         self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0])
         self.settings = Settings.Settings(self.settingsPath)
@@ -487,7 +487,7 @@ class GameMain:
                             if button.action == "singleplayer" and len(self.CO.players) == 2:
                                 self.CO.players.pop(1)
                             elif button.action == "multiplayer" and len(self.CO.players) == 1:
-                                self.CO.players.append(Player.Player(0, 0, 0))
+                                self.CO.players.append(Player.Player(0, 0, 0, 1))
                             self.CO.gameStatus = "selectMap"
                             print(self.CO.currentMode)
                             self.CO.mapButtonPage = 0
@@ -642,6 +642,9 @@ class GameMain:
                                 self.CO.players[0].move(True)
                             if keys[pygame.key.key_code(self.CO.settings.driveBackwardKey)]: # move backward
                                 self.CO.players[0].move(False)
+                            if keys[pygame.K_SPACE]: # item
+                                pass
+                                self.CO.raceObject.playerItemList[0] = -1
                         elif self.CO.currentMode == "multiplayer":
                             i = 0
                             for player in self.CO.players:
