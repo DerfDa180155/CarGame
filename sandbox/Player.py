@@ -81,6 +81,22 @@ class Player:
             self.direction -= changeDir
             self.isSteeringLeft = True
 
+    def useItem(self):
+        if self.currentItem == -1:
+            return
+
+        match self.currentItem:
+            case 0:
+                # speed boost
+                speedBootsValue = 50
+                self.currentMaxSpeed += speedBootsValue
+                self.speed += speedBootsValue
+            case 1:
+                pass
+
+        # remove Item
+        self.currentItem = -1
+
     def update(self):
         # car physics
         self.speed += self.acc * 0.05

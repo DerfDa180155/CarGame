@@ -574,8 +574,8 @@ class GameDisplay(threading.Thread):
         rectangle = pygame.Rect(x, y, sizeWidth, sizeHeight)
         pygame.draw.rect(self.screen, (128, 128, 128), rectangle)
         # draw Item image
-        if self.CO.raceObject.playerItemList[0] != -1:
-            self.screen.blit(pygame.transform.scale(self.CO.itemImageDictionary[self.CO.raceObject.playerItemList[0]],
+        if self.CO.players[0].currentItem != -1:
+            self.screen.blit(pygame.transform.scale(self.CO.itemImageDictionary[self.CO.players[0].currentItem],
                                                     (sizeHeight-(newTextSize/3), sizeWidth-(newTextSize/3))),
                              (x+(newTextSize/6), y+(newTextSize/6)))
         #else:
@@ -591,8 +591,8 @@ class GameDisplay(threading.Thread):
             rectangle = pygame.Rect(x, y, sizeWidth, sizeHeight)
             pygame.draw.rect(self.screen, (128, 128, 128), rectangle)
             # draw Item image
-            if self.CO.raceObject.playerItemList[0] != -1:
-                self.screen.blit(pygame.transform.scale(self.CO.itemImageDictionary[self.CO.raceObject.playerItemList[0]],
+            if self.CO.players[1].currentItem != -1:
+                self.screen.blit(pygame.transform.scale(self.CO.itemImageDictionary[self.CO.players[1].currentItem],
                                                         (sizeHeight - (newTextSize / 3), sizeWidth - (newTextSize / 3))),
                                  (x + (newTextSize / 6), y + (newTextSize / 6)))
             #else:

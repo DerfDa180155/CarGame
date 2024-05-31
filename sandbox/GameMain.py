@@ -644,7 +644,7 @@ class GameMain:
                                 self.CO.players[0].move(False)
                             if keys[pygame.K_SPACE]: # item
                                 pass
-                                self.CO.raceObject.playerItemList[0] = -1
+                                self.CO.players[0].useItem()
                         elif self.CO.currentMode == "multiplayer":
                             i = 0
                             for player in self.CO.players:
