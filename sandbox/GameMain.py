@@ -74,10 +74,17 @@ class GameMain:
         self.oldMapCount = self.mapController.getCountMaps(True)
         self.oldCustomMapCount = self.mapController.getCountMaps(False)
 
-        self.players = []
-        self.players.append(Player.Player(100, 100, 0, 0))
+        # items
+        self.boostItem = self.crossing
+        self.rocketItem = self.horizontalLine
+        self.itemImageDictionary = [self.boostItem, self.rocketItem]
+        self.summonedItems = []
 
-        self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0])
+        # player
+        self.players = []
+        self.players.append(Player.Player(100, 100, 0, 0, self.summonedItems))
+
+        self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0], amountOfItems=len(self.itemImageDictionary))
         self.settings = Settings.Settings(self.settingsPath)
         self.displayTempSettings = Settings.Settings(self.settingsPath)
         self.mapMaker = MapMaker.MapMaker()
@@ -184,10 +191,6 @@ class GameMain:
         tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.crossing, "nextPage"))
         self.mapButtons.append(tempArray)
         self.mapButtonPage = 0
-
-        # items
-        self.testItemImage1 = self.crossing
-        self.itemImageDictionary = [self.testItemImage1]
 
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, #FPS=self.FPS, TPS=self.TPS,
@@ -487,7 +490,7 @@ class GameMain:
                             if button.action == "singleplayer" and len(self.CO.players) == 2:
                                 self.CO.players.pop(1)
                             elif button.action == "multiplayer" and len(self.CO.players) == 1:
-                                self.CO.players.append(Player.Player(0, 0, 0, 1))
+                                self.CO.players.append(Player.Player(0, 0, 0, 1, self.summonedItems))
                             self.CO.gameStatus = "selectMap"
                             print(self.CO.currentMode)
                             self.CO.mapButtonPage = 0
@@ -664,6 +667,10 @@ class GameMain:
                             player.update()
                             # update ray length
                             player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+
+                        # update items
+                        for item in self.summonedItems:
+                            item.update()
                     elif self.CO.raceObject.raceStatus == "raceOver": # leaderboard buttons
                         for button in self.CO.leaderboardButtons:
                             if button.clicked(mx, my, mousePressedUp):

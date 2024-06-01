@@ -1,10 +1,12 @@
+import random
+
 import numpy as np
 import time
 import array
 import RaceMap
 
 class RaceObject:
-    def __init__(self, players: array, raceMap: RaceMap):
+    def __init__(self, players: array, raceMap: RaceMap, amountOfItems: int):
         self.stopwatch = 0
         self.stopwatchCurrentTime = 0
         self.stopwatchStart = 0
@@ -25,6 +27,7 @@ class RaceObject:
         self.maxAcc = self.defaultMaxAcc
         self.itemsEnabled = self.defaultItemsEnabled
         self.itemSpawnCooldown = self.defaultItemSpawnCooldown
+        self.amountOfItems = amountOfItems
 
         self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
@@ -212,5 +215,5 @@ class RaceObject:
             self.drawCounter = False
 
     def givePlayerItem(self, player):
-        if self.itemsEnabled:
-            player.currentItem = 0
+        if self.itemsEnabled and player.currentItem == -1:
+            player.currentItem = random.randint(0, self.amountOfItems-1)

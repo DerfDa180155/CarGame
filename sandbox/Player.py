@@ -2,13 +2,15 @@ import random
 import numpy as np
 import array
 import Ray
+import Rocket
 
 
 class Player:
-    def __init__(self, x: int, y: int, direction: int, id: int):
+    def __init__(self, x: int, y: int, direction: int, id: int, summonedItems: array):
         self.x = x
         self.y = y
         self.direction = direction
+        self.summonedItems = summonedItems
 
         self.scaleWidth = 1600
         self.scaleHeight = 900
@@ -92,7 +94,9 @@ class Player:
                 self.currentMaxSpeed += speedBootsValue
                 self.speed += speedBootsValue
             case 1:
-                pass
+                # rocket
+                item = Rocket.Rocket(self.x, self.y, self.direction, self)
+                self.summonedItems.append(item)
 
         # remove Item
         self.currentItem = -1
