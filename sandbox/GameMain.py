@@ -207,7 +207,8 @@ class GameMain:
                                                           pauseButtons=self.pauseButtons, mapButtons=self.mapButtons,
                                                           mapButtonPage=self.mapButtonPage, officialMaps=True,
                                                           currentMode="singleplayer",
-                                                          itemImageDictionary=self.itemImageDictionary)
+                                                          itemImageDictionary=self.itemImageDictionary,
+                                                          summonedItems=self.summonedItems)
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()
@@ -669,7 +670,7 @@ class GameMain:
                             player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
 
                         # update items
-                        for item in self.summonedItems:
+                        for item in self.CO.summonedItems:
                             item.update()
                     elif self.CO.raceObject.raceStatus == "raceOver": # leaderboard buttons
                         for button in self.CO.leaderboardButtons:

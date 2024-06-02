@@ -359,6 +359,9 @@ class GameDisplay(threading.Thread):
         # draw player items
         if self.CO.raceObject.itemsEnabled:
             self.drawPlayerItems()
+            # draw summoned items
+            for item in self.CO.summonedItems:
+                item.draw(self.screen)
 
         # draw player
         self.drawPlayers()
