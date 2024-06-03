@@ -217,3 +217,4 @@ class RaceObject:
     def givePlayerItem(self, player):
         if self.itemsEnabled and player.currentItem == -1:
             player.currentItem = random.randint(0, self.amountOfItems-1)
+            player.currentItem = 1 # for item testing
