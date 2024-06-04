@@ -6,7 +6,7 @@ import array
 import RaceMap
 
 class RaceObject:
-    def __init__(self, players: array, raceMap: RaceMap, amountOfItems: int):
+    def __init__(self, players: array, raceMap: RaceMap, amountOfItems: int, summonedItems: array):
         self.stopwatch = 0
         self.stopwatchCurrentTime = 0
         self.stopwatchStart = 0
@@ -28,6 +28,7 @@ class RaceObject:
         self.itemsEnabled = self.defaultItemsEnabled
         self.itemSpawnCooldown = self.defaultItemSpawnCooldown
         self.amountOfItems = amountOfItems
+        self.summonedItems = summonedItems
 
         self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
@@ -121,6 +122,11 @@ class RaceObject:
         # position players
         for player in self.players:
             player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
+
+        # deleting all summoned items
+        for item in self.summonedItems:
+            del item
+        self.summonedItems = []
 
     def update(self):
         if self.stopwatchRunning:

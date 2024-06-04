@@ -53,6 +53,7 @@ class Player:
         self.isSteeringRight = False
         self.countSteering = 0
         self.currentMaxSpeed = self.maxSpeed
+        self.currentItem = -1
 
         self.isDone = False  # for the race
 

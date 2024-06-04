@@ -84,7 +84,7 @@ class GameMain:
         self.players = []
         self.players.append(Player.Player(100, 100, 0, 0, self.summonedItems))
 
-        self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0], amountOfItems=len(self.itemImageDictionary))
+        self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0], amountOfItems=len(self.itemImageDictionary), summonedItems=self.summonedItems)
         self.settings = Settings.Settings(self.settingsPath)
         self.displayTempSettings = Settings.Settings(self.settingsPath)
         self.mapMaker = MapMaker.MapMaker()
