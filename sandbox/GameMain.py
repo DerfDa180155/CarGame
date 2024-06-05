@@ -670,6 +670,7 @@ class GameMain:
                             player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
 
                         # update items
+                        #print(len(self.summonedItems))
                         for item in self.CO.summonedItems:
                             item.update()
                     elif self.CO.raceObject.raceStatus == "raceOver": # leaderboard buttons

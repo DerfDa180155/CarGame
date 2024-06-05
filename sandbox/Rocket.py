@@ -13,6 +13,7 @@ class Rocket:
         self.direction = startDir
         self.summonedPlayer = summonedPlayer
         self.speed = summonedPlayer.maxSpeed * 3
+        self.living = True
 
     def draw(self, surface):
         newX = (self.x * surface.get_width()) / 1600
@@ -23,3 +24,6 @@ class Rocket:
     def update(self):
         self.x += (self.speed / 100) * np.cos(np.deg2rad(self.direction))
         self.y += (self.speed / 100) * np.sin(np.deg2rad(self.direction))
+
+        if random.randint(0, 300) == 0:
+            self.living = False

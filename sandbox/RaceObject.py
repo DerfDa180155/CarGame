@@ -124,9 +124,10 @@ class RaceObject:
             player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
 
         # deleting all summoned items
-        for item in self.summonedItems:
-            del item
-        self.summonedItems = []
+        i = len(self.summonedItems) - 1
+        while i >= 0:
+            del self.summonedItems[i]
+            i -= 1
 
     def update(self):
         if self.stopwatchRunning:
@@ -143,6 +144,7 @@ class RaceObject:
             case "race":
                 self.checkPlayerPassCheckpoint()
                 self.checkPlayerIsDone()
+                self.checkSummonedItems()
                 self.updatePlayerRoundList()
                 self.updateLeaderboard()
                 if self.checkRaceOver():
@@ -224,3 +226,10 @@ class RaceObject:
         if self.itemsEnabled and player.currentItem == -1:
             player.currentItem = random.randint(0, self.amountOfItems-1)
             player.currentItem = 1 # for item testing
+
+    def checkSummonedItems(self):
+        i = len(self.summonedItems) - 1
+        while i >= 0:
+            if not self.summonedItems[i].living:
+                del self.summonedItems[i]
+            i -= 1
