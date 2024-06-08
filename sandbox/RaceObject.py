@@ -144,6 +144,7 @@ class RaceObject:
             case "race":
                 self.checkPlayerPassCheckpoint()
                 self.checkPlayerIsDone()
+                self.checkPlayerItemHit()
                 self.checkSummonedItems()
                 self.updatePlayerRoundList()
                 self.updateLeaderboard()
@@ -233,3 +234,33 @@ class RaceObject:
             if not self.summonedItems[i].living:
                 del self.summonedItems[i]
             i -= 1
+
+    def checkPlayerItemHit(self):
+        for item in self.summonedItems:
+            for player in self.players:
+                match (item.itemName):
+                    case "Rocket":
+                        if item.explode:
+                            x = player.x - item.x
+                            y = player.y - item.y
+
+                            distance1 = np.sqrt(np.power(x, 2) + np.power(y, 2))
+                            distance2 = 0
+
+                            angle = 90
+                            if x != 0:
+                                angle = np.rad2deg(np.arctan(y/x))
+                            if angle < 0:
+                                angle *= -1
+                            while angle > 90:
+                                angle -= 90
+
+                            if angle == 45:
+                                distance2 = 14.142135624 # np.sqrt(np.power(x, 10) + np.power(y, 10))
+                            elif angle < 45:
+                                distance2 = 10 / np.sin(np.deg2rad(90 - angle))
+                            elif angle > 45:
+                                distance2 = 10 / np.sin(np.deg2rad(angle))
+
+                            if distance1 - distance2 <= item.explodeRadius:
+                                print("IN !!!!!!!!!!!!")

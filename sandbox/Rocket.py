@@ -49,6 +49,7 @@ class Rocket:
                 ray.updateRay(self.x, self.y, self.direction)
 
         else:
-            self.explodeRadius += 0.5
             if self.explodeRadius >= 20:
                 self.living = False
+            else:
+                self.explodeRadius += 0.5
