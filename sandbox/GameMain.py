@@ -647,7 +647,6 @@ class GameMain:
                             if keys[pygame.key.key_code(self.CO.settings.driveBackwardKey)]: # move backward
                                 self.CO.players[0].move(False)
                             if keys[pygame.K_SPACE]: # item
-                                pass
                                 self.CO.players[0].useItem()
                         elif self.CO.currentMode == "multiplayer":
                             i = 0
@@ -661,6 +660,8 @@ class GameMain:
                                         player.move(True)
                                     if keys[pygame.K_DOWN] and i == 1 or keys[pygame.K_s] and i == 0: # move backward
                                         player.move(False)
+                                    if keys[pygame.K_0] and i == 1 or keys[pygame.K_SPACE] and i == 0:  # item
+                                        player.useItem()
                                 i += 1
 
                         # update the players (position, speed, rays, ..)

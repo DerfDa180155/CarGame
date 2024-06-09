@@ -240,11 +240,10 @@ class RaceObject:
             for player in self.players:
                 match (item.itemName):
                     case "Rocket":
+                        x = player.x - item.x
+                        y = player.y - item.y
+                        distance1 = np.sqrt(np.power(x, 2) + np.power(y, 2))
                         if item.explode:
-                            x = player.x - item.x
-                            y = player.y - item.y
-
-                            distance1 = np.sqrt(np.power(x, 2) + np.power(y, 2))
                             distance2 = 0
 
                             angle = 90
@@ -263,4 +262,8 @@ class RaceObject:
                                 distance2 = 10 / np.sin(np.deg2rad(angle))
 
                             if distance1 - distance2 <= item.explodeRadius:
+                                pass
                                 print("IN !!!!!!!!!!!!")
+                        else:
+                            if distance1 <= 10 and player.id != item.summonedPlayer.id:
+                                item.explode = True
