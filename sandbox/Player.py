@@ -36,6 +36,7 @@ class Player:
         self.isDone = False # for the race
         self.id = id
         self.currentItem = -1
+        self.stunTime = 0
 
         i = self.frontRaysViewAngle / (-2)
         while i <= self.frontRaysViewAngle / 2:
@@ -102,7 +103,18 @@ class Player:
         # remove Item
         self.currentItem = -1
 
+    def itemHit(self, itemName):
+        match itemName:
+            case "Rocket":
+                self.speed = 0
+                self.currentMaxSpeed = 0
+                if self.stunTime == 0:
+                    self.stunTime = 120 * 3 # 3 seconds
+
     def update(self):
+        if self.stunTime > 0:
+            self.stunTime -= 1
+            return
         # car physics
         self.speed += self.acc * 0.05
 
