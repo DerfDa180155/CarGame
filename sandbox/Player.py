@@ -86,7 +86,7 @@ class Player:
             self.isSteeringLeft = True
 
     def useItem(self):
-        if self.currentItem == -1:
+        if self.currentItem == -1 or self.stunTime > 0:
             return
 
         match self.currentItem:
@@ -99,6 +99,15 @@ class Player:
                 # rocket
                 item = Rocket.Rocket(self.x, self.y, self.direction, self)
                 self.summonedItems.append(item)
+            case 2:
+                # multi rocket
+                angle = 5
+                i = self.direction - angle
+                while i <= self.direction + angle:
+                    item = Rocket.Rocket(self.x, self.y, i, self)
+                    #item.itemName = "MultiRocket"
+                    self.summonedItems.append(item)
+                    i += angle
 
         # remove Item
         self.currentItem = -1
