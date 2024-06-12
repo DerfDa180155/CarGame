@@ -239,7 +239,7 @@ class RaceObject:
         for item in self.summonedItems:
             for player in self.players:
                 match (item.itemName):
-                    case "Rocket":
+                    case "Rocket" | "MultiRocket":
                         x = player.x - item.x
                         y = player.y - item.y
                         distance1 = np.sqrt(np.power(x, 2) + np.power(y, 2))

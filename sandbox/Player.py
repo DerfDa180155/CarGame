@@ -105,7 +105,7 @@ class Player:
                 i = self.direction - angle
                 while i <= self.direction + angle:
                     item = Rocket.Rocket(self.x, self.y, i, self)
-                    #item.itemName = "MultiRocket"
+                    item.itemName = "MultiRocket"
                     self.summonedItems.append(item)
                     i += angle
 
@@ -119,6 +119,11 @@ class Player:
                 self.currentMaxSpeed = 0
                 if self.stunTime == 0:
                     self.stunTime = 120 * 3 # 3 seconds
+            case "MultiRocket":
+                self.speed = 0
+                self.currentMaxSpeed = 0
+                if self.stunTime == 0:
+                    self.stunTime = int(120 * 1.5) # 1.5 seconds
 
     def update(self):
         if self.stunTime > 0:

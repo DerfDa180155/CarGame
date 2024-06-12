@@ -675,7 +675,7 @@ class GameMain:
                         #print(len(self.summonedItems))
                         for item in self.CO.summonedItems:
                             item.update()
-                            if item.itemName == "Rocket":
+                            if item.itemName == "Rocket" or item.itemName == "MultiRocket":
                                 item.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
                     elif self.CO.raceObject.raceStatus == "raceOver": # leaderboard buttons
                         for button in self.CO.leaderboardButtons:
