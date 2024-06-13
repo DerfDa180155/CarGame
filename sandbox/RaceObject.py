@@ -226,7 +226,7 @@ class RaceObject:
     def givePlayerItem(self, player):
         if self.itemsEnabled and player.currentItem == -1:
             player.currentItem = random.randint(0, self.amountOfItems-1)
-            player.currentItem = 2 # for item testing
+            #player.currentItem = 2 # for item testing
 
     def checkSummonedItems(self):
         i = len(self.summonedItems) - 1
@@ -240,29 +240,31 @@ class RaceObject:
             for player in self.players:
                 match (item.itemName):
                     case "Rocket" | "MultiRocket":
-                        x = player.x - item.x
-                        y = player.y - item.y
-                        distance1 = np.sqrt(np.power(x, 2) + np.power(y, 2))
-                        if item.explode:
-                            distance2 = 0
+                        if player.id not in item.hitPlayers:
+                            x = player.x - item.x
+                            y = player.y - item.y
+                            distance1 = np.sqrt(np.power(x, 2) + np.power(y, 2))
+                            if item.explode:
+                                distance2 = 0
 
-                            angle = 90
-                            if x != 0:
-                                angle = np.rad2deg(np.arctan(y/x))
-                            if angle < 0:
-                                angle *= -1
-                            while angle > 90:
-                                angle -= 90
+                                angle = 90
+                                if x != 0:
+                                    angle = np.rad2deg(np.arctan(y/x))
+                                if angle < 0:
+                                    angle *= -1
+                                while angle > 90:
+                                    angle -= 90
 
-                            if angle == 45:
-                                distance2 = 14.142135624 # np.sqrt(np.power(x, 10) + np.power(y, 10))
-                            elif angle < 45:
-                                distance2 = 10 / np.sin(np.deg2rad(90 - angle))
-                            elif angle > 45:
-                                distance2 = 10 / np.sin(np.deg2rad(angle))
+                                if angle == 45:
+                                    distance2 = 14.142135624 # np.sqrt(np.power(x, 10) + np.power(y, 10))
+                                elif angle < 45:
+                                    distance2 = 10 / np.sin(np.deg2rad(90 - angle))
+                                elif angle > 45:
+                                    distance2 = 10 / np.sin(np.deg2rad(angle))
 
-                            if distance1 - distance2 <= item.explodeRadius:
-                                player.itemHit(item.itemName)
-                        else:
-                            if distance1 <= 10 and player.id != item.summonedPlayer.id:
-                                item.explode = True
+                                if distance1 - distance2 <= item.explodeRadius:
+                                    item.hitPlayers.append(player.id)
+                                    player.itemHit(item.itemName)
+                            else:
+                                if distance1 <= 10 and player.id != item.summonedPlayer.id:
+                                    item.explode = True

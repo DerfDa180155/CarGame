@@ -78,7 +78,8 @@ class GameMain:
         self.boostItem = self.crossing
         self.rocketItem = self.horizontalLine
         self.multiRocketItem = self.verticalLine
-        self.itemImageDictionary = [self.boostItem, self.rocketItem, self.multiRocketItem]
+        self.shieldItem = self.topLeft
+        self.itemImageDictionary = [self.boostItem, self.rocketItem, self.multiRocketItem, self.shieldItem]
         self.summonedItems = []
 
         # player

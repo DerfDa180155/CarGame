@@ -17,6 +17,7 @@ class Rocket:
         self.speed = summonedPlayer.maxSpeed * 3
 
         self.rays = [Ray.Ray(self.x, self.y, self.direction)]
+        self.hitPlayers = []
 
         self.living = True
         self.explode = False

@@ -37,6 +37,7 @@ class Player:
         self.id = id
         self.currentItem = -1
         self.stunTime = 0
+        self.shieldTime = 0
 
         i = self.frontRaysViewAngle / (-2)
         while i <= self.frontRaysViewAngle / 2:
@@ -108,6 +109,9 @@ class Player:
                     item.itemName = "MultiRocket"
                     self.summonedItems.append(item)
                     i += angle
+            case 3:
+                # shield
+                self.shieldTime += 120 * 5 # 5 seconds
 
         # remove Item
         self.currentItem = -1
@@ -115,17 +119,26 @@ class Player:
     def itemHit(self, itemName):
         match itemName:
             case "Rocket":
-                self.speed = 0
-                self.currentMaxSpeed = 0
-                if self.stunTime == 0:
-                    self.stunTime = 120 * 3 # 3 seconds
+                if self.shieldTime > 0:
+                    self.shieldTime = 0
+                else:
+                    self.speed = 0
+                    self.currentMaxSpeed = 0
+                    if self.stunTime == 0:
+                        self.stunTime = 120 * 3 # 3 seconds
             case "MultiRocket":
-                self.speed = 0
-                self.currentMaxSpeed = 0
-                if self.stunTime == 0:
-                    self.stunTime = int(120 * 1.5) # 1.5 seconds
+                if self.shieldTime > 0:
+                    self.shieldTime = 0
+                else:
+                    self.speed = 0
+                    self.currentMaxSpeed = 0
+                    if self.stunTime == 0:
+                        self.stunTime = int(120 * 1.5) # 1.5 seconds
 
     def update(self):
+        if self.shieldTime > 0:
+            self.shieldTime -= 1
+
         if self.stunTime > 0:
             self.stunTime -= 1
             return
