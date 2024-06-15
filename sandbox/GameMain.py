@@ -79,7 +79,8 @@ class GameMain:
         self.rocketItem = self.horizontalLine
         self.multiRocketItem = self.verticalLine
         self.shieldItem = self.topLeft
-        self.itemImageDictionary = [self.boostItem, self.rocketItem, self.multiRocketItem, self.shieldItem]
+        self.oilPuddleItem = self.topRight
+        self.itemImageDictionary = [self.boostItem, self.rocketItem, self.multiRocketItem, self.shieldItem, self.oilPuddleItem]
         self.summonedItems = []
 
         # player
@@ -676,8 +677,9 @@ class GameMain:
                         #print(len(self.summonedItems))
                         for item in self.CO.summonedItems:
                             item.update()
-                            if item.itemName == "Rocket" or item.itemName == "MultiRocket":
-                                item.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+                            match item.itemName:
+                                case "Rocket" | "MultiRocket":
+                                    item.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
                     elif self.CO.raceObject.raceStatus == "raceOver": # leaderboard buttons
                         for button in self.CO.leaderboardButtons:
                             if button.clicked(mx, my, mousePressedUp):

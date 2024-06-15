@@ -3,6 +3,7 @@ import numpy as np
 import array
 import Ray
 import Rocket
+import OilPuddle
 
 
 class Player:
@@ -112,6 +113,10 @@ class Player:
             case 3:
                 # shield
                 self.shieldTime += 120 * 5 # 5 seconds
+            case 4:
+                # oil puddle
+                item = OilPuddle.OilPuddle(self.x, self.y, self)
+                self.summonedItems.append(item)
 
         # remove Item
         self.currentItem = -1
