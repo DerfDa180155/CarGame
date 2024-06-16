@@ -16,7 +16,8 @@ class OilPuddle:
 
         self.hitPlayers = []
 
-        self.liveTime = 120 * 10 # 10 seconds
+        self.maxLiveTime = 120 * 10 # 10 seconds
+        self.liveTime = self.maxLiveTime
         self.living = True
 
     def draw(self, surface):

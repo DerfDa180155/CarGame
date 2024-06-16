@@ -268,3 +268,12 @@ class RaceObject:
                             else:
                                 if distance1 <= 10 and player.id != item.summonedPlayer.id:
                                     item.explode = True
+                    case "OilPuddle":
+                        if player.id not in item.hitPlayers and not (player.id == item.summonedPlayer.id and item.liveTime >= item.maxLiveTime - 120):
+                            x = player.x - item.x
+                            y = player.y - item.y
+                            distance1 = np.sqrt(np.power(x, 2) + np.power(y, 2))
+
+                            if distance1 <= item.size:
+                                item.hitPlayers.append(player.id)
+                                player.itemHit(item.itemName)

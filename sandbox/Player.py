@@ -139,6 +139,11 @@ class Player:
                     self.currentMaxSpeed = 0
                     if self.stunTime == 0:
                         self.stunTime = int(120 * 1.5) # 1.5 seconds
+            case "OilPuddle":
+                self.speed = 0
+                self.currentMaxSpeed = 0
+                self.stunTime = 120 * 5
+
 
     def update(self):
         if self.shieldTime > 0:
