@@ -117,6 +117,9 @@ class Player:
                 # oil puddle
                 item = OilPuddle.OilPuddle(self.x, self.y, self)
                 self.summonedItems.append(item)
+            case 5:
+                # god mode
+                self.currentMaxSpeed += 100 # temp
 
         # remove Item
         self.currentItem = -1

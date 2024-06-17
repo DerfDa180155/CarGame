@@ -226,7 +226,7 @@ class RaceObject:
     def givePlayerItem(self, player):
         if self.itemsEnabled and player.currentItem == -1:
             player.currentItem = random.randint(0, self.amountOfItems-1)
-            player.currentItem = 4 # for item testing
+            player.currentItem = 5 # for item testing
 
     def checkSummonedItems(self):
         i = len(self.summonedItems) - 1

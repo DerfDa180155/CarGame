@@ -80,7 +80,8 @@ class GameMain:
         self.multiRocketItem = self.verticalLine
         self.shieldItem = self.topLeft
         self.oilPuddleItem = self.topRight
-        self.itemImageDictionary = [self.boostItem, self.rocketItem, self.multiRocketItem, self.shieldItem, self.oilPuddleItem]
+        self.godModeItem = self.bottomRight
+        self.itemImageDictionary = [self.boostItem, self.rocketItem, self.multiRocketItem, self.shieldItem, self.oilPuddleItem, self.godModeItem]
         self.summonedItems = []
 
         # player
