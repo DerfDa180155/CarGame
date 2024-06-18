@@ -39,6 +39,7 @@ class Player:
         self.currentItem = -1
         self.stunTime = 0
         self.shieldTime = 0
+        self.indestructible = False
 
         i = self.frontRaysViewAngle / (-2)
         while i <= self.frontRaysViewAngle / 2:
@@ -120,32 +121,36 @@ class Player:
             case 5:
                 # god mode
                 self.currentMaxSpeed += 100 # temp
+                self.indestructible = True # temp
 
         # remove Item
         self.currentItem = -1
 
     def itemHit(self, itemName):
-        match itemName:
-            case "Rocket":
-                if self.shieldTime > 0:
-                    self.shieldTime = 0
-                else:
+        if not self.indestructible:
+            match itemName:
+                case "Rocket":
+                    if self.shieldTime > 0:
+                        self.shieldTime = 0
+                    else:
+                        self.speed = 0
+                        self.currentMaxSpeed = 0
+                        if self.stunTime == 0:
+                            self.stunTime = 120 * 3 # 3 seconds
+                case "MultiRocket":
+                    if self.shieldTime > 0:
+                        self.shieldTime = 0
+                    else:
+                        self.speed = 0
+                        self.currentMaxSpeed = 0
+                        if self.stunTime == 0:
+                            self.stunTime = int(120 * 1.5) # 1.5 seconds
+                case "OilPuddle":
                     self.speed = 0
                     self.currentMaxSpeed = 0
-                    if self.stunTime == 0:
-                        self.stunTime = 120 * 3 # 3 seconds
-            case "MultiRocket":
-                if self.shieldTime > 0:
-                    self.shieldTime = 0
-                else:
-                    self.speed = 0
-                    self.currentMaxSpeed = 0
-                    if self.stunTime == 0:
-                        self.stunTime = int(120 * 1.5) # 1.5 seconds
-            case "OilPuddle":
-                self.speed = 0
-                self.currentMaxSpeed = 0
-                self.stunTime = 120 * 5
+                    self.stunTime = 120 * 5
+        else:
+            self.indestructible = False
 
 
     def update(self):
