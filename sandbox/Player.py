@@ -4,6 +4,7 @@ import array
 import Ray
 import Rocket
 import OilPuddle
+import GodMode
 
 
 class Player:
@@ -39,7 +40,7 @@ class Player:
         self.currentItem = -1
         self.stunTime = 0
         self.shieldTime = 0
-        self.indestructible = False
+        self.godMode = False
 
         i = self.frontRaysViewAngle / (-2)
         while i <= self.frontRaysViewAngle / 2:
@@ -120,14 +121,16 @@ class Player:
                 self.summonedItems.append(item)
             case 5:
                 # god mode
-                self.currentMaxSpeed += 100 # temp
-                self.indestructible = True # temp
+                item = GodMode.GodMode(self)
+                self.summonedItems.append(item)
+                #self.currentMaxSpeed += 100 # temp
+                #self.godMode = True # temp
 
         # remove Item
         self.currentItem = -1
 
     def itemHit(self, itemName):
-        if not self.indestructible:
+        if not self.godMode:
             match itemName:
                 case "Rocket":
                     if self.shieldTime > 0:
@@ -149,9 +152,6 @@ class Player:
                     self.speed = 0
                     self.currentMaxSpeed = 0
                     self.stunTime = 120 * 5
-        else:
-            self.indestructible = False
-
 
     def update(self):
         if self.shieldTime > 0:
@@ -160,6 +160,7 @@ class Player:
         if self.stunTime > 0:
             self.stunTime -= 1
             return
+
         # car physics
         self.speed += self.acc * 0.05
 
