@@ -58,7 +58,11 @@ class Player:
         self.isSteeringRight = False
         self.countSteering = 0
         self.currentMaxSpeed = self.maxSpeed
+
         self.currentItem = -1
+        self.stunTime = 0
+        self.shieldTime = 0
+        self.godMode = False
 
         self.isDone = False  # for the race
 
@@ -222,7 +226,7 @@ class Player:
                 self.y -= (self.speed / 400) * np.sin(np.deg2rad(self.direction - 90))
                 self.countSteering += 1
             else:
-                if self.countSteering > 30:
+                if self.countSteering > 30 and not self.godMode: # disabled in god mode
                     self.currentMaxSpeed += self.countSteering / 5
                     self.speed += self.countSteering / 5
                 self.countSteering = 0
@@ -230,12 +234,11 @@ class Player:
             self.countSteering = 0
 
         # more max speed after steering
-        #if self.countSteering > 30:
-        #    self.currentMaxSpeed += 0.1
-        if self.currentMaxSpeed > self.maxSpeed:
-            self.currentMaxSpeed -= 0.2
-        elif self.currentMaxSpeed < self.maxSpeed:
-            self.currentMaxSpeed = self.maxSpeed
+        if not self.godMode: # disabled in god mode
+            if self.currentMaxSpeed > self.maxSpeed:
+                self.currentMaxSpeed -= 0.2
+            elif self.currentMaxSpeed < self.maxSpeed:
+                self.currentMaxSpeed = self.maxSpeed
 
         self.isSteeringRight = False
         self.isSteeringLeft = False

@@ -16,6 +16,7 @@ class GodMode:
         self.living = True
 
         self.summonedPlayer.godMode = True
+        self.summonedPlayer.currentMaxSpeed = self.summonedPlayer.maxSpeed + 100
 
     def draw(self, surface):
         pass # no draw function right now
@@ -23,6 +24,7 @@ class GodMode:
     def update(self):
         if self.liveTime <= 0:
             self.summonedPlayer.godMode = False
+            self.summonedPlayer.currentMaxSpeed = self.summonedPlayer.maxSpeed
             self.living = False
         self.liveTime -= 1
 
