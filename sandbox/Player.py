@@ -125,10 +125,15 @@ class Player:
                 self.summonedItems.append(item)
             case 5:
                 # god mode
-                item = GodMode.GodMode(self)
-                self.summonedItems.append(item)
-                #self.currentMaxSpeed += 100 # temp
-                #self.godMode = True # temp
+                checkExist = False
+                for item in self.summonedItems:
+                    if item.itemName == "GodMode" and item.summonedPlayer.id == self.id:
+                        item.resetCounter()
+                        checkExist = True
+
+                if not checkExist:
+                    item = GodMode.GodMode(self)
+                    self.summonedItems.append(item)
 
         # remove Item
         self.currentItem = -1

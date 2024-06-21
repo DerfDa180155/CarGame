@@ -12,11 +12,12 @@ class GodMode:
 
         self.hitPlayers = []
 
-        self.liveTime = 120 * 50 # 10 seconds
+        self.maxLiveTime = 120 * 50 # 10 seconds
+        self.liveTime = self.maxLiveTime
         self.living = True
 
         self.summonedPlayer.godMode = True
-        self.summonedPlayer.currentMaxSpeed = self.summonedPlayer.maxSpeed + 100
+        self.summonedPlayer.currentMaxSpeed = self.summonedPlayer.maxSpeed + 70
 
     def draw(self, surface):
         pass # no draw function right now
@@ -27,4 +28,7 @@ class GodMode:
             self.summonedPlayer.currentMaxSpeed = self.summonedPlayer.maxSpeed
             self.living = False
         self.liveTime -= 1
+
+    def resetCounter(self):
+        self.liveTime = self.maxLiveTime
 
