@@ -555,7 +555,7 @@ class GameMain:
                                 if button.action == "generateMapWFC":
                                     self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
                                     self.CO.gameStatus = "raceSettings"
-                                    self.CO.raceObject.reset()
+                                    self.CO.raceObject.reset(True)
                                     if self.CO.mapButtonPage != 0:
                                         self.CO.mapButtonPage -= 1
                                         print(self.CO.mapButtonPage)
@@ -575,7 +575,7 @@ class GameMain:
                                                  y=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartY,
                                                  direction=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartDirection)
                                 self.CO.gameStatus = "raceSettings"
-                                self.CO.raceObject.reset()
+                                self.CO.raceObject.reset(True)
                 case "raceSettings":
                     for button in self.CO.raceSettingsButtons:
                         if button.clicked(mx, my, mousePressedUp):
@@ -675,7 +675,6 @@ class GameMain:
                             player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
 
                         # update items
-                        #print(len(self.summonedItems))
                         for item in self.CO.summonedItems:
                             item.update()
                             match item.itemName:
@@ -705,6 +704,7 @@ class GameMain:
                                     self.CO.raceObject.resume()
                                 elif button.action == "restart":
                                     self.CO.raceObject.reset()
+                                    self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
                                 elif button.action == "mainMenu":
                                     self.CO.gameStatus = "menu"
 

@@ -97,7 +97,7 @@ class RaceObject:
 
             self.raceStatus = "race"
 
-    def reset(self):
+    def reset(self, fullReset=False):
         self.stopwatch = 0
         self.stopwatchCurrentTime = 0
         self.stopwatchStart = 0
@@ -105,11 +105,12 @@ class RaceObject:
 
         self.raceStatus = "noRace"
 
-        self.rounds = self.defaultRounds
-        self.maxSpeed = self.defaultMaxSpeed
-        self.maxAcc = self.defaultMaxAcc
-        self.itemsEnabled = self.defaultItemsEnabled
-        self.itemSpawnCooldown = self.defaultItemSpawnCooldown
+        if fullReset:
+            self.rounds = self.defaultRounds
+            self.maxSpeed = self.defaultMaxSpeed
+            self.maxAcc = self.defaultMaxAcc
+            self.itemsEnabled = self.defaultItemsEnabled
+            self.itemSpawnCooldown = self.defaultItemSpawnCooldown
 
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]
@@ -226,7 +227,7 @@ class RaceObject:
     def givePlayerItem(self, player):
         if self.itemsEnabled and player.currentItem == -1:
             player.currentItem = random.randint(0, self.amountOfItems-1)
-            player.currentItem = 5 # for item testing
+            player.currentItem = 2 # for item testing
 
     def checkSummonedItems(self):
         i = len(self.summonedItems) - 1
