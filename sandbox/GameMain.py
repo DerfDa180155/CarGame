@@ -685,6 +685,7 @@ class GameMain:
                             if button.clicked(mx, my, mousePressedUp):
                                 if button.action == "restart":
                                     self.CO.raceObject.reset()
+                                    self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
                                 elif button.action == "choseMap":
                                     self.CO.gameStatus = "selectMap"
                                 elif button.action == "saveMap" and self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
