@@ -759,6 +759,7 @@ class GameDisplay(threading.Thread):
                 playerSizeWidth = (20 * self.windowWidth) / player.scaleSizeWidth
                 playerSizeHeight = (20 * self.windowHeight) / player.scaleSizeHeight
 
+                # shield item
                 if self.CO.raceObject.itemsEnabled and player.shieldTime > 0:
                     pygame.draw.circle(self.screen, (10, 150, 200), (x, y), playerSizeWidth, 0)
 
