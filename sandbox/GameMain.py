@@ -626,7 +626,7 @@ class GameMain:
                     self.CO.raceObject.update()
 
                     if keys[pygame.K_t]:
-                        self.CO.raceObject.rounds = 1
+                        self.CO.raceObject.reset()
                         self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
                     elif keys[pygame.K_z]:
                         self.CO.raceObject.stop()
