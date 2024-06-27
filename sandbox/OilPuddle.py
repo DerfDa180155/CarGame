@@ -24,7 +24,7 @@ class OilPuddle:
         newX = (self.x * surface.get_width()) / 1600
         newY = (self.y * surface.get_height()) / 900
 
-        scaledRadius = ((self.size) * surface.get_width()) / 2000
+        scaledRadius = (self.size * surface.get_width()) / 2000
         pygame.draw.circle(surface, (10, 10, 30), (newX, newY), scaledRadius, 0)
 
     def update(self):
