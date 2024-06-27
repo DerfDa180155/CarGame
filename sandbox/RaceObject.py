@@ -278,3 +278,13 @@ class RaceObject:
                             if distance1 <= item.size:
                                 item.hitPlayers.append(player.id)
                                 player.itemHit(item.itemName)
+
+                    case "GodMode":
+                        if player.id != item.summonedPlayer.id:
+                            x = player.x - item.summonedPlayer.x
+                            y = player.y - item.summonedPlayer.y
+                            distance = np.sqrt(np.power(x, 2) + np.power(y, 2))
+                            print(distance)
+                            if distance <= item.scaledRadius / 2:
+                                #player.itemHit(item.itemName)
+                                print("Test123")

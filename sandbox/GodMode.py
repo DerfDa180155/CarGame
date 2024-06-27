@@ -19,16 +19,19 @@ class GodMode:
         self.colorIncreaser = [False, False, False]
         self.colorSpeed = 3
 
+        self.radius = 20
+        self.scaledRadius = self.radius
+
         self.summonedPlayer.godMode = True
         self.summonedPlayer.currentMaxSpeed = self.summonedPlayer.maxSpeed + 70
 
     def draw(self, surface):
         x = (self.summonedPlayer.x * surface.get_width()) / self.summonedPlayer.scaleWidth
         y = (self.summonedPlayer.y * surface.get_height()) / self.summonedPlayer.scaleHeight
-        playerSizeWidth = (20 * surface.get_width()) / self.summonedPlayer.scaleSizeWidth
-        playerSizeHeight = (20 * surface.get_height()) / self.summonedPlayer.scaleSizeHeight
 
-        pygame.draw.circle(surface, self.color, (x, y), playerSizeWidth, 0)
+        self.scaledRadius = (self.radius * surface.get_width()) / 2000
+
+        pygame.draw.circle(surface, self.color, (x, y), self.scaledRadius, 0)
 
         colorArray = [self.color[0], self.color[1], self.color[2]]
 
