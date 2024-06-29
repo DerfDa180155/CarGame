@@ -158,9 +158,17 @@ class Player:
                         if self.stunTime == 0:
                             self.stunTime = int(120 * 1.5) # 1.5 seconds
                 case "OilPuddle":
+                    if self.shieldTime > 0:
+                        self.shieldTime = 0
+                    else:
+                        self.speed = 0
+                        self.currentMaxSpeed = 0
+                        self.stunTime = 120 * 5
+                case "GodMode":
+                    self.shieldTime = 0
                     self.speed = 0
                     self.currentMaxSpeed = 0
-                    self.stunTime = 120 * 5
+                    self.stunTime = 120 * 3
 
     def update(self):
         if self.shieldTime > 0:
