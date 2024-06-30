@@ -56,6 +56,7 @@ class GameMain:
         self.horizontalLine = pygame.image.load(self.imagePath + "horizontal_line.png").convert()
         self.crossing = pygame.image.load(self.imagePath + "crossing.png").convert()
         self.settingsImg = pygame.image.load(self.imagePath + "settings.png").convert()
+        self.settingsImg.set_colorkey((255, 255, 255))
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
