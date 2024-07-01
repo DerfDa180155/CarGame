@@ -15,6 +15,8 @@ class Settings:
         self.steerRightKey = "d"
         self.pauseKey = "escape"
 
+        self.playerSteering = [["w", "s", "a", "d"], ["up", "down", "left", "right"]]
+
         # game settings
         self.FPS = 60
         self.TPS = 120
@@ -55,6 +57,9 @@ class Settings:
         self.driveBackwardKey = newSetting.driveBackwardKey
         self.steerLeftKey = newSetting.steerLeftKey
         self.steerRightKey = newSetting.steerRightKey
+
+        #self.playerSteering = newSetting.playerSteering
+
         self.pauseKey = newSetting.pauseKey
 
         self.FPS = newSetting.FPS
