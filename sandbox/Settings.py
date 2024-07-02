@@ -9,10 +9,10 @@ class Settings:
         self.filename = filename
 
         # default keys
-        self.driveForwardKey = "w"
-        self.driveBackwardKey = "s"
-        self.steerLeftKey = "a"
-        self.steerRightKey = "d"
+        #self.driveForwardKey = "w"
+        #self.driveBackwardKey = "s"
+        #self.steerLeftKey = "a"
+        #self.steerRightKey = "d"
         self.pauseKey = "escape"
 
         self.playerSteering = [["w", "s", "a", "d"], ["up", "down", "left", "right"]]
@@ -31,20 +31,20 @@ class Settings:
             for file in files:
                 if self.filename + ".xml" == file:
                     docRoot = ET.parse(os.path.join(root, file)).getroot()
-                    self.driveForwardKey = pygame.key.name(int(docRoot[0].text))
-                    self.driveBackwardKey = pygame.key.name(int(docRoot[1].text))
-                    self.steerLeftKey = pygame.key.name(int(docRoot[2].text))
-                    self.steerRightKey = pygame.key.name(int(docRoot[3].text))
+                    self.playerSteering[0][0] = pygame.key.name(int(docRoot[0].text))
+                    self.playerSteering[0][1] = pygame.key.name(int(docRoot[1].text))
+                    self.playerSteering[0][2] = pygame.key.name(int(docRoot[2].text))
+                    self.playerSteering[0][3] = pygame.key.name(int(docRoot[3].text))
                     self.pauseKey = pygame.key.name(int(docRoot[4].text))
                     self.FPS = int(docRoot[5].text)
                     self.TPS = int(docRoot[6].text)
 
     def saveSettings(self):
         root = ET.Element("settings")
-        ET.SubElement(root, "driveForwardKey").text = str(pygame.key.key_code(self.driveForwardKey))
-        ET.SubElement(root, "driveBackwardKey").text = str(pygame.key.key_code(self.driveBackwardKey))
-        ET.SubElement(root, "steerLeftKey").text = str(pygame.key.key_code(self.steerLeftKey))
-        ET.SubElement(root, "steerRightKey").text = str(pygame.key.key_code(self.steerRightKey))
+        ET.SubElement(root, "driveForwardKey").text = str(pygame.key.key_code(self.playerSteering[0][0]))
+        ET.SubElement(root, "driveBackwardKey").text = str(pygame.key.key_code(self.playerSteering[0][1]))
+        ET.SubElement(root, "steerLeftKey").text = str(pygame.key.key_code(self.playerSteering[0][2]))
+        ET.SubElement(root, "steerRightKey").text = str(pygame.key.key_code(self.playerSteering[0][3]))
         ET.SubElement(root, "pauseKey").text = str(pygame.key.key_code(self.pauseKey))
         ET.SubElement(root, "FPS").text = str(self.FPS)
         ET.SubElement(root, "TPS").text = str(self.TPS)
@@ -53,12 +53,12 @@ class Settings:
         ET.ElementTree(root).write(self.path + self.filename + ".xml")
 
     def copyFrom(self, newSetting):
-        self.driveForwardKey = newSetting.driveForwardKey
-        self.driveBackwardKey = newSetting.driveBackwardKey
-        self.steerLeftKey = newSetting.steerLeftKey
-        self.steerRightKey = newSetting.steerRightKey
+        #self.driveForwardKey = newSetting.driveForwardKey
+        #self.driveBackwardKey = newSetting.driveBackwardKey
+        #self.steerLeftKey = newSetting.steerLeftKey
+        #self.steerRightKey = newSetting.steerRightKey
 
-        #self.playerSteering = newSetting.playerSteering
+        self.playerSteering = newSetting.playerSteering
 
         self.pauseKey = newSetting.pauseKey
 

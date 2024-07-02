@@ -315,13 +315,13 @@ class GameMain:
                                 self.CO.waitForKey = False
                                 match button.action:
                                     case "forwardKey":
-                                        self.CO.displayTempSettings.driveForwardKey = pygame.key.name(text)
+                                        self.CO.displayTempSettings.playerSteering[0][0] = pygame.key.name(text)
                                     case "backwardKey":
-                                        self.CO.displayTempSettings.driveBackwardKey = pygame.key.name(text)
+                                        self.CO.displayTempSettings.playerSteering[0][1] = pygame.key.name(text)
                                     case "leftKey":
-                                        self.CO.displayTempSettings.steerLeftKey = pygame.key.name(text)
+                                        self.CO.displayTempSettings.playerSteering[0][2] = pygame.key.name(text)
                                     case "rightKey":
-                                        self.CO.displayTempSettings.steerRightKey = pygame.key.name(text)
+                                        self.CO.displayTempSettings.playerSteering[0][3] = pygame.key.name(text)
                                     case "pauseKey":
                                         self.CO.displayTempSettings.pauseKey = pygame.key.name(text)
                         if button.hover(mx, my):
@@ -643,13 +643,13 @@ class GameMain:
                     if self.CO.raceObject.raceStatus == "race":
                         # movement keys pressed --> Update players
                         if self.CO.currentMode == "singleplayer" and not self.CO.players[0].isDone:
-                            if keys[pygame.key.key_code(self.CO.settings.steerLeftKey)]: # turn left
+                            if keys[pygame.key.key_code(self.CO.settings.playerSteering[0][2])]: # turn left
                                 self.CO.players[0].changeDir(False)
-                            if keys[pygame.key.key_code(self.CO.settings.steerRightKey)]: # turn right
+                            if keys[pygame.key.key_code(self.CO.settings.playerSteering[0][3])]: # turn right
                                 self.CO.players[0].changeDir(True)
-                            if keys[pygame.key.key_code(self.CO.settings.driveForwardKey)]: # move forward
+                            if keys[pygame.key.key_code(self.CO.settings.playerSteering[0][0])]: # move forward
                                 self.CO.players[0].move(True)
-                            if keys[pygame.key.key_code(self.CO.settings.driveBackwardKey)]: # move backward
+                            if keys[pygame.key.key_code(self.CO.settings.playerSteering[0][1])]: # move backward
                                 self.CO.players[0].move(False)
                             if keys[pygame.K_SPACE]: # item
                                 self.CO.players[0].useItem()
