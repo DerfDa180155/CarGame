@@ -651,7 +651,7 @@ class GameMain:
                                 self.CO.players[0].move(True)
                             if keys[pygame.key.key_code(self.CO.settings.playerSteering[0][1])] or keys[pygame.key.key_code(self.CO.settings.playerSteering[1][1])]: # move backward
                                 self.CO.players[0].move(False)
-                            if keys[pygame.K_SPACE]: # item
+                            if keys[pygame.key.key_code(self.CO.settings.playerSteering[0][4])] or keys[pygame.key.key_code(self.CO.settings.playerSteering[1][4])]: # item
                                 self.CO.players[0].useItem()
                         elif self.CO.currentMode == "multiplayer":
                             i = 0
@@ -665,7 +665,7 @@ class GameMain:
                                         player.move(True)
                                     if keys[pygame.key.key_code(self.CO.settings.playerSteering[i][1])]: # move backward
                                         player.move(False)
-                                    if keys[pygame.K_0] and i == 1 or keys[pygame.K_SPACE] and i == 0:  # item
+                                    if keys[pygame.key.key_code(self.CO.settings.playerSteering[i][4])]:  # item
                                         player.useItem()
                                 i += 1
 

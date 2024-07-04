@@ -13,9 +13,10 @@ class Settings:
         #self.driveBackwardKey = "s"
         #self.steerLeftKey = "a"
         #self.steerRightKey = "d"
-        self.pauseKey = "escape"
 
-        self.playerSteering = [["w", "s", "a", "d"], ["up", "down", "left", "right"]]
+        # player steering keys with default values
+        self.playerSteering = [["w", "s", "a", "d", "space"], ["up", "down", "left", "right", "0"]]
+        self.pauseKey = "escape"
 
         # game settings
         self.FPS = 60
@@ -53,11 +54,6 @@ class Settings:
         ET.ElementTree(root).write(self.path + self.filename + ".xml")
 
     def copyFrom(self, newSetting):
-        #self.driveForwardKey = newSetting.driveForwardKey
-        #self.driveBackwardKey = newSetting.driveBackwardKey
-        #self.steerLeftKey = newSetting.steerLeftKey
-        #self.steerRightKey = newSetting.steerRightKey
-
         self.playerSteering = newSetting.playerSteering
 
         self.pauseKey = newSetting.pauseKey
