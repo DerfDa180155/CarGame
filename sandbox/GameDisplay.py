@@ -69,8 +69,8 @@ class GameDisplay(threading.Thread):
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
 
         settingsText = ["drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "pause key: ", "FPS: ", "TPS: "]
-        settingsData = [str(self.CO.displayTempSettings.playerSteering[0][0]), str(self.CO.displayTempSettings.playerSteering[0][1]),
-                        str(self.CO.displayTempSettings.playerSteering[0][2]), str(self.CO.displayTempSettings.playerSteering[0][3]),
+        settingsData = [str(self.CO.displayTempSettings.playerKeys[0][0]), str(self.CO.displayTempSettings.playerKeys[0][1]),
+                        str(self.CO.displayTempSettings.playerKeys[0][2]), str(self.CO.displayTempSettings.playerKeys[0][3]),
                         str(self.CO.displayTempSettings.pauseKey), str(self.CO.displayTempSettings.FPS), str(self.CO.displayTempSettings.TPS)]
 
         for i in range(len(settingsText)):
