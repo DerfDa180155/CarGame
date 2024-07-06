@@ -129,10 +129,11 @@ class GameMain:
         self.backwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "backwardKey")
         self.leftKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "leftKey")
         self.rightKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "rightKey")
+        self.itemKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "itemKey")
         self.pauseKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "pauseKey")
         self.FPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollFPS")
         self.TPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollTPS")
-        self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton]
+        self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.itemKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton]
 
         # mapMaker buttons
         self.bottomRightButton = Button.Button(self.screen, 1300, 100, 100, self.bottomRight, "mapPiece-bottomRight")
@@ -322,6 +323,8 @@ class GameMain:
                                         self.CO.displayTempSettings.playerKeys[0][2] = pygame.key.name(text)
                                     case "rightKey":
                                         self.CO.displayTempSettings.playerKeys[0][3] = pygame.key.name(text)
+                                    case "itemKey":
+                                        self.CO.displayTempSettings.playerKeys[0][4] = pygame.key.name(text)
                                     case "pauseKey":
                                         self.CO.displayTempSettings.pauseKey = pygame.key.name(text)
                         if button.hover(mx, my):
