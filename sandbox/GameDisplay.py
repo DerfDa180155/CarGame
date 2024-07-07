@@ -92,12 +92,12 @@ class GameDisplay(threading.Thread):
             #if len(self.CO.settingsButtons)-2 > i:
             self.CO.settingsButtons[i + 3].y = (newRect.y * 900) / self.windowHeight
 
-        if self.CO.waitForKey:
-            self.drawSettingsSelectKey()
-
         # draw buttons
         for button in self.CO.settingsButtons:
             button.draw(self.windowWidth, self.windowHeight)
+
+        if self.CO.waitForKey:
+            self.drawSettingsSelectKey()
 
     def drawMapMaker(self):
         self.screen.fill((50, 50, 50))  # background
