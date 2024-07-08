@@ -68,29 +68,50 @@ class GameDisplay(threading.Thread):
         newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
 
-        settingsText = ["drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "use item key: ", "pause key: ", "FPS: ", "TPS: "]
-        settingsData = [str(self.CO.displayTempSettings.playerKeys[0][0]), str(self.CO.displayTempSettings.playerKeys[0][1]),
+        settingsText = [["drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "use item key: ", "pause key: ", "FPS: ", "TPS: "],
+                        ["drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "use item key: ", "", "", ""]]
+        settingsData = [[str(self.CO.displayTempSettings.playerKeys[0][0]), str(self.CO.displayTempSettings.playerKeys[0][1]),
                         str(self.CO.displayTempSettings.playerKeys[0][2]), str(self.CO.displayTempSettings.playerKeys[0][3]),
                         str(self.CO.displayTempSettings.playerKeys[0][4]), str(self.CO.displayTempSettings.pauseKey),
-                        str(self.CO.displayTempSettings.FPS), str(self.CO.displayTempSettings.TPS)]
+                        str(self.CO.displayTempSettings.FPS), str(self.CO.displayTempSettings.TPS)],
+                        [str(self.CO.displayTempSettings.playerKeys[1][0]), str(self.CO.displayTempSettings.playerKeys[1][1]),
+                         str(self.CO.displayTempSettings.playerKeys[1][2]), str(self.CO.displayTempSettings.playerKeys[1][3]),
+                         str(self.CO.displayTempSettings.playerKeys[1][4])]]
 
-        for i in range(len(settingsText)):
+        for i in range(len(settingsData[0])):
+            # left row
             # settings Text
-            text = font.render(settingsText[i], True, (255, 255, 255))
+            text = font.render(settingsText[0][i], True, (255, 255, 255))
             newRect = text.get_rect()
             newRect.x = newTextSize
             newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
             self.screen.blit(text, newRect)
 
             # settings Data
-            text = font.render(settingsData[i], True, (255, 255, 255))
+            text = font.render(settingsData[0][i], True, (255, 255, 255))
             newRect = text.get_rect()
             newRect.right = newTextSize * 17
             newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
             self.screen.blit(text, newRect)
 
-            #if len(self.CO.settingsButtons)-2 > i:
+            # placing buttons
             self.CO.settingsButtons[i + 3].y = (newRect.y * 900) / self.windowHeight
+
+            # right row
+            if settingsText[1][i] != "":
+                # settings Text
+                text = font.render(settingsText[0][i], True, (255, 255, 255))
+                newRect = text.get_rect()
+                newRect.x = newTextSize + (self.windowWidth / 2)
+                newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
+                self.screen.blit(text, newRect)
+
+                # settings Data
+                text = font.render(settingsData[1][i], True, (255, 255, 255))
+                newRect = text.get_rect()
+                newRect.right = newTextSize * 17 + (self.windowWidth / 2)
+                newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
+                self.screen.blit(text, newRect)
 
         # draw buttons
         for button in self.CO.settingsButtons:
