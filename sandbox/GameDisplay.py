@@ -113,6 +113,9 @@ class GameDisplay(threading.Thread):
                 newRect.y = 30 + newTextSize + newTextSize * (i + 1) + newTextSize * i / 2
                 self.screen.blit(text, newRect)
 
+                # placing buttons
+                self.CO.settingsButtons[i + 3 + 8].y = (newRect.y * 900) / self.windowHeight
+
         # draw buttons
         for button in self.CO.settingsButtons:
             button.draw(self.windowWidth, self.windowHeight)

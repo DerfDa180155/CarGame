@@ -133,7 +133,12 @@ class GameMain:
         self.pauseKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "pauseKey")
         self.FPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollFPS")
         self.TPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollTPS")
-        self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.itemKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton]
+        self.secondPlayerForwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "forwardKey")
+        self.secondPlayerBackwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "backwardKey")
+        self.secondPlayerLeftKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "leftKey")
+        self.secondPlayerRightKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "rightKey")
+        self.secondPlayerItemKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "itemKey")
+        self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.itemKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton, self.secondPlayerForwardKeyButton, self.secondPlayerBackwardKeyButton, self.secondPlayerLeftKeyButton, self.secondPlayerRightKeyButton, self.secondPlayerItemKeyButton]
 
         # mapMaker buttons
         self.bottomRightButton = Button.Button(self.screen, 1300, 100, 100, self.bottomRight, "mapPiece-bottomRight")
