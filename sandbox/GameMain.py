@@ -133,11 +133,11 @@ class GameMain:
         self.pauseKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "pauseKey")
         self.FPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollFPS")
         self.TPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollTPS")
-        self.secondPlayerForwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "forwardKey")
-        self.secondPlayerBackwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "backwardKey")
-        self.secondPlayerLeftKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "leftKey")
-        self.secondPlayerRightKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "rightKey")
-        self.secondPlayerItemKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "itemKey")
+        self.secondPlayerForwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerForwardKey")
+        self.secondPlayerBackwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerBackwardKey")
+        self.secondPlayerLeftKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerLeftKey")
+        self.secondPlayerRightKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerRightKey")
+        self.secondPlayerItemKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerItemKey")
         self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.itemKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton, self.secondPlayerForwardKeyButton, self.secondPlayerBackwardKeyButton, self.secondPlayerLeftKeyButton, self.secondPlayerRightKeyButton, self.secondPlayerItemKeyButton]
 
         # mapMaker buttons
@@ -332,6 +332,16 @@ class GameMain:
                                         self.CO.displayTempSettings.playerKeys[0][4] = pygame.key.name(text)
                                     case "pauseKey":
                                         self.CO.displayTempSettings.pauseKey = pygame.key.name(text)
+                                    case "secondPlayerForwardKey":
+                                        self.CO.displayTempSettings.playerKeys[1][0] = pygame.key.name(text)
+                                    case "secondPlayerBackwardKey":
+                                        self.CO.displayTempSettings.playerKeys[1][1] = pygame.key.name(text)
+                                    case "secondPlayerLeftKey":
+                                        self.CO.displayTempSettings.playerKeys[1][2] = pygame.key.name(text)
+                                    case "secondPlayerRightKey":
+                                        self.CO.displayTempSettings.playerKeys[1][3] = pygame.key.name(text)
+                                    case "secondPlayerItemKey":
+                                        self.CO.displayTempSettings.playerKeys[1][4] = pygame.key.name(text)
                         if button.hover(mx, my):
                             match button.action:
                                 case "scrollFPS":
