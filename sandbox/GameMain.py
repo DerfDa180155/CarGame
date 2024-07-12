@@ -84,12 +84,13 @@ class GameMain:
         self.godModeItem = self.bottomRight
         self.itemImageDictionary = [self.boostItem, self.rocketItem, self.multiRocketItem, self.shieldItem, self.oilPuddleItem, self.godModeItem]
         self.summonedItems = []
+        self.itemBoxes = []
 
         # player
         self.players = []
         self.players.append(Player.Player(100, 100, 0, 0, self.summonedItems))
 
-        self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0], amountOfItems=len(self.itemImageDictionary), summonedItems=self.summonedItems)
+        self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0], amountOfItems=len(self.itemImageDictionary), summonedItems=self.summonedItems, itemBoxes=self.itemBoxes)
         self.settings = Settings.Settings(self.settingsPath)
         self.displayTempSettings = Settings.Settings(self.settingsPath)
         self.mapMaker = MapMaker.MapMaker()
@@ -219,7 +220,7 @@ class GameMain:
                                                           mapButtonPage=self.mapButtonPage, officialMaps=True,
                                                           currentMode="singleplayer",
                                                           itemImageDictionary=self.itemImageDictionary,
-                                                          summonedItems=self.summonedItems)
+                                                          summonedItems=self.summonedItems, itemBoxes=self.itemBoxes)
 
         self.gameDisplay = GameDisplay.GameDisplay(screen=self.screen, CO=self.CO)
         self.gameDisplay.start()

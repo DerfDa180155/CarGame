@@ -382,9 +382,12 @@ class GameDisplay(threading.Thread):
         # draw player stats text
         self.drawPlayerStatsText()
 
-        # draw player items
+        # draw player items and item boxes
         if self.CO.raceObject.itemsEnabled:
             self.drawPlayerItems()
+            # draw summoned items
+            for box in self.CO.itemBoxes:
+                box.draw(self.screen)
             # draw summoned items
             for item in self.CO.summonedItems:
                 item.draw(self.screen)

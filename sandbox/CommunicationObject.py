@@ -15,7 +15,7 @@ class CommunicationObject:
                  menuButtons: array, gameModeButtons: array, raceSettingsButtons: array, settingsButtons: array,
                  mapMakerButtons: array, leaderboardButtons: array, pauseButtons: array, mapButtons: array,
                  mapButtonPage: int, officialMaps: bool, currentMode: str, itemImageDictionary: array,
-                 summonedItems: array):
+                 summonedItems: array, itemBoxes: array):
         self.gameStatus = gameStatus
         self.FPSClock = FPSClock
         self.TPSClock = TPSClock
@@ -32,6 +32,7 @@ class CommunicationObject:
         self.waitForKey = waitForKey
         self.itemImageDictionary = itemImageDictionary
         self.summonedItems = summonedItems
+        self.itemBoxes = itemBoxes
 
         # buttons
         self.menuButtons = menuButtons

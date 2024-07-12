@@ -4,9 +4,11 @@ import numpy as np
 import time
 import array
 import RaceMap
+import ItemBox
+
 
 class RaceObject:
-    def __init__(self, players: array, raceMap: RaceMap, amountOfItems: int, summonedItems: array):
+    def __init__(self, players: array, raceMap: RaceMap, amountOfItems: int, summonedItems: array, itemBoxes: array):
         self.stopwatch = 0
         self.stopwatchCurrentTime = 0
         self.stopwatchStart = 0
@@ -29,6 +31,8 @@ class RaceObject:
         self.itemSpawnCooldown = self.defaultItemSpawnCooldown
         self.amountOfItems = amountOfItems
         self.summonedItems = summonedItems
+        self.itemBoxes = itemBoxes
+        self.itemBoxes.append(ItemBox.ItemBox(800,500))
 
         self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
