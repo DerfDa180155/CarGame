@@ -32,7 +32,7 @@ class RaceObject:
         self.amountOfItems = amountOfItems
         self.summonedItems = summonedItems
         self.itemBoxes = itemBoxes
-        self.itemBoxes.append(ItemBox.ItemBox(800,500))
+        self.itemBoxes.append(ItemBox.ItemBox(800, 450)) # only for testing
 
         self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 

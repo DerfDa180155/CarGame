@@ -15,5 +15,5 @@ class ItemBox:
         newY = (self.y * surface.get_height()) / 900
 
         scaledSize = (self.size * surface.get_width()) / 2000
-        pygame.draw.rect(surface, (0, 150, 200), pygame.Rect(newX, newY, scaledSize, scaledSize))
+        pygame.draw.rect(surface, (0, 150, 200), pygame.Rect(newX - (scaledSize / 2), newY - (scaledSize / 2), scaledSize, scaledSize))
 
