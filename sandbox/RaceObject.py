@@ -32,7 +32,6 @@ class RaceObject:
         self.amountOfItems = amountOfItems
         self.summonedItems = summonedItems
         self.itemBoxes = itemBoxes
-        self.itemBoxes.append(ItemBox.ItemBox(800, 450)) # only for testing
 
         self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
@@ -70,6 +69,10 @@ class RaceObject:
                     tempList += self.raceMap.checkpoints
                 tempList.append(self.raceMap.checkpoints[0])
                 self.playerCheckpointList.append(tempList)
+
+            # create item boxes
+            for i in range(len(self.raceMap.itemBoxes)):
+                self.itemBoxes.append(self.raceMap.itemBoxes[i])
 
             self.finishLine = self.playerCheckpointList[0][len(self.playerCheckpointList[0])-1]
 
@@ -132,6 +135,12 @@ class RaceObject:
         i = len(self.summonedItems) - 1
         while i >= 0:
             del self.summonedItems[i]
+            i -= 1
+
+        # deleting all item boxes
+        i = len(self.itemBoxes) - 1
+        while i >= 0:
+            del self.itemBoxes[i]
             i -= 1
 
     def update(self):

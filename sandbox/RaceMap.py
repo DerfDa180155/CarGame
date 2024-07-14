@@ -4,6 +4,7 @@ import os
 import numpy
 import array
 import xml.etree.cElementTree as ET
+import ItemBox
 
 
 class RaceMap:
@@ -28,6 +29,9 @@ class RaceMap:
 
         self.checkpoints = []
         self.generateCheckpoints()
+
+        self.itemBoxes = []
+        self.generateItemBoxes()
 
     def saveMap(self, path: str, name: str = ""):
         root = ET.Element("raceMap")
@@ -405,6 +409,11 @@ class RaceMap:
             for i in reversed(range(len(self.checkpoints))):
                 tempCheckpoint.append(self.checkpoints[i])
             self.checkpoints = tempCheckpoint
+
+    def generateItemBoxes(self):
+        self.itemBoxes = []
+        self.itemBoxes.append(ItemBox.ItemBox(800, 450)) # only for testing
+        self.itemBoxes.append(ItemBox.ItemBox(700, 450)) # only for testing
 
     def getStreet(self, myMap, x: int, y: int):
         street = [[x, y]]
