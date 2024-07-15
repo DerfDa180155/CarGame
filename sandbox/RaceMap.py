@@ -412,8 +412,53 @@ class RaceMap:
 
     def generateItemBoxes(self):
         self.itemBoxes = []
-        self.itemBoxes.append(ItemBox.ItemBox(800, 450)) # only for testing
-        self.itemBoxes.append(ItemBox.ItemBox(700, 450)) # only for testing
+
+        sizeX = 1600 / len(self.myMap)
+        sizeY = 900 / len(self.myMap[0])
+
+        x = 0
+        y = 0
+        tempX = self.playerStartX
+        tempY = self.playerStartY
+
+        found = False
+        while not found:
+            if tempX > sizeX:
+                x += 1
+                tempX -= sizeX
+            else:
+                found = True
+
+        found = False
+        while not found:
+            if tempY > sizeY:
+                y += 1
+                tempY -= sizeY
+            else:
+                found = True
+
+        if self.myMap[x][y] == 0:
+            found = False
+            for i in range(len(self.myMap)):
+                for j in range(len(self.myMap[0])):
+                    if self.myMap[i][j] != 0 and not found:
+                        x = i
+                        y = j
+                        found = True
+
+        street = self.getStreet(self.myMap, x, y)
+        sizeX = len(self.myMap)
+        sizeY = len(self.myMap[0])
+
+        sizeXOneSquare = 1600 / sizeX
+        sizeYOneSquare = 900 / sizeY
+
+        for streetPiece in street:
+            if self.myMap[streetPiece[0]][streetPiece[1]] == 5 or self.myMap[streetPiece[0]][streetPiece[1]] == 6:
+                newX = int((sizeXOneSquare * streetPiece[0]) + (sizeXOneSquare/2))
+                newY = int((sizeYOneSquare * streetPiece[1]) + (sizeYOneSquare/2))
+                self.itemBoxes.append(ItemBox.ItemBox(newX, newY))
+
 
     def getStreet(self, myMap, x: int, y: int):
         street = [[x, y]]
