@@ -13,11 +13,12 @@ class ItemBox:
         self.currentCooldown = 0
 
     def draw(self, surface):
-        newX = (self.x * surface.get_width()) / 1600
-        newY = (self.y * surface.get_height()) / 900
+        if self.currentCooldown == 0:
+            newX = (self.x * surface.get_width()) / 1600
+            newY = (self.y * surface.get_height()) / 900
 
-        scaledSize = (self.size * surface.get_width()) / 2000
-        pygame.draw.rect(surface, (0, 150, 200), pygame.Rect(newX - (scaledSize / 2), newY - (scaledSize / 2), scaledSize, scaledSize))
+            scaledSize = (self.size * surface.get_width()) / 2000
+            pygame.draw.rect(surface, (0, 150, 200), pygame.Rect(newX - (scaledSize / 2), newY - (scaledSize / 2), scaledSize, scaledSize))
 
     def checkCollected(self, player):
         pass

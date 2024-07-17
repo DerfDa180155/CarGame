@@ -161,6 +161,9 @@ class RaceObject:
                 self.checkPlayerIsDone()
                 self.checkPlayerItemHit()
                 self.checkSummonedItems()
+                if self.itemsEnabled:
+                    self.updateItemBoxes()
+                    self.checkPlayerItemBoxCollected()
                 self.updatePlayerRoundList()
                 self.updateLeaderboard()
                 if self.checkRaceOver():
@@ -249,6 +252,14 @@ class RaceObject:
             if not self.summonedItems[i].living:
                 del self.summonedItems[i]
             i -= 1
+
+    def updateItemBoxes(self):
+        for box in self.itemBoxes:
+            box.update()
+
+    def checkPlayerItemBoxCollected(self):
+        for box in self.itemBoxes:
+            box.checkCollected(self.players)
 
     def checkPlayerItemHit(self):
         for item in self.summonedItems:
