@@ -20,8 +20,14 @@ class ItemBox:
             scaledSize = (self.size * surface.get_width()) / 2000
             pygame.draw.rect(surface, (0, 150, 200), pygame.Rect(newX - (scaledSize / 2), newY - (scaledSize / 2), scaledSize, scaledSize))
 
-    def checkCollected(self, player):
-        pass
+    def checkCollected(self, players):
+        for player in players:
+            x = player.x - self.x
+            y = player.y - self.y
+            distance = np.sqrt(np.power(x, 2) + np.power(y, 2))
+
+            if distance <= self.size:
+                self.currentCooldown = self.cooldown
 
     def update(self):
         if self.currentCooldown > 0:
