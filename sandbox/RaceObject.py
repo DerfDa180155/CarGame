@@ -74,6 +74,7 @@ class RaceObject:
             for i in range(len(self.raceMap.itemBoxes)):
                 self.itemBoxes.append(self.raceMap.itemBoxes[i])
                 self.itemBoxes[i].cooldown = self.itemSpawnCooldown
+                self.itemBoxes[i].amountOfItems = self.amountOfItems
 
             self.finishLine = self.playerCheckpointList[0][len(self.playerCheckpointList[0])-1]
 

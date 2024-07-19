@@ -12,6 +12,8 @@ class ItemBox:
         self.cooldown = 0
         self.currentCooldown = 0
 
+        self.amountOfItems = 1
+
     def draw(self, surface):
         if self.currentCooldown == 0:
             newX = (self.x * surface.get_width()) / 1600
@@ -21,13 +23,19 @@ class ItemBox:
             pygame.draw.rect(surface, (0, 150, 200), pygame.Rect(newX - (scaledSize / 2), newY - (scaledSize / 2), scaledSize, scaledSize))
 
     def checkCollected(self, players):
-        for player in players:
-            x = player.x - self.x
-            y = player.y - self.y
-            distance = np.sqrt(np.power(x, 2) + np.power(y, 2))
+        if self.currentCooldown == 0:
+            for player in players:
+                x = player.x - self.x
+                y = player.y - self.y
+                distance = np.sqrt(np.power(x, 2) + np.power(y, 2))
 
-            if distance <= self.size:
-                self.currentCooldown = self.cooldown
+                if distance <= self.size:
+                    self.currentCooldown = self.cooldown
+                    self.givePlayerItem(player)
+
+    def givePlayerItem(self, player):
+        if player.currentItem == -1:
+            player.currentItem = random.randint(0, self.amountOfItems-1)
 
     def update(self):
         if self.currentCooldown > 0:
