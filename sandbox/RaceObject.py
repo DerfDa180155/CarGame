@@ -190,7 +190,7 @@ class RaceObject:
 
                 if length <= 3:
                     self.playerCheckpointList[player.id].pop(0)
-                    self.givePlayerItem(player)
+                    #self.givePlayerItem(player)
                     print(len(self.playerCheckpointList[player.id]))
 
     def updatePlayerRoundList(self):
@@ -242,10 +242,10 @@ class RaceObject:
             self.countDown = "-"
             self.drawCounter = False
 
-    def givePlayerItem(self, player):
-        if self.itemsEnabled and player.currentItem == -1:
-            player.currentItem = random.randint(0, self.amountOfItems-1)
-            #player.currentItem = 5 # for item testing
+    #def givePlayerItem(self, player):
+    #    if self.itemsEnabled and player.currentItem == -1:
+    #        player.currentItem = random.randint(0, self.amountOfItems-1)
+    #        #player.currentItem = 5 # for item testing
 
     def checkSummonedItems(self):
         i = len(self.summonedItems) - 1
