@@ -635,11 +635,11 @@ class GameMain:
                                         self.CO.raceObject.itemsEnabled = False
                                 case "scrollISC":
                                     if scrolledUp:
-                                        self.CO.raceObject.itemSpawnCooldown += 1
+                                        self.CO.raceObject.itemSpawnCooldown += 30
                                     elif scrolledDown:
-                                        self.CO.raceObject.itemSpawnCooldown -= 1
-                                        if self.CO.raceObject.itemSpawnCooldown < 0:
-                                            self.CO.raceObject.itemSpawnCooldown = 0
+                                        self.CO.raceObject.itemSpawnCooldown -= 30
+                                        if self.CO.raceObject.itemSpawnCooldown < 30:
+                                            self.CO.raceObject.itemSpawnCooldown = 30
 
                 case "race":
                     # update raceObject

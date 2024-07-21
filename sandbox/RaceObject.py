@@ -22,7 +22,7 @@ class RaceObject:
         self.defaultMaxSpeed = 150
         self.defaultMaxAcc = 30
         self.defaultItemsEnabled = False
-        self.defaultItemSpawnCooldown = 0
+        self.defaultItemSpawnCooldown = 120
 
         self.rounds = self.defaultRounds
         self.maxSpeed = self.defaultMaxSpeed
