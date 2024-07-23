@@ -454,10 +454,18 @@ class RaceMap:
         sizeYOneSquare = 900 / sizeY
 
         for streetPiece in street:
-            if self.myMap[streetPiece[0]][streetPiece[1]] == 5 or self.myMap[streetPiece[0]][streetPiece[1]] == 6:
-                newX = int((sizeXOneSquare * streetPiece[0]) + (sizeXOneSquare/2))
+            if self.myMap[streetPiece[0]][streetPiece[1]] == 5:
+                newX1 = int(((sizeXOneSquare * streetPiece[0]) + (sizeXOneSquare/2)) - ((sizeXOneSquare*1.5)/16))
+                newX2 = int(((sizeXOneSquare * streetPiece[0]) + (sizeXOneSquare/2)) + ((sizeXOneSquare*1.5)/16))
                 newY = int((sizeYOneSquare * streetPiece[1]) + (sizeYOneSquare/2))
-                self.itemBoxes.append(ItemBox.ItemBox(newX, newY))
+                self.itemBoxes.append(ItemBox.ItemBox(newX1, newY))
+                self.itemBoxes.append(ItemBox.ItemBox(newX2, newY))
+            elif self.myMap[streetPiece[0]][streetPiece[1]] == 6:
+                newX = int((sizeXOneSquare * streetPiece[0]) + (sizeXOneSquare / 2))
+                newY1 = int(((sizeYOneSquare * streetPiece[1]) + (sizeYOneSquare / 2)) - ((sizeYOneSquare*1.5)/16))
+                newY2 = int(((sizeYOneSquare * streetPiece[1]) + (sizeYOneSquare / 2)) + ((sizeYOneSquare*1.5)/16))
+                self.itemBoxes.append(ItemBox.ItemBox(newX, newY1))
+                self.itemBoxes.append(ItemBox.ItemBox(newX, newY2))
 
 
     def getStreet(self, myMap, x: int, y: int):
