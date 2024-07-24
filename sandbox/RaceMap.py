@@ -467,7 +467,6 @@ class RaceMap:
                 self.itemBoxes.append(ItemBox.ItemBox(newX, newY1))
                 self.itemBoxes.append(ItemBox.ItemBox(newX, newY2))
 
-
     def getStreet(self, myMap, x: int, y: int):
         street = [[x, y]]
 
