@@ -329,8 +329,8 @@ class GameDisplay(threading.Thread):
         # map name
         self.drawMenuText(self.CO.mapController.getCurrentMap(self.CO.officialMaps).name, (255, 255, 255))
 
-        settingsText = ["Rounds: ", "MaxSpeed: ", "MaxAcc: ", "Items: ", "Items spawn cooldown: "]
-        settingsData = [str(self.CO.raceObject.rounds), str(self.CO.raceObject.maxSpeed), str(self.CO.raceObject.maxAcc), str(self.CO.raceObject.itemsEnabled), str(self.CO.raceObject.itemSpawnCooldown)]
+        settingsText = ["Rounds: ", "MaxSpeed: ", "MaxAcc: ", "Items: ", "Items spawn cooldown: ", "Amount of Bots: "]
+        settingsData = [str(self.CO.raceObject.rounds), str(self.CO.raceObject.maxSpeed), str(self.CO.raceObject.maxAcc), str(self.CO.raceObject.itemsEnabled), str(self.CO.raceObject.itemSpawnCooldown), str(self.CO.raceObject.amountOfBots)]
 
         for i in range(len(settingsText)):
             # settings Text

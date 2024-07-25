@@ -23,12 +23,14 @@ class RaceObject:
         self.defaultMaxAcc = 30
         self.defaultItemsEnabled = False
         self.defaultItemSpawnCooldown = 240
+        self.defaultAmountOfBots = 0
 
         self.rounds = self.defaultRounds
         self.maxSpeed = self.defaultMaxSpeed
         self.maxAcc = self.defaultMaxAcc
         self.itemsEnabled = self.defaultItemsEnabled
         self.itemSpawnCooldown = self.defaultItemSpawnCooldown
+        self.amountOfBots = self.defaultAmountOfBots
         self.amountOfItems = amountOfItems
         self.summonedItems = summonedItems
         self.itemBoxes = itemBoxes
@@ -120,6 +122,7 @@ class RaceObject:
             self.maxAcc = self.defaultMaxAcc
             self.itemsEnabled = self.defaultItemsEnabled
             self.itemSpawnCooldown = self.defaultItemSpawnCooldown
+            self.amountOfBots = self.defaultAmountOfBots
 
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]

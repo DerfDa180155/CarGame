@@ -120,7 +120,8 @@ class GameMain:
         self.maxAccScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollMaxAcc")
         self.itemsEnabledScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollItemsEnabled")
         self.itemsSpawnCooldownScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollISC")
-        self.raceSettingsButtons = [self.startRaceButtons, self.backButton, self.roundsScrollButton, self.maxSpeedScrollButton, self.maxAccScrollButton, self.itemsEnabledScrollButton, self.itemsSpawnCooldownScrollButton]
+        self.amountBotButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollAmountBot")
+        self.raceSettingsButtons = [self.startRaceButtons, self.backButton, self.roundsScrollButton, self.maxSpeedScrollButton, self.maxAccScrollButton, self.itemsEnabledScrollButton, self.itemsSpawnCooldownScrollButton, self.amountBotButton]
 
         # settings buttons
         self.saveButton = Button.Button(self.screen, 1450, 750, 100, self.verticalLine, "save")
@@ -640,6 +641,13 @@ class GameMain:
                                         self.CO.raceObject.itemSpawnCooldown -= 30
                                         if self.CO.raceObject.itemSpawnCooldown < 30:
                                             self.CO.raceObject.itemSpawnCooldown = 30
+                                case "scrollAmountBot":
+                                    if scrolledUp:
+                                        self.CO.raceObject.amountOfBots += 1
+                                    elif scrolledDown:
+                                        self.CO.raceObject.amountOfBots -= 1
+                                        if self.CO.raceObject.amountOfBots < 0:
+                                            self.CO.raceObject.amountOfBots = 0
 
                 case "race":
                     # update raceObject
