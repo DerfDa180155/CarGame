@@ -161,6 +161,7 @@ class RaceObject:
             case "startRace": # starting sequenz
                 self.startingSequenz()
             case "race":
+                self.updateBots()
                 self.checkPlayerPassCheckpoint()
                 self.checkPlayerIsDone()
                 self.checkPlayerItemHit()
@@ -181,6 +182,9 @@ class RaceObject:
                 pass
             case "paused":
                 pass
+
+    def updateBots(self):
+        pass
 
     def checkPlayerPassCheckpoint(self):
         for player in self.players:
