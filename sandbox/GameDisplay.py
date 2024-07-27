@@ -398,6 +398,10 @@ class GameDisplay(threading.Thread):
         # draw rays
         self.drawPlayerRays()
 
+        # draw bots
+        if self.CO.raceObject.amountOfBots > 0:
+            self.drawBots()
+
         # draw starting sequenz
         if self.CO.raceObject.raceStatus == "startRace" or (
                 self.CO.raceObject.raceStatus == "race" and self.CO.raceObject.drawCounter):
@@ -809,4 +813,22 @@ class GameDisplay(threading.Thread):
                     x2 = x1 + rayLengthX * np.cos(np.deg2rad(ray.direction))
                     y2 = y1 + rayLengthY * np.sin(np.deg2rad(ray.direction))
                     pygame.draw.line(self.screen, player.color, (x1, y1), (x2, y2), 4)
+            i += 1
+
+    def drawBots(self):
+        i = 0
+        for bot in self.CO.bots:
+            if (self.CO.currentMode == "singleplayer" and i == 0) or self.CO.currentMode == "multiplayer":
+                x = (bot.player.x * self.windowWidth) / bot.player.scaleWidth
+                y = (bot.player.y * self.windowHeight) / bot.player.scaleHeight
+                playerSizeWidth = (20 * self.windowWidth) / bot.player.scaleSizeWidth
+                playerSizeHeight = (20 * self.windowHeight) / bot.player.scaleSizeHeight
+
+                # shield item
+                if self.CO.raceObject.itemsEnabled and bot.player.shieldTime > 0:
+                    pygame.draw.circle(self.screen, (10, 150, 200), (x, y), playerSizeWidth, 0)
+
+                pygame.draw.rect(self.screen, bot.player.color,
+                                 pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
+                                             playerSizeWidth, playerSizeHeight))
             i += 1

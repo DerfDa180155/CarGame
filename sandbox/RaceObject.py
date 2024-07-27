@@ -8,7 +8,7 @@ import ItemBox
 
 
 class RaceObject:
-    def __init__(self, players: array, raceMap: RaceMap, amountOfItems: int, summonedItems: array, itemBoxes: array):
+    def __init__(self, players: array, bots: array, raceMap: RaceMap, amountOfItems: int, summonedItems: array, itemBoxes: array):
         self.stopwatch = 0
         self.stopwatchCurrentTime = 0
         self.stopwatchStart = 0
@@ -38,6 +38,7 @@ class RaceObject:
         self.checkpointsPerRounds = len(self.raceMap.checkpoints)
 
         self.players = players
+        self.bots = bots
         self.playerCheckpointList = []
         self.playerRoundsList = [0, 0]
         self.leaderboard = []

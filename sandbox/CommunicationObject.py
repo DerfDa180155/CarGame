@@ -10,11 +10,11 @@ import array
 
 class CommunicationObject:
     def __init__(self, gameStatus: str, FPSClock: pygame.time.Clock, TPSClock: pygame.time.Clock, #FPS: int, TPS: int,
-                 TextSize: int, imageArray: array, mapController: MapController, players: array, raceObject: RaceObject,
-                 settings: Settings, mapMaker: MapMaker, displayTempSettings: Settings, waitForKey: bool,
-                 menuButtons: array, gameModeButtons: array, raceSettingsButtons: array, settingsButtons: array,
-                 mapMakerButtons: array, leaderboardButtons: array, pauseButtons: array, mapButtons: array,
-                 mapButtonPage: int, officialMaps: bool, currentMode: str, itemImageDictionary: array,
+                 TextSize: int, imageArray: array, mapController: MapController, players: array, bots: array,
+                 raceObject: RaceObject, settings: Settings, mapMaker: MapMaker, displayTempSettings: Settings,
+                 waitForKey: bool, menuButtons: array, gameModeButtons: array, raceSettingsButtons: array,
+                 settingsButtons: array, mapMakerButtons: array, leaderboardButtons: array, pauseButtons: array,
+                 mapButtons: array, mapButtonPage: int, officialMaps: bool, currentMode: str, itemImageDictionary: array,
                  summonedItems: array, itemBoxes: array):
         self.gameStatus = gameStatus
         self.FPSClock = FPSClock
@@ -25,6 +25,7 @@ class CommunicationObject:
         self.imageArray = imageArray
         self.mapController = mapController
         self.players = players
+        self.bots = bots
         self.raceObject = raceObject
         self.settings = settings
         self.mapMaker = mapMaker

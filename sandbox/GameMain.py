@@ -12,6 +12,7 @@ import MapMaker
 import WaveFunctionCollapse
 import MapCleaner
 import Player
+import Bot
 import RaceObject
 import Button
 import webbrowser
@@ -90,7 +91,11 @@ class GameMain:
         self.players = []
         self.players.append(Player.Player(100, 100, 0, 0, self.summonedItems))
 
-        self.raceObject = RaceObject.RaceObject(players=self.players, raceMap=self.mapController.maps[0], amountOfItems=len(self.itemImageDictionary), summonedItems=self.summonedItems, itemBoxes=self.itemBoxes)
+        # bots
+        self.bots = []
+        self.bots.append(Bot.Bot(Player.Player(100, 100, 0, 100, self.summonedItems)))
+
+        self.raceObject = RaceObject.RaceObject(players=self.players, bots=self.bots, raceMap=self.mapController.maps[0], amountOfItems=len(self.itemImageDictionary), summonedItems=self.summonedItems, itemBoxes=self.itemBoxes)
         self.settings = Settings.Settings(self.settingsPath)
         self.displayTempSettings = Settings.Settings(self.settingsPath)
         self.mapMaker = MapMaker.MapMaker()
@@ -209,7 +214,7 @@ class GameMain:
                                                           TPSClock=self.TPSClock, #FPS=self.FPS, TPS=self.TPS,
                                                           TextSize=30, imageArray=self.mapArray,
                                                           mapController=self.mapController, players=self.players,
-                                                          raceObject=self.raceObject, settings=self.settings,
+                                                          bots=self.bots, raceObject=self.raceObject, settings=self.settings,
                                                           mapMaker=self.mapMaker, displayTempSettings=self.displayTempSettings,
                                                           waitForKey=False, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,

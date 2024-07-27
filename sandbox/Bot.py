@@ -5,7 +5,7 @@ import array
 import Player
 
 
-class ItemBox:
+class Bot:
     def __init__(self, player: Player):
         self.player = player
 
