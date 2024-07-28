@@ -707,6 +707,13 @@ class GameMain:
                             # update ray length
                             player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
 
+                        # update the bots
+                        if self.CO.raceObject.amountOfBots > 0:
+                            for bot in self.CO.bots:
+                                bot.player.update()
+                                # update ray length
+                                bot.player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+
                         # update items
                         for item in self.CO.summonedItems:
                             item.update()

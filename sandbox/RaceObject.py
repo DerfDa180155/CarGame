@@ -73,6 +73,12 @@ class RaceObject:
                 tempList.append(self.raceMap.checkpoints[0])
                 self.playerCheckpointList.append(tempList)
 
+            # position bots
+            for bot in self.bots:
+                bot.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
+                bot.player.maxSpeed = self.maxSpeed
+                bot.player.maxAcc = self.maxAcc
+
             # create item boxes
             for i in range(len(self.raceMap.itemBoxes)):
                 self.itemBoxes.append(self.raceMap.itemBoxes[i])
@@ -137,6 +143,10 @@ class RaceObject:
         for player in self.players:
             player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
 
+        # position bots
+        for bot in self.bots:
+            bot.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
+
         # deleting all summoned items
         i = len(self.summonedItems) - 1
         while i >= 0:
@@ -185,7 +195,8 @@ class RaceObject:
                 pass
 
     def updateBots(self):
-        pass
+        for bot in self.bots:
+            bot.update()
 
     def checkPlayerPassCheckpoint(self):
         for player in self.players:
