@@ -37,6 +37,9 @@ class ItemBox:
         if player.currentItem == -1:
             player.currentItem = random.randint(0, self.amountOfItems-1)
 
+    def reset(self):
+        self.currentCooldown = 0
+
     def update(self):
         if self.currentCooldown > 0:
             self.currentCooldown -= 1

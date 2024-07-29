@@ -153,9 +153,10 @@ class RaceObject:
             del self.summonedItems[i]
             i -= 1
 
-        # deleting all item boxes
+        # deleting and resetting all item boxes
         i = len(self.itemBoxes) - 1
         while i >= 0:
+            self.itemBoxes[i].reset()
             del self.itemBoxes[i]
             i -= 1
 
