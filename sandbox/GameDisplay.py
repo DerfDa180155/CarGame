@@ -398,9 +398,10 @@ class GameDisplay(threading.Thread):
         # draw rays
         self.drawPlayerRays()
 
-        # draw bots
+        # draw bots and bots rays
         if self.CO.raceObject.amountOfBots > 0:
             self.drawBots()
+            self.drawBotRays()
 
         # draw starting sequenz
         if self.CO.raceObject.raceStatus == "startRace" or (
@@ -831,4 +832,18 @@ class GameDisplay(threading.Thread):
                 pygame.draw.rect(self.screen, bot.player.color,
                                  pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
                                              playerSizeWidth, playerSizeHeight))
+            i += 1
+
+    def drawBotRays(self):
+        i = 0
+        for bot in self.CO.bots:
+            if (self.CO.currentMode == "singleplayer" and i == 0) or self.CO.currentMode == "multiplayer":
+                for ray in bot.player.frontRays:
+                    rayLengthX = (ray.length * self.windowWidth) / 1600
+                    rayLengthY = (ray.length * self.windowHeight) / 900
+                    x1 = (bot.player.x * self.windowWidth) / bot.player.scaleWidth
+                    y1 = (bot.player.y * self.windowHeight) / bot.player.scaleHeight
+                    x2 = x1 + rayLengthX * np.cos(np.deg2rad(ray.direction))
+                    y2 = y1 + rayLengthY * np.sin(np.deg2rad(ray.direction))
+                    pygame.draw.line(self.screen, bot.player.color, (x1, y1), (x2, y2), 4)
             i += 1
