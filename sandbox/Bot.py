@@ -8,6 +8,8 @@ import Player
 class Bot:
     def __init__(self, player: Player):
         self.player = player
+        self.player.frontRaysDeg = 9
+        self.player.generateFrontRays()
 
     def reset(self, x: int, y: int, direction: int):
         self.player.reset(x, y, direction)

@@ -42,6 +42,10 @@ class Player:
         self.shieldTime = 0
         self.godMode = False
 
+        self.generateFrontRays()
+
+    def generateFrontRays(self):
+        self.frontRays = []
         i = self.frontRaysViewAngle / (-2)
         while i <= self.frontRaysViewAngle / 2:
             self.frontRays.append(Ray.Ray(self.x, self.y, self.direction + i))
