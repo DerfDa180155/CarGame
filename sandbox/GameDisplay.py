@@ -731,10 +731,10 @@ class GameDisplay(threading.Thread):
         self.screen.blit(text, newRect)
 
         # race settings
-        settingsText = ["Rounds: ", "MaxSpeed: ", "MaxAcc: ", "Items: ", "Items spawn cooldown: "]
+        settingsText = ["Rounds: ", "MaxSpeed: ", "MaxAcc: ", "Items: ", "Items spawn cooldown: ", "Amount of Bots: "]
         settingsData = [str(self.CO.raceObject.rounds), str(self.CO.raceObject.maxSpeed),
                         str(self.CO.raceObject.maxAcc), str(self.CO.raceObject.itemsEnabled),
-                        str(self.CO.raceObject.itemSpawnCooldown)]
+                        str(self.CO.raceObject.itemSpawnCooldown), str(self.CO.raceObject.amountOfBots)]
         newTextSize = int((30 * self.windowWidth) / 2000)
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
         x = (430 * self.windowWidth) / 1600
