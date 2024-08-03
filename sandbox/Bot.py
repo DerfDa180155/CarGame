@@ -29,5 +29,5 @@ class Bot:
         sum2 += self.player.frontRays[9].length
         sum2 += self.player.frontRays[10].length
 
-        if sum1 != sum2:
+        if np.abs(sum1 - sum2) > 50:
             self.player.changeDir(sum2 > sum1)
