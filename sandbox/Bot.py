@@ -17,17 +17,15 @@ class Bot:
     def update(self):
         self.player.move(True) # for testing
 
-        sum1 = self.player.frontRays[0].length
-        sum1 += self.player.frontRays[1].length
-        sum1 += self.player.frontRays[2].length
-        sum1 += self.player.frontRays[3].length
-        sum1 += self.player.frontRays[4].length
+        sum1 = 0
+        sum2 = 0
 
-        sum2 = self.player.frontRays[6].length
-        sum2 += self.player.frontRays[7].length
-        sum2 += self.player.frontRays[8].length
-        sum2 += self.player.frontRays[9].length
-        sum2 += self.player.frontRays[10].length
+        for i in range(5):
+            sum1 += self.player.frontRays[i].length
+            sum2 += self.player.frontRays[i+6].length
 
         if np.abs(sum1 - sum2) > 50:
             self.player.changeDir(sum2 > sum1)
+
+        if self.player.currentItem != -1:
+            self.player.useItem()
