@@ -39,8 +39,17 @@ class RaceObject:
 
         self.players = players
         self.bots = bots
+        self.allPlayers = []
+        for player in self.players:
+            self.allPlayers.append(player)
+        for bot in self.bots:
+            self.allPlayers.append(bot.player)
+
         self.playerCheckpointList = []
-        self.playerRoundsList = [0, 0]
+        self.playerRoundsList = []
+        for player in self.allPlayers:
+            self.playerRoundsList.append(0)
+
         self.leaderboard = []
         self.finishLine = []
 
@@ -63,7 +72,7 @@ class RaceObject:
 
             # position players and create checkpoints list
             self.playerCheckpointList = []
-            for player in self.players:
+            for player in self.allPlayers:
                 player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
                 player.maxSpeed = self.maxSpeed
                 player.maxAcc = self.maxAcc
@@ -74,10 +83,10 @@ class RaceObject:
                 self.playerCheckpointList.append(tempList)
 
             # position bots
-            for bot in self.bots:
-                bot.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
-                bot.player.maxSpeed = self.maxSpeed
-                bot.player.maxAcc = self.maxAcc
+            #for bot in self.bots:
+            #    bot.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
+            #    bot.player.maxSpeed = self.maxSpeed
+            #    bot.player.maxAcc = self.maxAcc
 
             # create item boxes
             for i in range(len(self.raceMap.itemBoxes)):
@@ -140,12 +149,12 @@ class RaceObject:
         self.drawCounter = False
 
         # position players
-        for player in self.players:
+        for player in self.allPlayers:
             player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
 
         # position bots
-        for bot in self.bots:
-            bot.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
+        #for bot in self.bots:
+        #    bot.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
 
         # deleting all summoned items
         i = len(self.summonedItems) - 1
@@ -200,7 +209,7 @@ class RaceObject:
             bot.update()
 
     def checkPlayerPassCheckpoint(self):
-        for player in self.players:
+        for player in self.allPlayers:
             if len(self.playerCheckpointList[player.id]) != 0:
                 length = float('inf')
                 for ray in player.frontRays:
@@ -214,7 +223,7 @@ class RaceObject:
                     print(len(self.playerCheckpointList[player.id]))
 
     def updatePlayerRoundList(self):
-        for player in self.players:
+        for player in self.allPlayers:
             currentRound = 0
             for j in range(self.rounds + 1):
                 if (self.rounds * self.checkpointsPerRounds) - (self.checkpointsPerRounds * j) >= len(self.playerCheckpointList[player.id]):
@@ -222,20 +231,20 @@ class RaceObject:
             self.playerRoundsList[player.id] = currentRound
 
     def checkPlayerIsDone(self):
-        for player in self.players:
+        for player in self.allPlayers:
             if len(self.playerCheckpointList[player.id]) == 0:
                 player.isDone = True
 
     def checkRaceOver(self):
         if self.mode == "singleplayer":
             return self.players[0].isDone
-        for player in self.players:
+        for player in self.allPlayers:
             if not player.isDone:
                 return False
         return True
 
     def updateLeaderboard(self):
-        for player in self.players:
+        for player in self.allPlayers:
             if player.isDone:
                 exist = False
                 for j in self.leaderboard:
@@ -280,11 +289,11 @@ class RaceObject:
 
     def checkPlayerItemBoxCollected(self):
         for box in self.itemBoxes:
-            box.checkCollected(self.players)
+            box.checkCollected(self.allPlayers)
 
     def checkPlayerItemHit(self):
         for item in self.summonedItems:
-            for player in self.players:
+            for player in self.allPlayers:
                 if player.stunTime == 0:
                     match (item.itemName):
                         case "Rocket" | "MultiRocket":

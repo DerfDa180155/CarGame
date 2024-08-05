@@ -15,6 +15,9 @@ class Bot:
         self.player.reset(x, y, direction)
 
     def update(self):
+        if self.player.isDone:
+            return
+
         self.player.move(True) # for testing
 
         sum1 = 0
