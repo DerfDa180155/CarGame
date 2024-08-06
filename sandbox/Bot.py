@@ -18,7 +18,16 @@ class Bot:
         if self.player.isDone:
             return
 
-        self.player.move(True) # for testing
+        driveForward = True
+        for ray in self.player.frontRays:
+            if ray.length < 10:
+                driveForward = False
+
+        if self.player.frontRays[5].length > 50 and driveForward:
+            self.player.move(True) # for testing
+        else:
+            driveForward = False
+            self.player.move(False)
 
         sum1 = 0
         sum2 = 0
@@ -27,7 +36,7 @@ class Bot:
             sum1 += self.player.frontRays[i].length
             sum2 += self.player.frontRays[i+6].length
 
-        if np.abs(sum1 - sum2) > 50:
+        if np.abs(sum1 - sum2) > 50 and driveForward and self.player.speed > 0:
             self.player.changeDir(sum2 > sum1)
 
         if self.player.currentItem != -1:
