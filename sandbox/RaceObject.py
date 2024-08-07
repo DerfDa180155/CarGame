@@ -236,8 +236,6 @@ class RaceObject:
                 player.isDone = True
 
     def checkRaceOver(self):
-        if self.mode == "singleplayer":
-            return self.players[0].isDone
         for player in self.allPlayers:
             if not player.isDone:
                 return False
