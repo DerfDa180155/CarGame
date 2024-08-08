@@ -40,10 +40,7 @@ class RaceObject:
         self.players = players
         self.bots = bots
         self.allPlayers = []
-        for player in self.players:
-            self.allPlayers.append(player)
-        for bot in self.bots:
-            self.allPlayers.append(bot.player)
+        self.generateAllPlayers()
 
         self.playerCheckpointList = []
         self.playerRoundsList = []
@@ -69,6 +66,8 @@ class RaceObject:
             self.startingSequenzTimer = time.time_ns()
 
             self.drawCounter = True
+
+            self.generateAllPlayers()
 
             # position players and create checkpoints list
             self.playerCheckpointList = []
@@ -203,6 +202,13 @@ class RaceObject:
                 pass
             case "paused":
                 pass
+
+    def generateAllPlayers(self):
+        self.allPlayers = []
+        for player in self.players:
+            self.allPlayers.append(player)
+        for bot in self.bots:
+            self.allPlayers.append(bot.player)
 
     def updateBots(self):
         for bot in self.bots:
