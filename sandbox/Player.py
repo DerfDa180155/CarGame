@@ -37,6 +37,7 @@ class Player:
 
         self.isDone = False # for the race
         self.id = id
+
         self.currentItem = -1
         self.stunTime = 0
         self.shieldTime = 0

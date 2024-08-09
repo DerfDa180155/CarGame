@@ -93,7 +93,7 @@ class GameMain:
 
         # bots
         self.bots = []
-        self.bots.append(Bot.Bot(Player.Player(100, 100, 0, 1, self.summonedItems)))
+        self.bots.append(Bot.Bot(Player.Player(100, 100, 0, 100, self.summonedItems)))
 
         self.raceObject = RaceObject.RaceObject(players=self.players, bots=self.bots, raceMap=self.mapController.maps[0], amountOfItems=len(self.itemImageDictionary), summonedItems=self.summonedItems, itemBoxes=self.itemBoxes)
         self.settings = Settings.Settings(self.settingsPath)

@@ -42,7 +42,7 @@ class RaceObject:
         self.allPlayers = []
         self.generateAllPlayers()
 
-        self.playerCheckpointList = []
+        self.playerCheckpointList = {}
         self.playerRoundsList = []
         for player in self.allPlayers:
             self.playerRoundsList.append(0)
@@ -70,7 +70,7 @@ class RaceObject:
             self.generateAllPlayers()
 
             # position players and create checkpoints list
-            self.playerCheckpointList = []
+            self.playerCheckpointList = {}
             for player in self.allPlayers:
                 player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
                 player.maxSpeed = self.maxSpeed
@@ -79,7 +79,8 @@ class RaceObject:
                 for i in range(self.rounds):
                     tempList += self.raceMap.checkpoints
                 tempList.append(self.raceMap.checkpoints[0])
-                self.playerCheckpointList.append(tempList)
+                #self.playerCheckpointList.append(tempList)
+                self.playerCheckpointList[player.id] = tempList
 
             # position bots
             #for bot in self.bots:
@@ -93,7 +94,7 @@ class RaceObject:
                 self.itemBoxes[i].cooldown = self.itemSpawnCooldown
                 self.itemBoxes[i].amountOfItems = self.amountOfItems
 
-            self.finishLine = self.playerCheckpointList[0][len(self.playerCheckpointList[0])-1]
+            self.finishLine = self.raceMap.checkpoints[0]
 
             # reset the old leaderboard
             self.leaderboard = []
@@ -139,7 +140,7 @@ class RaceObject:
             self.itemSpawnCooldown = self.defaultItemSpawnCooldown
             self.amountOfBots = self.defaultAmountOfBots
 
-        self.playerCheckpointList = []
+        self.playerCheckpointList = {}
         self.playerRoundsList = [0, 0]
         self.leaderboard = []
         self.finishLine = []
