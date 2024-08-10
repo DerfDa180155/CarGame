@@ -43,9 +43,9 @@ class RaceObject:
         self.generateAllPlayers()
 
         self.playerCheckpointList = {}
-        self.playerRoundsList = []
+        self.playerRoundsList = {}
         for player in self.allPlayers:
-            self.playerRoundsList.append(0)
+            self.playerRoundsList[player.id] = 0
 
         self.leaderboard = []
         self.finishLine = []
@@ -141,7 +141,9 @@ class RaceObject:
             self.amountOfBots = self.defaultAmountOfBots
 
         self.playerCheckpointList = {}
-        self.playerRoundsList = [0, 0]
+        self.playerRoundsList = {}
+        for player in self.allPlayers:
+            self.playerRoundsList[player.id] = 0
         self.leaderboard = []
         self.finishLine = []
 
