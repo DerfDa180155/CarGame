@@ -68,6 +68,9 @@ class RaceObject:
             self.drawCounter = True
 
             self.generateAllPlayers()
+            self.playerRoundsList = {}
+            for player in self.allPlayers:
+                self.playerRoundsList[player.id] = 0
 
             # position players and create checkpoints list
             self.playerCheckpointList = {}
