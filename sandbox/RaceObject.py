@@ -5,6 +5,8 @@ import time
 import array
 import RaceMap
 import ItemBox
+import Bot
+import Player
 
 
 class RaceObject:
@@ -210,6 +212,13 @@ class RaceObject:
                 pass
 
     def generateAllPlayers(self):
+        # deleting all bots
+        while len(self.bots) > 0:
+            self.bots.pop(0)
+
+        for i in range(self.amountOfBots):
+            self.bots.append(Bot.Bot(Player.Player(100, 100, 0, 100 + i, self.summonedItems)))
+
         self.allPlayers = []
         for player in self.players:
             self.allPlayers.append(player)
