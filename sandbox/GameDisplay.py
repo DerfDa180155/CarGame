@@ -669,7 +669,10 @@ class GameDisplay(threading.Thread):
 
         i = 0
         for entry in self.CO.raceObject.leaderboard:
-            text = font.render("Player " + str(entry[0]), True, (255, 255, 255))
+            if entry[0] < 100:
+                text = font.render("Player " + str(entry[0]), True, (255, 255, 255))
+            else:
+                text = font.render("Bot " + str(entry[0] - 100), True, (255, 255, 255))
             newRect = text.get_rect()
             newRect.x = rectangle.x + (newTextSize / 2)
             newRect.y = rectangle.y + (newTextSize * (3 + i))
