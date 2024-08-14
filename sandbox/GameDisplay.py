@@ -669,10 +669,17 @@ class GameDisplay(threading.Thread):
 
         i = 0
         for entry in self.CO.raceObject.leaderboard:
+            color = (255, 255, 255)
             if entry[0] < 100:
-                text = font.render("Player " + str(entry[0]), True, (255, 255, 255))
+                for player in self.CO.players:
+                    if player.id == entry[0]:
+                        color = player.color
+                text = font.render("Player " + str(entry[0]), True, color)
             else:
-                text = font.render("Bot " + str(entry[0] - 100), True, (255, 255, 255))
+                for bot in self.CO.bots:
+                    if bot.player.id == entry[0]:
+                        color = bot.player.color
+                text = font.render("Bot " + str(entry[0] - 100), True, color)
             newRect = text.get_rect()
             newRect.x = rectangle.x + (newTextSize / 2)
             newRect.y = rectangle.y + (newTextSize * (3 + i))
@@ -685,7 +692,7 @@ class GameDisplay(threading.Thread):
             timeText = str(minutes).zfill(2) + ":" + str(seconds % 60).zfill(2) + ":" + str(
                 int((nanoSec / 1000000) % 1000)).zfill(3)
 
-            text = font.render(timeText, True, (255, 255, 255))
+            text = font.render(timeText, True, color)
             newRect = text.get_rect()
             newRect.right = rectangle.right - (newTextSize / 2)
             newRect.y = rectangle.y + (newTextSize * (3 + i))
