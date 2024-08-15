@@ -145,6 +145,7 @@ class RaceObject:
             self.itemSpawnCooldown = self.defaultItemSpawnCooldown
             self.amountOfBots = self.defaultAmountOfBots
 
+        self.generateAllPlayers()
         self.playerCheckpointList = {}
         self.playerRoundsList = {}
         for player in self.allPlayers:
@@ -212,6 +213,8 @@ class RaceObject:
                 pass
 
     def generateAllPlayers(self):
+        if len(self.allPlayers) == len(self.players) + self.amountOfBots:
+            return
         # deleting all bots
         while len(self.bots) > 0:
             self.bots.pop(0)
