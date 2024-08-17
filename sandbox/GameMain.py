@@ -115,7 +115,8 @@ class GameMain:
         # game mode buttons
         self.singlePlayerButton = Button.Button(self.screen, 100, 100, 150, self.horizontalLine, "singleplayer")
         self.multiPlayerButton = Button.Button(self.screen, 100, 300, 150, self.crossing, "multiplayer")
-        self.gameModeButtons = [self.singlePlayerButton, self.multiPlayerButton]
+        self.returnButton = Button.Button(self.screen, 100, 750, 100, self.bottomLeft, "return")
+        self.gameModeButtons = [self.singlePlayerButton, self.multiPlayerButton, self.returnButton]
 
         # race settings buttons
         self.startRaceButtons = Button.Button(self.screen, 750, 720, 150, self.horizontalLine, "start")
@@ -516,15 +517,18 @@ class GameMain:
                 case "selectMode":
                     for button in self.CO.gameModeButtons:
                         if button.clicked(mx, my, mousePressedUp):
-                            self.CO.currentMode = button.action
-                            self.CO.raceObject.mode = button.action
-                            if button.action == "singleplayer" and len(self.CO.players) == 2:
-                                self.CO.players.pop(1)
-                            elif button.action == "multiplayer" and len(self.CO.players) == 1:
-                                self.CO.players.append(Player.Player(0, 0, 0, 1, self.summonedItems))
-                            self.CO.gameStatus = "selectMap"
-                            print(self.CO.currentMode)
-                            self.CO.mapButtonPage = 0
+                            if button.action == "return":
+                                self.CO.gameStatus = "menu"
+                            else:
+                                self.CO.currentMode = button.action
+                                self.CO.raceObject.mode = button.action
+                                if button.action == "singleplayer" and len(self.CO.players) == 2:
+                                    self.CO.players.pop(1)
+                                elif button.action == "multiplayer" and len(self.CO.players) == 1:
+                                    self.CO.players.append(Player.Player(0, 0, 0, 1, self.summonedItems))
+                                self.CO.gameStatus = "selectMap"
+                                print(self.CO.currentMode)
+                                self.CO.mapButtonPage = 0
                 case "selectMap":
                     if self.oldMapCount != self.CO.mapController.getCountMaps(True):
                         self.oldMapCount = self.CO.mapController.getCountMaps(True)
