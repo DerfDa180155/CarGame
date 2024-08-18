@@ -168,7 +168,8 @@ class GameMain:
         self.startXScrollButton = Button.Button(self.screen, 1150, 785, 30, self.verticalLine, "scrollButton-startX")
         self.startYScrollButton = Button.Button(self.screen, 1150, 830, 30, self.verticalLine, "scrollButton-startY")
         self.startDirScrollButton = Button.Button(self.screen, 1555, 830, 30, self.verticalLine, "scrollButton-startDir")
-        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.startPieceHighlightButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton, self.startDirScrollButton]
+        self.returnButton = Button.Button(self.screen, 100, 20, 50, self.bottomLeft, "return")
+        self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.startPieceHighlightButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton, self.startDirScrollButton, self.returnButton]
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
@@ -463,6 +464,8 @@ class GameMain:
                                     self.CO.mapMaker.createEmptyMap(self.CO.mapMaker.x, self.CO.mapMaker.y, True)
                                 elif button.action == "actionButton-startPieceHighlight":
                                     self.CO.mapMaker.highlightStartingPiece = not self.CO.mapMaker.highlightStartingPiece
+                                elif button.action == "return":
+                                    self.CO.gameStatus = "menu"
                             elif button.hover(mx, my):
                                 match button.action:
                                     case "scrollButton-x":
