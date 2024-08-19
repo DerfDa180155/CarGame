@@ -196,19 +196,20 @@ class GameMain:
         for i in range(self.oldMapCount):
             tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i)))
             if i >= 15:
-                tempArray[len(self.mapButtons)-1].enable = False
+                tempArray[len(tempArray)-1].enable = False
         self.mapButtons.append(tempArray)
         # custom maps
         tempArray = []
         for i in range(self.oldCustomMapCount):
             tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i)))
             if i >= 15:
-                tempArray[len(self.mapButtons)-1].enable = False
+                tempArray[len(tempArray)-1].enable = False
         self.mapButtons.append(tempArray)
         self.mapButtons[0].append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
         tempArray = []
         tempArray.append(Button.Button(self.screen, 75, 800, 50, self.crossing, "previousPage"))
         tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.crossing, "nextPage"))
+        tempArray.append(Button.Button(self.screen, 100, 20, 50, self.bottomLeft, "return"))
         self.mapButtons.append(tempArray)
         self.mapButtonPage = 0
 
@@ -600,6 +601,9 @@ class GameMain:
                                     if self.CO.mapButtonPage < maxPage:
                                         self.CO.mapButtonPage += 1
                                         print(self.CO.mapButtonPage)
+                                elif button.action == "return":
+                                    self.CO.gameStatus = "selectMode"
+                                    #self.CO.mapButtonPage = 0
                             else:
                                 self.CO.mapController.currentMapIndex = button.action
                                 print(button.action)
