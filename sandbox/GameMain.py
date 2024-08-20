@@ -205,7 +205,7 @@ class GameMain:
             if i >= 15:
                 tempArray[len(tempArray)-1].enable = False
         self.mapButtons.append(tempArray)
-        self.mapButtons[0].append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
+        self.mapButtons[1].append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
         tempArray = []
         tempArray.append(Button.Button(self.screen, 75, 800, 50, self.crossing, "previousPage"))
         tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.crossing, "nextPage"))
@@ -570,6 +570,8 @@ class GameMain:
                             if button.action == str(count):  # only toggle the map buttons
                                 button.enable = (self.CO.mapButtonPage-maxPageOfficialMaps) * 15 <= count <= ((self.CO.mapButtonPage-maxPageOfficialMaps) + 1) * 15
                                 count += 1
+                            elif button.action == "generateMapWFC":
+                                button.enable = True
 
                     # hotkeys for debugging and testing
                     if keys[pygame.K_j]:

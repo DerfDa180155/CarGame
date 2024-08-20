@@ -142,9 +142,9 @@ class MapController:
         if saveMap:
             newMap.saveMap(self.mapPath)
         print(newMap.myMap)
-        self.maps.append(newMap)
+        self.customMaps.append(newMap)
         if setIndex:
-            self.currentMapIndex = self.getCountMaps()-1
+            self.currentMapIndex = self.getCountMaps(False)-1
         return newMap
 
     def checkAndRemoveOldGenerated(self, name):
