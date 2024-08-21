@@ -592,11 +592,8 @@ class GameMain:
                                     self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
                                     self.CO.gameStatus = "raceSettings"
                                     self.CO.raceObject.reset(True)
-                                    if self.CO.mapButtonPage != 0:
-                                        self.CO.mapButtonPage -= 1
-                                        print(self.CO.mapButtonPage)
                                 elif button.action == "previousPage":
-                                    if self.CO.mapButtonPage != 0:
+                                    if self.CO.mapButtonPage > 0:
                                         self.CO.mapButtonPage -= 1
                                         print(self.CO.mapButtonPage)
                                 elif button.action == "nextPage":
