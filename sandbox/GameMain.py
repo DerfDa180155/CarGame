@@ -659,8 +659,12 @@ class GameMain:
                                 case "scrollAmountBot":
                                     if scrolledUp:
                                         self.CO.raceObject.amountOfBots += 1
-                                        if self.CO.raceObject.amountOfBots > 6:
-                                            self.CO.raceObject.amountOfBots = 6
+                                        if self.CO.raceObject.mode == "singleplayer":
+                                            if self.CO.raceObject.amountOfBots > 7:
+                                                self.CO.raceObject.amountOfBots = 7
+                                        else:
+                                            if self.CO.raceObject.amountOfBots > 6:
+                                                self.CO.raceObject.amountOfBots = 6
                                     elif scrolledDown:
                                         self.CO.raceObject.amountOfBots -= 1
                                         if self.CO.raceObject.amountOfBots < 0:
