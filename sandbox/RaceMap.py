@@ -30,6 +30,9 @@ class RaceMap:
         self.checkpoints = []
         self.generateCheckpoints()
 
+        self.startPositions = []
+        self.generateStartPositions()
+
         self.itemBoxes = []
         self.generateItemBoxes()
 
@@ -409,6 +412,16 @@ class RaceMap:
             for i in reversed(range(len(self.checkpoints))):
                 tempCheckpoint.append(self.checkpoints[i])
             self.checkpoints = tempCheckpoint
+
+    def generateStartPositions(self):
+        self.startPositions = []
+
+        #temp
+        for i in range(8):
+            temp = []
+            temp.append(self.playerStartX)
+            temp.append(self.playerStartY)
+            self.startPositions.append(temp)
 
     def generateItemBoxes(self):
         self.itemBoxes = []
