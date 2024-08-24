@@ -419,8 +419,8 @@ class RaceMap:
         #temp
         for i in range(8):
             temp = []
-            temp.append(self.playerStartX)
-            temp.append(self.playerStartY)
+            temp.append(self.playerStartX + (i*10))
+            temp.append(self.playerStartY + (i*10))
             self.startPositions.append(temp)
 
     def generateItemBoxes(self):

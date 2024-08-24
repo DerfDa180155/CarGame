@@ -76,8 +76,9 @@ class RaceObject:
 
             # position players and create checkpoints list
             self.playerCheckpointList = {}
+            playerCounter = 0
             for player in self.allPlayers:
-                player.reset(self.raceMap.playerStartX, self.raceMap.playerStartY, self.raceMap.playerStartDirection)
+                player.reset(self.raceMap.startPositions[playerCounter][0], self.raceMap.startPositions[playerCounter][1], self.raceMap.playerStartDirection)
                 player.maxSpeed = self.maxSpeed
                 player.maxAcc = self.maxAcc
                 tempList = []
@@ -86,6 +87,7 @@ class RaceObject:
                 tempList.append(self.raceMap.checkpoints[0])
                 #self.playerCheckpointList.append(tempList)
                 self.playerCheckpointList[player.id] = tempList
+                playerCounter += 1
 
             # position bots
             #for bot in self.bots:
