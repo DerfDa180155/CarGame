@@ -416,12 +416,62 @@ class RaceMap:
     def generateStartPositions(self):
         self.startPositions = []
 
-        #temp
-        for i in range(8):
-            temp = []
-            temp.append(self.playerStartX + (i*10))
-            temp.append(self.playerStartY + (i*10))
-            self.startPositions.append(temp)
+        sizeX = len(self.myMap)
+        sizeY = len(self.myMap[0])
+
+        sizeXOneSquare = 1600 / sizeX
+        sizeYOneSquare = 900 / sizeY
+
+        xOffset = sizeXOneSquare/10
+        yOffset = sizeYOneSquare/10
+
+        match self.playerStartDirection:
+            case 0: # right
+                for i in range(4):
+                    temp = []
+                    temp.append(self.playerStartX - (xOffset * i) + (xOffset*2))
+                    temp.append(self.playerStartY - yOffset)
+                    self.startPositions.append(temp)
+                    temp = []
+                    temp.append(self.playerStartX - (xOffset * (i + 0.5)) + (xOffset*2))
+                    temp.append(self.playerStartY + yOffset)
+                    self.startPositions.append(temp)
+            case 90: # down
+                for i in range(4):
+                    temp = []
+                    temp.append(self.playerStartX + xOffset)
+                    temp.append(self.playerStartY - (yOffset * i) + (yOffset * 2))
+                    self.startPositions.append(temp)
+                    temp = []
+                    temp.append(self.playerStartX - xOffset)
+                    temp.append(self.playerStartY - (yOffset * (i + 0.5)) + (yOffset * 2))
+                    self.startPositions.append(temp)
+            case 180: # left
+                for i in range(4):
+                    temp = []
+                    temp.append(self.playerStartX + (xOffset * i) - (xOffset * 2))
+                    temp.append(self.playerStartY + yOffset)
+                    self.startPositions.append(temp)
+                    temp = []
+                    temp.append(self.playerStartX + (xOffset * (i + 0.5)) - (xOffset * 2))
+                    temp.append(self.playerStartY - yOffset)
+                    self.startPositions.append(temp)
+            case 270: # up
+                for i in range(4):
+                    temp = []
+                    temp.append(self.playerStartX - xOffset)
+                    temp.append(self.playerStartY + (yOffset * i) - (yOffset*2))
+                    self.startPositions.append(temp)
+                    temp = []
+                    temp.append(self.playerStartX + xOffset)
+                    temp.append(self.playerStartY + (yOffset * (i + 0.5)) - (yOffset*2))
+                    self.startPositions.append(temp)
+            case _: # default
+                for i in range(8):
+                    temp = []
+                    temp.append(self.playerStartX)
+                    temp.append(self.playerStartY)
+                    self.startPositions.append(temp)
 
     def generateItemBoxes(self):
         self.itemBoxes = []
