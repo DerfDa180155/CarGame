@@ -552,6 +552,13 @@ class GameMain:
                         index = 0
                         self.CO.officialMaps = True
 
+                    # previous and next page buttons enable and disable
+                    for button in self.CO.mapButtons[2]:
+                        if button.action == "previousPage":
+                            button.enable = self.CO.mapButtonPage != 0
+                        elif button.action == "nextPage":
+                            button.enable = self.CO.mapButtonPage < maxPage
+
                     if index == 0:
                         count = 0
                         for button in self.CO.mapButtons[0]:
