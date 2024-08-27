@@ -1,0 +1,1 @@
+<raceMap><name>TestMap4</name><playerStartX>200.0</playerStartX><playerStartY>337.5</playerStartY><playerStartDirection>270</playerStartDirection><mapSizeX>4</mapSizeX><mapSizeY>4</mapSizeY><map type="array"><x><y>4</y><y>5</y><y>5</y><y>2</y></x><x><y>3</y><y>2</y><y>4</y><y>1</y></x><x><y>4</y><y>1</y><y>3</y><y>2</y></x><x><y>3</y><y>5</y><y>5</y><y>1</y></x></map></raceMap>
