@@ -529,6 +529,10 @@ class RaceMap:
                 newY2 = int(((sizeYOneSquare * streetPiece[1]) + (sizeYOneSquare / 2)) + ((sizeYOneSquare*1.5)/16))
                 self.itemBoxes.append(ItemBox.ItemBox(newX, newY1))
                 self.itemBoxes.append(ItemBox.ItemBox(newX, newY2))
+            else:
+                newX = int((sizeXOneSquare * streetPiece[0]) + (sizeXOneSquare / 2))
+                newY = int((sizeYOneSquare * streetPiece[1]) + (sizeYOneSquare / 2))
+                self.itemBoxes.append(ItemBox.ItemBox(newX, newY))
 
     def getStreet(self, myMap, x: int, y: int):
         street = [[x, y]]
