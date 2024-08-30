@@ -42,15 +42,16 @@ class Button:
                 self.surface.blit(self.scaledImg, (newX-(newSizeX/2), newY-(newSizeY/2)))
 
             if self.getsHovered:
-                darkenFaktor = 70
-                newImg = self.scaledImg.copy()
-                newImg.set_colorkey((255, 255, 255))
-                #surf = pygame.Surface(newImg.get_size())
-                #surf.blit(newImg, (0,0), special_flags=pygame.BLEND_RGBA_ADD)
-                #surf.set_colorkey((255, 255, 255))
-                newImg.fill((darkenFaktor, darkenFaktor, darkenFaktor))
+                darkenFaktor = 100
+                newImg = self.scaledImg.copy().convert_alpha()
+                #newImg.fill((darkenFaktor, darkenFaktor, darkenFaktor))
+
+                darkOverlay = pygame.Surface(newImg.get_size(), flags=pygame.SRCALPHA)
+                darkOverlay.fill((0, 0, 0, darkenFaktor))
+                newImg.blit(darkOverlay, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+
                 if self.useTopLeft:
-                    self.surface.blit(newImg, (newX, newY), special_flags=pygame.BLEND_RGBA_SUB)
+                    self.surface.blit(newImg, (newX, newY))
                 else:
                     self.surface.blit(newImg, (newX-(newSizeX/2), newY-(newSizeY/2)), special_flags=pygame.BLEND_RGBA_SUB)
 
