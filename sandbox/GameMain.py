@@ -58,6 +58,7 @@ class GameMain:
         self.crossing = pygame.image.load(self.imagePath + "crossing.png").convert()
         self.settingsImg = pygame.image.load(self.imagePath + "settings.png").convert()
         self.settingsImg.set_colorkey((255, 255, 255))
+        self.quitButtonImg = pygame.image.load(self.imagePath + "quitButton.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -108,7 +109,7 @@ class GameMain:
         self.mapSelectButton = Button.Button(self.screen, 100, 500, 150, self.topLeft, "selectMap")
         self.settingsButton = Button.Button(self.screen, 1460, 40, 100, self.settingsImg, "settings")
         self.linkButton = Button.Button(self.screen, 1450, 750, 100, self.empty, "https://github.com/DerfDa180155")
-        self.quitButton = Button.Button(self.screen, 100, 700, 150, self.empty, "quit")
+        self.quitButton = Button.Button(self.screen, 100, 700, 150, self.quitButtonImg, "quit")
         self.menuButtons = [self.testButton, self.modeSelectButton, self.mapSelectButton, self.settingsButton,
                             self.linkButton, self.quitButton]
 
