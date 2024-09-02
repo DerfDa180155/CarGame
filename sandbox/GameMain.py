@@ -60,6 +60,7 @@ class GameMain:
         self.settingsImg.set_colorkey((255, 255, 255))
         self.playButtonImg = pygame.image.load(self.imagePath + "playButton.png").convert()
         self.quitButtonImg = pygame.image.load(self.imagePath + "quitButton.png").convert()
+        self.scrollBarImg = pygame.image.load(self.imagePath + "scrollBar.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -123,12 +124,12 @@ class GameMain:
         # race settings buttons
         self.startRaceButtons = Button.Button(self.screen, 750, 720, 150, self.horizontalLine, "start")
         self.backButton = Button.Button(self.screen, 50, 770, 100, self.crossing, "back")
-        self.roundsScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollRounds")
-        self.maxSpeedScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollMaxSpeed")
-        self.maxAccScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollMaxAcc")
-        self.itemsEnabledScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollItemsEnabled")
-        self.itemsSpawnCooldownScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollISC")
-        self.amountBotButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollAmountBot")
+        self.roundsScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollRounds")
+        self.maxSpeedScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollMaxSpeed")
+        self.maxAccScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollMaxAcc")
+        self.itemsEnabledScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollItemsEnabled")
+        self.itemsSpawnCooldownScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollISC")
+        self.amountBotButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollAmountBot")
         self.raceSettingsButtons = [self.startRaceButtons, self.backButton, self.roundsScrollButton, self.maxSpeedScrollButton, self.maxAccScrollButton, self.itemsEnabledScrollButton, self.itemsSpawnCooldownScrollButton, self.amountBotButton]
 
         # settings buttons
@@ -141,8 +142,8 @@ class GameMain:
         self.rightKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "rightKey")
         self.itemKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "itemKey")
         self.pauseKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "pauseKey")
-        self.FPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollFPS")
-        self.TPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "scrollTPS")
+        self.FPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollFPS")
+        self.TPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollTPS")
         self.secondPlayerForwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerForwardKey")
         self.secondPlayerBackwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerBackwardKey")
         self.secondPlayerLeftKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerLeftKey")
@@ -165,10 +166,10 @@ class GameMain:
         self.fillEmptyButton = Button.Button(self.screen, 400, 775, 100, self.empty, "actionButton-fillEmpty")
         self.enterNameButton = Button.Button(self.screen, 550, 775, 100, self.empty, "actionButton-enterName")
         self.createNewMapButton = Button.Button(self.screen, 700, 775, 100, self.empty, "actionButton-createNewMap")
-        self.XScrollButton = Button.Button(self.screen, 920, 785, 30, self.verticalLine, "scrollButton-x")
-        self.YScrollButton = Button.Button(self.screen, 920, 830, 30, self.verticalLine, "scrollButton-y")
-        self.startXScrollButton = Button.Button(self.screen, 1150, 785, 30, self.verticalLine, "scrollButton-startX")
-        self.startYScrollButton = Button.Button(self.screen, 1150, 830, 30, self.verticalLine, "scrollButton-startY")
+        self.XScrollButton = Button.Button(self.screen, 920, 785, 30, self.scrollBarImg, "scrollButton-x")
+        self.YScrollButton = Button.Button(self.screen, 920, 830, 30, self.scrollBarImg, "scrollButton-y")
+        self.startXScrollButton = Button.Button(self.screen, 1150, 785, 30, self.scrollBarImg, "scrollButton-startX")
+        self.startYScrollButton = Button.Button(self.screen, 1150, 830, 30, self.scrollBarImg, "scrollButton-startY")
         self.startDirScrollButton = Button.Button(self.screen, 1555, 830, 30, self.verticalLine, "scrollButton-startDir")
         self.returnButton = Button.Button(self.screen, 100, 20, 50, self.bottomLeft, "return")
         self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.startPieceHighlightButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton, self.startDirScrollButton, self.returnButton]
