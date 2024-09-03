@@ -61,6 +61,7 @@ class GameMain:
         self.playButtonImg = pygame.image.load(self.imagePath + "playButton.png").convert()
         self.quitButtonImg = pygame.image.load(self.imagePath + "quitButton.png").convert()
         self.scrollBarImg = pygame.image.load(self.imagePath + "scrollBar.png").convert()
+        self.selectButtonImg = pygame.image.load(self.imagePath + "selectButton.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -136,19 +137,19 @@ class GameMain:
         self.saveButton = Button.Button(self.screen, 1450, 750, 100, self.verticalLine, "save")
         self.applyButton = Button.Button(self.screen, 750, 750, 100, self.crossing, "apply")
         self.backButton = Button.Button(self.screen, 50, 750, 100, self.bottomLeft, "back")
-        self.forwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "forwardKey")
-        self.backwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "backwardKey")
-        self.leftKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "leftKey")
-        self.rightKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "rightKey")
-        self.itemKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "itemKey")
-        self.pauseKeyButton = Button.Button(self.screen, 710, 100, 45, self.verticalLine, "pauseKey")
+        self.forwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.selectButtonImg, "forwardKey")
+        self.backwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.selectButtonImg, "backwardKey")
+        self.leftKeyButton = Button.Button(self.screen, 710, 100, 45, self.selectButtonImg, "leftKey")
+        self.rightKeyButton = Button.Button(self.screen, 710, 100, 45, self.selectButtonImg, "rightKey")
+        self.itemKeyButton = Button.Button(self.screen, 710, 100, 45, self.selectButtonImg, "itemKey")
+        self.pauseKeyButton = Button.Button(self.screen, 710, 100, 45, self.selectButtonImg, "pauseKey")
         self.FPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollFPS")
         self.TPSScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollTPS")
-        self.secondPlayerForwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerForwardKey")
-        self.secondPlayerBackwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerBackwardKey")
-        self.secondPlayerLeftKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerLeftKey")
-        self.secondPlayerRightKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerRightKey")
-        self.secondPlayerItemKeyButton = Button.Button(self.screen, 1510, 100, 45, self.verticalLine, "secondPlayerItemKey")
+        self.secondPlayerForwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "secondPlayerForwardKey")
+        self.secondPlayerBackwardKeyButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "secondPlayerBackwardKey")
+        self.secondPlayerLeftKeyButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "secondPlayerLeftKey")
+        self.secondPlayerRightKeyButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "secondPlayerRightKey")
+        self.secondPlayerItemKeyButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "secondPlayerItemKey")
         self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.itemKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton, self.secondPlayerForwardKeyButton, self.secondPlayerBackwardKeyButton, self.secondPlayerLeftKeyButton, self.secondPlayerRightKeyButton, self.secondPlayerItemKeyButton]
 
         # mapMaker buttons
