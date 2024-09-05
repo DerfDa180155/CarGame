@@ -63,6 +63,7 @@ class GameMain:
         self.scrollBarImg = pygame.image.load(self.imagePath + "scrollBar.png").convert()
         self.selectButtonImg = pygame.image.load(self.imagePath + "selectButton.png").convert()
         self.returnButtonImg = pygame.image.load(self.imagePath + "returnButton.png").convert()
+        self.nextPageButtonImg = pygame.image.load(self.imagePath + "nextPageButton.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -172,7 +173,7 @@ class GameMain:
         self.YScrollButton = Button.Button(self.screen, 920, 830, 30, self.scrollBarImg, "scrollButton-y")
         self.startXScrollButton = Button.Button(self.screen, 1150, 785, 30, self.scrollBarImg, "scrollButton-startX")
         self.startYScrollButton = Button.Button(self.screen, 1150, 830, 30, self.scrollBarImg, "scrollButton-startY")
-        self.startDirScrollButton = Button.Button(self.screen, 1555, 830, 30, self.verticalLine, "scrollButton-startDir")
+        self.startDirScrollButton = Button.Button(self.screen, 1555, 830, 30, self.scrollBarImg, "scrollButton-startDir")
         self.returnButton = Button.Button(self.screen, 100, 20, 50, self.returnButtonImg, "return")
         self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.startPieceHighlightButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton, self.startDirScrollButton, self.returnButton]
 
@@ -213,7 +214,7 @@ class GameMain:
         self.mapButtons[1].append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
         tempArray = []
         tempArray.append(Button.Button(self.screen, 75, 800, 50, self.crossing, "previousPage"))
-        tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.crossing, "nextPage"))
+        tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.nextPageButtonImg, "nextPage"))
         tempArray.append(Button.Button(self.screen, 100, 20, 50, self.returnButtonImg, "return"))
         self.mapButtons.append(tempArray)
         self.mapButtonPage = 0
