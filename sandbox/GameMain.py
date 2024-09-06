@@ -64,6 +64,7 @@ class GameMain:
         self.selectButtonImg = pygame.image.load(self.imagePath + "selectButton.png").convert()
         self.returnButtonImg = pygame.image.load(self.imagePath + "returnButton.png").convert()
         self.nextPageButtonImg = pygame.image.load(self.imagePath + "nextPageButton.png").convert()
+        self.previousPageButtonImg = pygame.image.load(self.imagePath + "previousPageButton.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -213,7 +214,7 @@ class GameMain:
         self.mapButtons.append(tempArray)
         self.mapButtons[1].append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
         tempArray = []
-        tempArray.append(Button.Button(self.screen, 75, 800, 50, self.crossing, "previousPage"))
+        tempArray.append(Button.Button(self.screen, 75, 800, 50, self.previousPageButtonImg, "previousPage"))
         tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.nextPageButtonImg, "nextPage"))
         tempArray.append(Button.Button(self.screen, 100, 20, 50, self.returnButtonImg, "return"))
         self.mapButtons.append(tempArray)
