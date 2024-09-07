@@ -65,6 +65,7 @@ class GameMain:
         self.returnButtonImg = pygame.image.load(self.imagePath + "returnButton.png").convert()
         self.nextPageButtonImg = pygame.image.load(self.imagePath + "nextPageButton.png").convert()
         self.previousPageButtonImg = pygame.image.load(self.imagePath + "previousPageButton.png").convert()
+        self.applyButtonImg = pygame.image.load(self.imagePath + "applyButton.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -138,7 +139,7 @@ class GameMain:
 
         # settings buttons
         self.saveButton = Button.Button(self.screen, 1450, 750, 100, self.verticalLine, "save")
-        self.applyButton = Button.Button(self.screen, 750, 750, 100, self.crossing, "apply")
+        self.applyButton = Button.Button(self.screen, 750, 750, 100, self.applyButtonImg, "apply")
         self.backButton = Button.Button(self.screen, 50, 750, 100, self.returnButtonImg, "back")
         self.forwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.selectButtonImg, "forwardKey")
         self.backwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.selectButtonImg, "backwardKey")
