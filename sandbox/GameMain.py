@@ -67,6 +67,7 @@ class GameMain:
         self.previousPageButtonImg = pygame.image.load(self.imagePath + "previousPageButton.png").convert()
         self.applyButtonImg = pygame.image.load(self.imagePath + "applyButton.png").convert()
         self.homeButtonImg = pygame.image.load(self.imagePath + "homeButton.png").convert()
+        self.restartButtonImg = pygame.image.load(self.imagePath + "restartButton.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -182,13 +183,13 @@ class GameMain:
 
         # leaderboard buttons
         self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
-        self.restartButton = Button.Button(self.screen, 875, 625, 50, self.topRight, "restart")
+        self.restartButton = Button.Button(self.screen, 875, 625, 50, self.restartButtonImg, "restart")
         self.saveButton = Button.Button(self.screen, 775, 575, 50, self.crossing, "saveMap")
         self.leaderboardButtons = [self.choseMap, self.restartButton, self.saveButton]
 
         # pause buttons
         self.mainMenu = Button.Button(self.screen, 650, 625, 50, self.homeButtonImg, "mainMenu")
-        self.restartButton = Button.Button(self.screen, 775, 625, 50, self.topRight, "restart")
+        self.restartButton = Button.Button(self.screen, 775, 625, 50, self.restartButtonImg, "restart")
         self.resumeButton = Button.Button(self.screen, 900, 625, 50, self.topRight, "resume")
         self.pauseButtons = [self.mainMenu, self.restartButton, self.resumeButton]
 
