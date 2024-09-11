@@ -310,14 +310,15 @@ class GameDisplay(threading.Thread):
         for button in self.CO.mapButtons[2]:
             if button.enable:
                 button.draw(self.windowWidth, self.windowHeight)
-                newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)  # scale text size
-                newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600)  # scale x
-                newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900)  # scale y
-                font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
-                text = font.render(button.action, True, (255, 255, 255))
-                newRect = text.get_rect()
-                newRect.center = newX, newY  # center text
-                self.screen.blit(text, newRect)
+                if button.action != "return":
+                    newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)  # scale text size
+                    newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600)  # scale x
+                    newY = int(((button.y + (button.size*1.3)) * self.windowHeight) / 900)  # scale y
+                    font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+                    text = font.render(button.action, True, (255, 255, 255))
+                    newRect = text.get_rect()
+                    newRect.center = newX, newY  # center text
+                    self.screen.blit(text, newRect)
 
     def drawRaceSettings(self):
         self.screen.fill((100, 200, 200))  # background
