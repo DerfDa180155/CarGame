@@ -183,10 +183,10 @@ class GameMain:
         self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.startPieceHighlightButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton, self.startDirScrollButton, self.returnButton]
 
         # leaderboard buttons
-        self.choseMap = Button.Button(self.screen, 675, 625, 50, self.topLeft, "choseMap")
+        self.mainMenu = Button.Button(self.screen, 675, 625, 50, self.homeButtonImg, "mainMenu")
         self.restartButton = Button.Button(self.screen, 875, 625, 50, self.restartButtonImg, "restart")
         self.saveButton = Button.Button(self.screen, 775, 575, 50, self.crossing, "saveMap")
-        self.leaderboardButtons = [self.choseMap, self.restartButton, self.saveButton]
+        self.leaderboardButtons = [self.mainMenu, self.restartButton, self.saveButton]
 
         # pause buttons
         self.mainMenu = Button.Button(self.screen, 650, 625, 50, self.homeButtonImg, "mainMenu")
@@ -760,8 +760,8 @@ class GameMain:
                                 if button.action == "restart":
                                     self.CO.raceObject.reset()
                                     self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
-                                elif button.action == "choseMap":
-                                    self.CO.gameStatus = "selectMap"
+                                elif button.action == "mainMenu":
+                                    self.CO.gameStatus = "menu"
                                 elif button.action == "saveMap" and self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
                                     currentTime = datetime.datetime.now()
                                     name = "generated map: "
