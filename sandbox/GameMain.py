@@ -70,6 +70,8 @@ class GameMain:
         self.restartButtonImg = pygame.image.load(self.imagePath + "restartButton.png").convert()
         self.resumeButtonImg = pygame.image.load(self.imagePath + "resumeButton.png").convert()
 
+        self.boostItemImg = pygame.image.load(self.imagePath + "boostItem.png").convert()
+
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
                                    [1, 0, 0, 1],
@@ -88,7 +90,7 @@ class GameMain:
         self.oldCustomMapCount = self.mapController.getCountMaps(False)
 
         # items
-        self.boostItem = self.crossing
+        self.boostItem = self.boostItemImg
         self.rocketItem = self.horizontalLine
         self.multiRocketItem = self.verticalLine
         self.shieldItem = self.topLeft
