@@ -71,6 +71,7 @@ class GameMain:
         self.resumeButtonImg = pygame.image.load(self.imagePath + "resumeButton.png").convert()
 
         self.boostItemImg = pygame.image.load(self.imagePath + "boostItem.png").convert()
+        self.shieldItemImg = pygame.image.load(self.imagePath + "shieldItem.png").convert()
 
         self.mapArray = [self.empty, self.topLeft, self.topRight, self.bottomLeft, self.bottomRight, self.verticalLine, self.horizontalLine]
         self.mapArrayDefinition = [[0, 0, 0, 0], # top, right, bottom, left
@@ -93,7 +94,7 @@ class GameMain:
         self.boostItem = self.boostItemImg
         self.rocketItem = self.horizontalLine
         self.multiRocketItem = self.verticalLine
-        self.shieldItem = self.topLeft
+        self.shieldItem = self.shieldItemImg
         self.oilPuddleItem = self.topRight
         self.godModeItem = self.bottomRight
         self.itemImageDictionary = [self.boostItem, self.rocketItem, self.multiRocketItem, self.shieldItem, self.oilPuddleItem, self.godModeItem]
