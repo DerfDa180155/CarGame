@@ -22,6 +22,8 @@ class Settings:
         self.FPS = 60
         self.TPS = 120
 
+        self.debugMode = False
+
         self.loadSettings()
 
     def loadSettings(self):
@@ -70,3 +72,5 @@ class Settings:
 
         self.FPS = newSetting.FPS
         self.TPS = newSetting.TPS
+
+        self.debugMode = newSetting.debugMode

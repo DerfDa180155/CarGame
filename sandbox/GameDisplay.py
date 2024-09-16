@@ -372,10 +372,12 @@ class GameDisplay(threading.Thread):
         self.drawMap()
 
         # draw bounds (for testing)
-        self.drawBoundsMap()
+        if self.CO.settings.debugMode:
+            self.drawBoundsMap()
 
         # draw checkpoints (for testing)
-        self.drawCheckpoints()
+        if self.CO.settings.debugMode:
+            self.drawCheckpoints()
 
         # draw the finish Line
         self.drawFinishLine(15)
@@ -397,12 +399,14 @@ class GameDisplay(threading.Thread):
         self.drawPlayers()
 
         # draw rays
-        self.drawPlayerRays()
+        if self.CO.settings.debugMode:
+            self.drawPlayerRays()
 
         # draw bots and bots rays
         if self.CO.raceObject.amountOfBots > 0:
             self.drawBots()
-            self.drawBotRays()
+            if self.CO.settings.debugMode:
+                self.drawBotRays()
 
         # draw starting sequenz
         if self.CO.raceObject.raceStatus == "startRace" or (
@@ -537,8 +541,9 @@ class GameDisplay(threading.Thread):
         displayTextColor.append((diffTPS * 2, 255 - diffTPS * 2, 0))
 
         # status Display
-        displayText.append("Status: " + self.CO.gameStatus)
-        displayTextColor.append((255, 255, 0))
+        if self.CO.settings.debugMode:
+            displayText.append("Status: " + self.CO.gameStatus)
+            displayTextColor.append((255, 255, 0))
 
         # stopwatch Display
         if self.CO.gameStatus == "race":
