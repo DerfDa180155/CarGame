@@ -309,6 +309,11 @@ class GameMain:
             #print("----")
             oldMousePressed = mousePressed
 
+            # toggle debug menu
+            if keys[pygame.K_TAB]:
+                self.CO.settings.debugMode = not self.CO.settings.debugMode
+                time.sleep(0.3)
+
             match self.CO.gameStatus:
                 case "menu":
                     for button in self.CO.menuButtons:
