@@ -521,24 +521,26 @@ class GameDisplay(threading.Thread):
         displayTextColor = []
 
         # FPS Display
-        currentFPS = round(self.CO.FPSClock.get_fps(), 1)
-        diffFPS = self.CO.settings.FPS - currentFPS
-        if diffFPS < 0:
-            diffFPS = 0
-        elif diffFPS > 255 / 2:
-            diffFPS = 255 / 2
-        displayText.append("FPS: " + str(currentFPS))
-        displayTextColor.append((diffFPS * 2, 255 - diffFPS * 2, 0))
+        if self.CO.settings.displayFPS:
+            currentFPS = round(self.CO.FPSClock.get_fps(), 1)
+            diffFPS = self.CO.settings.FPS - currentFPS
+            if diffFPS < 0:
+                diffFPS = 0
+            elif diffFPS > 255 / 2:
+                diffFPS = 255 / 2
+            displayText.append("FPS: " + str(currentFPS))
+            displayTextColor.append((diffFPS * 2, 255 - diffFPS * 2, 0))
 
         # TPS Display
-        currentTPS = round(self.CO.TPSClock.get_fps(), 1)
-        diffTPS = self.CO.settings.TPS - currentTPS
-        if diffTPS < 0:
-            diffTPS = 0
-        elif diffTPS > 255 / 2:
-            diffTPS = 255 / 2
-        displayText.append("Ticks: " + str(currentTPS))
-        displayTextColor.append((diffTPS * 2, 255 - diffTPS * 2, 0))
+        if self.CO.settings.displayTPS:
+            currentTPS = round(self.CO.TPSClock.get_fps(), 1)
+            diffTPS = self.CO.settings.TPS - currentTPS
+            if diffTPS < 0:
+                diffTPS = 0
+            elif diffTPS > 255 / 2:
+                diffTPS = 255 / 2
+            displayText.append("Ticks: " + str(currentTPS))
+            displayTextColor.append((diffTPS * 2, 255 - diffTPS * 2, 0))
 
         # status Display
         if self.CO.settings.debugMode:

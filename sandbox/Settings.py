@@ -21,6 +21,8 @@ class Settings:
         # game settings
         self.FPS = 60
         self.TPS = 120
+        self.displayFPS = False
+        self.displayTPS = False
 
         self.debugMode = False
 
@@ -72,5 +74,7 @@ class Settings:
 
         self.FPS = newSetting.FPS
         self.TPS = newSetting.TPS
+        self.displayFPS = newSetting.displayFPS
+        self.displayTPS = newSetting.displayTPS
 
         self.debugMode = newSetting.debugMode
