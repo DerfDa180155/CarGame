@@ -161,7 +161,10 @@ class GameMain:
         self.secondPlayerLeftKeyButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "secondPlayerLeftKey")
         self.secondPlayerRightKeyButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "secondPlayerRightKey")
         self.secondPlayerItemKeyButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "secondPlayerItemKey")
-        self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.itemKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton, self.secondPlayerForwardKeyButton, self.secondPlayerBackwardKeyButton, self.secondPlayerLeftKeyButton, self.secondPlayerRightKeyButton, self.secondPlayerItemKeyButton]
+        self.debugModeToggleButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "toggleDebugMode")
+        self.displayFPSToggleButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "toggleDisplayFPS")
+        self.displayTPSToggleButton = Button.Button(self.screen, 1510, 100, 45, self.selectButtonImg, "toggleDisplayTPS")
+        self.settingsButtons = [self.saveButton, self.applyButton, self.backButton, self.forwardKeyButton, self.backwardKeyButton, self.leftKeyButton, self.rightKeyButton, self.itemKeyButton, self.pauseKeyButton, self.FPSScrollButton, self.TPSScrollButton, self.secondPlayerForwardKeyButton, self.secondPlayerBackwardKeyButton, self.secondPlayerLeftKeyButton, self.secondPlayerRightKeyButton, self.secondPlayerItemKeyButton, self.debugModeToggleButton, self.displayFPSToggleButton, self.displayTPSToggleButton]
 
         # mapMaker buttons
         self.bottomRightButton = Button.Button(self.screen, 1300, 100, 100, self.bottomRight, "mapPiece-bottomRight")

@@ -69,14 +69,15 @@ class GameDisplay(threading.Thread):
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
 
         settingsText = [["Player 1", "drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "use item key: ", "pause key: ", "FPS: ", "TPS: "],
-                        ["Player 2", "drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "use item key: ", "", "", ""]]
+                        ["Player 2", "drive forward key: ", "drive backward key: ", "steer left key: ", "steer right key: ", "use item key: ", "Debug mode: ", "Show FPS: ", "Show TPS: "]]
         settingsData = [["", str(self.CO.displayTempSettings.playerKeys[0][0]), str(self.CO.displayTempSettings.playerKeys[0][1]),
                         str(self.CO.displayTempSettings.playerKeys[0][2]), str(self.CO.displayTempSettings.playerKeys[0][3]),
                         str(self.CO.displayTempSettings.playerKeys[0][4]), str(self.CO.displayTempSettings.pauseKey),
                         str(self.CO.displayTempSettings.FPS), str(self.CO.displayTempSettings.TPS)],
                         ["", str(self.CO.displayTempSettings.playerKeys[1][0]), str(self.CO.displayTempSettings.playerKeys[1][1]),
                          str(self.CO.displayTempSettings.playerKeys[1][2]), str(self.CO.displayTempSettings.playerKeys[1][3]),
-                         str(self.CO.displayTempSettings.playerKeys[1][4])]]
+                         str(self.CO.displayTempSettings.playerKeys[1][4]), str(self.CO.displayTempSettings.debugMode),
+                         str(self.CO.displayTempSettings.displayFPS), str(self.CO.displayTempSettings.displayTPS)]]
 
         for i in range(len(settingsData[0])):
             # left row
