@@ -344,6 +344,12 @@ class GameMain:
                                 self.CO.gameStatus = "menu"
                             elif button.action == "apply":
                                 self.CO.settings.copyFrom(self.CO.displayTempSettings)
+                            elif button.action == "toggleDebugMode":
+                                self.CO.displayTempSettings.debugMode = not self.CO.displayTempSettings.debugMode
+                            elif button.action == "toggleDisplayFPS":
+                                self.CO.displayTempSettings.displayFPS = not self.CO.displayTempSettings.displayFPS
+                            elif button.action == "toggleDisplayTPS":
+                                self.CO.displayTempSettings.displayTPS = not self.CO.displayTempSettings.displayTPS
                             elif button.action not in ["scrollFPS", "scrollTPS"]:
                                 text = ""
                                 self.CO.waitForKey = True
