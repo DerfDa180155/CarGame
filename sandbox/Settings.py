@@ -40,9 +40,13 @@ class Settings:
                     self.TPS = int(docRoot[1].text)
                     self.pauseKey = pygame.key.name(int(docRoot[2].text))
 
+                    self.displayFPS = (int(docRoot[3].text) == 1)
+                    self.displayTPS = (int(docRoot[4].text) == 1)
+                    self.debugMode = (int(docRoot[5].text) == 1)
+
                     # load the keys of the players
                     self.playerKeys = []
-                    for player in docRoot[3]:
+                    for player in docRoot[6]:
                         temp = []
                         for i in player:
                             temp.append(pygame.key.name(int(i.text)))
@@ -53,6 +57,9 @@ class Settings:
         ET.SubElement(root, "FPS").text = str(self.FPS)
         ET.SubElement(root, "TPS").text = str(self.TPS)
         ET.SubElement(root, "pauseKey").text = str(pygame.key.key_code(self.pauseKey))
+        ET.SubElement(root, "displayFPS").text = str(int(self.displayFPS))
+        ET.SubElement(root, "displayTPS").text = str(int(self.displayTPS))
+        ET.SubElement(root, "debugMode").text = str(int(self.debugMode))
 
         # save the keys of the players
         playerKeys = ET.SubElement(root, "PlayerKeys", type="array")
