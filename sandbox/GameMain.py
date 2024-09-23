@@ -66,6 +66,7 @@ class GameMain:
         self.nextPageButtonImg = pygame.image.load(self.imagePath + "nextPageButton.png").convert()
         self.previousPageButtonImg = pygame.image.load(self.imagePath + "previousPageButton.png").convert()
         self.applyButtonImg = pygame.image.load(self.imagePath + "applyButton.png").convert()
+        self.saveButtonImg = pygame.image.load(self.imagePath + "saveButton.png").convert()
         self.homeButtonImg = pygame.image.load(self.imagePath + "homeButton.png").convert()
         self.restartButtonImg = pygame.image.load(self.imagePath + "restartButton.png").convert()
         self.resumeButtonImg = pygame.image.load(self.imagePath + "resumeButton.png").convert()
@@ -146,7 +147,7 @@ class GameMain:
         self.raceSettingsButtons = [self.startRaceButtons, self.backButton, self.roundsScrollButton, self.maxSpeedScrollButton, self.maxAccScrollButton, self.itemsEnabledScrollButton, self.itemsSpawnCooldownScrollButton, self.amountBotButton]
 
         # settings buttons
-        self.saveButton = Button.Button(self.screen, 1450, 750, 100, self.verticalLine, "save")
+        self.saveButton = Button.Button(self.screen, 1450, 750, 100, self.saveButtonImg, "save")
         self.applyButton = Button.Button(self.screen, 750, 750, 100, self.applyButtonImg, "apply")
         self.backButton = Button.Button(self.screen, 50, 750, 100, self.returnButtonImg, "back")
         self.forwardKeyButton = Button.Button(self.screen, 710, 100, 45, self.selectButtonImg, "forwardKey")
@@ -178,7 +179,7 @@ class GameMain:
         self.eraseModeButton = Button.Button(self.screen, 1300, 750, 50, self.empty, "actionButton-eraseMode")
         self.startPieceHighlightButton = Button.Button(self.screen, 1375, 750, 50, self.empty, "actionButton-startPieceHighlight")
         self.clearButton = Button.Button(self.screen, 100, 775, 100, self.empty, "actionButton-clear")
-        self.saveButton = Button.Button(self.screen, 250, 775, 100, self.empty, "actionButton-save")
+        self.saveButton = Button.Button(self.screen, 250, 775, 100, self.saveButtonImg, "actionButton-save")
         self.fillEmptyButton = Button.Button(self.screen, 400, 775, 100, self.empty, "actionButton-fillEmpty")
         self.enterNameButton = Button.Button(self.screen, 550, 775, 100, self.empty, "actionButton-enterName")
         self.createNewMapButton = Button.Button(self.screen, 700, 775, 100, self.empty, "actionButton-createNewMap")
