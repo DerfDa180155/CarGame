@@ -73,6 +73,7 @@ class GameMain:
 
         self.boostItemImg = pygame.image.load(self.imagePath + "boostItem.png").convert()
         self.rocketItemImg = pygame.image.load(self.imagePath + "rocketItem.png").convert()
+        self.multiRocketItemImg = pygame.image.load(self.imagePath + "multiRocketItem.png").convert()
         self.shieldItemImg = pygame.image.load(self.imagePath + "shieldItem.png").convert()
         self.godModeItemImg = pygame.image.load(self.imagePath + "godModeItem.png").convert()
 
@@ -96,7 +97,7 @@ class GameMain:
         # items
         self.boostItem = self.boostItemImg
         self.rocketItem = self.rocketItemImg
-        self.multiRocketItem = self.verticalLine
+        self.multiRocketItem = self.multiRocketItemImg
         self.shieldItem = self.shieldItemImg
         self.oilPuddleItem = self.topRight
         self.godModeItem = self.godModeItemImg
