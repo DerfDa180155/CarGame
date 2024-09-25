@@ -279,8 +279,10 @@ class GameMain:
                             self.CO.gameStatus = "menu"
                         elif self.CO.gameStatus == "selectMode" or self.CO.gameStatus == "settings" or self.CO.gameStatus == "mapMaker":
                             self.CO.gameStatus = "menu"
-                        elif self.CO.gameStatus == "selectMap":
+                        elif self.CO.gameStatus == "selectCar":
                             self.CO.gameStatus = "selectMode"
+                        elif self.CO.gameStatus == "selectMap":
+                            self.CO.gameStatus = "selectCar"
                         elif self.CO.gameStatus == "raceSettings":
                             self.CO.gameStatus = "selectMap"
                         elif self.CO.gameStatus == "race":
@@ -562,9 +564,12 @@ class GameMain:
                                     self.CO.players.pop(1)
                                 elif button.action == "multiplayer" and len(self.CO.players) == 1:
                                     self.CO.players.append(Player.Player(0, 0, 0, 1, self.summonedItems))
-                                self.CO.gameStatus = "selectMap"
+                                self.CO.gameStatus = "selectCar"
                                 print(self.CO.currentMode)
                                 self.CO.mapButtonPage = 0
+                case "selectCar":
+                    if keys[pygame.K_SPACE]: # temp
+                        self.CO.gameStatus = "selectMap"
                 case "selectMap":
                     if self.oldMapCount != self.CO.mapController.getCountMaps(True):
                         self.oldMapCount = self.CO.mapController.getCountMaps(True)

@@ -38,6 +38,8 @@ class GameDisplay(threading.Thread):
                     self.drawMapMaker()
                 case "selectMode":
                     self.drawModeSelector()
+                case "selectCar":
+                    self.drawCarSelector()
                 case "selectMap":
                     self.drawMapSelector()
                 case "raceSettings":
@@ -280,6 +282,16 @@ class GameDisplay(threading.Thread):
         # draw buttons
         for button in self.CO.gameModeButtons:
             button.draw(self.windowWidth, self.windowHeight)
+
+    def drawCarSelector(self):
+        self.screen.fill((150, 150, 100))  # background
+
+        # draw menu Text
+        self.drawMenuText("Car Selector", (255, 255, 255))
+
+        # draw buttons
+        #for button in self.CO.carSelectorButtons:
+        #    button.draw(self.windowWidth, self.windowHeight)
 
     def drawMapSelector(self):
         self.screen.fill((100, 150, 250))  # background
