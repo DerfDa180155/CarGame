@@ -136,6 +136,11 @@ class GameMain:
         self.returnButton = Button.Button(self.screen, 100, 750, 100, self.returnButtonImg, "return")
         self.gameModeButtons = [self.singlePlayerButton, self.multiPlayerButton, self.returnButton]
 
+        # car selector buttons
+        self.returnButton = Button.Button(self.screen, 100, 750, 100, self.returnButtonImg, "return")
+        self.readyButton = Button.Button(self.screen, 750, 750, 100, self.horizontalLine, "ready")
+        self.carSelectorButtons = [self.returnButton, self.readyButton]
+
         # race settings buttons
         self.startRaceButtons = Button.Button(self.screen, 750, 720, 150, self.horizontalLine, "start")
         self.backButton = Button.Button(self.screen, 50, 770, 100, self.returnButtonImg, "back")
@@ -242,6 +247,7 @@ class GameMain:
                                                           mapMaker=self.mapMaker, displayTempSettings=self.displayTempSettings,
                                                           waitForKey=False, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,
+                                                          carSelectorButtons = self.carSelectorButtons,
                                                           raceSettingsButtons=self.raceSettingsButtons,
                                                           leaderboardButtons=self.leaderboardButtons,
                                                           settingsButtons=self.settingsButtons,
@@ -570,6 +576,13 @@ class GameMain:
                 case "selectCar":
                     if keys[pygame.K_SPACE]: # temp
                         self.CO.gameStatus = "selectMap"
+
+                    for button in self.CO.carSelectorButtons:
+                        if button.clicked(mx, my, mousePressedUp):
+                            if button.action == "return":
+                                self.CO.gameStatus = "selectMode"
+                            elif button.action == "ready":
+                                self.CO.gameStatus = "selectMap"
                 case "selectMap":
                     if self.oldMapCount != self.CO.mapController.getCountMaps(True):
                         self.oldMapCount = self.CO.mapController.getCountMaps(True)

@@ -290,8 +290,8 @@ class GameDisplay(threading.Thread):
         self.drawMenuText("Car Selector", (255, 255, 255))
 
         # draw buttons
-        #for button in self.CO.carSelectorButtons:
-        #    button.draw(self.windowWidth, self.windowHeight)
+        for button in self.CO.carSelectorButtons:
+            button.draw(self.windowWidth, self.windowHeight)
 
     def drawMapSelector(self):
         self.screen.fill((100, 150, 250))  # background
