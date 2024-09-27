@@ -574,9 +574,6 @@ class GameMain:
                                 print(self.CO.currentMode)
                                 self.CO.mapButtonPage = 0
                 case "selectCar":
-                    if keys[pygame.K_SPACE]: # temp
-                        self.CO.gameStatus = "selectMap"
-
                     for button in self.CO.carSelectorButtons:
                         if button.clicked(mx, my, mousePressedUp):
                             if button.action == "return":
