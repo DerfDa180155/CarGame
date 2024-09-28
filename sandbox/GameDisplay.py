@@ -289,6 +289,7 @@ class GameDisplay(threading.Thread):
         # draw menu Text
         self.drawMenuText("Car Selector", (255, 255, 255))
 
+        selectetCar = 0
         # draw the 8 cars
         for i in range(8):
             x = 200 + i * 400
@@ -296,11 +297,21 @@ class GameDisplay(threading.Thread):
             if i >= 4:
                 y += 300
                 x -= 1600
+
             newX = int((x * self.windowWidth) / 1600)  # scale x
             newY = int((y * self.windowHeight) / 900)  # scale y
+            size = 200
+            sizeX = int((size * self.windowWidth) / 1600)
+            sizeY = int((size * self.windowHeight) / 900)
+
+            if selectetCar == i: # border
+                pygame.draw.rect(self.screen, (50, 150, 200), (newX - (sizeX / 2), newY - (sizeY / 2), sizeX, sizeY))
+
+
             size = 150
             sizeX = int((size * self.windowWidth) / 1600)
             sizeY = int((size * self.windowHeight) / 900)
+
             pygame.draw.rect(self.screen, (255, 255, 255), (newX - (sizeX / 2), newY - (sizeY / 2), sizeX, sizeY))
 
         # draw buttons
