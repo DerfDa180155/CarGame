@@ -20,6 +20,7 @@ class Player:
         self.scaleSizeHeight = 900
 
         self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        self.selectedCarId = -1
 
         self.frontRaysViewAngle = 90
         self.frontRaysDeg = 22.5
