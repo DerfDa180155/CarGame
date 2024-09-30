@@ -306,6 +306,9 @@ class GameDisplay(threading.Thread):
             if i == self.CO.players[0].selectedCarId: # border
                 pygame.draw.rect(self.screen, (50, 150, 200), (newX - (sizeX / 2), newY - (sizeY / 2), sizeX, sizeY))
 
+            if self.CO.currentMode == "multiplayer":
+                if i == self.CO.players[1].selectedCarId: # border
+                    pygame.draw.rect(self.screen, (200, 150, 50),(newX - (sizeX / 2), newY - (sizeY / 2), sizeX, sizeY))
 
             size = 150
             sizeX = int((size * self.windowWidth) / 1600)
