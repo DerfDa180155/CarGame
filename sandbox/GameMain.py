@@ -577,12 +577,21 @@ class GameMain:
                                 self.CO.mapButtonPage = 0
                 case "selectCar":
                     for i in range(len(self.CO.players)):
+                        selected = -1
+                        if self.CO.currentMode == "multiplayer":
+                            selected = self.CO.players[1-i].selectedCarId
                         if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][2])]: # left
                             self.CO.players[i].selectedCarId -= 1
                             if self.CO.players[i].selectedCarId == -1:
                                 self.CO.players[i].selectedCarId = 3
                             elif self.CO.players[i].selectedCarId == 3:
                                 self.CO.players[i].selectedCarId = 7
+                            if self.CO.players[i].selectedCarId == selected:
+                                self.CO.players[i].selectedCarId -= 1
+                                if self.CO.players[i].selectedCarId == -1:
+                                    self.CO.players[i].selectedCarId = 3
+                                elif self.CO.players[i].selectedCarId == 3:
+                                    self.CO.players[i].selectedCarId = 7
                             time.sleep(0.1)
                         if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][3])]: # right
                             self.CO.players[i].selectedCarId += 1
@@ -590,16 +599,30 @@ class GameMain:
                                 self.CO.players[i].selectedCarId = 0
                             elif self.CO.players[i].selectedCarId == 8:
                                 self.CO.players[i].selectedCarId = 4
+                            if self.CO.players[i].selectedCarId == selected:
+                                self.CO.players[i].selectedCarId += 1
+                                if self.CO.players[i].selectedCarId == 4:
+                                    self.CO.players[i].selectedCarId = 0
+                                elif self.CO.players[i].selectedCarId == 8:
+                                    self.CO.players[i].selectedCarId = 4
                             time.sleep(0.1)
                         if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][0])]: # up
                             self.CO.players[i].selectedCarId -= 4
                             if self.CO.players[i].selectedCarId <= -1:
                                 self.CO.players[i].selectedCarId += 8
+                            if self.CO.players[i].selectedCarId == selected:
+                                self.CO.players[i].selectedCarId -= 4
+                                if self.CO.players[i].selectedCarId <= -1:
+                                    self.CO.players[i].selectedCarId += 8
                             time.sleep(0.1)
                         if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][1])]: # down
                             self.CO.players[i].selectedCarId += 4
                             if self.CO.players[i].selectedCarId >= 8:
                                 self.CO.players[i].selectedCarId -= 8
+                            if self.CO.players[i].selectedCarId == selected:
+                                self.CO.players[i].selectedCarId += 4
+                                if self.CO.players[i].selectedCarId >= 8:
+                                    self.CO.players[i].selectedCarId -= 8
                             time.sleep(0.1)
 
 
