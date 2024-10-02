@@ -105,6 +105,9 @@ class GameMain:
         self.summonedItems = []
         self.itemBoxes = []
 
+        # cars
+        self.carSkins = [(255,0,0),(255,255,0),(0,255,0),(0,255,255),(0,0,255),(255,0,255),(255,255,255),(100,100,100)]
+
         # player
         self.players = []
         self.players.append(Player.Player(100, 100, 0, 0, self.summonedItems))
@@ -242,8 +245,9 @@ class GameMain:
         self.CO = CommunicationObject.CommunicationObject(gameStatus="menu", FPSClock=self.FPSClock,
                                                           TPSClock=self.TPSClock, #FPS=self.FPS, TPS=self.TPS,
                                                           TextSize=30, imageArray=self.mapArray,
-                                                          mapController=self.mapController, players=self.players,
-                                                          bots=self.bots, raceObject=self.raceObject, settings=self.settings,
+                                                          mapController=self.mapController, carSkins=self.carSkins,
+                                                          players=self.players, bots=self.bots,
+                                                          raceObject=self.raceObject, settings=self.settings,
                                                           mapMaker=self.mapMaker, displayTempSettings=self.displayTempSettings,
                                                           waitForKey=False, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,

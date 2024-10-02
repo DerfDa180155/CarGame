@@ -314,7 +314,7 @@ class GameDisplay(threading.Thread):
             sizeX = int((size * self.windowWidth) / 1600)
             sizeY = int((size * self.windowHeight) / 900)
 
-            pygame.draw.rect(self.screen, (255, 255, 255), (newX - (sizeX / 2), newY - (sizeY / 2), sizeX, sizeY))
+            pygame.draw.rect(self.screen, self.CO.carSkins[i], (newX - (sizeX / 2), newY - (sizeY / 2), sizeX, sizeY))
 
         # draw buttons
         for button in self.CO.carSelectorButtons:
