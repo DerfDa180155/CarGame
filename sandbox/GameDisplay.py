@@ -855,7 +855,10 @@ class GameDisplay(threading.Thread):
                 if self.CO.raceObject.itemsEnabled and player.shieldTime > 0:
                     pygame.draw.circle(self.screen, (10, 150, 200), (x, y), playerSizeWidth, 0)
 
-                pygame.draw.rect(self.screen, player.color,
+                color = player.color
+                if player.selectedCarId != -1:
+                    color = self.CO.carSkins[player.selectedCarId]
+                pygame.draw.rect(self.screen, color,
                                  pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
                                              playerSizeWidth, playerSizeHeight))
             i += 1
@@ -864,6 +867,9 @@ class GameDisplay(threading.Thread):
         i = 0
         for player in self.CO.players:
             if (self.CO.currentMode == "singleplayer" and i == 0) or self.CO.currentMode == "multiplayer":
+                color = player.color
+                if player.selectedCarId != -1:
+                    color = self.CO.carSkins[player.selectedCarId]
                 for ray in player.frontRays:
                     rayLengthX = (ray.length * self.windowWidth) / 1600
                     rayLengthY = (ray.length * self.windowHeight) / 900
@@ -871,7 +877,7 @@ class GameDisplay(threading.Thread):
                     y1 = (player.y * self.windowHeight) / player.scaleHeight
                     x2 = x1 + rayLengthX * np.cos(np.deg2rad(ray.direction))
                     y2 = y1 + rayLengthY * np.sin(np.deg2rad(ray.direction))
-                    pygame.draw.line(self.screen, player.color, (x1, y1), (x2, y2), 4)
+                    pygame.draw.line(self.screen, color, (x1, y1), (x2, y2), 4)
             i += 1
 
     def drawBots(self):
@@ -885,17 +891,23 @@ class GameDisplay(threading.Thread):
             if self.CO.raceObject.itemsEnabled and bot.player.shieldTime > 0:
                 pygame.draw.circle(self.screen, (10, 150, 200), (x, y), playerSizeWidth, 0)
 
-            pygame.draw.rect(self.screen, bot.player.color,
+            color = bot.player.color
+            if bot.player.selectedCarId != -1:
+                color = self.CO.carSkins[bot.player.selectedCarId]
+            pygame.draw.rect(self.screen, color,
                              pygame.Rect(x - (playerSizeWidth / 2), y - (playerSizeHeight / 2),
                                          playerSizeWidth, playerSizeHeight))
 
     def drawBotRays(self):
         for bot in self.CO.bots:
             for ray in bot.player.frontRays:
+                color = bot.player.color
+                if bot.player.selectedCarId != -1:
+                    color = self.CO.carSkins[bot.player.selectedCarId]
                 rayLengthX = (ray.length * self.windowWidth) / 1600
                 rayLengthY = (ray.length * self.windowHeight) / 900
                 x1 = (bot.player.x * self.windowWidth) / bot.player.scaleWidth
                 y1 = (bot.player.y * self.windowHeight) / bot.player.scaleHeight
                 x2 = x1 + rayLengthX * np.cos(np.deg2rad(ray.direction))
                 y2 = y1 + rayLengthY * np.sin(np.deg2rad(ray.direction))
-                pygame.draw.line(self.screen, bot.player.color, (x1, y1), (x2, y2), 4)
+                pygame.draw.line(self.screen, color, (x1, y1), (x2, y2), 4)
