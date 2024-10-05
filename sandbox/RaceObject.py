@@ -1,4 +1,6 @@
 import random
+from getpass import fallback_getpass
+from traceback import print_tb
 
 import numpy as np
 import time
@@ -224,10 +226,23 @@ class RaceObject:
         for i in range(self.amountOfBots):
             self.bots.append(Bot.Bot(Player.Player(100, 100, 0, 100 + i, self.summonedItems)))
 
+        availableCarSkins = [0, 1, 2, 3, 4, 5, 6, 7]
         self.allPlayers = []
         for player in self.players:
+            print("tset")
+            print(len(self.players))
+            deleted = False
+            for i in range(len(availableCarSkins)):
+                print(i)
+                if not deleted:
+                    if availableCarSkins[i] == player.selectedCarId:
+                        availableCarSkins.pop(i)
+                        deleted = True
             self.allPlayers.append(player)
         for bot in self.bots:
+            temp = random.randint(0,len(availableCarSkins)-1)
+            bot.player.selectedCarId = availableCarSkins[temp]
+            availableCarSkins.pop(temp)
             self.allPlayers.append(bot.player)
 
     def updateBots(self):
