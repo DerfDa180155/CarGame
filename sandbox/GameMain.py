@@ -711,7 +711,7 @@ class GameMain:
                                         self.CO.mapButtonPage += 1
                                         print(self.CO.mapButtonPage)
                                 elif button.action == "return":
-                                    self.CO.gameStatus = "selectMode"
+                                    self.CO.gameStatus = "selectCar"
                                     #self.CO.mapButtonPage = 0
                             else:
                                 self.CO.mapController.currentMapIndex = button.action
