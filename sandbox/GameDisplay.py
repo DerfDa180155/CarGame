@@ -721,12 +721,12 @@ class GameDisplay(threading.Thread):
             if entry[0] < 100:
                 for player in self.CO.players:
                     if player.id == entry[0]:
-                        color = player.color
+                        color = self.CO.carSkins[player.selectedCarId]
                 text = font.render("Player " + str(entry[0]), True, color)
             else:
                 for bot in self.CO.bots:
                     if bot.player.id == entry[0]:
-                        color = bot.player.color
+                        color = self.CO.carSkins[bot.player.selectedCarId]
                 text = font.render("Bot " + str(entry[0] - 100), True, color)
             newRect = text.get_rect()
             newRect.x = rectangle.x + (newTextSize / 2)
