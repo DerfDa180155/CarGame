@@ -326,6 +326,12 @@ class GameDisplay(threading.Thread):
         # draw menu Text
         self.drawMenuText("Map Selector", (255, 255, 255))
 
+        # draw page counter
+        maxPageOfficialMaps = int((len(self.CO.mapButtons[0]) / 15) + 0.5)
+        maxPageCustomMaps = int((len(self.CO.mapButtons[1]) / 15) + 0.5)
+        maxPage = maxPageOfficialMaps + maxPageCustomMaps + 1
+        self.drawBottomText(str(self.CO.mapButtonPage+1) + "/" + str(maxPage), (255, 255, 255))
+
         index = 1
         if self.CO.officialMaps:
             index = 0
@@ -613,6 +619,15 @@ class GameDisplay(threading.Thread):
         newRect = text.get_rect()
         newRect.centerx = self.windowWidth / 2
         newRect.y = newTextSize * 0.5
+        self.screen.blit(text, newRect)
+
+    def drawBottomText(self, inputText, color = (255, 255, 255)):
+        newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+        text = font.render(inputText, True, color)
+        newRect = text.get_rect()
+        newRect.centerx = self.windowWidth / 2
+        newRect.y = (830 * self.windowHeight) / 900
         self.screen.blit(text, newRect)
 
     def drawPlayerStatsText(self):
