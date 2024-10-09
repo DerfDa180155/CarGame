@@ -645,9 +645,9 @@ class GameMain:
                                 Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
 
 
-                    maxPageOfficialMaps = int((len(self.CO.mapButtons[0])/15)+0.5)
-                    maxPageCustomMaps = int((len(self.CO.mapButtons[1])/15)+0.5)
-                    maxPage = maxPageOfficialMaps + maxPageCustomMaps
+                    maxPageOfficialMaps = round((len(self.CO.mapButtons[0])/15)+0.5)
+                    maxPageCustomMaps = round((len(self.CO.mapButtons[1])/15)+0.5)
+                    maxPage = maxPageOfficialMaps + maxPageCustomMaps - 1
                     if self.CO.mapButtonPage >= maxPageOfficialMaps:
                         index = 1
                         self.CO.officialMaps = False

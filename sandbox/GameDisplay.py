@@ -327,10 +327,10 @@ class GameDisplay(threading.Thread):
         self.drawMenuText("Map Selector", (255, 255, 255))
 
         # draw page counter
-        maxPageOfficialMaps = int((len(self.CO.mapButtons[0]) / 15) + 0.5)
-        maxPageCustomMaps = int((len(self.CO.mapButtons[1]) / 15) + 0.5)
-        maxPage = maxPageOfficialMaps + maxPageCustomMaps + 1
-        self.drawBottomText(str(self.CO.mapButtonPage+1) + "/" + str(maxPage), (255, 255, 255))
+        maxPageOfficialMaps = round((len(self.CO.mapButtons[0]) / 15) + 0.5)
+        maxPageCustomMaps = round((len(self.CO.mapButtons[1]) / 15) + 0.5)
+        maxPage = maxPageOfficialMaps + maxPageCustomMaps
+        self.drawBottomText(str(self.CO.mapButtonPage + 1) + "/" + str(maxPage), (255, 255, 255))
 
         index = 1
         if self.CO.officialMaps:
