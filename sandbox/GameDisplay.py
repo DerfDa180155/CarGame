@@ -332,6 +332,9 @@ class GameDisplay(threading.Thread):
         maxPage = maxPageOfficialMaps + maxPageCustomMaps
         self.drawBottomText(str(self.CO.mapButtonPage + 1) + "/" + str(maxPage), (255, 255, 255))
 
+        if self.CO.mapButtonPage > (maxPageOfficialMaps-1):
+            self.drawMenuText("\nCustom Maps", (255, 255, 255))
+
         index = 1
         if self.CO.officialMaps:
             index = 0
