@@ -212,6 +212,7 @@ class GameMain:
         self.resumeButton = Button.Button(self.screen, 900, 625, 50, self.resumeButtonImg, "resume")
         self.pauseButtons = [self.mainMenu, self.restartButton, self.resumeButton]
 
+        # mapSelector buttons
         self.mapButtons = []
         self.imageMapSize = 200
         #self.locations = [[100, 100], [400, 100], [700, 100], [1000, 100], [1300, 100],
@@ -239,6 +240,7 @@ class GameMain:
         tempArray.append(Button.Button(self.screen, 75, 800, 50, self.previousPageButtonImg, "previousPage"))
         tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.nextPageButtonImg, "nextPage"))
         tempArray.append(Button.Button(self.screen, 100, 20, 50, self.returnButtonImg, "return"))
+        tempArray.append(Button.Button(self.screen, 775, 825, 50, self.selectButtonImg, "toggleMaps"))
         self.mapButtons.append(tempArray)
         self.mapButtonPage = 0
 
@@ -735,6 +737,8 @@ class GameMain:
                                             print(self.CO.mapButtonPage)
                                 elif button.action == "return":
                                     self.CO.gameStatus = "selectCar"
+                                elif button.action == "toggleMaps":
+                                    self.CO.officialMaps = not self.CO.officialMaps
                             else:
                                 self.CO.mapController.currentMapIndex = button.action
                                 for player in self.CO.players:
