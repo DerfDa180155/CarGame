@@ -326,27 +326,29 @@ class GameDisplay(threading.Thread):
         # draw menu Text
         self.drawMenuText("Map Selector", (255, 255, 255))
 
-        # draw page counter
+        # calculate max page
         maxPageOfficialMaps = round((len(self.CO.mapButtons[0]) / 15) + 0.5)
         maxPageCustomMaps = round((len(self.CO.mapButtons[1]) / 15) + 0.5)
-        maxPage = maxPageOfficialMaps + maxPageCustomMaps
+        maxPage = maxPageOfficialMaps
+
+        index = 0
+        if not self.CO.officialMaps:
+            index = 1
+            self.drawMenuText("\nCustom Maps", (255, 255, 255))
+            maxPage = maxPageCustomMaps
+
+        # draw page counter
         self.drawBottomText(str(self.CO.mapButtonPage + 1) + "/" + str(maxPage), (255, 255, 255))
 
-        if self.CO.mapButtonPage > (maxPageOfficialMaps-1):
-            self.drawMenuText("\nCustom Maps", (255, 255, 255))
 
-        index = 1
-        if self.CO.officialMaps:
-            index = 0
-
-        # draw buttons
+        # draw map buttons
         for button in self.CO.mapButtons[index]:
             if button.enable:
                 button.draw(self.windowWidth, self.windowHeight)
                 # draw name of map on button
-                newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)  # scale text size
-                newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600)  # scale x
-                newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900)  # scale y
+                newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000) # scale text size
+                newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600) # scale x
+                newY = int(((button.y + (button.size / 2)) * self.windowHeight) / 900) # scale y
                 font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
                 if button.action.isnumeric():
                     text = font.render(str(self.CO.mapController.getMapArray((index == 0))[int(button.action)].name), True, (255, 255, 255))
@@ -354,19 +356,21 @@ class GameDisplay(threading.Thread):
                     if button.action == "generateMapWFC":
                         text = font.render("generate new Map", True, (255, 255, 255))
                 newRect = text.get_rect()
-                newRect.center = newX, newY  # center text
+                newRect.center = newX, newY # center text
                 self.screen.blit(text, newRect)
+
+        # draw control buttons
         for button in self.CO.mapButtons[2]:
             if button.enable:
                 button.draw(self.windowWidth, self.windowHeight)
-                if button.action != "return":
-                    newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000)  # scale text size
-                    newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600)  # scale x
-                    newY = int(((button.y + (button.size*1.3)) * self.windowHeight) / 900)  # scale y
+                if button.action not in ["return", "toggleMaps"]: # draw button name
+                    newTextSize = int((self.CO.TextSize * self.windowWidth) / 2000) # scale text size
+                    newX = int(((button.x + (button.size / 2)) * self.windowWidth) / 1600) # scale x
+                    newY = int(((button.y + (button.size*1.3)) * self.windowHeight) / 900) # scale y
                     font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
                     text = font.render(button.action, True, (255, 255, 255))
                     newRect = text.get_rect()
-                    newRect.center = newX, newY  # center text
+                    newRect.center = newX, newY # center text
                     self.screen.blit(text, newRect)
 
     def drawRaceSettings(self):

@@ -240,7 +240,7 @@ class GameMain:
         tempArray.append(Button.Button(self.screen, 75, 800, 50, self.previousPageButtonImg, "previousPage"))
         tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.nextPageButtonImg, "nextPage"))
         tempArray.append(Button.Button(self.screen, 100, 20, 50, self.returnButtonImg, "return"))
-        tempArray.append(Button.Button(self.screen, 775, 825, 50, self.selectButtonImg, "toggleMaps"))
+        tempArray.append(Button.Button(self.screen, 975, 825, 50, self.selectButtonImg, "toggleMaps"))
         self.mapButtons.append(tempArray)
         self.mapButtonPage = 0
 
@@ -646,7 +646,7 @@ class GameMain:
                     #        self.mapButtons.append(
                     #            Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
 
-
+                    # calculate max page
                     maxPageOfficialMaps = round((len(self.CO.mapButtons[0])/15)+0.5)-1
                     maxPageCustomMaps = round((len(self.CO.mapButtons[1])/15)+0.5)-1
                     #maxPage = maxPageOfficialMaps + maxPageCustomMaps - 1
@@ -739,6 +739,7 @@ class GameMain:
                                     self.CO.gameStatus = "selectCar"
                                 elif button.action == "toggleMaps":
                                     self.CO.officialMaps = not self.CO.officialMaps
+                                    self.CO.mapButtonPage = 0
                             else:
                                 self.CO.mapController.currentMapIndex = button.action
                                 for player in self.CO.players:
