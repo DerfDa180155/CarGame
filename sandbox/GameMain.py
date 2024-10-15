@@ -216,11 +216,11 @@ class GameMain:
         self.mapButtons = []
         self.imageMapSize = 200
         #self.locations = [[100, 100], [400, 100], [700, 100], [1000, 100], [1300, 100],
-        #                  [100, 400], [400, 400], [700, 400], [1000, 400], [1300, 400],
-        #                  [100, 700], [400, 700], [700, 700], [1000, 700], [1300, 700]]
-        self.locations = [[100, 100], [400, 100], [700, 100], [1000, 100], [1300, 100],
-                          [100, 380], [400, 380], [700, 380], [1000, 380], [1300, 380],
-                          [100, 660], [400, 660], [700, 660], [1000, 660], [1300, 660]]
+        #                  [100, 380], [400, 380], [700, 380], [1000, 380], [1300, 380],
+        #                  [100, 660], [400, 660], [700, 660], [1000, 660], [1300, 660]]
+        self.locations = [[100, 130], [400, 130], [700, 130], [1000, 130], [1300, 130],
+                          [100, 370], [400, 370], [700, 370], [1000, 370], [1300, 370],
+                          [100, 610], [400, 610], [700, 610], [1000, 610], [1300, 610]]
         # official maps
         tempArray = []
         for i in range(self.oldMapCount):
@@ -235,7 +235,7 @@ class GameMain:
             if i >= 15:
                 tempArray[len(tempArray)-1].enable = False
         self.mapButtons.append(tempArray)
-        self.mapButtons[1].append(Button.Button(self.screen, 750, 750, 100, self.crossing, "generateMapWFC"))
+        self.mapButtons[1].append(Button.Button(self.screen, 750, 700, 100, self.crossing, "generateMapWFC"))
         tempArray = []
         tempArray.append(Button.Button(self.screen, 75, 800, 50, self.previousPageButtonImg, "previousPage"))
         tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.nextPageButtonImg, "nextPage"))
