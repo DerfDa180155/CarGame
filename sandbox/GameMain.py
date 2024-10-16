@@ -639,34 +639,17 @@ class GameMain:
                             elif button.action == "ready":
                                 self.CO.gameStatus = "selectMap"
                 case "selectMap":
-                    #if self.oldMapCount != self.CO.mapController.getCountMaps(True):
-                    #    self.oldMapCount = self.CO.mapController.getCountMaps(True)
-                    #    self.mapButtons = []
-                    #    for i in range(self.oldMapCount):
-                    #        self.mapButtons.append(
-                    #            Button.Button(self.screen, self.locations[i][0], self.locations[i][1], self.imageMapSize, self.empty, str(i)))
-
                     # calculate max page
                     maxPageOfficialMaps = round((len(self.CO.mapButtons[0])/15)+0.5)-1
                     maxPageCustomMaps = round((len(self.CO.mapButtons[1])/15)+0.5)-1
-                    #maxPage = maxPageOfficialMaps + maxPageCustomMaps - 1
-                    #if self.CO.mapButtonPage > maxPageOfficialMaps:
-                    #    index = 1
-                    #     self.CO.officialMaps = False
-                    #else:
-                    #    index = 0
-                    #    self.CO.officialMaps = True
 
                     # previous and next page buttons enable and disable
                     for button in self.CO.mapButtons[2]:
                         if button.action == "previousPage":
                             button.enable = self.CO.mapButtonPage > 0
                         elif button.action == "nextPage":
-                            if self.CO.officialMaps:
-                                button.enable = self.CO.mapButtonPage < maxPageOfficialMaps
-                            else:
-                                button.enable = self.CO.mapButtonPage < maxPageCustomMaps
-                            #button.enable = self.CO.mapButtonPage < maxPage
+                            button.enable = (self.CO.officialMaps and (self.CO.mapButtonPage < maxPageOfficialMaps)) or (not self.CO.officialMaps and (self.CO.mapButtonPage < maxPageCustomMaps))
+
 
                     # hotkeys for debugging and testing
                     if keys[pygame.K_j]:
@@ -693,13 +676,9 @@ class GameMain:
                     if self.CO.officialMaps:
                         index = 0
 
-                    print(self.CO.officialMaps)
-                    #count = 0
                     if self.CO.officialMaps: # official maps
                         for button in self.CO.mapButtons[0]:
-                            #if button.action == str(count): # only toggle the current map buttons
                             button.enable = self.CO.mapButtonPage * 15 <= int(button.action) <= (self.CO.mapButtonPage + 1) * 15
-                            #count += 1
                         for button in self.CO.mapButtons[1]:
                             button.enable = False
 
@@ -710,10 +689,7 @@ class GameMain:
                             if button.action == "generateMapWFC":
                                 button.enable = True
                             else:
-                                #if button.action == str(count): # only toggle the current map buttons
                                 button.enable = (self.CO.mapButtonPage-maxPageOfficialMaps) * 15 <= int(button.action) <= ((self.CO.mapButtonPage-maxPageOfficialMaps) + 1) * 15
-                                #    count += 1
-
 
                     for button in self.CO.mapButtons[index] + self.CO.mapButtons[2]:
                         if button.clicked(mx, my, mousePressedUp):
