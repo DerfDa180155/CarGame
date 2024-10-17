@@ -237,8 +237,8 @@ class GameMain:
         self.mapButtons.append(tempArray)
         self.mapButtons[1].append(Button.Button(self.screen, 750, 700, 100, self.crossing, "generateMapWFC"))
         tempArray = []
-        tempArray.append(Button.Button(self.screen, 75, 800, 50, self.previousPageButtonImg, "previousPage"))
-        tempArray.append(Button.Button(self.screen, 1475, 800, 50, self.nextPageButtonImg, "nextPage"))
+        tempArray.append(Button.Button(self.screen, 700, 825, 50, self.previousPageButtonImg, "previousPage"))
+        tempArray.append(Button.Button(self.screen, 850, 825, 50, self.nextPageButtonImg, "nextPage"))
         tempArray.append(Button.Button(self.screen, 100, 20, 50, self.returnButtonImg, "return"))
         tempArray.append(Button.Button(self.screen, 975, 825, 50, self.selectButtonImg, "toggleMaps"))
         self.mapButtons.append(tempArray)
