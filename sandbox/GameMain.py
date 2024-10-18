@@ -239,8 +239,8 @@ class GameMain:
         tempArray = []
         tempArray.append(Button.Button(self.screen, 700, 825, 50, self.previousPageButtonImg, "previousPage"))
         tempArray.append(Button.Button(self.screen, 850, 825, 50, self.nextPageButtonImg, "nextPage"))
-        tempArray.append(Button.Button(self.screen, 100, 20, 50, self.returnButtonImg, "return"))
-        tempArray.append(Button.Button(self.screen, 975, 825, 50, self.selectButtonImg, "toggleMaps"))
+        tempArray.append(Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return"))
+        tempArray.append(Button.Button(self.screen, 1475, 825, 50, self.selectButtonImg, "toggleMaps"))
         self.mapButtons.append(tempArray)
         self.mapButtonPage = 0
 
