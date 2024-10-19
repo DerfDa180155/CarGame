@@ -136,11 +136,11 @@ class GameMain:
         # game mode buttons
         self.singlePlayerButton = Button.Button(self.screen, 100, 100, 150, self.horizontalLine, "singleplayer")
         self.multiPlayerButton = Button.Button(self.screen, 100, 300, 150, self.crossing, "multiplayer")
-        self.returnButton = Button.Button(self.screen, 100, 750, 100, self.returnButtonImg, "return")
+        self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
         self.gameModeButtons = [self.singlePlayerButton, self.multiPlayerButton, self.returnButton]
 
         # car selector buttons
-        self.returnButton = Button.Button(self.screen, 100, 750, 100, self.returnButtonImg, "return")
+        self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
         self.readyButton = Button.Button(self.screen, 750, 750, 100, self.horizontalLine, "ready")
         self.carSelectorButtons = [self.returnButton, self.readyButton]
 
@@ -197,7 +197,7 @@ class GameMain:
         self.startXScrollButton = Button.Button(self.screen, 1150, 785, 30, self.scrollBarImg, "scrollButton-startX")
         self.startYScrollButton = Button.Button(self.screen, 1150, 830, 30, self.scrollBarImg, "scrollButton-startY")
         self.startDirScrollButton = Button.Button(self.screen, 1555, 830, 30, self.scrollBarImg, "scrollButton-startDir")
-        self.returnButton = Button.Button(self.screen, 100, 20, 50, self.returnButtonImg, "return")
+        self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
         self.mapMakerButtons = [self.bottomRightButton, self.bottomLeftButton, self.topRightButton, self.topLeftButton, self.verticalLineButton, self.horizontalLineButton, self.emptyButton, self.eraseModeButton, self.startPieceHighlightButton, self.clearButton, self.saveButton, self.fillEmptyButton, self.enterNameButton, self.createNewMapButton, self.XScrollButton, self.YScrollButton, self.startXScrollButton, self.startYScrollButton, self.startDirScrollButton, self.returnButton]
 
         # leaderboard buttons
