@@ -695,9 +695,10 @@ class GameMain:
                         if button.clicked(mx, my, mousePressedUp):
                             if not button.action.isnumeric():
                                 if button.action == "generateMapWFC":
-                                    self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
-                                    self.CO.gameStatus = "raceSettings"
-                                    self.CO.raceObject.reset(True)
+                                    #self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
+                                    #self.CO.gameStatus = "raceSettings"
+                                    #self.CO.raceObject.reset(True)
+                                    self.CO.gameStatus = "generateMapWFC"
                                 elif button.action == "previousPage":
                                     if self.CO.mapButtonPage > 0:
                                         self.CO.mapButtonPage -= 1
@@ -724,6 +725,8 @@ class GameMain:
                                                  direction=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartDirection)
                                 self.CO.gameStatus = "raceSettings"
                                 self.CO.raceObject.reset(True)
+                case "generateMapWFC":
+                    pass
                 case "raceSettings":
                     for button in self.CO.raceSettingsButtons:
                         if button.clicked(mx, my, mousePressedUp):

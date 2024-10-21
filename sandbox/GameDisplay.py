@@ -42,6 +42,8 @@ class GameDisplay(threading.Thread):
                     self.drawCarSelector()
                 case "selectMap":
                     self.drawMapSelector()
+                case "generateMapWFC":
+                    self.drawMapGeneratorWFC()
                 case "raceSettings":
                     self.drawRaceSettings()
                 case "race":
@@ -372,6 +374,13 @@ class GameDisplay(threading.Thread):
                     newRect = text.get_rect()
                     newRect.center = newX, newY # center text
                     self.screen.blit(text, newRect)
+
+    def drawMapGeneratorWFC(self):
+        self.screen.fill((100, 150, 100))  # background
+
+        # draw menu Text
+        self.drawMenuText("Map Generator", (255, 255, 255))
+        self.drawMenuText("\nWave Function Collapse", (255, 255, 255))
 
     def drawRaceSettings(self):
         self.screen.fill((100, 200, 200))  # background
