@@ -144,6 +144,12 @@ class GameMain:
         self.readyButton = Button.Button(self.screen, 750, 750, 100, self.horizontalLine, "ready")
         self.carSelectorButtons = [self.returnButton, self.readyButton]
 
+        # generate Map WFC buttons
+        self.generateButton = Button.Button(self.screen, 100, 700, 100, self.empty, "generate")
+        self.saveButton = Button.Button(self.screen, 750, 750, 100, self.saveButtonImg, "save")
+        self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
+        self.generateMapButtons = [self.generateButton, self.saveButton, self.returnButton]
+
         # race settings buttons
         self.startRaceButtons = Button.Button(self.screen, 750, 720, 150, self.horizontalLine, "start")
         self.backButton = Button.Button(self.screen, 50, 770, 100, self.returnButtonImg, "back")
@@ -254,6 +260,7 @@ class GameMain:
                                                           waitForKey=False, menuButtons=self.menuButtons,
                                                           gameModeButtons=self.gameModeButtons,
                                                           carSelectorButtons = self.carSelectorButtons,
+                                                          generateMapButtons = self.generateMapButtons,
                                                           raceSettingsButtons=self.raceSettingsButtons,
                                                           leaderboardButtons=self.leaderboardButtons,
                                                           settingsButtons=self.settingsButtons,

@@ -382,6 +382,10 @@ class GameDisplay(threading.Thread):
         self.drawMenuText("Map Generator", (255, 255, 255))
         self.drawMenuText("\nWave Function Collapse", (255, 255, 255))
 
+        for button in self.CO.generateMapButtons:
+            if button.enable:
+                button.draw(self.windowWidth, self.windowHeight)
+
     def drawRaceSettings(self):
         self.screen.fill((100, 200, 200))  # background
 
