@@ -733,7 +733,17 @@ class GameMain:
                                 self.CO.gameStatus = "raceSettings"
                                 self.CO.raceObject.reset(True)
                 case "generateMapWFC":
-                    pass
+                    for button in self.CO.generateMapButtons:
+                        if button.clicked(mx, my, mousePressedUp):
+                            if button.action == "return":
+                                self.CO.gameStatus = "selectMap"
+                            elif button.action == "generate":
+                                print("generate")
+                                #self.mapController.generateNewMap(2,2)
+                            elif button.action == "save":
+                                print("save")
+                                #self.mapController.save()
+
                 case "raceSettings":
                     for button in self.CO.raceSettingsButtons:
                         if button.clicked(mx, my, mousePressedUp):
