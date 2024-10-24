@@ -739,7 +739,7 @@ class GameMain:
                                 self.CO.gameStatus = "selectMap"
                             elif button.action == "generate":
                                 print("generate")
-                                #self.mapController.generateNewMap(2,2)
+                                self.mapController.generateNewMap(10,10, False, True)
                             elif button.action == "save":
                                 print("save")
                                 #self.mapController.save()

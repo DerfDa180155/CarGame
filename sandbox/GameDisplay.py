@@ -382,6 +382,20 @@ class GameDisplay(threading.Thread):
         self.drawMenuText("Map Generator", (255, 255, 255))
         self.drawMenuText("\nWave Function Collapse", (255, 255, 255))
 
+        newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
+        font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+
+        # map preview
+        topLeft = [(870 * self.windowWidth) / 1600, (120 * self.windowHeight) / 900]
+        bottomRight = [(1570 * self.windowWidth) / 1600, (790 * self.windowHeight) / 900]
+        self.drawMap(self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap, topLeft, bottomRight)
+
+        # border
+        pygame.draw.line(self.screen, (0, 0, 0), topLeft, (bottomRight[0], topLeft[1]), int(newTextSize / 15)) # top
+        pygame.draw.line(self.screen, (0, 0, 0), (bottomRight[0], topLeft[1]), bottomRight, int(newTextSize / 15)) # right
+        pygame.draw.line(self.screen, (0, 0, 0), bottomRight, (topLeft[0], bottomRight[1]), int(newTextSize / 15)) # bottom
+        pygame.draw.line(self.screen, (0, 0, 0), (topLeft[0], bottomRight[1]), topLeft, int(newTextSize / 15)) # left
+
         for button in self.CO.generateMapButtons:
             if button.enable:
                 button.draw(self.windowWidth, self.windowHeight)
