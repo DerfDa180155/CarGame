@@ -148,7 +148,9 @@ class GameMain:
         self.generateButton = Button.Button(self.screen, 100, 700, 100, self.empty, "generate")
         self.saveButton = Button.Button(self.screen, 750, 750, 100, self.saveButtonImg, "save")
         self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
-        self.generateMapButtons = [self.generateButton, self.saveButton, self.returnButton]
+        self.scrollMaxXButton = Button.Button(self.screen, 710, 150, 45, self.scrollBarImg, "scrollX")
+        self.scrollMaxYButton = Button.Button(self.screen, 710, 150, 45, self.scrollBarImg, "scrollY")
+        self.generateMapButtons = [self.generateButton, self.saveButton, self.returnButton, self.scrollMaxXButton, self.scrollMaxYButton]
 
         # race settings buttons
         self.startRaceButtons = Button.Button(self.screen, 750, 720, 150, self.horizontalLine, "start")

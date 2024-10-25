@@ -323,7 +323,7 @@ class GameDisplay(threading.Thread):
             button.draw(self.windowWidth, self.windowHeight)
 
     def drawMapSelector(self):
-        self.screen.fill((100, 150, 250))  # background
+        self.screen.fill((100, 150, 250)) # background
 
         # draw menu Text
         self.drawMenuText("Map Selector", (255, 255, 255))
@@ -376,7 +376,7 @@ class GameDisplay(threading.Thread):
                     self.screen.blit(text, newRect)
 
     def drawMapGeneratorWFC(self):
-        self.screen.fill((100, 150, 100))  # background
+        self.screen.fill((100, 150, 100)) # background
 
         # draw menu Text
         self.drawMenuText("Map Generator", (255, 255, 255))
@@ -396,12 +396,33 @@ class GameDisplay(threading.Thread):
         pygame.draw.line(self.screen, (0, 0, 0), bottomRight, (topLeft[0], bottomRight[1]), int(newTextSize / 15)) # bottom
         pygame.draw.line(self.screen, (0, 0, 0), (topLeft[0], bottomRight[1]), topLeft, int(newTextSize / 15)) # left
 
+        settingsText = ["Max X: ", "Max Y: "]
+        settingsData = ["1", "1"]
+
+        for i in range(len(settingsText)):
+            # settings Text
+            text = font.render(settingsText[i], True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.x = newTextSize
+            newRect.y = newTextSize + newTextSize * (i + 2) + newTextSize * i / 2
+            self.screen.blit(text, newRect)
+
+            # settings Data
+            text = font.render(settingsData[i], True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.right = newTextSize * 17
+            newRect.y = newTextSize + newTextSize * (i + 2) + newTextSize * i / 2
+            self.screen.blit(text, newRect)
+
+            self.CO.generateMapButtons[i + 3].y = (newRect.y * 900) / self.windowHeight
+
+
         for button in self.CO.generateMapButtons:
             if button.enable:
                 button.draw(self.windowWidth, self.windowHeight)
 
     def drawRaceSettings(self):
-        self.screen.fill((100, 200, 200))  # background
+        self.screen.fill((100, 200, 200)) # background
 
         # display race settings
         newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
