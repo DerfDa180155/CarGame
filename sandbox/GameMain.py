@@ -745,6 +745,18 @@ class GameMain:
                             elif button.action == "save":
                                 print("save")
                                 #self.mapController.save()
+                        if button.hover(mx, my):
+                            match button.action:
+                                case "scrollX":
+                                    if scrolledUp:
+                                        print("x up")
+                                    elif scrolledDown:
+                                        print("x down")
+                                case "scrollY":
+                                    if scrolledUp:
+                                        print("y up")
+                                    elif scrolledDown:
+                                        print("y down")
 
                 case "raceSettings":
                     for button in self.CO.raceSettingsButtons:
