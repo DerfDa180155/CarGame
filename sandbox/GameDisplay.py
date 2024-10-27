@@ -397,7 +397,7 @@ class GameDisplay(threading.Thread):
         pygame.draw.line(self.screen, (0, 0, 0), (topLeft[0], bottomRight[1]), topLeft, int(newTextSize / 15)) # left
 
         settingsText = ["Max X: ", "Max Y: "]
-        settingsData = ["1", "1"]
+        settingsData = [str(self.CO.mapController.mapGeneratorX), str(self.CO.mapController.mapGeneratorY)]
 
         for i in range(len(settingsText)):
             # settings Text

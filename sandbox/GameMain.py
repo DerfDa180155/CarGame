@@ -749,14 +749,18 @@ class GameMain:
                             match button.action:
                                 case "scrollX":
                                     if scrolledUp:
-                                        print("x up")
+                                        self.CO.mapController.mapGeneratorX += 1
                                     elif scrolledDown:
-                                        print("x down")
+                                        self.CO.mapController.mapGeneratorX -= 1
+                                        if self.CO.mapController.mapGeneratorX < 2:
+                                            self.CO.mapController.mapGeneratorX = 2
                                 case "scrollY":
                                     if scrolledUp:
-                                        print("y up")
+                                        self.CO.mapController.mapGeneratorY += 1
                                     elif scrolledDown:
-                                        print("y down")
+                                        self.CO.mapController.mapGeneratorY -= 1
+                                        if self.CO.mapController.mapGeneratorY < 2:
+                                            self.CO.mapController.mapGeneratorY = 2
 
                 case "raceSettings":
                     for button in self.CO.raceSettingsButtons:
