@@ -19,8 +19,8 @@ class MapController:
         self.currentMapIndex = 0
 
         # variables for map generator
-        self.mapGeneratorX = 2
-        self.mapGeneratorY = 2
+        self.mapGeneratorX = 5
+        self.mapGeneratorY = 5
 
         self.mapDefinition = [[0, 0, 0, 0],  # top, right, bottom, left
                               [1, 0, 0, 1],
