@@ -304,6 +304,8 @@ class GameMain:
                             self.CO.gameStatus = "selectMode"
                         elif self.CO.gameStatus == "selectMap":
                             self.CO.gameStatus = "selectCar"
+                        elif self.CO.gameStatus == "generateMapWFC":
+                            self.CO.gameStatus = "selectMap"
                         elif self.CO.gameStatus == "raceSettings":
                             self.CO.gameStatus = "selectMap"
                         elif self.CO.gameStatus == "race":
