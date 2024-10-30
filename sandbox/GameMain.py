@@ -146,11 +146,12 @@ class GameMain:
 
         # generate Map WFC buttons
         self.generateButton = Button.Button(self.screen, 100, 700, 100, self.empty, "generate")
-        self.saveButton = Button.Button(self.screen, 750, 750, 100, self.saveButtonImg, "save")
+        self.saveButton = Button.Button(self.screen, 1400, 775, 100, self.saveButtonImg, "save")
+        self.playButton = Button.Button(self.screen, 750, 775, 100, self.selectButtonImg, "play")
         self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
         self.scrollMaxXButton = Button.Button(self.screen, 710, 150, 45, self.scrollBarImg, "scrollX")
         self.scrollMaxYButton = Button.Button(self.screen, 710, 150, 45, self.scrollBarImg, "scrollY")
-        self.generateMapButtons = [self.generateButton, self.saveButton, self.returnButton, self.scrollMaxXButton, self.scrollMaxYButton]
+        self.generateMapButtons = [self.generateButton, self.saveButton, self.playButton, self.returnButton, self.scrollMaxXButton, self.scrollMaxYButton]
 
         # race settings buttons
         self.startRaceButtons = Button.Button(self.screen, 750, 720, 150, self.horizontalLine, "start")
@@ -743,9 +744,13 @@ class GameMain:
                                 self.CO.gameStatus = "selectMap"
                             elif button.action == "generate":
                                 self.mapController.generateNewMap(self.CO.mapController.mapGeneratorX, self.CO.mapController.mapGeneratorY, False, True)
+                                print(len(self.CO.mapController.customMaps))
                             elif button.action == "save":
                                 print("save")
                                 #self.mapController.save()
+                            elif button.action == "play":
+                                self.CO.gameStatus = "raceSettings"
+                                self.CO.raceObject.reset(True)
                         if button.hover(mx, my):
                             match button.action:
                                 case "scrollX":

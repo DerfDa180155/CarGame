@@ -414,7 +414,7 @@ class GameDisplay(threading.Thread):
             newRect.y = newTextSize + newTextSize * (i + 2) + newTextSize * i / 2
             self.screen.blit(text, newRect)
 
-            self.CO.generateMapButtons[i + 3].y = (newRect.y * 900) / self.windowHeight
+            self.CO.generateMapButtons[i + 4].y = (newRect.y * 900) / self.windowHeight
 
 
         for button in self.CO.generateMapButtons:
