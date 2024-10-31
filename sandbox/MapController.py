@@ -100,7 +100,7 @@ class MapController:
         # this function will get made in the future (maybe with a custom mapmaker)
         pass
 
-    def generateNewMap(self, x: int, y: int, saveMap=False, setIndex=False):
+    def generateNewMap(self, x: int, y: int, saveMap=False, setIndex=False, replaceOldMap=False):
         generateName = "generatedWFC"
         self.checkAndRemoveOldGenerated(generateName)
 
@@ -146,9 +146,16 @@ class MapController:
         if saveMap:
             newMap.saveMap(self.mapPath)
         print(newMap.myMap)
-        self.customMaps.append(newMap)
-        if setIndex:
-            self.currentMapIndex = self.getCountMaps(False)-1
+        if replaceOldMap:
+            for i in range(len(self.customMaps)):
+                if self.customMaps[i].name == "generatedWFC":
+                    self.customMaps[i] = newMap
+                    if setIndex:
+                        self.currentMapIndex = i
+        else:
+            self.customMaps.append(newMap)
+            if setIndex:
+                self.currentMapIndex = self.getCountMaps(False)-1
         return newMap
 
     def checkAndRemoveOldGenerated(self, name):

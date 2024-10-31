@@ -743,8 +743,7 @@ class GameMain:
                             if button.action == "return":
                                 self.CO.gameStatus = "selectMap"
                             elif button.action == "generate":
-                                self.mapController.generateNewMap(self.CO.mapController.mapGeneratorX, self.CO.mapController.mapGeneratorY, False, True)
-                                print(len(self.CO.mapController.customMaps))
+                                self.mapController.generateNewMap(self.CO.mapController.mapGeneratorX, self.CO.mapController.mapGeneratorY, False, True, True)
                             elif button.action == "save":
                                 print("save")
                                 #self.mapController.save()
