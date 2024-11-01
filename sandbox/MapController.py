@@ -146,13 +146,15 @@ class MapController:
         if saveMap:
             newMap.saveMap(self.mapPath)
         print(newMap.myMap)
+        found = False
         if replaceOldMap:
             for i in range(len(self.customMaps)):
-                if self.customMaps[i].name == "generatedWFC":
+                if self.customMaps[i].name == "generatedWFC" and not found:
                     self.customMaps[i] = newMap
+                    found = True
                     if setIndex:
                         self.currentMapIndex = i
-        else:
+        if not found:
             self.customMaps.append(newMap)
             if setIndex:
                 self.currentMapIndex = self.getCountMaps(False)-1
