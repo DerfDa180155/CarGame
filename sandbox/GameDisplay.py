@@ -396,8 +396,8 @@ class GameDisplay(threading.Thread):
         pygame.draw.line(self.screen, (0, 0, 0), bottomRight, (topLeft[0], bottomRight[1]), int(newTextSize / 15)) # bottom
         pygame.draw.line(self.screen, (0, 0, 0), (topLeft[0], bottomRight[1]), topLeft, int(newTextSize / 15)) # left
 
-        settingsText = ["Max X: ", "Max Y: "]
-        settingsData = [str(self.CO.mapController.mapGeneratorX), str(self.CO.mapController.mapGeneratorY)]
+        settingsText = ["Max X: ", "Max Y: ", "", "Map informations:", "Start Position X:", "Start Position Y:", "Start Direction:"]
+        settingsData = [str(self.CO.mapController.mapGeneratorX), str(self.CO.mapController.mapGeneratorY), "", "", str(self.CO.mapController.getCurrentMap(False).playerStartX), str(self.CO.mapController.getCurrentMap(False).playerStartY), str(self.CO.mapController.getCurrentMap(False).playerStartDirection)]
 
         for i in range(len(settingsText)):
             # settings Text
@@ -414,7 +414,8 @@ class GameDisplay(threading.Thread):
             newRect.y = newTextSize + newTextSize * (i + 2) + newTextSize * i / 2
             self.screen.blit(text, newRect)
 
-            self.CO.generateMapButtons[i + 4].y = (newRect.y * 900) / self.windowHeight
+            if i+4 < len(self.CO.generateMapButtons):
+                self.CO.generateMapButtons[i + 4].y = (newRect.y * 900) / self.windowHeight
 
 
         for button in self.CO.generateMapButtons:
