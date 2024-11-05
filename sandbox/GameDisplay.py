@@ -396,7 +396,23 @@ class GameDisplay(threading.Thread):
         pygame.draw.line(self.screen, (0, 0, 0), bottomRight, (topLeft[0], bottomRight[1]), int(newTextSize / 15)) # bottom
         pygame.draw.line(self.screen, (0, 0, 0), (topLeft[0], bottomRight[1]), topLeft, int(newTextSize / 15)) # left
 
-
+        # map information
+        sizeX = len(self.CO.mapController.getCurrentMap(False).myMap)
+        sizeY = len(self.CO.mapController.getCurrentMap(False).myMap[0])
+        sizeXOneSquare = 1600 / sizeX
+        sizeYOneSquare = 900 / sizeY
+        startX = self.CO.mapController.getCurrentMap(False).playerStartX
+        startY = self.CO.mapController.getCurrentMap(False).playerStartY
+        countX = 0
+        countY = 0
+        while startX >= 0:
+            startX -= sizeXOneSquare
+            countX += 1
+        while startY >= 0:
+            startY -= sizeYOneSquare
+            countY += 1
+        playerStartX = str(countX)
+        playerStartY = str(countY)
         playerStartDirection = ""
         match self.CO.mapController.getCurrentMap(False).playerStartDirection:
             case 0:
@@ -408,7 +424,7 @@ class GameDisplay(threading.Thread):
             case 270:
                 playerStartDirection = "UP"
         settingsText = ["Max X: ", "Max Y: ", "", "Map informations:", "Start Position X:", "Start Position Y:", "Start Direction:"]
-        settingsData = [str(self.CO.mapController.mapGeneratorX), str(self.CO.mapController.mapGeneratorY), "", "", str(self.CO.mapController.getCurrentMap(False).playerStartX), str(self.CO.mapController.getCurrentMap(False).playerStartY), playerStartDirection]
+        settingsData = [str(self.CO.mapController.mapGeneratorX), str(self.CO.mapController.mapGeneratorY), "", "", playerStartX, playerStartY, playerStartDirection]
 
         for i in range(len(settingsText)):
             # settings Text
