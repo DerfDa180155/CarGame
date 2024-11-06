@@ -385,17 +385,6 @@ class GameDisplay(threading.Thread):
         newTextSize = int((50 * self.windowWidth) / 2000)  # scale text size
         font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
 
-        # map preview
-        topLeft = [(870 * self.windowWidth) / 1600, (120 * self.windowHeight) / 900]
-        bottomRight = [(1570 * self.windowWidth) / 1600, (790 * self.windowHeight) / 900]
-        self.drawMap(self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap, topLeft, bottomRight)
-
-        # border
-        pygame.draw.line(self.screen, (0, 0, 0), topLeft, (bottomRight[0], topLeft[1]), int(newTextSize / 15)) # top
-        pygame.draw.line(self.screen, (0, 0, 0), (bottomRight[0], topLeft[1]), bottomRight, int(newTextSize / 15)) # right
-        pygame.draw.line(self.screen, (0, 0, 0), bottomRight, (topLeft[0], bottomRight[1]), int(newTextSize / 15)) # bottom
-        pygame.draw.line(self.screen, (0, 0, 0), (topLeft[0], bottomRight[1]), topLeft, int(newTextSize / 15)) # left
-
         # map information
         sizeX = len(self.CO.mapController.getCurrentMap(False).myMap)
         sizeY = len(self.CO.mapController.getCurrentMap(False).myMap[0])
@@ -443,6 +432,19 @@ class GameDisplay(threading.Thread):
 
             if i+4 < len(self.CO.generateMapButtons):
                 self.CO.generateMapButtons[i + 4].y = (newRect.y * 900) / self.windowHeight
+
+        # map preview
+        topLeft = [(870 * self.windowWidth) / 1600, (120 * self.windowHeight) / 900]
+        bottomRight = [(1570 * self.windowWidth) / 1600, (790 * self.windowHeight) / 900]
+        self.drawMap(self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap, topLeft, bottomRight, (countX-1, countY-1))
+
+        # border
+        pygame.draw.line(self.screen, (0, 0, 0), topLeft, (bottomRight[0], topLeft[1]), int(newTextSize / 15))  # top
+        pygame.draw.line(self.screen, (0, 0, 0), (bottomRight[0], topLeft[1]), bottomRight,
+                         int(newTextSize / 15))  # right
+        pygame.draw.line(self.screen, (0, 0, 0), bottomRight, (topLeft[0], bottomRight[1]),
+                         int(newTextSize / 15))  # bottom
+        pygame.draw.line(self.screen, (0, 0, 0), (topLeft[0], bottomRight[1]), topLeft, int(newTextSize / 15))  # left
 
 
         for button in self.CO.generateMapButtons:
@@ -560,7 +562,7 @@ class GameDisplay(threading.Thread):
             for button in self.CO.pauseButtons:
                 button.draw(self.windowWidth, self.windowHeight)
 
-    def drawMap(self, myMap=None, topLeft=None, bottomRight=None):
+    def drawMap(self, myMap=None, topLeft=None, bottomRight=None, highlight=None):
         if myMap is None:
             myMap = self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap
 
@@ -581,6 +583,11 @@ class GameDisplay(threading.Thread):
                                                                  (mapHeight / len(myMap[i])) + 1)),
                                          ((mapWidth / len(myMap) * i) + topLeft[0],
                                           (mapHeight / len(myMap[i]) * j) + topLeft[1]))
+                        if highlight is not None:
+                            if i == highlight[0] and j == highlight[1]:
+                                highlighter = pygame.Surface(((mapWidth / len(myMap)) + 1, (mapHeight / len(myMap[i])) + 1))
+                                highlighter.fill((70, 70, 70))
+                                self.screen.blit(highlighter, ((mapWidth / len(myMap) * i) + topLeft[0], (mapHeight / len(myMap[i]) * j) + topLeft[1]), special_flags=pygame.BLEND_RGBA_ADD)
         else:
             self.screen.fill((50, 200, 200))
 
