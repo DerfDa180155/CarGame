@@ -68,6 +68,9 @@ class MapController:
                     self.maps.append(newMap)
 
         # custom maps
+        newMap = RaceMap.RaceMap(myMap=[[4, 2], [3, 1]], name="currentGeneratedWFC")
+
+        self.customMaps.append(newMap)
         print("Custom:")
         for root, dirs, files in os.walk(customMapsPath):
             for file in sorted(files):
@@ -101,7 +104,7 @@ class MapController:
         pass
 
     def generateNewMap(self, x: int, y: int, saveMap=False, setIndex=False, replaceOldMap=False):
-        generateName = "generatedWFC"
+        generateName = "currentGeneratedWFC"
         self.checkAndRemoveOldGenerated(generateName)
 
         mapArray = self.WFC.generate(x, y)
@@ -149,7 +152,7 @@ class MapController:
         found = False
         if replaceOldMap:
             for i in range(len(self.customMaps)):
-                if self.customMaps[i].name == "generatedWFC" and not found:
+                if self.customMaps[i].name == generateName and not found:
                     self.customMaps[i] = newMap
                     found = True
                     if setIndex:
