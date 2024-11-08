@@ -346,6 +346,21 @@ class GameMain:
                 self.CO.settings.debugMode = not self.CO.settings.debugMode
                 time.sleep(0.3)
 
+            # debug hotkeys
+            if self.CO.settings.debugMode:
+                if keys[pygame.K_y]:
+                    print("resume")
+                    self.CO.settings.currentDebugMode = 0
+                    time.sleep(0.3)
+                if keys[pygame.K_x]:
+                    print("stop")
+                    self.CO.settings.currentDebugMode = 1
+                    time.sleep(0.3)
+                if keys[pygame.K_c]:
+                    print("step 1")
+                    self.CO.settings.currentDebugMode = 2
+                    time.sleep(0.3)
+
             match self.CO.gameStatus:
                 case "menu":
                     for button in self.CO.menuButtons:

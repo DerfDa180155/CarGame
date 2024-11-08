@@ -25,6 +25,7 @@ class Settings:
         self.displayTPS = False
 
         self.debugMode = False
+        self.currentDebugMode = 0
 
         self.loadSettings()
 
