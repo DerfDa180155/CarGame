@@ -346,6 +346,9 @@ class GameMain:
                 self.CO.settings.debugMode = not self.CO.settings.debugMode
                 time.sleep(0.3)
 
+            if self.CO.settings.currentDebugMode >= 2:
+                self.CO.settings.currentDebugMode -= 1
+
             # debug hotkeys
             if self.CO.settings.debugMode:
                 if keys[pygame.K_y]:
@@ -356,584 +359,585 @@ class GameMain:
                     print("stop")
                     self.CO.settings.currentDebugMode = 1
                     time.sleep(0.3)
-                if keys[pygame.K_c]:
+                if keys[pygame.K_c] and self.CO.settings.currentDebugMode == 1:
                     print("step 1")
                     self.CO.settings.currentDebugMode = 2
-                    time.sleep(0.3)
+                    time.sleep(0.15)
 
-            match self.CO.gameStatus:
-                case "menu":
-                    for button in self.CO.menuButtons:
-                        if button.clicked(mx, my, mousePressedUp):
-                            if "https://" in button.action:
-                                if not button.hadAction:
-                                    button.hadAction = True
-                                    webbrowser.open(button.action)
-                            elif "quit" in button.action: # quit the game
-                                self.running = False
-                                self.gameDisplay.running = False
-                            else:
-                                self.CO.gameStatus = button.action
-                case "settings":
-                    # hotkeys for debugging and testing
-                    if keys[pygame.K_s]:
-                        self.CO.settings.saveSettings()
-                        time.sleep(0.3)
-
-                    for button in self.CO.settingsButtons:
-                        if button.clicked(mx, my, mousePressedUp):
-                            if button.action == "save":
-                                self.CO.displayTempSettings.saveSettings()
-                            elif button.action == "back":
-                                self.CO.gameStatus = "menu"
-                            elif button.action == "apply":
-                                self.CO.settings.copyFrom(self.CO.displayTempSettings)
-                            elif button.action == "toggleDebugMode":
-                                self.CO.displayTempSettings.debugMode = not self.CO.displayTempSettings.debugMode
-                            elif button.action == "toggleDisplayFPS":
-                                self.CO.displayTempSettings.displayFPS = not self.CO.displayTempSettings.displayFPS
-                            elif button.action == "toggleDisplayTPS":
-                                self.CO.displayTempSettings.displayTPS = not self.CO.displayTempSettings.displayTPS
-                            elif button.action not in ["scrollFPS", "scrollTPS"]:
-                                text = ""
-                                self.CO.waitForKey = True
-                                while text == "":
-                                    for detect in pygame.event.get():
-                                        if detect.type == pygame.KEYDOWN:
-                                            text = detect.key
-                                self.CO.waitForKey = False
-                                match button.action:
-                                    case "forwardKey":
-                                        self.CO.displayTempSettings.playerKeys[0][0] = pygame.key.name(text)
-                                    case "backwardKey":
-                                        self.CO.displayTempSettings.playerKeys[0][1] = pygame.key.name(text)
-                                    case "leftKey":
-                                        self.CO.displayTempSettings.playerKeys[0][2] = pygame.key.name(text)
-                                    case "rightKey":
-                                        self.CO.displayTempSettings.playerKeys[0][3] = pygame.key.name(text)
-                                    case "itemKey":
-                                        self.CO.displayTempSettings.playerKeys[0][4] = pygame.key.name(text)
-                                    case "pauseKey":
-                                        self.CO.displayTempSettings.pauseKey = pygame.key.name(text)
-                                    case "secondPlayerForwardKey":
-                                        self.CO.displayTempSettings.playerKeys[1][0] = pygame.key.name(text)
-                                    case "secondPlayerBackwardKey":
-                                        self.CO.displayTempSettings.playerKeys[1][1] = pygame.key.name(text)
-                                    case "secondPlayerLeftKey":
-                                        self.CO.displayTempSettings.playerKeys[1][2] = pygame.key.name(text)
-                                    case "secondPlayerRightKey":
-                                        self.CO.displayTempSettings.playerKeys[1][3] = pygame.key.name(text)
-                                    case "secondPlayerItemKey":
-                                        self.CO.displayTempSettings.playerKeys[1][4] = pygame.key.name(text)
-                        if button.hover(mx, my):
-                            match button.action:
-                                case "scrollFPS":
-                                    if scrolledUp:
-                                        self.CO.displayTempSettings.FPS += 1
-                                    if scrolledDown and self.CO.displayTempSettings.FPS > 1:
-                                        self.CO.displayTempSettings.FPS -= 1
-                                case "scrollTPS":
-                                    if scrolledUp:
-                                        self.CO.displayTempSettings.TPS += 1
-                                    if scrolledDown and self.CO.displayTempSettings.TPS > 1:
-                                        self.CO.displayTempSettings.TPS -= 1
-                case "mapMaker":
-                    if self.CO.mapMaker.enteringName:
-                        self.CO.mapMaker.tempName = ""
-                        self.CO.waitForKey = True
-                        while self.CO.waitForKey:
-                            for detect in pygame.event.get():
-                                if detect.type == pygame.KEYDOWN:
-                                    if detect.key == 13:
-                                        self.CO.waitForKey = False
-                                    else:
-                                        if detect.key == 8:
-                                            self.CO.mapMaker.tempName = self.CO.mapMaker.tempName[:-1]
-                                        else:
-                                            self.CO.mapMaker.tempName += str(detect.unicode)
-                            time.sleep(0.001) # a little delay, because the display thread drops to 2 FPS without
-                        self.CO.mapMaker.enteringName = False
-                        self.CO.mapMaker.mapName = str(self.CO.mapMaker.tempName)
-                    else:
-                        # hotkeys
-                        if keys[pygame.K_w]:
-                            if self.CO.mapMaker.selectedPiece == 3: # bottom left
-                                self.CO.mapMaker.selectedPiece = 1 # top left
-                            elif self.CO.mapMaker.selectedPiece == 4: # bottom right
-                                self.CO.mapMaker.selectedPiece = 2 # top right
-                            elif self.CO.mapMaker.selectedPiece in [0, 6]: # empty | horizontal line
-                                self.CO.mapMaker.selectedPiece = 5 # vertical line
-                        elif keys[pygame.K_s]:
-                            if self.CO.mapMaker.selectedPiece == 1: # top left
-                                self.CO.mapMaker.selectedPiece = 3 # bottom left
-                            elif self.CO.mapMaker.selectedPiece == 2: # top right
-                                self.CO.mapMaker.selectedPiece = 4 # bottom right
-                            elif self.CO.mapMaker.selectedPiece in [0, 6]: # empty | horizontal line
-                                self.CO.mapMaker.selectedPiece = 5 # vertical line
-                        elif keys[pygame.K_a]:
-                            if self.CO.mapMaker.selectedPiece == 2: # top right
-                                self.CO.mapMaker.selectedPiece = 1 # top left
-                            elif self.CO.mapMaker.selectedPiece == 4: # bottom right
-                                self.CO.mapMaker.selectedPiece = 3 # bottom left
-                            elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
-                                self.CO.mapMaker.selectedPiece = 6 # horizontal line
-                        elif keys[pygame.K_d]:
-                            if self.CO.mapMaker.selectedPiece == 1: # top left
-                                self.CO.mapMaker.selectedPiece = 2 # top right
-                            elif self.CO.mapMaker.selectedPiece == 3: # bottom left
-                                self.CO.mapMaker.selectedPiece = 4 # bottom right
-                            elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
-                                self.CO.mapMaker.selectedPiece = 6 # horizontal line
-                        elif keys[pygame.K_1]:
-                            self.CO.mapMaker.selectedPiece = 0
-                        elif keys[pygame.K_2]:
-                            self.CO.mapMaker.selectedPiece = 1
-                        elif keys[pygame.K_3]:
-                            self.CO.mapMaker.selectedPiece = 2
-                        elif keys[pygame.K_4]:
-                            self.CO.mapMaker.selectedPiece = 3
-                        elif keys[pygame.K_5]:
-                            self.CO.mapMaker.selectedPiece = 4
-                        elif keys[pygame.K_6]:
-                            self.CO.mapMaker.selectedPiece = 5
-                        elif keys[pygame.K_7]:
-                            self.CO.mapMaker.selectedPiece = 6
-                        elif keys[pygame.K_g]: # clear map
-                            self.CO.mapMaker.clearMap()
-                        elif keys[pygame.K_h]: # fill map empty
-                            self.CO.mapMaker.fillMap(0)
-                        elif keys[pygame.K_q]:
-                            self.CO.mapMaker.enablePlace = not self.CO.mapMaker.enablePlace
-                            time.sleep(0.2)
-                        elif keys[pygame.K_e]:
-                            self.CO.mapMaker.highlightStartingPiece = not self.CO.mapMaker.highlightStartingPiece
-                            #print(self.CO.mapMaker.highlightStartingPiece)
-                            time.sleep(0.2)
-
-                        for button in self.CO.mapMakerButtons:
+            if self.CO.settings.currentDebugMode == 0 or self.CO.settings.currentDebugMode >= 2:
+                match self.CO.gameStatus:
+                    case "menu":
+                        for button in self.CO.menuButtons:
                             if button.clicked(mx, my, mousePressedUp):
-                                if "mapPiece-" in button.action:
-                                    dictionary = {
-                                        "mapPiece-empty": 0,
-                                        "mapPiece-topLeft": 1,
-                                        "mapPiece-topRight": 2,
-                                        "mapPiece-bottomLeft": 3,
-                                        "mapPiece-bottomRight": 4,
-                                        "mapPiece-verticalLine": 5,
-                                        "mapPiece-horizontalLine": 6,
-                                    }
-                                    self.CO.mapMaker.selectedPiece = dictionary[button.action]
-                                    #print(self.CO.mapMaker.selectedPiece)
-                                elif button.action == "actionButton-clear":
-                                    self.CO.mapMaker.clearMap()
-                                elif button.action == "actionButton-save":
-                                    self.CO.mapMaker.save(self.customMapPath)
-                                elif button.action == "actionButton-fillEmpty":
-                                    self.CO.mapMaker.fillMap(0)
-                                elif button.action == "actionButton-enterName":
-                                    self.CO.mapMaker.enteringName = True
-                                elif button.action == "actionButton-eraseMode":
-                                    self.CO.mapMaker.enablePlace = not self.CO.mapMaker.enablePlace
-                                elif button.action == "actionButton-createNewMap":
-                                    self.CO.mapMaker.createEmptyMap(self.CO.mapMaker.x, self.CO.mapMaker.y, True)
-                                elif button.action == "actionButton-startPieceHighlight":
-                                    self.CO.mapMaker.highlightStartingPiece = not self.CO.mapMaker.highlightStartingPiece
-                                elif button.action == "return":
+                                if "https://" in button.action:
+                                    if not button.hadAction:
+                                        button.hadAction = True
+                                        webbrowser.open(button.action)
+                                elif "quit" in button.action: # quit the game
+                                    self.running = False
+                                    self.gameDisplay.running = False
+                                else:
+                                    self.CO.gameStatus = button.action
+                    case "settings":
+                        # hotkeys for debugging and testing
+                        if keys[pygame.K_s]:
+                            self.CO.settings.saveSettings()
+                            time.sleep(0.3)
+
+                        for button in self.CO.settingsButtons:
+                            if button.clicked(mx, my, mousePressedUp):
+                                if button.action == "save":
+                                    self.CO.displayTempSettings.saveSettings()
+                                elif button.action == "back":
                                     self.CO.gameStatus = "menu"
-                            elif button.hover(mx, my):
+                                elif button.action == "apply":
+                                    self.CO.settings.copyFrom(self.CO.displayTempSettings)
+                                elif button.action == "toggleDebugMode":
+                                    self.CO.displayTempSettings.debugMode = not self.CO.displayTempSettings.debugMode
+                                elif button.action == "toggleDisplayFPS":
+                                    self.CO.displayTempSettings.displayFPS = not self.CO.displayTempSettings.displayFPS
+                                elif button.action == "toggleDisplayTPS":
+                                    self.CO.displayTempSettings.displayTPS = not self.CO.displayTempSettings.displayTPS
+                                elif button.action not in ["scrollFPS", "scrollTPS"]:
+                                    text = ""
+                                    self.CO.waitForKey = True
+                                    while text == "":
+                                        for detect in pygame.event.get():
+                                            if detect.type == pygame.KEYDOWN:
+                                                text = detect.key
+                                    self.CO.waitForKey = False
+                                    match button.action:
+                                        case "forwardKey":
+                                            self.CO.displayTempSettings.playerKeys[0][0] = pygame.key.name(text)
+                                        case "backwardKey":
+                                            self.CO.displayTempSettings.playerKeys[0][1] = pygame.key.name(text)
+                                        case "leftKey":
+                                            self.CO.displayTempSettings.playerKeys[0][2] = pygame.key.name(text)
+                                        case "rightKey":
+                                            self.CO.displayTempSettings.playerKeys[0][3] = pygame.key.name(text)
+                                        case "itemKey":
+                                            self.CO.displayTempSettings.playerKeys[0][4] = pygame.key.name(text)
+                                        case "pauseKey":
+                                            self.CO.displayTempSettings.pauseKey = pygame.key.name(text)
+                                        case "secondPlayerForwardKey":
+                                            self.CO.displayTempSettings.playerKeys[1][0] = pygame.key.name(text)
+                                        case "secondPlayerBackwardKey":
+                                            self.CO.displayTempSettings.playerKeys[1][1] = pygame.key.name(text)
+                                        case "secondPlayerLeftKey":
+                                            self.CO.displayTempSettings.playerKeys[1][2] = pygame.key.name(text)
+                                        case "secondPlayerRightKey":
+                                            self.CO.displayTempSettings.playerKeys[1][3] = pygame.key.name(text)
+                                        case "secondPlayerItemKey":
+                                            self.CO.displayTempSettings.playerKeys[1][4] = pygame.key.name(text)
+                            if button.hover(mx, my):
                                 match button.action:
-                                    case "scrollButton-x":
+                                    case "scrollFPS":
                                         if scrolledUp:
-                                            self.CO.mapMaker.x += 1
-                                        elif scrolledDown:
-                                            self.CO.mapMaker.x -= 1
-                                            if self.CO.mapMaker.x < 1:
-                                                self.CO.mapMaker.x = 1
-                                    case "scrollButton-y":
+                                            self.CO.displayTempSettings.FPS += 1
+                                        if scrolledDown and self.CO.displayTempSettings.FPS > 1:
+                                            self.CO.displayTempSettings.FPS -= 1
+                                    case "scrollTPS":
                                         if scrolledUp:
-                                            self.CO.mapMaker.y += 1
-                                        elif scrolledDown:
-                                            self.CO.mapMaker.y -= 1
-                                            if self.CO.mapMaker.y < 1:
-                                                self.CO.mapMaker.y = 1
-                                    case "scrollButton-startX":
-                                        if scrolledUp:
-                                            self.CO.mapMaker.startingPiece[0] += 1
-                                            if self.CO.mapMaker.startingPiece[0] > self.CO.mapMaker.x - 1:
-                                                self.CO.mapMaker.startingPiece[0] = self.CO.mapMaker.x - 1
-                                        elif scrolledDown:
-                                            self.CO.mapMaker.startingPiece[0] -= 1
-                                            if self.CO.mapMaker.startingPiece[0] < 0:
-                                                self.CO.mapMaker.startingPiece[0] = 0
-                                    case "scrollButton-startY":
-                                        if scrolledUp:
-                                            self.CO.mapMaker.startingPiece[1] += 1
-                                            if self.CO.mapMaker.startingPiece[1] > self.CO.mapMaker.y - 1:
-                                                self.CO.mapMaker.startingPiece[1] = self.CO.mapMaker.y - 1
-                                        elif scrolledDown:
-                                            self.CO.mapMaker.startingPiece[1] -= 1
-                                            if self.CO.mapMaker.startingPiece[1] < 0:
-                                                self.CO.mapMaker.startingPiece[1] = 0
-                                    case "scrollButton-startDir":
-                                        if scrolledUp:
-                                            self.CO.mapMaker.startingDirection += 90
-                                            if self.CO.mapMaker.startingDirection >= 360:
-                                                self.CO.mapMaker.startingDirection -= 360
-                                        elif scrolledDown:
-                                            self.CO.mapMaker.startingDirection -= 90
-                                            if self.CO.mapMaker.startingDirection < 0:
-                                                self.CO.mapMaker.startingDirection += 360
-                        # place selected piece
-                        if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
-                            widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x
-                            heightGridOne = self.CO.mapMaker.mapRect.height / self.CO.mapMaker.y
-                            gridX = int((mx-self.CO.mapMaker.mapRect.x)/widthGridOne)
-                            gridY = int((my-self.CO.mapMaker.mapRect.y)/heightGridOne)
-                            #print(str(gridX) + " | " + str(gridY))
-                            self.CO.mapMaker.place(gridX, gridY)
-                case "selectMode":
-                    for button in self.CO.gameModeButtons:
-                        if button.clicked(mx, my, mousePressedUp):
-                            if button.action == "return":
-                                self.CO.gameStatus = "menu"
-                            else:
-                                self.CO.currentMode = button.action
-                                self.CO.raceObject.mode = button.action
-                                self.CO.players[0].selectedCarId = 0
-                                if button.action == "singleplayer" and len(self.CO.players) == 2:
-                                    self.CO.players.pop(1)
-                                elif button.action == "multiplayer" and len(self.CO.players) == 1:
-                                    self.CO.players.append(Player.Player(0, 0, 0, 1, self.summonedItems))
-                                    self.CO.players[1].selectedCarId = 1
-                                self.CO.gameStatus = "selectCar"
-                                print(self.CO.currentMode)
-                                self.CO.mapButtonPage = 0
-                case "selectCar":
-                    for i in range(len(self.CO.players)):
-                        selected = -1
-                        if self.CO.currentMode == "multiplayer":
-                            selected = self.CO.players[1-i].selectedCarId
-                        if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][2])]: # left
-                            self.CO.players[i].selectedCarId -= 1
-                            if self.CO.players[i].selectedCarId == -1:
-                                self.CO.players[i].selectedCarId = 3
-                            elif self.CO.players[i].selectedCarId == 3:
-                                self.CO.players[i].selectedCarId = 7
-                            if self.CO.players[i].selectedCarId == selected:
+                                            self.CO.displayTempSettings.TPS += 1
+                                        if scrolledDown and self.CO.displayTempSettings.TPS > 1:
+                                            self.CO.displayTempSettings.TPS -= 1
+                    case "mapMaker":
+                        if self.CO.mapMaker.enteringName:
+                            self.CO.mapMaker.tempName = ""
+                            self.CO.waitForKey = True
+                            while self.CO.waitForKey:
+                                for detect in pygame.event.get():
+                                    if detect.type == pygame.KEYDOWN:
+                                        if detect.key == 13:
+                                            self.CO.waitForKey = False
+                                        else:
+                                            if detect.key == 8:
+                                                self.CO.mapMaker.tempName = self.CO.mapMaker.tempName[:-1]
+                                            else:
+                                                self.CO.mapMaker.tempName += str(detect.unicode)
+                                time.sleep(0.001) # a little delay, because the display thread drops to 2 FPS without
+                            self.CO.mapMaker.enteringName = False
+                            self.CO.mapMaker.mapName = str(self.CO.mapMaker.tempName)
+                        else:
+                            # hotkeys
+                            if keys[pygame.K_w]:
+                                if self.CO.mapMaker.selectedPiece == 3: # bottom left
+                                    self.CO.mapMaker.selectedPiece = 1 # top left
+                                elif self.CO.mapMaker.selectedPiece == 4: # bottom right
+                                    self.CO.mapMaker.selectedPiece = 2 # top right
+                                elif self.CO.mapMaker.selectedPiece in [0, 6]: # empty | horizontal line
+                                    self.CO.mapMaker.selectedPiece = 5 # vertical line
+                            elif keys[pygame.K_s]:
+                                if self.CO.mapMaker.selectedPiece == 1: # top left
+                                    self.CO.mapMaker.selectedPiece = 3 # bottom left
+                                elif self.CO.mapMaker.selectedPiece == 2: # top right
+                                    self.CO.mapMaker.selectedPiece = 4 # bottom right
+                                elif self.CO.mapMaker.selectedPiece in [0, 6]: # empty | horizontal line
+                                    self.CO.mapMaker.selectedPiece = 5 # vertical line
+                            elif keys[pygame.K_a]:
+                                if self.CO.mapMaker.selectedPiece == 2: # top right
+                                    self.CO.mapMaker.selectedPiece = 1 # top left
+                                elif self.CO.mapMaker.selectedPiece == 4: # bottom right
+                                    self.CO.mapMaker.selectedPiece = 3 # bottom left
+                                elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
+                                    self.CO.mapMaker.selectedPiece = 6 # horizontal line
+                            elif keys[pygame.K_d]:
+                                if self.CO.mapMaker.selectedPiece == 1: # top left
+                                    self.CO.mapMaker.selectedPiece = 2 # top right
+                                elif self.CO.mapMaker.selectedPiece == 3: # bottom left
+                                    self.CO.mapMaker.selectedPiece = 4 # bottom right
+                                elif self.CO.mapMaker.selectedPiece in [0, 5]: # empty | vertical line
+                                    self.CO.mapMaker.selectedPiece = 6 # horizontal line
+                            elif keys[pygame.K_1]:
+                                self.CO.mapMaker.selectedPiece = 0
+                            elif keys[pygame.K_2]:
+                                self.CO.mapMaker.selectedPiece = 1
+                            elif keys[pygame.K_3]:
+                                self.CO.mapMaker.selectedPiece = 2
+                            elif keys[pygame.K_4]:
+                                self.CO.mapMaker.selectedPiece = 3
+                            elif keys[pygame.K_5]:
+                                self.CO.mapMaker.selectedPiece = 4
+                            elif keys[pygame.K_6]:
+                                self.CO.mapMaker.selectedPiece = 5
+                            elif keys[pygame.K_7]:
+                                self.CO.mapMaker.selectedPiece = 6
+                            elif keys[pygame.K_g]: # clear map
+                                self.CO.mapMaker.clearMap()
+                            elif keys[pygame.K_h]: # fill map empty
+                                self.CO.mapMaker.fillMap(0)
+                            elif keys[pygame.K_q]:
+                                self.CO.mapMaker.enablePlace = not self.CO.mapMaker.enablePlace
+                                time.sleep(0.2)
+                            elif keys[pygame.K_e]:
+                                self.CO.mapMaker.highlightStartingPiece = not self.CO.mapMaker.highlightStartingPiece
+                                #print(self.CO.mapMaker.highlightStartingPiece)
+                                time.sleep(0.2)
+
+                            for button in self.CO.mapMakerButtons:
+                                if button.clicked(mx, my, mousePressedUp):
+                                    if "mapPiece-" in button.action:
+                                        dictionary = {
+                                            "mapPiece-empty": 0,
+                                            "mapPiece-topLeft": 1,
+                                            "mapPiece-topRight": 2,
+                                            "mapPiece-bottomLeft": 3,
+                                            "mapPiece-bottomRight": 4,
+                                            "mapPiece-verticalLine": 5,
+                                            "mapPiece-horizontalLine": 6,
+                                        }
+                                        self.CO.mapMaker.selectedPiece = dictionary[button.action]
+                                        #print(self.CO.mapMaker.selectedPiece)
+                                    elif button.action == "actionButton-clear":
+                                        self.CO.mapMaker.clearMap()
+                                    elif button.action == "actionButton-save":
+                                        self.CO.mapMaker.save(self.customMapPath)
+                                    elif button.action == "actionButton-fillEmpty":
+                                        self.CO.mapMaker.fillMap(0)
+                                    elif button.action == "actionButton-enterName":
+                                        self.CO.mapMaker.enteringName = True
+                                    elif button.action == "actionButton-eraseMode":
+                                        self.CO.mapMaker.enablePlace = not self.CO.mapMaker.enablePlace
+                                    elif button.action == "actionButton-createNewMap":
+                                        self.CO.mapMaker.createEmptyMap(self.CO.mapMaker.x, self.CO.mapMaker.y, True)
+                                    elif button.action == "actionButton-startPieceHighlight":
+                                        self.CO.mapMaker.highlightStartingPiece = not self.CO.mapMaker.highlightStartingPiece
+                                    elif button.action == "return":
+                                        self.CO.gameStatus = "menu"
+                                elif button.hover(mx, my):
+                                    match button.action:
+                                        case "scrollButton-x":
+                                            if scrolledUp:
+                                                self.CO.mapMaker.x += 1
+                                            elif scrolledDown:
+                                                self.CO.mapMaker.x -= 1
+                                                if self.CO.mapMaker.x < 1:
+                                                    self.CO.mapMaker.x = 1
+                                        case "scrollButton-y":
+                                            if scrolledUp:
+                                                self.CO.mapMaker.y += 1
+                                            elif scrolledDown:
+                                                self.CO.mapMaker.y -= 1
+                                                if self.CO.mapMaker.y < 1:
+                                                    self.CO.mapMaker.y = 1
+                                        case "scrollButton-startX":
+                                            if scrolledUp:
+                                                self.CO.mapMaker.startingPiece[0] += 1
+                                                if self.CO.mapMaker.startingPiece[0] > self.CO.mapMaker.x - 1:
+                                                    self.CO.mapMaker.startingPiece[0] = self.CO.mapMaker.x - 1
+                                            elif scrolledDown:
+                                                self.CO.mapMaker.startingPiece[0] -= 1
+                                                if self.CO.mapMaker.startingPiece[0] < 0:
+                                                    self.CO.mapMaker.startingPiece[0] = 0
+                                        case "scrollButton-startY":
+                                            if scrolledUp:
+                                                self.CO.mapMaker.startingPiece[1] += 1
+                                                if self.CO.mapMaker.startingPiece[1] > self.CO.mapMaker.y - 1:
+                                                    self.CO.mapMaker.startingPiece[1] = self.CO.mapMaker.y - 1
+                                            elif scrolledDown:
+                                                self.CO.mapMaker.startingPiece[1] -= 1
+                                                if self.CO.mapMaker.startingPiece[1] < 0:
+                                                    self.CO.mapMaker.startingPiece[1] = 0
+                                        case "scrollButton-startDir":
+                                            if scrolledUp:
+                                                self.CO.mapMaker.startingDirection += 90
+                                                if self.CO.mapMaker.startingDirection >= 360:
+                                                    self.CO.mapMaker.startingDirection -= 360
+                                            elif scrolledDown:
+                                                self.CO.mapMaker.startingDirection -= 90
+                                                if self.CO.mapMaker.startingDirection < 0:
+                                                    self.CO.mapMaker.startingDirection += 360
+                            # place selected piece
+                            if self.CO.mapMaker.mapRect.collidepoint((mx, my)) and mousePressed[0]:
+                                widthGridOne = self.CO.mapMaker.mapRect.width / self.CO.mapMaker.x
+                                heightGridOne = self.CO.mapMaker.mapRect.height / self.CO.mapMaker.y
+                                gridX = int((mx-self.CO.mapMaker.mapRect.x)/widthGridOne)
+                                gridY = int((my-self.CO.mapMaker.mapRect.y)/heightGridOne)
+                                #print(str(gridX) + " | " + str(gridY))
+                                self.CO.mapMaker.place(gridX, gridY)
+                    case "selectMode":
+                        for button in self.CO.gameModeButtons:
+                            if button.clicked(mx, my, mousePressedUp):
+                                if button.action == "return":
+                                    self.CO.gameStatus = "menu"
+                                else:
+                                    self.CO.currentMode = button.action
+                                    self.CO.raceObject.mode = button.action
+                                    self.CO.players[0].selectedCarId = 0
+                                    if button.action == "singleplayer" and len(self.CO.players) == 2:
+                                        self.CO.players.pop(1)
+                                    elif button.action == "multiplayer" and len(self.CO.players) == 1:
+                                        self.CO.players.append(Player.Player(0, 0, 0, 1, self.summonedItems))
+                                        self.CO.players[1].selectedCarId = 1
+                                    self.CO.gameStatus = "selectCar"
+                                    print(self.CO.currentMode)
+                                    self.CO.mapButtonPage = 0
+                    case "selectCar":
+                        for i in range(len(self.CO.players)):
+                            selected = -1
+                            if self.CO.currentMode == "multiplayer":
+                                selected = self.CO.players[1-i].selectedCarId
+                            if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][2])]: # left
                                 self.CO.players[i].selectedCarId -= 1
                                 if self.CO.players[i].selectedCarId == -1:
                                     self.CO.players[i].selectedCarId = 3
                                 elif self.CO.players[i].selectedCarId == 3:
                                     self.CO.players[i].selectedCarId = 7
-                            time.sleep(0.1)
-                        if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][3])]: # right
-                            self.CO.players[i].selectedCarId += 1
-                            if self.CO.players[i].selectedCarId == 4:
-                                self.CO.players[i].selectedCarId = 0
-                            elif self.CO.players[i].selectedCarId == 8:
-                                self.CO.players[i].selectedCarId = 4
-                            if self.CO.players[i].selectedCarId == selected:
+                                if self.CO.players[i].selectedCarId == selected:
+                                    self.CO.players[i].selectedCarId -= 1
+                                    if self.CO.players[i].selectedCarId == -1:
+                                        self.CO.players[i].selectedCarId = 3
+                                    elif self.CO.players[i].selectedCarId == 3:
+                                        self.CO.players[i].selectedCarId = 7
+                                time.sleep(0.1)
+                            if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][3])]: # right
                                 self.CO.players[i].selectedCarId += 1
                                 if self.CO.players[i].selectedCarId == 4:
                                     self.CO.players[i].selectedCarId = 0
                                 elif self.CO.players[i].selectedCarId == 8:
                                     self.CO.players[i].selectedCarId = 4
-                            time.sleep(0.1)
-                        if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][0])]: # up
-                            self.CO.players[i].selectedCarId -= 4
-                            if self.CO.players[i].selectedCarId <= -1:
-                                self.CO.players[i].selectedCarId += 8
-                            if self.CO.players[i].selectedCarId == selected:
+                                if self.CO.players[i].selectedCarId == selected:
+                                    self.CO.players[i].selectedCarId += 1
+                                    if self.CO.players[i].selectedCarId == 4:
+                                        self.CO.players[i].selectedCarId = 0
+                                    elif self.CO.players[i].selectedCarId == 8:
+                                        self.CO.players[i].selectedCarId = 4
+                                time.sleep(0.1)
+                            if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][0])]: # up
                                 self.CO.players[i].selectedCarId -= 4
                                 if self.CO.players[i].selectedCarId <= -1:
                                     self.CO.players[i].selectedCarId += 8
-                            time.sleep(0.1)
-                        if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][1])]: # down
-                            self.CO.players[i].selectedCarId += 4
-                            if self.CO.players[i].selectedCarId >= 8:
-                                self.CO.players[i].selectedCarId -= 8
-                            if self.CO.players[i].selectedCarId == selected:
+                                if self.CO.players[i].selectedCarId == selected:
+                                    self.CO.players[i].selectedCarId -= 4
+                                    if self.CO.players[i].selectedCarId <= -1:
+                                        self.CO.players[i].selectedCarId += 8
+                                time.sleep(0.1)
+                            if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][1])]: # down
                                 self.CO.players[i].selectedCarId += 4
                                 if self.CO.players[i].selectedCarId >= 8:
                                     self.CO.players[i].selectedCarId -= 8
-                            time.sleep(0.1)
+                                if self.CO.players[i].selectedCarId == selected:
+                                    self.CO.players[i].selectedCarId += 4
+                                    if self.CO.players[i].selectedCarId >= 8:
+                                        self.CO.players[i].selectedCarId -= 8
+                                time.sleep(0.1)
 
 
-                    for button in self.CO.carSelectorButtons:
-                        if button.clicked(mx, my, mousePressedUp):
-                            if button.action == "return":
-                                self.CO.gameStatus = "selectMode"
-                            elif button.action == "ready":
-                                self.CO.gameStatus = "selectMap"
-                case "selectMap":
-                    # calculate max page
-                    maxPageOfficialMaps = round((len(self.CO.mapButtons[0])/15)+0.5)-1
-                    maxPageCustomMaps = round((len(self.CO.mapButtons[1])/15)+0.5)-1
+                        for button in self.CO.carSelectorButtons:
+                            if button.clicked(mx, my, mousePressedUp):
+                                if button.action == "return":
+                                    self.CO.gameStatus = "selectMode"
+                                elif button.action == "ready":
+                                    self.CO.gameStatus = "selectMap"
+                    case "selectMap":
+                        # calculate max page
+                        maxPageOfficialMaps = round((len(self.CO.mapButtons[0])/15)+0.5)-1
+                        maxPageCustomMaps = round((len(self.CO.mapButtons[1])/15)+0.5)-1
 
-                    # previous and next page buttons enable and disable
-                    for button in self.CO.mapButtons[2]:
-                        if button.action == "previousPage":
-                            button.enable = self.CO.mapButtonPage > 0
-                        elif button.action == "nextPage":
-                            button.enable = (self.CO.officialMaps and (self.CO.mapButtonPage < maxPageOfficialMaps)) or (not self.CO.officialMaps and (self.CO.mapButtonPage < maxPageCustomMaps))
+                        # previous and next page buttons enable and disable
+                        for button in self.CO.mapButtons[2]:
+                            if button.action == "previousPage":
+                                button.enable = self.CO.mapButtonPage > 0
+                            elif button.action == "nextPage":
+                                button.enable = (self.CO.officialMaps and (self.CO.mapButtonPage < maxPageOfficialMaps)) or (not self.CO.officialMaps and (self.CO.mapButtonPage < maxPageCustomMaps))
 
 
-                    # hotkeys for debugging and testing
-                    if keys[pygame.K_j]:
-                        if self.CO.mapButtonPage != 0:
-                            self.CO.mapButtonPage -= 1
-                            print(self.CO.mapButtonPage)
+                        # hotkeys for debugging and testing
+                        if keys[pygame.K_j]:
+                            if self.CO.mapButtonPage != 0:
+                                self.CO.mapButtonPage -= 1
+                                print(self.CO.mapButtonPage)
+                                time.sleep(0.3)
+                        elif keys[pygame.K_k]:
+                            if self.CO.officialMaps:
+                                if self.CO.mapButtonPage < maxPageOfficialMaps:
+                                    self.CO.mapButtonPage += 1
+                                    print(self.CO.mapButtonPage)
+                                    time.sleep(0.3)
+                            else:
+                                if self.CO.mapButtonPage < maxPageCustomMaps:
+                                    self.CO.mapButtonPage += 1
+                                    print(self.CO.mapButtonPage)
+                                    time.sleep(0.3)
+                        elif keys[pygame.K_l]: # toggle official and custom maps
+                            self.CO.officialMaps = not self.CO.officialMaps
                             time.sleep(0.3)
-                    elif keys[pygame.K_k]:
+
+                        index = 1
                         if self.CO.officialMaps:
-                            if self.CO.mapButtonPage < maxPageOfficialMaps:
-                                self.CO.mapButtonPage += 1
-                                print(self.CO.mapButtonPage)
-                                time.sleep(0.3)
-                        else:
-                            if self.CO.mapButtonPage < maxPageCustomMaps:
-                                self.CO.mapButtonPage += 1
-                                print(self.CO.mapButtonPage)
-                                time.sleep(0.3)
-                    elif keys[pygame.K_l]: # toggle official and custom maps
-                        self.CO.officialMaps = not self.CO.officialMaps
-                        time.sleep(0.3)
+                            index = 0
 
-                    index = 1
-                    if self.CO.officialMaps:
-                        index = 0
+                        if self.CO.officialMaps: # official maps
+                            for button in self.CO.mapButtons[0]:
+                                button.enable = self.CO.mapButtonPage * 15 <= int(button.action) <= (self.CO.mapButtonPage + 1) * 15
+                            for button in self.CO.mapButtons[1]:
+                                button.enable = False
 
-                    if self.CO.officialMaps: # official maps
-                        for button in self.CO.mapButtons[0]:
-                            button.enable = self.CO.mapButtonPage * 15 <= int(button.action) <= (self.CO.mapButtonPage + 1) * 15
-                        for button in self.CO.mapButtons[1]:
-                            button.enable = False
-
-                    else: # custom maps
-                        for button in self.CO.mapButtons[0]:
-                            button.enable = False
-                        for button in self.CO.mapButtons[1]:
-                            if button.action == "generateMapWFC":
-                                button.enable = True
-                            else:
-                                button.enable = (self.CO.mapButtonPage-maxPageOfficialMaps) * 15 <= int(button.action) <= ((self.CO.mapButtonPage-maxPageOfficialMaps) + 1) * 15
-
-                    for button in self.CO.mapButtons[index] + self.CO.mapButtons[2]:
-                        if button.clicked(mx, my, mousePressedUp):
-                            if not button.action.isnumeric():
+                        else: # custom maps
+                            for button in self.CO.mapButtons[0]:
+                                button.enable = False
+                            for button in self.CO.mapButtons[1]:
                                 if button.action == "generateMapWFC":
-                                    #self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
-                                    #self.CO.gameStatus = "raceSettings"
-                                    #self.CO.raceObject.reset(True)
-                                    self.CO.gameStatus = "generateMapWFC"
-                                elif button.action == "previousPage":
-                                    if self.CO.mapButtonPage > 0:
-                                        self.CO.mapButtonPage -= 1
-                                        print(self.CO.mapButtonPage)
-                                elif button.action == "nextPage":
-                                    if self.CO.officialMaps:
-                                        if self.CO.mapButtonPage < maxPageOfficialMaps:
-                                            self.CO.mapButtonPage += 1
-                                            print(self.CO.mapButtonPage)
-                                    else:
-                                        if self.CO.mapButtonPage < maxPageCustomMaps:
-                                            self.CO.mapButtonPage += 1
-                                            print(self.CO.mapButtonPage)
-                                elif button.action == "return":
-                                    self.CO.gameStatus = "selectCar"
-                                elif button.action == "toggleMaps":
-                                    self.CO.officialMaps = not self.CO.officialMaps
-                                    self.CO.mapButtonPage = 0
-                            else:
-                                self.CO.mapController.currentMapIndex = button.action
-                                for player in self.CO.players:
-                                    player.reset(x=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartX,
-                                                 y=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartY,
-                                                 direction=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartDirection)
-                                self.CO.gameStatus = "raceSettings"
-                                self.CO.raceObject.reset(True)
-                case "generateMapWFC":
-                    for button in self.CO.generateMapButtons:
-                        if button.clicked(mx, my, mousePressedUp):
-                            if button.action == "return":
-                                self.CO.gameStatus = "selectMap"
-                            elif button.action == "generate":
-                                self.CO.mapController.generateNewMap(self.CO.mapController.mapGeneratorX, self.CO.mapController.mapGeneratorY, False, True, True)
-                            elif button.action == "save":
-                                print("save")
-                                self.CO.mapController.getCurrentMap(False).saveMap(self.customMapPath, "generatedMap-" + str(random.randint(1,99999)))
-                            elif button.action == "play":
-                                self.CO.gameStatus = "raceSettings"
-                                self.CO.raceObject.reset(True)
-                        if button.hover(mx, my):
-                            match button.action:
-                                case "scrollX":
-                                    if scrolledUp:
-                                        self.CO.mapController.mapGeneratorX += 1
-                                    elif scrolledDown:
-                                        self.CO.mapController.mapGeneratorX -= 1
-                                        if self.CO.mapController.mapGeneratorX < 2:
-                                            self.CO.mapController.mapGeneratorX = 2
-                                case "scrollY":
-                                    if scrolledUp:
-                                        self.CO.mapController.mapGeneratorY += 1
-                                    elif scrolledDown:
-                                        self.CO.mapController.mapGeneratorY -= 1
-                                        if self.CO.mapController.mapGeneratorY < 2:
-                                            self.CO.mapController.mapGeneratorY = 2
+                                    button.enable = True
+                                else:
+                                    button.enable = (self.CO.mapButtonPage-maxPageOfficialMaps) * 15 <= int(button.action) <= ((self.CO.mapButtonPage-maxPageOfficialMaps) + 1) * 15
 
-                case "raceSettings":
-                    for button in self.CO.raceSettingsButtons:
-                        if button.clicked(mx, my, mousePressedUp):
-                            if button.action == "start":
-                                if self.CO.raceObject.rounds > 0:
-                                    self.CO.gameStatus = "race"
-                                    self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
-                            elif button.action == "back":
-                                self.CO.gameStatus = "selectMap"
-                        if button.hover(mx, my):
-                            match button.action:
-                                case "scrollRounds":
-                                    if scrolledUp:
-                                        self.CO.raceObject.rounds += 1
-                                    elif scrolledDown:
-                                        self.CO.raceObject.rounds -= 1
-                                        if self.CO.raceObject.rounds < 0:
-                                            self.CO.raceObject.rounds = 0
-                                case "scrollMaxSpeed":
-                                    if scrolledUp:
-                                        self.CO.raceObject.maxSpeed += 1
-                                    elif scrolledDown:
-                                        self.CO.raceObject.maxSpeed -= 1
-                                        if self.CO.raceObject.maxSpeed < 0:
-                                            self.CO.raceObject.maxSpeed = 0
-                                case "scrollMaxAcc":
-                                    if scrolledUp:
-                                        self.CO.raceObject.maxAcc += 1
-                                    elif scrolledDown:
-                                        self.CO.raceObject.maxAcc -= 1
-                                        if self.CO.raceObject.maxAcc < 0:
-                                            self.CO.raceObject.maxAcc = 0
-                                case "scrollItemsEnabled":
-                                    if scrolledUp:
-                                        self.CO.raceObject.itemsEnabled = True
-                                    elif scrolledDown:
-                                        self.CO.raceObject.itemsEnabled = False
-                                case "scrollISC":
-                                    if scrolledUp:
-                                        self.CO.raceObject.itemSpawnCooldown += 30
-                                    elif scrolledDown:
-                                        self.CO.raceObject.itemSpawnCooldown -= 30
-                                        if self.CO.raceObject.itemSpawnCooldown < 30:
-                                            self.CO.raceObject.itemSpawnCooldown = 30
-                                case "scrollAmountBot":
-                                    if scrolledUp:
-                                        self.CO.raceObject.amountOfBots += 1
-                                        if self.CO.raceObject.mode == "singleplayer":
-                                            if self.CO.raceObject.amountOfBots > 7:
-                                                self.CO.raceObject.amountOfBots = 7
+                        for button in self.CO.mapButtons[index] + self.CO.mapButtons[2]:
+                            if button.clicked(mx, my, mousePressedUp):
+                                if not button.action.isnumeric():
+                                    if button.action == "generateMapWFC":
+                                        #self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
+                                        #self.CO.gameStatus = "raceSettings"
+                                        #self.CO.raceObject.reset(True)
+                                        self.CO.gameStatus = "generateMapWFC"
+                                    elif button.action == "previousPage":
+                                        if self.CO.mapButtonPage > 0:
+                                            self.CO.mapButtonPage -= 1
+                                            print(self.CO.mapButtonPage)
+                                    elif button.action == "nextPage":
+                                        if self.CO.officialMaps:
+                                            if self.CO.mapButtonPage < maxPageOfficialMaps:
+                                                self.CO.mapButtonPage += 1
+                                                print(self.CO.mapButtonPage)
                                         else:
-                                            if self.CO.raceObject.amountOfBots > 6:
-                                                self.CO.raceObject.amountOfBots = 6
-                                    elif scrolledDown:
-                                        self.CO.raceObject.amountOfBots -= 1
-                                        if self.CO.raceObject.amountOfBots < 0:
-                                            self.CO.raceObject.amountOfBots = 0
+                                            if self.CO.mapButtonPage < maxPageCustomMaps:
+                                                self.CO.mapButtonPage += 1
+                                                print(self.CO.mapButtonPage)
+                                    elif button.action == "return":
+                                        self.CO.gameStatus = "selectCar"
+                                    elif button.action == "toggleMaps":
+                                        self.CO.officialMaps = not self.CO.officialMaps
+                                        self.CO.mapButtonPage = 0
+                                else:
+                                    self.CO.mapController.currentMapIndex = button.action
+                                    for player in self.CO.players:
+                                        player.reset(x=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartX,
+                                                     y=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartY,
+                                                     direction=self.CO.mapController.getCurrentMap(self.CO.officialMaps).playerStartDirection)
+                                    self.CO.gameStatus = "raceSettings"
+                                    self.CO.raceObject.reset(True)
+                    case "generateMapWFC":
+                        for button in self.CO.generateMapButtons:
+                            if button.clicked(mx, my, mousePressedUp):
+                                if button.action == "return":
+                                    self.CO.gameStatus = "selectMap"
+                                elif button.action == "generate":
+                                    self.CO.mapController.generateNewMap(self.CO.mapController.mapGeneratorX, self.CO.mapController.mapGeneratorY, False, True, True)
+                                elif button.action == "save":
+                                    print("save")
+                                    self.CO.mapController.getCurrentMap(False).saveMap(self.customMapPath, "generatedMap-" + str(random.randint(1,99999)))
+                                elif button.action == "play":
+                                    self.CO.gameStatus = "raceSettings"
+                                    self.CO.raceObject.reset(True)
+                            if button.hover(mx, my):
+                                match button.action:
+                                    case "scrollX":
+                                        if scrolledUp:
+                                            self.CO.mapController.mapGeneratorX += 1
+                                        elif scrolledDown:
+                                            self.CO.mapController.mapGeneratorX -= 1
+                                            if self.CO.mapController.mapGeneratorX < 2:
+                                                self.CO.mapController.mapGeneratorX = 2
+                                    case "scrollY":
+                                        if scrolledUp:
+                                            self.CO.mapController.mapGeneratorY += 1
+                                        elif scrolledDown:
+                                            self.CO.mapController.mapGeneratorY -= 1
+                                            if self.CO.mapController.mapGeneratorY < 2:
+                                                self.CO.mapController.mapGeneratorY = 2
 
-                case "race":
-                    # update raceObject
-                    self.CO.raceObject.update()
+                    case "raceSettings":
+                        for button in self.CO.raceSettingsButtons:
+                            if button.clicked(mx, my, mousePressedUp):
+                                if button.action == "start":
+                                    if self.CO.raceObject.rounds > 0:
+                                        self.CO.gameStatus = "race"
+                                        self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
+                                elif button.action == "back":
+                                    self.CO.gameStatus = "selectMap"
+                            if button.hover(mx, my):
+                                match button.action:
+                                    case "scrollRounds":
+                                        if scrolledUp:
+                                            self.CO.raceObject.rounds += 1
+                                        elif scrolledDown:
+                                            self.CO.raceObject.rounds -= 1
+                                            if self.CO.raceObject.rounds < 0:
+                                                self.CO.raceObject.rounds = 0
+                                    case "scrollMaxSpeed":
+                                        if scrolledUp:
+                                            self.CO.raceObject.maxSpeed += 1
+                                        elif scrolledDown:
+                                            self.CO.raceObject.maxSpeed -= 1
+                                            if self.CO.raceObject.maxSpeed < 0:
+                                                self.CO.raceObject.maxSpeed = 0
+                                    case "scrollMaxAcc":
+                                        if scrolledUp:
+                                            self.CO.raceObject.maxAcc += 1
+                                        elif scrolledDown:
+                                            self.CO.raceObject.maxAcc -= 1
+                                            if self.CO.raceObject.maxAcc < 0:
+                                                self.CO.raceObject.maxAcc = 0
+                                    case "scrollItemsEnabled":
+                                        if scrolledUp:
+                                            self.CO.raceObject.itemsEnabled = True
+                                        elif scrolledDown:
+                                            self.CO.raceObject.itemsEnabled = False
+                                    case "scrollISC":
+                                        if scrolledUp:
+                                            self.CO.raceObject.itemSpawnCooldown += 30
+                                        elif scrolledDown:
+                                            self.CO.raceObject.itemSpawnCooldown -= 30
+                                            if self.CO.raceObject.itemSpawnCooldown < 30:
+                                                self.CO.raceObject.itemSpawnCooldown = 30
+                                    case "scrollAmountBot":
+                                        if scrolledUp:
+                                            self.CO.raceObject.amountOfBots += 1
+                                            if self.CO.raceObject.mode == "singleplayer":
+                                                if self.CO.raceObject.amountOfBots > 7:
+                                                    self.CO.raceObject.amountOfBots = 7
+                                            else:
+                                                if self.CO.raceObject.amountOfBots > 6:
+                                                    self.CO.raceObject.amountOfBots = 6
+                                        elif scrolledDown:
+                                            self.CO.raceObject.amountOfBots -= 1
+                                            if self.CO.raceObject.amountOfBots < 0:
+                                                self.CO.raceObject.amountOfBots = 0
 
-                    if keys[pygame.K_t]:
-                        self.CO.raceObject.reset()
-                        self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
-                    elif keys[pygame.K_z]:
-                        self.CO.raceObject.stop()
-                    elif keys[pygame.K_u]:
-                        self.CO.raceObject.resume()
-                    elif keys[pygame.K_i]:
-                        self.CO.raceObject.reset()
+                    case "race":
+                        # update raceObject
+                        self.CO.raceObject.update()
 
-                    if self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
-                        if keys[pygame.K_o]: # save custom map
-                            self.CO.mapController.getCurrentMap(self.CO.officialMaps).saveMap(self.customMapPath)
+                        if keys[pygame.K_t]:
+                            self.CO.raceObject.reset()
+                            self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
+                        elif keys[pygame.K_z]:
+                            self.CO.raceObject.stop()
+                        elif keys[pygame.K_u]:
+                            self.CO.raceObject.resume()
+                        elif keys[pygame.K_i]:
+                            self.CO.raceObject.reset()
 
-                    if self.CO.raceObject.raceStatus == "race":
-                        # movement keys pressed --> Update players
-                        if self.CO.currentMode == "singleplayer" and not self.CO.players[0].isDone:
-                            if keys[pygame.key.key_code(self.CO.settings.playerKeys[0][2])] or keys[pygame.key.key_code(self.CO.settings.playerKeys[1][2])]: # turn left
-                                self.CO.players[0].changeDir(False)
-                            if keys[pygame.key.key_code(self.CO.settings.playerKeys[0][3])] or keys[pygame.key.key_code(self.CO.settings.playerKeys[1][3])]: # turn right
-                                self.CO.players[0].changeDir(True)
-                            if keys[pygame.key.key_code(self.CO.settings.playerKeys[0][0])] or keys[pygame.key.key_code(self.CO.settings.playerKeys[1][0])]: # move forward
-                                self.CO.players[0].move(True)
-                            if keys[pygame.key.key_code(self.CO.settings.playerKeys[0][1])] or keys[pygame.key.key_code(self.CO.settings.playerKeys[1][1])]: # move backward
-                                self.CO.players[0].move(False)
-                            if keys[pygame.key.key_code(self.CO.settings.playerKeys[0][4])] or keys[pygame.key.key_code(self.CO.settings.playerKeys[1][4])]: # item
-                                self.CO.players[0].useItem()
-                        elif self.CO.currentMode == "multiplayer":
-                            i = 0
+                        if self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
+                            if keys[pygame.K_o]: # save custom map
+                                self.CO.mapController.getCurrentMap(self.CO.officialMaps).saveMap(self.customMapPath)
+
+                        if self.CO.raceObject.raceStatus == "race":
+                            # movement keys pressed --> Update players
+                            if self.CO.currentMode == "singleplayer" and not self.CO.players[0].isDone:
+                                if keys[pygame.key.key_code(self.CO.settings.playerKeys[0][2])] or keys[pygame.key.key_code(self.CO.settings.playerKeys[1][2])]: # turn left
+                                    self.CO.players[0].changeDir(False)
+                                if keys[pygame.key.key_code(self.CO.settings.playerKeys[0][3])] or keys[pygame.key.key_code(self.CO.settings.playerKeys[1][3])]: # turn right
+                                    self.CO.players[0].changeDir(True)
+                                if keys[pygame.key.key_code(self.CO.settings.playerKeys[0][0])] or keys[pygame.key.key_code(self.CO.settings.playerKeys[1][0])]: # move forward
+                                    self.CO.players[0].move(True)
+                                if keys[pygame.key.key_code(self.CO.settings.playerKeys[0][1])] or keys[pygame.key.key_code(self.CO.settings.playerKeys[1][1])]: # move backward
+                                    self.CO.players[0].move(False)
+                                if keys[pygame.key.key_code(self.CO.settings.playerKeys[0][4])] or keys[pygame.key.key_code(self.CO.settings.playerKeys[1][4])]: # item
+                                    self.CO.players[0].useItem()
+                            elif self.CO.currentMode == "multiplayer":
+                                i = 0
+                                for player in self.CO.players:
+                                    if not player.isDone:
+                                        if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][2])]: # turn left
+                                            player.changeDir(False)
+                                        if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][3])]: # turn right
+                                            player.changeDir(True)
+                                        if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][0])]: # move forward
+                                            player.move(True)
+                                        if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][1])]: # move backward
+                                            player.move(False)
+                                        if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][4])]:  # item
+                                            player.useItem()
+                                    i += 1
+
+                            # update the players (position, speed, rays, ..)
                             for player in self.CO.players:
-                                if not player.isDone:
-                                    if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][2])]: # turn left
-                                        player.changeDir(False)
-                                    if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][3])]: # turn right
-                                        player.changeDir(True)
-                                    if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][0])]: # move forward
-                                        player.move(True)
-                                    if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][1])]: # move backward
-                                        player.move(False)
-                                    if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][4])]:  # item
-                                        player.useItem()
-                                i += 1
-
-                        # update the players (position, speed, rays, ..)
-                        for player in self.CO.players:
-                            player.update()
-                            # update ray length
-                            player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
-
-                        # update the bots
-                        if self.CO.raceObject.amountOfBots > 0:
-                            for bot in self.CO.bots:
-                                bot.player.update()
+                                player.update()
                                 # update ray length
-                                bot.player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+                                player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
 
-                        # update items
-                        for item in self.CO.summonedItems:
-                            item.update()
-                            match item.itemName:
-                                case "Rocket" | "MultiRocket":
-                                    item.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
-                    elif self.CO.raceObject.raceStatus == "raceOver": # leaderboard buttons
-                        for button in self.CO.leaderboardButtons:
-                            if button.clicked(mx, my, mousePressedUp):
-                                if button.action == "restart":
-                                    self.CO.raceObject.reset()
-                                    self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
-                                elif button.action == "mainMenu":
-                                    self.CO.gameStatus = "menu"
-                                elif button.action == "saveMap" and self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
-                                    currentTime = datetime.datetime.now()
-                                    name = "generated map: "
-                                    name += str(currentTime.hour) + ":"
-                                    name += str(currentTime.minute) + ":"
-                                    name += str(currentTime.second) + " | "
-                                    name += str(currentTime.day) + "."
-                                    name += str(currentTime.month) + "."
-                                    name += str(currentTime.year)
-                                    self.CO.mapController.getCurrentMap(self.CO.officialMaps).saveMap(self.customMapPath, name)
-                    elif self.CO.raceObject.raceStatus == "paused":
-                        for button in self.CO.pauseButtons: # paused menu buttons
-                            if button.clicked(mx, my, mousePressedUp):
-                                if button.action == "resume":
-                                    self.CO.raceObject.resume()
-                                elif button.action == "restart":
-                                    self.CO.raceObject.reset()
-                                    self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
-                                elif button.action == "mainMenu":
-                                    self.CO.gameStatus = "menu"
+                            # update the bots
+                            if self.CO.raceObject.amountOfBots > 0:
+                                for bot in self.CO.bots:
+                                    bot.player.update()
+                                    # update ray length
+                                    bot.player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+
+                            # update items
+                            for item in self.CO.summonedItems:
+                                item.update()
+                                match item.itemName:
+                                    case "Rocket" | "MultiRocket":
+                                        item.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+                        elif self.CO.raceObject.raceStatus == "raceOver": # leaderboard buttons
+                            for button in self.CO.leaderboardButtons:
+                                if button.clicked(mx, my, mousePressedUp):
+                                    if button.action == "restart":
+                                        self.CO.raceObject.reset()
+                                        self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
+                                    elif button.action == "mainMenu":
+                                        self.CO.gameStatus = "menu"
+                                    elif button.action == "saveMap" and self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
+                                        currentTime = datetime.datetime.now()
+                                        name = "generated map: "
+                                        name += str(currentTime.hour) + ":"
+                                        name += str(currentTime.minute) + ":"
+                                        name += str(currentTime.second) + " | "
+                                        name += str(currentTime.day) + "."
+                                        name += str(currentTime.month) + "."
+                                        name += str(currentTime.year)
+                                        self.CO.mapController.getCurrentMap(self.CO.officialMaps).saveMap(self.customMapPath, name)
+                        elif self.CO.raceObject.raceStatus == "paused":
+                            for button in self.CO.pauseButtons: # paused menu buttons
+                                if button.clicked(mx, my, mousePressedUp):
+                                    if button.action == "resume":
+                                        self.CO.raceObject.resume()
+                                    elif button.action == "restart":
+                                        self.CO.raceObject.reset()
+                                        self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
+                                    elif button.action == "mainMenu":
+                                        self.CO.gameStatus = "menu"
 
 
 
