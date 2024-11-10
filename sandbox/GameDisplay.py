@@ -52,6 +52,30 @@ class GameDisplay(threading.Thread):
             # print Text
             self.drawText()
 
+            # draw debug menu text
+            if self.CO.settings.debugMode:
+                newTextSize = int((15 * self.windowWidth) / 2000)  # scale text size
+                font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+                debugText = ["Debug Mode: ", "Game Running: ", "Hotkeys:", "Stop game:", "Resume game:", "Step 1 tick:"]
+                debugData = [str(self.CO.settings.debugMode), str(self.CO.settings.currentDebugMode), "", "x", "y", "c"]
+
+                for i in range(len(debugText)-1, -1, -1):
+                    # settings Text
+                    text = font.render(debugText[i], True, (255, 100, 100))
+                    newRect = text.get_rect()
+                    newRect.x = newTextSize
+                    newRect.y = ((450*self.windowHeight)/900) + newTextSize * (i + 1) + newTextSize * i / 2
+                    self.screen.blit(text, newRect)
+
+                    # settings Data
+                    text = font.render(debugData[i], True, (255, 100, 100))
+                    newRect = text.get_rect()
+                    newRect.right = newTextSize * 13
+                    newRect.y = ((450*self.windowHeight)/900) + newTextSize * (i + 1) + newTextSize * i / 2
+                    self.screen.blit(text, newRect)
+
+                    self.CO.raceSettingsButtons[i + 2].y = (newRect.y * 900) / self.windowHeight
+
             # update Display
             pygame.display.flip()
             self.CO.FPSClock.tick(self.CO.settings.FPS)  # limit FPS
