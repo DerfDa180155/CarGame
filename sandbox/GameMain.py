@@ -364,7 +364,7 @@ class GameMain:
                     self.CO.settings.currentDebugMode = 2
                     time.sleep(0.15)
 
-            if self.CO.settings.currentDebugMode == 0 or self.CO.settings.currentDebugMode >= 2:
+            if not self.CO.settings.debugMode or (self.CO.settings.currentDebugMode == 0 or self.CO.settings.currentDebugMode >= 2):
                 match self.CO.gameStatus:
                     case "menu":
                         for button in self.CO.menuButtons:
