@@ -56,8 +56,8 @@ class GameDisplay(threading.Thread):
             if self.CO.settings.debugMode:
                 newTextSize = int((15 * self.windowWidth) / 2000)  # scale text size
                 font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
-                debugText = ["Debug Mode: ", "Game Running: ", "Hotkeys:", "Stop game:", "Resume game:", "Step 1 tick:"]
-                debugData = [str(self.CO.settings.debugMode), str(self.CO.settings.currentDebugMode), "", "x", "y", "c"]
+                debugText = ["Debug Mode: ", "Game Running: ", "Hotkeys:", "Stop game:", "Resume game:", "Step 1 tick slow:", "Step 1 tick fast:"]
+                debugData = [str(self.CO.settings.debugMode), str(self.CO.settings.currentDebugMode), "", "x", "y", "c", "v"]
 
                 for i in range(len(debugText)-1, -1, -1):
                     # settings Text
@@ -74,7 +74,6 @@ class GameDisplay(threading.Thread):
                     newRect.y = ((450*self.windowHeight)/900) + newTextSize * (i + 1) + newTextSize * i / 2
                     self.screen.blit(text, newRect)
 
-                    self.CO.raceSettingsButtons[i + 2].y = (newRect.y * 900) / self.windowHeight
 
             # update Display
             pygame.display.flip()

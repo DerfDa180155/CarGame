@@ -360,9 +360,12 @@ class GameMain:
                     self.CO.settings.currentDebugMode = 1
                     time.sleep(0.3)
                 if keys[pygame.K_c] and self.CO.settings.currentDebugMode == 1:
-                    print("step 1")
+                    print("step 1 slow")
                     self.CO.settings.currentDebugMode = 2
                     time.sleep(0.15)
+                if keys[pygame.K_v] and self.CO.settings.currentDebugMode == 1:
+                    print("step 1 fast")
+                    self.CO.settings.currentDebugMode = 2
 
             if not self.CO.settings.debugMode or (self.CO.settings.currentDebugMode == 0 or self.CO.settings.currentDebugMode >= 2):
                 match self.CO.gameStatus:
