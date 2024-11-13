@@ -921,6 +921,7 @@ class GameMain:
                                         self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
                                     elif button.action == "mainMenu":
                                         self.CO.gameStatus = "menu"
+                                        self.CO.raceObject.reset()
                                     elif button.action == "saveMap" and self.CO.mapController.getCurrentMap(self.CO.officialMaps).name == "generatedWFC":
                                         currentTime = datetime.datetime.now()
                                         name = "generated map: "
@@ -941,6 +942,7 @@ class GameMain:
                                         self.CO.raceObject.start(self.CO.mapController.getCurrentMap(self.CO.officialMaps))
                                     elif button.action == "mainMenu":
                                         self.CO.gameStatus = "menu"
+                                        self.CO.raceObject.reset()
 
 
 

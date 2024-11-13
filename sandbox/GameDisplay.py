@@ -74,6 +74,10 @@ class GameDisplay(threading.Thread):
                     newRect.y = ((450*self.windowHeight)/900) + newTextSize * (i + 1) + newTextSize * i / 2
                     self.screen.blit(text, newRect)
 
+                # draw player speed
+                if self.CO.raceObject.raceStatus != "noRace":
+                    for player in self.CO.raceObject.allPlayers:
+                        print(player.speed)
 
             # update Display
             pygame.display.flip()

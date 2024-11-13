@@ -1,6 +1,4 @@
 import random
-from getpass import fallback_getpass
-from traceback import print_tb
 
 import numpy as np
 import time
