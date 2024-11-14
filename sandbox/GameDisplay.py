@@ -59,7 +59,7 @@ class GameDisplay(threading.Thread):
                 debugText = ["Debug Mode: ", "Game Running: ", "Hotkeys:", "Stop game:", "Resume game:", "Step 1 tick slow:", "Step 1 tick fast:"]
                 debugData = [str(self.CO.settings.debugMode), str(self.CO.settings.currentDebugMode), "", "x", "y", "c", "v"]
 
-                for i in range(len(debugText)-1, -1, -1):
+                for i in range(len(debugText)):
                     # settings Text
                     text = font.render(debugText[i], True, (255, 100, 100))
                     newRect = text.get_rect()
@@ -74,10 +74,22 @@ class GameDisplay(threading.Thread):
                     newRect.y = ((450*self.windowHeight)/900) + newTextSize * (i + 1) + newTextSize * i / 2
                     self.screen.blit(text, newRect)
 
-                # draw player speed
+                newTextSize = int((10 * self.windowWidth) / 2000)  # scale text size
+                font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+                # draw player stats
                 if self.CO.raceObject.raceStatus != "noRace":
                     for player in self.CO.raceObject.allPlayers:
-                        print(player.speed)
+                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc)]
+                        statsX = (player.x * self.windowWidth) / 1600
+                        statsY = (player.y * self.windowHeight) / 900
+                        for i in range(len(statsText)):
+                            text = font.render(statsText[i], True, (255, 100, 100))
+                            newRect = text.get_rect()
+                            newRect.x = statsX
+                            newRect.y = statsY + (newTextSize * i)
+                            self.screen.blit(text, newRect)
+
+
 
             # update Display
             pygame.display.flip()
