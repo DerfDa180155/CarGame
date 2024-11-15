@@ -68,7 +68,7 @@ class MapController:
                     self.maps.append(newMap)
 
         # custom maps
-        newMap = RaceMap.RaceMap(myMap=[[4, 2], [3, 1]], name="currentGeneratedWFC")
+        newMap = RaceMap.RaceMap(myMap=[[4, 2], [3, 1]], name="currentGeneratedWFC", playerStartX=400, playerStartY=225, playerStartDirection=0)
 
         self.customMaps.append(newMap)
         print("Custom:")
