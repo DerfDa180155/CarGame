@@ -79,7 +79,7 @@ class GameDisplay(threading.Thread):
                 # draw player stats
                 if self.CO.raceObject.raceStatus != "noRace":
                     for player in self.CO.raceObject.allPlayers:
-                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc)]
+                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc), "dir: " + str(player.direction)]
                         statsX = (player.x * self.windowWidth) / 1600
                         statsY = (player.y * self.windowHeight) / 900
                         for i in range(len(statsText)):
