@@ -56,8 +56,8 @@ class GameDisplay(threading.Thread):
             if self.CO.settings.debugMode:
                 newTextSize = int((15 * self.windowWidth) / 2000)  # scale text size
                 font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
-                debugText = ["Debug Mode: ", "Game Running: ", "Hotkeys:", "Stop game:", "Resume game:", "Step 1 tick slow:", "Step 1 tick fast:"]
-                debugData = [str(self.CO.settings.debugMode), str(self.CO.settings.currentDebugMode), "", "x", "y", "c", "v"]
+                debugText = ["Debug Mode: ", "Game Running: ", "Game Status: ", "Hotkeys:", "Stop game:", "Resume game:", "Step 1 tick slow:", "Step 1 tick fast:"]
+                debugData = [str(self.CO.settings.debugMode), str(self.CO.settings.currentDebugMode), str(self.CO.gameStatus), "", "x", "y", "c", "v"]
 
                 for i in range(len(debugText)):
                     # settings Text
@@ -70,7 +70,7 @@ class GameDisplay(threading.Thread):
                     # settings Data
                     text = font.render(debugData[i], True, (255, 100, 100))
                     newRect = text.get_rect()
-                    newRect.right = newTextSize * 13
+                    newRect.right = newTextSize * 14
                     newRect.y = ((450*self.windowHeight)/900) + newTextSize * (i + 1) + newTextSize * i / 2
                     self.screen.blit(text, newRect)
 
