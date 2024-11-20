@@ -81,8 +81,8 @@ class GameDisplay(threading.Thread):
                     for player in self.CO.raceObject.allPlayers:
                         rays = []
                         for ray in player.frontRays:
-                            rays.append(ray.length)
-                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc), "dir: " + str(player.direction), "amount of rays: " + str(len(player.frontRays)), "rays: " + str(rays)]
+                            rays.append(round(ray.length,2))
+                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc), "dir: " + str(round(player.direction,2)), "amount of rays: " + str(len(player.frontRays)), "rays: " + str(rays)]
                         statsX = (player.x * self.windowWidth) / 1600
                         statsY = (player.y * self.windowHeight) / 900
                         for i in range(len(statsText)):
