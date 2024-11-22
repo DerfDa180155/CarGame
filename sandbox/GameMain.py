@@ -894,18 +894,45 @@ class GameMain:
                                             player.useItem()
                                     i += 1
 
+                            currentMap = self.CO.mapController.getCurrentMap(self.CO.officialMaps).myMap
+                            sizeX = len(currentMap)
+                            sizeY = len(currentMap[0])
+                            sizeOneX = 1600/sizeX
+                            sizeOneY = 900/sizeY
                             # update the players (position, speed, rays, ..)
                             for player in self.CO.players:
                                 player.update()
                                 # update ray length
-                                player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+                                #player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+                                posX = player.x
+                                posY = player.y
+                                countX = 0
+                                countY = 0
+                                while posX > sizeOneX:
+                                    posX -= sizeOneX
+                                    countX += 1
+                                while posY > sizeOneY:
+                                    posY -= sizeOneY
+                                    countY += 1
+                                player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY))
 
                             # update the bots
                             if self.CO.raceObject.amountOfBots > 0:
                                 for bot in self.CO.bots:
                                     bot.player.update()
                                     # update ray length
-                                    bot.player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+                                    #bot.player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+                                    posX = bot.player.x
+                                    posY = bot.player.y
+                                    countX = 0
+                                    countY = 0
+                                    while posX > sizeOneX:
+                                        posX -= sizeOneX
+                                        countX += 1
+                                    while posY > sizeOneY:
+                                        posY -= sizeOneY
+                                        countY += 1
+                                    bot.player.updateRays( self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY))
 
                             # update items
                             for item in self.CO.summonedItems:
