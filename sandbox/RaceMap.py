@@ -211,7 +211,7 @@ class RaceMap:
                         endY = sizeYOneSquare * j + sizeYOneSquare * 23 / 32
                         self.boundsMap.append([startX, startY, endX, endY])
 
-    def getBoundsOnePiece(self, x, y):
+    def getBoundsOnePiece(self, x, y, adjacentPieces = False):
         bounds = []
 
         sizeX = len(self.myMap)
@@ -219,143 +219,160 @@ class RaceMap:
 
         sizeXOneSquare = 1600 / sizeX
         sizeYOneSquare = 900 / sizeY
-        match self.myMap[x][y]:
-            case 1:  # topLeft
-                # top line horizontal
-                startX = sizeXOneSquare * x
-                startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                bounds.append([startX, startY, endX, endY])
 
-                # bottom line horizontal
-                startX = sizeXOneSquare * x
-                startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                bounds.append([startX, startY, endX, endY])
+        pieces = []
+        pieces.append([x, y])
 
-                # left line vertical
-                startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                startY = sizeYOneSquare * y
-                endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                bounds.append([startX, startY, endX, endY])
+        if adjacentPieces:
+            if x-1 >= 0:
+                pieces.append([x-1, y])
+            if x+1 < len(self.myMap):
+                pieces.append([x+1, y])
+            if y-1 >= 0:
+                pieces.append([x, y-1])
+            if y+1 < len(self.myMap[0]):
+                pieces.append([x, y+1])
 
-                # right line vertical
-                startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                startY = sizeYOneSquare * y
-                endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                bounds.append([startX, startY, endX, endY])
-            case 2:  # topRight
-                # top line horizontal
-                startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                endX = sizeXOneSquare * (x + 1)
-                endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                bounds.append([startX, startY, endX, endY])
+        for piece in pieces:
+            x = piece[0]
+            y = piece[1]
+            match self.myMap[x][y]:
+                case 1:  # topLeft
+                    # top line horizontal
+                    startX = sizeXOneSquare * x
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    bounds.append([startX, startY, endX, endY])
 
-                # bottom line horizontal
-                startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                endX = sizeXOneSquare * (x + 1)
-                endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                bounds.append([startX, startY, endX, endY])
+                    # bottom line horizontal
+                    startX = sizeXOneSquare * x
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    bounds.append([startX, startY, endX, endY])
 
-                # left line vertical
-                startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                startY = sizeYOneSquare * y
-                endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                bounds.append([startX, startY, endX, endY])
+                    # left line vertical
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    startY = sizeYOneSquare * y
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    bounds.append([startX, startY, endX, endY])
 
-                # right line vertical
-                startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                startY = sizeYOneSquare * y
-                endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                bounds.append([startX, startY, endX, endY])
-            case 3:  # bottomLeft
-                # top line horizontal
-                startX = sizeXOneSquare * x
-                startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                bounds.append([startX, startY, endX, endY])
+                    # right line vertical
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    startY = sizeYOneSquare * y
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    bounds.append([startX, startY, endX, endY])
+                case 2:  # topRight
+                    # top line horizontal
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    endX = sizeXOneSquare * (x + 1)
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    bounds.append([startX, startY, endX, endY])
 
-                # bottom line horizontal
-                startX = sizeXOneSquare * x
-                startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                bounds.append([startX, startY, endX, endY])
+                    # bottom line horizontal
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    endX = sizeXOneSquare * (x + 1)
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    bounds.append([startX, startY, endX, endY])
 
-                # left line vertical
-                startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                endY = sizeYOneSquare * (y + 1)
-                bounds.append([startX, startY, endX, endY])
+                    # left line vertical
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    startY = sizeYOneSquare * y
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    bounds.append([startX, startY, endX, endY])
 
-                # right line vertical
-                startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                endY = sizeYOneSquare * (y + 1)
-                bounds.append([startX, startY, endX, endY])
-            case 4:  # bottomRight
-                # top line horizontal
-                startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                endX = sizeXOneSquare * (x + 1)
-                endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                bounds.append([startX, startY, endX, endY])
+                    # right line vertical
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    startY = sizeYOneSquare * y
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    bounds.append([startX, startY, endX, endY])
+                case 3:  # bottomLeft
+                    # top line horizontal
+                    startX = sizeXOneSquare * x
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    bounds.append([startX, startY, endX, endY])
 
-                # bottom line horizontal
-                startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                endX = sizeXOneSquare * (x + 1)
-                endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                bounds.append([startX, startY, endX, endY])
+                    # bottom line horizontal
+                    startX = sizeXOneSquare * x
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    bounds.append([startX, startY, endX, endY])
 
-                # left line vertical
-                startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                endY = sizeYOneSquare * (y + 1)
-                bounds.append([startX, startY, endX, endY])
+                    # left line vertical
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    endY = sizeYOneSquare * (y + 1)
+                    bounds.append([startX, startY, endX, endY])
 
-                # right line vertical
-                startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                endY = sizeYOneSquare * (y + 1)
-                bounds.append([startX, startY, endX, endY])
-            case 5:  # verticalLine
-                # left line
-                startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                startY = sizeYOneSquare * y
-                endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
-                endY = sizeYOneSquare * (y + 1)
-                bounds.append([startX, startY, endX, endY])
+                    # right line vertical
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    endY = sizeYOneSquare * (y + 1)
+                    bounds.append([startX, startY, endX, endY])
+                case 4:  # bottomRight
+                    # top line horizontal
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    endX = sizeXOneSquare * (x + 1)
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    bounds.append([startX, startY, endX, endY])
 
-                # right line
-                startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
-                bounds.append([startX, startY, endX, endY])
-            case 6:  # horizontalLine
-                # top line
-                startX = sizeXOneSquare * x
-                startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                endX = sizeXOneSquare * (x + 1)
-                endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
-                bounds.append([startX, startY, endX, endY])
+                    # bottom line horizontal
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    endX = sizeXOneSquare * (x + 1)
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    bounds.append([startX, startY, endX, endY])
 
-                # bottom line
-                startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
-                bounds.append([startX, startY, endX, endY])
+                    # left line vertical
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    endY = sizeYOneSquare * (y + 1)
+                    bounds.append([startX, startY, endX, endY])
+
+                    # right line vertical
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    endY = sizeYOneSquare * (y + 1)
+                    bounds.append([startX, startY, endX, endY])
+                case 5:  # verticalLine
+                    # left line
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    startY = sizeYOneSquare * y
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 9 / 32
+                    endY = sizeYOneSquare * (y + 1)
+                    bounds.append([startX, startY, endX, endY])
+
+                    # right line
+                    startX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    endX = sizeXOneSquare * x + sizeXOneSquare * 23 / 32
+                    bounds.append([startX, startY, endX, endY])
+                case 6:  # horizontalLine
+                    # top line
+                    startX = sizeXOneSquare * x
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    endX = sizeXOneSquare * (x + 1)
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 9 / 32
+                    bounds.append([startX, startY, endX, endY])
+
+                    # bottom line
+                    startY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    endY = sizeYOneSquare * y + sizeYOneSquare * 23 / 32
+                    bounds.append([startX, startY, endX, endY])
 
         return bounds
 

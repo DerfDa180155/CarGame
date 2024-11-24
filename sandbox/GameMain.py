@@ -918,7 +918,7 @@ class GameMain:
                                     countX = sizeX - 1
                                 if countY >= sizeY:
                                     countY = sizeY - 1
-                                player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY))
+                                player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY, True))
 
                             # update the bots
                             if self.CO.raceObject.amountOfBots > 0:
@@ -940,7 +940,7 @@ class GameMain:
                                         countX = sizeX-1
                                     if countY >= sizeY:
                                         countY = sizeY-1
-                                    bot.player.updateRays( self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY))
+                                    bot.player.updateRays( self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY, True))
 
                             # update items
                             for item in self.CO.summonedItems:
