@@ -901,33 +901,12 @@ class GameMain:
                             sizeOneY = 900/sizeY
                             # update the players (position, speed, rays, ..)
                             for player in self.CO.players:
-                                player.update()
-                                # update ray length
-                                #player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
-                                posX = player.x
-                                posY = player.y
-                                countX = 0
-                                countY = 0
-                                while posX > sizeOneX:
-                                    posX -= sizeOneX
-                                    countX += 1
-                                while posY > sizeOneY:
-                                    posY -= sizeOneY
-                                    countY += 1
-                                if countX >= sizeX:
-                                    countX = sizeX - 1
-                                if countY >= sizeY:
-                                    countY = sizeY - 1
-                                player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY, True))
-
-                            # update the bots
-                            if self.CO.raceObject.amountOfBots > 0:
-                                for bot in self.CO.bots:
-                                    bot.player.update()
+                                if not player.isDone:
+                                    player.update()
                                     # update ray length
-                                    #bot.player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
-                                    posX = bot.player.x
-                                    posY = bot.player.y
+                                    #player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+                                    posX = player.x
+                                    posY = player.y
                                     countX = 0
                                     countY = 0
                                     while posX > sizeOneX:
@@ -937,10 +916,33 @@ class GameMain:
                                         posY -= sizeOneY
                                         countY += 1
                                     if countX >= sizeX:
-                                        countX = sizeX-1
+                                        countX = sizeX - 1
                                     if countY >= sizeY:
-                                        countY = sizeY-1
-                                    bot.player.updateRays( self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY, True))
+                                        countY = sizeY - 1
+                                    player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY, True))
+
+                            # update the bots
+                            if self.CO.raceObject.amountOfBots > 0:
+                                for bot in self.CO.bots:
+                                    if not bot.player.isDone:
+                                        bot.player.update()
+                                        # update ray length
+                                        #bot.player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).boundsMap)
+                                        posX = bot.player.x
+                                        posY = bot.player.y
+                                        countX = 0
+                                        countY = 0
+                                        while posX > sizeOneX:
+                                            posX -= sizeOneX
+                                            countX += 1
+                                        while posY > sizeOneY:
+                                            posY -= sizeOneY
+                                            countY += 1
+                                        if countX >= sizeX:
+                                            countX = sizeX-1
+                                        if countY >= sizeY:
+                                            countY = sizeY-1
+                                        bot.player.updateRays( self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY, True))
 
                             # update items
                             for item in self.CO.summonedItems:
