@@ -671,6 +671,8 @@ class GameMain:
                                 if button.action == "return":
                                     self.CO.gameStatus = "selectMode"
                                 elif button.action == "ready":
+                                    self.CO.mapButtonPage = 0
+                                    self.CO.officialMaps = True
                                     self.CO.gameStatus = "selectMap"
                     case "selectMap":
                         # calculate max page
