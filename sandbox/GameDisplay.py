@@ -82,7 +82,7 @@ class GameDisplay(threading.Thread):
                         rays = []
                         for ray in player.frontRays:
                             rays.append(round(ray.length,2))
-                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc), "dir: " + str(round(player.direction,2)), "amount of rays: " + str(len(player.frontRays)), "rays: " + str(rays)]
+                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc), "dir: " + str(round(player.direction,2)), "Item: " + str(player.currentItem),"amount of rays: " + str(len(player.frontRays)), "rays: " + str(rays)]
                         statsX = (player.x * self.windowWidth) / 1600
                         statsY = (player.y * self.windowHeight) / 900
                         for i in range(len(statsText)):
