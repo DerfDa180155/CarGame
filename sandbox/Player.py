@@ -99,6 +99,11 @@ class Player:
             self.direction -= changeDir
             self.isSteeringLeft = True
 
+        if self.direction < 0:
+            self.direction += 360
+        elif self.direction > 360:
+            self.direction -= 360
+
     def useItem(self):
         if self.currentItem == -1 or self.stunTime > 0:
             return
