@@ -56,8 +56,8 @@ class GameDisplay(threading.Thread):
             if self.CO.settings.debugMode:
                 newTextSize = int((15 * self.windowWidth) / 2000)  # scale text size
                 font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
-                debugText = ["Debug Mode: ", "Game Running: ", "Game Status: ", "Hotkeys:", "Stop game:", "Resume game:", "Step 1 tick slow:", "Step 1 tick fast:"]
-                debugData = [str(self.CO.settings.debugMode), str(self.CO.settings.currentDebugMode), str(self.CO.gameStatus), "", "x", "y", "c", "v"]
+                debugText = ["Debug Mode: ", "FPS: ", "TPS: ", "Game Running: ", "Game Status: ", "Hotkeys:", "Stop game:", "Resume game:", "Step 1 tick slow:", "Step 1 tick fast:"]
+                debugData = [str(self.CO.settings.debugMode), str(self.CO.settings.FPS), str(self.CO.settings.TPS), str(self.CO.settings.currentDebugMode), str(self.CO.gameStatus), "", "x", "y", "c", "v"]
 
                 for i in range(len(debugText)):
                     # settings Text
