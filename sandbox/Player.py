@@ -65,6 +65,9 @@ class Player:
         self.countSteering = 0
         self.currentMaxSpeed = self.maxSpeed
 
+        for playerRay in self.frontRays:
+            playerRay.length = -1
+
         self.currentItem = -1
         self.stunTime = 0
         self.shieldTime = 0
