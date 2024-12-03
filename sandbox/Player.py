@@ -25,6 +25,7 @@ class Player:
         self.frontRaysViewAngle = 90
         self.frontRaysDeg = 22.5
         self.frontRays = []
+        self.backRays = []
 
         self.maxSpeed = 150
         self.currentMaxSpeed = self.maxSpeed
@@ -45,6 +46,7 @@ class Player:
         self.godMode = False
 
         self.generateFrontRays()
+        self.generateBackRays()
 
     def generateFrontRays(self):
         self.frontRays = []
@@ -52,6 +54,10 @@ class Player:
         while i <= self.frontRaysViewAngle / 2:
             self.frontRays.append(Ray.Ray(self.x, self.y, self.direction + i))
             i += self.frontRaysDeg
+
+    def generateBackRays(self):
+        self.backRays = []
+        self.backRays.append(Ray.Ray(self.x, self.y, self.direction + 190))
 
     def reset(self, x: int, y: int, direction: int):
         self.direction = direction
@@ -78,6 +84,9 @@ class Player:
     def updateRays(self, bounds: array):
         for ray in self.frontRays:
             ray.calcLength(bounds)
+        for ray in self.backRays:
+            ray.calcLength(bounds)
+            print(ray.length)
 
     def move(self, forward: bool):
         self.isMoving = True
@@ -275,7 +284,6 @@ class Player:
         for ray in self.frontRays:
             ray.updateRay(self.x, self.y, self.direction + i)
             i += self.frontRaysDeg
-
-
+        self.backRays[0].updateRay(self.x, self.y, self.direction + 190)
 
 
