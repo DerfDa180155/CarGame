@@ -1017,7 +1017,7 @@ class GameDisplay(threading.Thread):
                 color = (255, 255, 255)
                 if player.selectedCarId != -1:
                     color = self.CO.carSkins[player.selectedCarId]
-                for ray in player.frontRays:
+                for ray in player.frontRays + player.backRays:
                     rayLengthX = (ray.length * self.windowWidth) / 1600
                     rayLengthY = (ray.length * self.windowHeight) / 900
                     x1 = (player.x * self.windowWidth) / player.scaleWidth

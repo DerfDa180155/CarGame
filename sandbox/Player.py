@@ -57,7 +57,7 @@ class Player:
 
     def generateBackRays(self):
         self.backRays = []
-        self.backRays.append(Ray.Ray(self.x, self.y, self.direction + 190))
+        self.backRays.append(Ray.Ray(self.x, self.y, self.direction + 180))
 
     def reset(self, x: int, y: int, direction: int):
         self.direction = direction
@@ -284,6 +284,6 @@ class Player:
         for ray in self.frontRays:
             ray.updateRay(self.x, self.y, self.direction + i)
             i += self.frontRaysDeg
-        self.backRays[0].updateRay(self.x, self.y, self.direction + 190)
+        self.backRays[0].updateRay(self.x, self.y, self.direction + 180)
 
 
