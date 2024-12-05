@@ -1047,7 +1047,7 @@ class GameDisplay(threading.Thread):
 
     def drawBotRays(self):
         for bot in self.CO.bots:
-            for ray in bot.player.frontRays:
+            for ray in bot.player.frontRays + bot.player.backRays:
                 color = (255, 255, 255)
                 if bot.player.selectedCarId != -1:
                     color = self.CO.carSkins[bot.player.selectedCarId]
