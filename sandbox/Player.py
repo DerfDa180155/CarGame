@@ -246,7 +246,7 @@ class Player:
                 checkBackMove = False
         moved = False
 
-        if (checkFrontMove and self.speed > 0) or (checkBackMove and self.speed < 0):
+        if (checkFrontMove and self.speed > 0) or (checkBackMove and self.speed < 0) or (not checkFrontMove and not checkBackMove and self.speed >= 0):
             # update coordinates based on direction and speed
             self.x += (self.speed / 100) * np.cos(np.deg2rad(self.direction))
             self.y += (self.speed / 100) * np.sin(np.deg2rad(self.direction))
