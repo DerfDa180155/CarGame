@@ -79,10 +79,13 @@ class GameDisplay(threading.Thread):
                 # draw player stats
                 if self.CO.raceObject.raceStatus != "noRace":
                     for player in self.CO.raceObject.allPlayers:
-                        rays = []
+                        frontRays = []
+                        backRays = []
                         for ray in player.frontRays:
-                            rays.append(round(ray.length,2))
-                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc), "dir: " + str(round(player.direction,2)), "is done: " + str(player.isDone), "checkpoint: " + str(len(self.CO.raceObject.playerCheckpointList[player.id])), "Item: " + str(player.currentItem),"amount of rays: " + str(len(player.frontRays)), "rays: " + str(rays)]
+                            frontRays.append(round(ray.length, 2))
+                        for ray in player.backRays:
+                            backRays.append(round(ray.length,2))
+                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc), "dir: " + str(round(player.direction,2)), "is done: " + str(player.isDone), "checkpoint: " + str(len(self.CO.raceObject.playerCheckpointList[player.id])), "Item: " + str(player.currentItem),"amount of rays: " + str(len(player.frontRays)), "frontRays: " + str(frontRays), "backRays: " + str(backRays)]
                         statsX = (player.x * self.windowWidth) / 1600
                         statsY = (player.y * self.windowHeight) / 900
                         for i in range(len(statsText)):
