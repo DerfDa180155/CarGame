@@ -74,6 +74,9 @@ class Player:
         for playerRay in self.frontRays:
             playerRay.length = -1
 
+        for playerRay in self.backRays:
+            playerRay.length = -1
+
         self.currentItem = -1
         self.stunTime = 0
         self.shieldTime = 0
