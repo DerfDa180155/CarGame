@@ -7,11 +7,13 @@ import array
 
 
 class Button:
-    def __init__(self, surface, x: int, y: int, size: int, img: pygame.image, action: str, useTopLeft: bool = True):
+    def __init__(self, surface, x: int, y: int, size: int, img: pygame.image, action: str, displayText: str = "settsetset", displayTextSize: int = 20, useTopLeft: bool = True):
         self.surface = surface
         self.x = x
         self.y = y
         self.size = size
+        self.displayText = displayText
+        self.displayTextSize = displayTextSize
         self.img = img
         self.rect = self.img.get_rect()
         self.useTopLeft = useTopLeft
@@ -28,6 +30,10 @@ class Button:
 
     def draw(self, currentWidth: int, currentHeight: int, highlight: bool = False):
         if self.enable:
+            newTextSize = int((self.displayTextSize * currentWidth) / 2000)  # scale text size
+            font = pygame.font.Font(pygame.font.get_default_font(), newTextSize)
+
+
             newX = (self.x * currentWidth) / 1600
             newY = (self.y * currentHeight) / 900
             newSizeX = ((self.img.get_width() / self.img.get_height())  * self.size * currentWidth) / 1600
@@ -40,6 +46,11 @@ class Button:
             else:
                 self.rect.center = (newX, newY)
                 self.surface.blit(self.scaledImg, (newX-(newSizeX/2), newY-(newSizeY/2)))
+
+            text = font.render(self.displayText, True, (255, 255, 255))
+            newRect = text.get_rect()
+            newRect.center = self.rect.center
+            self.surface.blit(text, newRect)
 
             if self.getsHovered:
                 darkenFaktor = 100
