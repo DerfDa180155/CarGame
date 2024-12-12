@@ -124,37 +124,37 @@ class GameMain:
         # buttons
         # main menu buttons
         #self.testButton = Button.Button(self.screen, 100, 100, 150, self.crossing, "generateMap")
-        self.modeSelectButton = Button.Button(self.screen, 100, 300, 150, self.playButtonImg, "selectMode")
-        self.mapMakerButton = Button.Button(self.screen, 100, 500, 150, self.crossing, "mapMaker")
-        self.mapSelectButton = Button.Button(self.screen, 1350, 500, 150, self.topLeft, "selectMap")
+        self.modeSelectButton = Button.Button(self.screen, 100, 300, 150, self.playButtonImg, "selectMode", "Play")
+        self.mapMakerButton = Button.Button(self.screen, 100, 500, 150, self.crossing, "mapMaker", "Map Maker")
+        self.mapSelectButton = Button.Button(self.screen, 1350, 500, 150, self.topLeft, "selectMap", "Temp")
         self.settingsButton = Button.Button(self.screen, 1460, 40, 100, self.settingsImg, "settings")
         self.linkButton = Button.Button(self.screen, 1450, 750, 100, self.empty, "https://github.com/DerfDa180155")
-        self.quitButton = Button.Button(self.screen, 100, 700, 150, self.quitButtonImg, "quit")
+        self.quitButton = Button.Button(self.screen, 100, 700, 150, self.quitButtonImg, "quit", "Quit")
         self.menuButtons = [self.modeSelectButton, self.mapMakerButton, self.mapSelectButton, self.settingsButton,
                             self.linkButton, self.quitButton]
 
         # game mode buttons
-        self.singlePlayerButton = Button.Button(self.screen, 100, 100, 150, self.horizontalLine, "singleplayer")
-        self.multiPlayerButton = Button.Button(self.screen, 100, 300, 150, self.crossing, "multiplayer")
+        self.singlePlayerButton = Button.Button(self.screen, 100, 100, 150, self.horizontalLine, "singleplayer", "Singleplayer")
+        self.multiPlayerButton = Button.Button(self.screen, 100, 300, 150, self.crossing, "multiplayer", "multiplayer")
         self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
         self.gameModeButtons = [self.singlePlayerButton, self.multiPlayerButton, self.returnButton]
 
         # car selector buttons
         self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
-        self.readyButton = Button.Button(self.screen, 750, 750, 100, self.horizontalLine, "ready")
+        self.readyButton = Button.Button(self.screen, 750, 750, 100, self.horizontalLine, "ready", "Ready")
         self.carSelectorButtons = [self.returnButton, self.readyButton]
 
         # generate Map WFC buttons
-        self.generateButton = Button.Button(self.screen, 100, 700, 100, self.empty, "generate")
+        self.generateButton = Button.Button(self.screen, 100, 700, 100, self.empty, "generate", "Generate map")
         self.saveButton = Button.Button(self.screen, 1400, 775, 100, self.saveButtonImg, "save")
-        self.playButton = Button.Button(self.screen, 750, 775, 100, self.selectButtonImg, "play")
+        self.playButton = Button.Button(self.screen, 750, 775, 100, self.selectButtonImg, "play", "Play")
         self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
         self.scrollMaxXButton = Button.Button(self.screen, 710, 150, 45, self.scrollBarImg, "scrollX")
         self.scrollMaxYButton = Button.Button(self.screen, 710, 150, 45, self.scrollBarImg, "scrollY")
         self.generateMapButtons = [self.generateButton, self.saveButton, self.playButton, self.returnButton, self.scrollMaxXButton, self.scrollMaxYButton]
 
         # race settings buttons
-        self.startRaceButtons = Button.Button(self.screen, 725, 720, 150, self.horizontalLine, "start")
+        self.startRaceButtons = Button.Button(self.screen, 725, 720, 150, self.horizontalLine, "start", "Play")
         self.backButton = Button.Button(self.screen, 50, 770, 100, self.returnButtonImg, "back")
         self.roundsScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollRounds")
         self.maxSpeedScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollMaxSpeed")
@@ -194,13 +194,13 @@ class GameMain:
         self.verticalLineButton = Button.Button(self.screen, 1300, 400, 100, self.verticalLine, "mapPiece-verticalLine")
         self.horizontalLineButton = Button.Button(self.screen, 1450, 400, 100, self.horizontalLine, "mapPiece-horizontalLine")
         self.emptyButton = Button.Button(self.screen, 1300, 550, 100, self.empty, "mapPiece-empty")
-        self.eraseModeButton = Button.Button(self.screen, 1300, 750, 50, self.empty, "actionButton-eraseMode")
-        self.startPieceHighlightButton = Button.Button(self.screen, 1375, 750, 50, self.empty, "actionButton-startPieceHighlight")
-        self.clearButton = Button.Button(self.screen, 100, 775, 100, self.empty, "actionButton-clear")
+        self.eraseModeButton = Button.Button(self.screen, 1300, 750, 50, self.empty, "actionButton-eraseMode", "Erase Mode")
+        self.startPieceHighlightButton = Button.Button(self.screen, 1375, 750, 50, self.empty, "actionButton-startPieceHighlight", "Highlight Start Piece")
+        self.clearButton = Button.Button(self.screen, 100, 775, 100, self.empty, "actionButton-clear", "clear")
         self.saveButton = Button.Button(self.screen, 250, 775, 100, self.saveButtonImg, "actionButton-save")
-        self.fillEmptyButton = Button.Button(self.screen, 400, 775, 100, self.empty, "actionButton-fillEmpty")
-        self.enterNameButton = Button.Button(self.screen, 550, 775, 100, self.empty, "actionButton-enterName")
-        self.createNewMapButton = Button.Button(self.screen, 700, 775, 100, self.empty, "actionButton-createNewMap")
+        self.fillEmptyButton = Button.Button(self.screen, 400, 775, 100, self.empty, "actionButton-fillEmpty", "Fill Empty")
+        self.enterNameButton = Button.Button(self.screen, 550, 775, 100, self.empty, "actionButton-enterName", "Enter Name")
+        self.createNewMapButton = Button.Button(self.screen, 700, 775, 100, self.empty, "actionButton-createNewMap", "Create new Empty Map")
         self.XScrollButton = Button.Button(self.screen, 920, 785, 30, self.scrollBarImg, "scrollButton-x")
         self.YScrollButton = Button.Button(self.screen, 920, 830, 30, self.scrollBarImg, "scrollButton-y")
         self.startXScrollButton = Button.Button(self.screen, 1150, 785, 30, self.scrollBarImg, "scrollButton-startX")
