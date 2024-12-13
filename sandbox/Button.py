@@ -7,12 +7,13 @@ import array
 
 
 class Button:
-    def __init__(self, surface, x: int, y: int, size: int, img: pygame.image, action: str, displayText: str = "", displayTextSize: int = 20, useTopLeft: bool = True):
+    def __init__(self, surface, x: int, y: int, size: int, img: pygame.image, action: str, displayText: str = "", displayTextColor = (255, 255, 255), displayTextSize: int = 20, useTopLeft: bool = True):
         self.surface = surface
         self.x = x
         self.y = y
         self.size = size
         self.displayText = displayText
+        self.displayTextColor = displayTextColor
         self.displayTextSize = displayTextSize
         self.img = img
         self.rect = self.img.get_rect()
@@ -47,7 +48,7 @@ class Button:
                 self.rect.center = (newX, newY)
                 self.surface.blit(self.scaledImg, (newX-(newSizeX/2), newY-(newSizeY/2)))
 
-            text = font.render(self.displayText, True, (255, 255, 255))
+            text = font.render(self.displayText, True, self.displayTextColor)
             newRect = text.get_rect()
             newRect.center = self.rect.center
             self.surface.blit(text, newRect)
