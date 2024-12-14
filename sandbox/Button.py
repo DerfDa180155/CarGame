@@ -7,7 +7,7 @@ import array
 
 
 class Button:
-    def __init__(self, surface, x: int, y: int, size: int, img: pygame.image, action: str, displayText: str = "", displayTextColor = (255, 255, 255), displayTextSize: int = 20, useTopLeft: bool = True):
+    def __init__(self, surface, x: int, y: int, size: int, img: pygame.image, action: str, displayText: str = "", displayTextSize: int = 20, displayTextColor = (255, 255, 255), useTopLeft: bool = True):
         self.surface = surface
         self.x = x
         self.y = y

@@ -124,18 +124,18 @@ class GameMain:
         # buttons
         # main menu buttons
         #self.testButton = Button.Button(self.screen, 100, 100, 150, self.crossing, "generateMap")
-        self.modeSelectButton = Button.Button(self.screen, 100, 300, 150, self.playButtonImg, "selectMode", "Play")
-        self.mapMakerButton = Button.Button(self.screen, 100, 500, 150, self.crossing, "mapMaker", "Map Maker")
-        self.mapSelectButton = Button.Button(self.screen, 1350, 500, 150, self.topLeft, "selectMap", "Temp")
+        self.modeSelectButton = Button.Button(self.screen, 100, 300, 150, self.playButtonImg, "selectMode", "Play", 80)
+        self.mapMakerButton = Button.Button(self.screen, 100, 500, 150, self.crossing, "mapMaker", "Map Maker", 80)
+        self.mapSelectButton = Button.Button(self.screen, 1350, 500, 150, self.topLeft, "selectMap", "Temp", 80)
         self.settingsButton = Button.Button(self.screen, 1460, 40, 100, self.settingsImg, "settings")
-        self.linkButton = Button.Button(self.screen, 1450, 750, 100, self.empty, "https://github.com/DerfDa180155")
-        self.quitButton = Button.Button(self.screen, 100, 700, 150, self.quitButtonImg, "quit", "Quit")
+        self.linkButton = Button.Button(self.screen, 1450, 750, 100, self.empty, "https://github.com/DerfDa180155", "Website", 50)
+        self.quitButton = Button.Button(self.screen, 100, 700, 150, self.quitButtonImg, "quit", "Quit", 80)
         self.menuButtons = [self.modeSelectButton, self.mapMakerButton, self.mapSelectButton, self.settingsButton,
                             self.linkButton, self.quitButton]
 
         # game mode buttons
-        self.singlePlayerButton = Button.Button(self.screen, 100, 100, 150, self.horizontalLine, "singleplayer", "Singleplayer")
-        self.multiPlayerButton = Button.Button(self.screen, 100, 300, 150, self.crossing, "multiplayer", "multiplayer")
+        self.singlePlayerButton = Button.Button(self.screen, 100, 100, 150, self.horizontalLine, "singleplayer", "Singleplayer", 80)
+        self.multiPlayerButton = Button.Button(self.screen, 100, 300, 150, self.crossing, "multiplayer", "multiplayer", 80)
         self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
         self.gameModeButtons = [self.singlePlayerButton, self.multiPlayerButton, self.returnButton]
 
@@ -145,16 +145,16 @@ class GameMain:
         self.carSelectorButtons = [self.returnButton, self.readyButton]
 
         # generate Map WFC buttons
-        self.generateButton = Button.Button(self.screen, 100, 700, 100, self.empty, "generate", "Generate map")
+        self.generateButton = Button.Button(self.screen, 100, 700, 100, self.empty, "generate", "Generate map", 50)
         self.saveButton = Button.Button(self.screen, 1400, 775, 100, self.saveButtonImg, "save")
-        self.playButton = Button.Button(self.screen, 750, 775, 100, self.selectButtonImg, "play", "Play")
+        self.playButton = Button.Button(self.screen, 750, 775, 100, self.selectButtonImg, "play", "Play", 50)
         self.returnButton = Button.Button(self.screen, 75, 825, 50, self.returnButtonImg, "return")
         self.scrollMaxXButton = Button.Button(self.screen, 710, 150, 45, self.scrollBarImg, "scrollX")
         self.scrollMaxYButton = Button.Button(self.screen, 710, 150, 45, self.scrollBarImg, "scrollY")
         self.generateMapButtons = [self.generateButton, self.saveButton, self.playButton, self.returnButton, self.scrollMaxXButton, self.scrollMaxYButton]
 
         # race settings buttons
-        self.startRaceButtons = Button.Button(self.screen, 725, 720, 150, self.horizontalLine, "start", "Play")
+        self.startRaceButtons = Button.Button(self.screen, 725, 720, 150, self.horizontalLine, "start", "Play", 50)
         self.backButton = Button.Button(self.screen, 50, 770, 100, self.returnButtonImg, "back")
         self.roundsScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollRounds")
         self.maxSpeedScrollButton = Button.Button(self.screen, 710, 100, 45, self.scrollBarImg, "scrollMaxSpeed")
