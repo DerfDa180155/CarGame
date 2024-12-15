@@ -192,6 +192,12 @@ class MapController:
                 return self.customMaps[int(self.currentMapIndex)]
             return ""
 
+    def getMapIndex(self, index: int):
+        if index > self.getCountMaps()-1 or index <= 0:
+            return self.maps[0]
+        else:
+            return self.maps[index]
+
     def getLastMap(self): # only for testing
         if len(self.maps) > 0:
             return self.maps[0].myMap
