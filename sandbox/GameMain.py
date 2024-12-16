@@ -233,14 +233,14 @@ class GameMain:
         # official maps
         tempArray = []
         for i in range(self.oldMapCount):
-            tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i), self.mapController.getMapIndex(i).name, 50))
+            tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i), self.mapController.getMapIndex(i, True).name, 50))
             if i >= 15:
                 tempArray[len(tempArray)-1].enable = False
         self.mapButtons.append(tempArray)
         # custom maps
         tempArray = []
         for i in range(self.oldCustomMapCount):
-            tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i)))
+            tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i), self.mapController.getMapIndex(i, False).name, 50))
             if i >= 15:
                 tempArray[len(tempArray)-1].enable = False
         self.mapButtons.append(tempArray)
