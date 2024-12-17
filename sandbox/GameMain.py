@@ -233,18 +233,18 @@ class GameMain:
         # official maps
         tempArray = []
         for i in range(self.oldMapCount):
-            tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i), self.mapController.getMapIndex(i, True).name, 50))
+            tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i), self.mapController.getMapIndex(i, True).name, 30))
             if i >= 15:
                 tempArray[len(tempArray)-1].enable = False
         self.mapButtons.append(tempArray)
         # custom maps
         tempArray = []
         for i in range(self.oldCustomMapCount):
-            tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i), self.mapController.getMapIndex(i, False).name, 50))
+            tempArray.append(Button.Button(self.screen, self.locations[i % 15][0], self.locations[i % 15][1], self.imageMapSize, self.empty, str(i), self.mapController.getMapIndex(i, False).name, 30))
             if i >= 15:
                 tempArray[len(tempArray)-1].enable = False
         self.mapButtons.append(tempArray)
-        self.mapButtons[1].append(Button.Button(self.screen, 750, 700, 100, self.crossing, "generateMapWFC"))
+        self.mapButtons[1].append(Button.Button(self.screen, 750, 700, 100, self.crossing, "generateMapWFC", "generate new Map", 30))
         tempArray = []
         tempArray.append(Button.Button(self.screen, 700, 825, 50, self.previousPageButtonImg, "previousPage"))
         tempArray.append(Button.Button(self.screen, 850, 825, 50, self.nextPageButtonImg, "nextPage"))
