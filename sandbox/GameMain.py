@@ -632,7 +632,7 @@ class GameMain:
                                         self.CO.players[i].selectedCarId = 3
                                     elif self.CO.players[i].selectedCarId == 3:
                                         self.CO.players[i].selectedCarId = 7
-                                time.sleep(0.1)
+                                time.sleep(0.2)
                             if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][3])]: # right
                                 self.CO.players[i].selectedCarId += 1
                                 if self.CO.players[i].selectedCarId == 4:
@@ -645,7 +645,7 @@ class GameMain:
                                         self.CO.players[i].selectedCarId = 0
                                     elif self.CO.players[i].selectedCarId == 8:
                                         self.CO.players[i].selectedCarId = 4
-                                time.sleep(0.1)
+                                time.sleep(0.2)
                             if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][0])]: # up
                                 self.CO.players[i].selectedCarId -= 4
                                 if self.CO.players[i].selectedCarId <= -1:
@@ -654,7 +654,7 @@ class GameMain:
                                     self.CO.players[i].selectedCarId -= 4
                                     if self.CO.players[i].selectedCarId <= -1:
                                         self.CO.players[i].selectedCarId += 8
-                                time.sleep(0.1)
+                                time.sleep(0.2)
                             if keys[pygame.key.key_code(self.CO.settings.playerKeys[i][1])]: # down
                                 self.CO.players[i].selectedCarId += 4
                                 if self.CO.players[i].selectedCarId >= 8:
@@ -663,7 +663,7 @@ class GameMain:
                                     self.CO.players[i].selectedCarId += 4
                                     if self.CO.players[i].selectedCarId >= 8:
                                         self.CO.players[i].selectedCarId -= 8
-                                time.sleep(0.1)
+                                time.sleep(0.2)
 
 
                         for button in self.CO.carSelectorButtons:
