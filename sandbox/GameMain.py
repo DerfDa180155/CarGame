@@ -734,6 +734,8 @@ class GameMain:
                                         #self.CO.mapController.generateNewMap(random.randint(2, 6), random.randint(2, 6), False, True)
                                         #self.CO.gameStatus = "raceSettings"
                                         #self.CO.raceObject.reset(True)
+                                        self.CO.mapController.useOfficialMaps = False
+                                        self.CO.mapController.currentMapIndex = 0
                                         self.CO.gameStatus = "generateMapWFC"
                                     elif button.action == "previousPage":
                                         if self.CO.mapButtonPage > 0:
