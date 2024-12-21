@@ -26,6 +26,7 @@ class Player:
         self.frontRaysDeg = 22.5
         self.frontRays = []
         self.backRays = []
+        self.nextCheckpointDirection = 0
 
         self.maxSpeed = 150
         self.currentMaxSpeed = self.maxSpeed
@@ -89,7 +90,17 @@ class Player:
             ray.calcLength(bounds)
         for ray in self.backRays:
             ray.calcLength(bounds)
-            print(ray.length)
+
+    def updatedNextCheckpointDirection(self, bound: array):
+        newX = bound[0] - bound[2]
+        newY = bound[1] - bound[3]
+
+        print(str(newX) + " | " + str(newY))
+
+        deltaX = np.abs(self.x-bound[0])
+        deltaY = self.y-bound[1]
+        self.nextCheckpointDirection = np.rad2deg(np.arctan(deltaY/deltaX))
+        print(self.nextCheckpointDirection)
 
     def move(self, forward: bool):
         self.isMoving = True

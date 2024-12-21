@@ -924,6 +924,7 @@ class GameMain:
                                     if countY >= sizeY:
                                         countY = sizeY - 1
                                     player.updateRays(self.CO.mapController.getCurrentMap(self.CO.officialMaps).getBoundsOnePiece(countX, countY, True))
+                                    player.updatedNextCheckpointDirection(self.CO.raceObject.playerCheckpointList[player.id][0])
 
                             # update the bots
                             if self.CO.raceObject.amountOfBots > 0:
