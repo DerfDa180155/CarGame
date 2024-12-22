@@ -92,13 +92,18 @@ class Player:
             ray.calcLength(bounds)
 
     def updatedNextCheckpointDirection(self, bound: array):
-        newX = bound[0] - bound[2]
-        newY = bound[1] - bound[3]
+        newX = 0
+        newY = 0
+        # calculate middle point of the bound
+        if bound[0] == bound[2]:
+            newX = bound[0]
+            newY = bound[3] + ((bound[1] - bound[3]) / 2)
+        elif bound[1] == bound[3]:
+            newY = bound[1]
+            newX = bound[2] + ((bound[0] - bound[2]) / 2)
 
-        print(str(newX) + " | " + str(newY))
-
-        deltaX = np.abs(self.x-bound[0])
-        deltaY = self.y-bound[1]
+        deltaX = self.x-newX
+        deltaY = self.y-newY
         self.nextCheckpointDirection = np.rad2deg(np.arctan(deltaY/deltaX))
         print(self.nextCheckpointDirection)
 
