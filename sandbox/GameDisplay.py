@@ -1028,6 +1028,7 @@ class GameDisplay(threading.Thread):
                     x2 = x1 + rayLengthX * np.cos(np.deg2rad(ray.direction))
                     y2 = y1 + rayLengthY * np.sin(np.deg2rad(ray.direction))
                     pygame.draw.line(self.screen, color, (x1, y1), (x2, y2), 4)
+                pygame.draw.line(self.screen, (100, 255, 255), ((player.x * self.windowWidth) / 1600, (player.y * self.windowHeight) / 900), (((player.x * self.windowWidth) / 1600) + 1000*np.cos(np.deg2rad(player.nextCheckpointDirection)), ((player.y * self.windowHeight) / 900) + 1000*np.sin(np.deg2rad(player.nextCheckpointDirection))), 4)
             i += 1
 
     def drawBots(self):
