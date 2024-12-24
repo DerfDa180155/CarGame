@@ -102,10 +102,13 @@ class Player:
             newY = bound[1]
             newX = bound[2] + ((bound[0] - bound[2]) / 2)
 
-        deltaX = self.x-newX
-        deltaY = self.y-newY
+        deltaX = newX-self.x
+        deltaY = newY-self.y
         self.nextCheckpointDirection = np.rad2deg(np.arctan(deltaY/deltaX))
-        print(self.nextCheckpointDirection)
+        if deltaX < 0:
+            self.nextCheckpointDirection += 180
+        if self.nextCheckpointDirection < 0:
+            self.nextCheckpointDirection += 360
 
     def move(self, forward: bool):
         self.isMoving = True
