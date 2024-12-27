@@ -27,6 +27,7 @@ class Player:
         self.frontRays = []
         self.backRays = []
         self.nextCheckpointDirection = 0
+        self.nextCheckpointLength = 0
 
         self.maxSpeed = 150
         self.currentMaxSpeed = self.maxSpeed
@@ -104,6 +105,7 @@ class Player:
 
         deltaX = newX-self.x
         deltaY = newY-self.y
+        self.nextCheckpointLength = np.sqrt(np.power(deltaX, 2) + np.power(deltaY, 2))
         self.nextCheckpointDirection = np.rad2deg(np.arctan(deltaY/deltaX))
         if deltaX < 0:
             self.nextCheckpointDirection += 180
