@@ -25,8 +25,6 @@ class Bot:
             if ray.length < 10:
                 driveForward = False
 
-        print(int((amountOfRays-1)/2))
-
         if self.player.frontRays[int((amountOfRays-1)/2)].length > 50 and driveForward:
             self.player.move(True) # for testing
         else:
@@ -40,8 +38,15 @@ class Bot:
             sum1 += self.player.frontRays[i].length
             sum2 += self.player.frontRays[i+int((amountOfRays-1)/2)].length
 
-        if np.abs(sum1 - sum2) > 50 and driveForward and self.player.speed > 0:
-            self.player.changeDir(sum2 > sum1)
+        print(self.player.nextCheckpointDirection - self.player.direction)
+        print(str(self.player.nextCheckpointDirection) + " | " + str(self.player.direction))
+
+        if self.player.nextCheckpointLength < 70:
+            if np.abs(sum1 - sum2) > 50 and driveForward and self.player.speed > 0:
+                self.player.changeDir(sum2 > sum1)
+        else:
+            if np.abs(sum1 - sum2) > 50 and driveForward and self.player.speed > 0:
+                self.player.changeDir((sum2 + self.player.nextCheckpointDirection-self.player.direction) > sum1)
 
         if self.player.currentItem != -1:
             self.player.useItem()
