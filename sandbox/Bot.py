@@ -38,15 +38,22 @@ class Bot:
             sum1 += self.player.frontRays[i].length
             sum2 += self.player.frontRays[i+int((amountOfRays-1)/2)].length
 
-        print(self.player.nextCheckpointDirection - self.player.direction)
         print(str(self.player.nextCheckpointDirection) + " | " + str(self.player.direction))
+        direction = self.player.nextCheckpointDirection - self.player.direction
+
+        if direction > 200:
+            direction -= 360
+        elif direction < -200:
+            direction += 360
+        print(direction)
 
         if self.player.nextCheckpointLength < 70:
             if np.abs(sum1 - sum2) > 50 and driveForward and self.player.speed > 0:
                 self.player.changeDir(sum2 > sum1)
         else:
+            #self.player.changeDir(direction>0)
             if np.abs(sum1 - sum2) > 50 and driveForward and self.player.speed > 0:
-                self.player.changeDir((sum2 + self.player.nextCheckpointDirection-self.player.direction) > sum1)
+                self.player.changeDir((sum2 + (direction*20)) > sum1)
 
         if self.player.currentItem != -1:
             self.player.useItem()
