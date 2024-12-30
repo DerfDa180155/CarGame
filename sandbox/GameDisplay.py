@@ -85,7 +85,7 @@ class GameDisplay(threading.Thread):
                             frontRays.append(round(ray.length, 2))
                         for ray in player.backRays:
                             backRays.append(round(ray.length,2))
-                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc), "dir: " + str(round(player.direction,2)), "is done: " + str(player.isDone), "checkpoint: " + str(len(self.CO.raceObject.playerCheckpointList[player.id])), "Item: " + str(player.currentItem),"amount of front rays: " + str(len(player.frontRays)), "amount of back rays: " + str(len(player.backRays)), "frontRays: " + str(frontRays), "backRays: " + str(backRays)]
+                        statsText = ["ID: " + str(player.id), "speed: " + str(player.speed), "acc: " + str(player.acc), "dir: " + str(round(player.direction,2)), "is done: " + str(player.isDone), "checkpoint: " + str(len(self.CO.raceObject.playerCheckpointList[player.id])), "Item: " + str(player.currentItem),"amount of front rays: " + str(len(player.frontRays)), "amount of back rays: " + str(len(player.backRays)), "frontRays: " + str(frontRays), "backRays: " + str(backRays), "nextCheckpointLength: " + str(player.nextCheckpointLength), "nextCheckpointDirection: " + str(player.nextCheckpointDirection)]
                         statsX = (player.x * self.windowWidth) / 1600
                         statsY = (player.y * self.windowHeight) / 900
                         for i in range(len(statsText)):
