@@ -8,7 +8,7 @@ import Player
 class Bot:
     def __init__(self, player: Player):
         self.player = player
-        self.player.frontRaysDeg = 9
+        self.player.frontRaysDeg = 18
         self.player.frontRaysViewAngle = 180
         self.player.generateFrontRays()
 
